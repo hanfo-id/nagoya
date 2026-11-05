@@ -1,0 +1,76 @@
+/* Hallmark · checked: 2026-11-06 · genre: editorial · built: the project · scope: app · v2.0.0 */
+/* Critique: preserve the Japanese travel notebook; make the next destination the visual anchor. */
+:root{--status-good:#24573c;--status-bg:#eaf1e8;--status-warn:#863c27;--status-warn-bg:#f8ece2;--status-dim:#59675d;--soft-panel:#f0f1e9;--dialog-shade:rgba(24,60,50,.38);--toast-shadow:rgba(24,60,50,.15);--header-height:56px;--date-height:72px}
+html,body{overflow-x:clip}
+main{display:flex;flex-direction:column;min-width:0}
+main>section{min-width:0}
+.top{min-height:56px;padding-block:4px}
+.top nav{gap:16px}.top nav button{display:inline-flex;border:0;padding:4px 0;min-height:44px;background:var(--clear)}
+.top nav a,.top nav button{font-size:14px;min-width:44px;justify-content:center}.top #print{border:1px solid var(--line);padding-inline:12px}
+section[id],article[id],.eventrow{scroll-margin-top:calc(var(--header-height) + var(--date-height) + 16px)}
+.todaypanel{margin:32px 0 16px;border-top:2px solid var(--ink);padding-top:24px}
+.todayheading{display:flex;justify-content:space-between;align-items:start;gap:16px}.todayheading h2{font-family:var(--font-display);font-size:32px;line-height:1.5;margin:0 0 16px;font-weight:500}
+.todaydate{font-size:14px;color:var(--muted);margin:0 0 8px}.quietbutton{flex-shrink:0;border:0;background:var(--clear);text-decoration:underline;font-size:14px;min-height:44px;color:var(--ink)}
+.nextaction{padding:24px;background:var(--soft-panel);border-radius:8px}.nextlabel{font-size:13px;color:var(--muted);margin:0 0 8px}
+.nextaction h3{font-size:24px;line-height:1.55;margin:0;max-width:32ch}.nextaction h3>span{font-variant-numeric:tabular-nums;margin-right:8px}.nextaction>p{font-size:15px;margin:8px 0}.nextaction .important{margin-block:8px}
+.homeactions,.restaurantactions,.backupactions,.dialogactions{display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;margin-top:16px}
+.homeactions>a:first-child{background:var(--ink);color:var(--white);padding-inline:20px;border:1px solid var(--ink);border-radius:4px;text-decoration:none;font-weight:600}
+.homeactions a,.homeactions button,.restaurantactions a,.restaurantactions button,.backupactions button,.dialogactions button{min-height:44px;padding:8px 4px;font-size:14px;display:inline-flex;align-items:center;justify-content:center}
+.homeactions button,.backupactions button,.adjustactions>button,.dialogactions button{border:1px solid var(--line);background:var(--white);border-radius:4px;padding-inline:12px;color:var(--ink)}
+.homeprogress{font-size:14px;margin:12px 0}.homeprogress>span,.dayprogress>span{margin-left:12px;color:var(--muted);font-size:13px}
+.reservation-summary{padding:16px 0;border-bottom:1px solid var(--line);font-size:15px}.reservation-summary>p{font-size:14px;color:var(--muted);margin:4px 0}
+.is-travelling .hero,.is-travelling .facts,.is-travelling .notice{display:none}.is-travelling .todaypanel{order:-2;margin-top:16px}.is-travelling .reservation-summary{order:-1}
+.daytabs{min-height:72px}.daytabs button{padding:8px 4px}.daytabs b{font-size:19px}.daytabs span{font-size:12px}.daytabs small{font-size:12px}
+.dayprogress{font-size:14px;margin:12px 0 20px}.dayhero h3{font-size:26px}.dayhero .eyebrow{margin-bottom:8px}
+.toolbar{gap:4px 16px}.toolbar label{font-size:14px}.toolbar>button{margin-left:auto}
+.travelstop{padding-bottom:20px}.travelstop .event summary{padding:16px 20px}.travelstop .event summary:after{display:none}.travelstop h4{font-size:18px;line-height:1.6;margin:8px 0}
+.eventtags{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}.eventtags .tag{font-size:12px;padding:2px 8px}
+.statusbadge{display:inline-flex;align-items:center;max-width:100%;font-size:12px;line-height:1.6;padding:2px 8px;border:1px solid var(--line);border-radius:4px;font-weight:500;color:var(--muted);background:var(--white)}
+.statusbadge.confirmed,.statusbadge.done,.statusbadge.progress{color:var(--status-good);background:var(--status-bg);border-color:var(--status-good)}
+.statusbadge.unconfirmed,.statusbadge.requested,.statusbadge.cancelled{color:var(--status-warn);background:var(--status-warn-bg);border-color:var(--status-warn)}
+.statusbadge.skipped,.statusbadge.elapsed{color:var(--status-dim);border-style:dashed}.statusbadge.optional{background:var(--paper)}
+.movement{font-size:14px;display:block;color:var(--muted);line-height:1.7}
+.important{display:block;color:var(--status-warn);font-size:14px;line-height:1.7;margin-top:8px}.dishshort{display:block;font-size:14px;line-height:1.7;margin-top:8px}
+.placename{font-size:14px;line-height:1.7}.reservation-inline{margin-top:8px}.reservation-plan{display:block;font-size:13px;color:var(--muted);margin-top:4px}.actualtime{display:block;font-size:15px;color:var(--status-good);font-weight:600;margin:4px 0}
+.detailhint{display:inline-flex;align-items:center;min-height:36px;text-decoration:underline;color:var(--ink);font-size:13px;margin-top:4px}
+.eventactions{display:flex;align-items:center;flex-wrap:wrap;gap:8px 20px;border-top:1px solid var(--line);margin:0 20px;padding:4px 0}
+.eventactions>a,.textbutton{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;font-size:14px;padding:4px 0;border:0;background:var(--clear);color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.eventactions>a:first-child{font-weight:600;text-decoration:none}.event-status-label{display:flex;gap:8px;align-items:center;font-size:13px;margin-left:auto}.event-status-label select{width:auto;min-width:100px;font-size:14px;padding:4px 8px;background:var(--white);border:1px solid var(--line);border-radius:4px}
+.fromplace{font-size:13px;margin:0 20px 12px;color:var(--muted)}.fromplace a{display:inline-flex;align-items:center;min-height:44px}.is-done>.eventrow{background:var(--soft-panel)}.is-skipped>.eventrow{border-style:dashed;background:var(--paper)}.is-skipped h4{color:var(--muted)}.is-target>.eventrow{border-color:var(--ink)}
+.travelstop:focus-visible{outline:2px solid var(--focus);outline-offset:4px;border-radius:4px}
+.detail>p{font-size:15px}.staytime{color:var(--muted)}
+.compactlinks{display:flex;align-items:center;flex-wrap:wrap;gap:4px 16px}.compactlinks a{display:inline-flex;align-items:center;min-height:44px;font-size:14px;max-width:100%;overflow-wrap:anywhere}
+.journeydetail{margin-top:16px;border-top:1px solid var(--line);font-size:14px}.journeydetail summary,.restaurantdetail>summary{cursor:pointer;min-height:44px;padding-block:8px}.journeydetail p{font-size:14px}
+.daynote{margin-left:0;background:var(--clear);border:0;border-top:1px solid var(--line);padding:16px 0}.daynote>summary{min-height:44px;cursor:pointer;font-weight:600}.adjustactions{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px}.adjustactions p{flex-basis:100%;font-size:14px;margin:4px 0;color:var(--muted)}.adjustactions label{display:flex;align-items:center;gap:8px;min-height:44px}.adjustactions button,.adjustactions a{min-height:44px;font-size:14px}
+.reservationgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.reservationcard{min-width:0;padding:24px;border-top:2px solid var(--line);background:var(--white);border-radius:4px}.rescardhead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:start}.rescardhead h3{font-size:18px;margin:0 0 8px}.reservationcard>label,.reswhen label{font-size:14px;display:block;margin-top:16px}.reservationcard select,.reservationcard input,.reservationcard textarea{width:100%;min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:4px;color:var(--ink);padding:8px 12px;min-height:44px;display:block;margin-top:4px;font-size:16px}.reservationcard textarea{margin-bottom:4px}.reswhen{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:12px}.reservationcard p{font-size:14px}.sectionintro{font-size:15px;max-width:70ch;margin-bottom:24px}
+.restaurantactions{margin-top:12px}.restaurantactions a:first-child{font-weight:600}.restaurant p.jp{font-size:14px}.restaurantdetail{margin-top:16px;border-top:1px solid var(--line);font-size:14px}.restaurant-price{font-weight:600}.bookingmethod{font-size:14px!important}.restaurantdetail p{font-size:14px}.restaurant dl div{grid-template-columns:70px minmax(0,1fr)}
+.checkgroup>h4{font-size:16px;margin:24px 0 12px}.reservationcheck{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px}.reservationcheck>span:first-child{flex:1 1 160px}.reservationcheck .textbutton{font-size:13px}.panel p{font-size:14px}
+.journeylist{grid-template-columns:minmax(0,1fr);gap:0}.journeylist .mapstop{display:flex;align-items:center;gap:0 16px;padding:12px 0}.mapstop .pinselect{flex:1 1 220px}.mapstoptime{display:block;font-size:13px;color:var(--muted)}.mapleg{flex-basis:100%;padding-left:32px;font-size:14px}.mapleg>span{font-size:13px;color:var(--muted)}.mapleg details{margin-top:4px}.mapleg summary{min-height:44px;cursor:pointer;display:list-item;padding-block:8px}.mapleg p{margin:4px 0;font-size:14px}.placepopup button{font-size:14px}.numberpin.is-skipped>span{border-style:dashed;background:var(--paper);color:var(--muted)}.is-skipped .pinindex{border-style:dashed}
+.maplegend{font-size:13px}.numberedmap{height:440px}
+.backupactions{align-items:stretch}.backupactions button{flex:0 1 auto}#resetdata{color:var(--status-warn)}
+.appstatus{position:fixed;bottom:max(16px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:10000;width:max-content;max-width:calc(100% - 32px);padding:12px 16px;background:var(--ink);color:var(--white);border-radius:6px;box-shadow:0 4px 20px var(--toast-shadow);font-size:14px;line-height:1.7;pointer-events:none}
+dialog{max-width:min(480px,calc(100% - 32px));border:1px solid var(--line);border-radius:8px;padding:24px;background:var(--paper);color:var(--ink)}dialog::backdrop{background:var(--dialog-shade)}dialog h2{font-size:22px;margin-top:0}dialog p{font-size:15px}.dialogactions{justify-content:flex-end}.dialogactions button:last-child{background:var(--ink);color:var(--white)}
+.printing #printcontent{display:block!important}
+@media(max-width:760px){
+ .top{padding:4px max(12px,env(safe-area-inset-right)) 4px max(12px,env(safe-area-inset-left));min-height:52px;gap:4px}.brand{font-size:14px}.brand span{display:none}.top nav{gap:2px}.top nav a,.top nav button{font-size:13px;min-width:40px}.top .nav-food,.top #print{display:none}
+ main{padding-inline:max(16px,env(safe-area-inset-left))}.hero{margin-top:8px}.daytabs{min-height:64px;padding-inline:8px}.daytabs small{font-size:11px}.daytabs b{font-size:18px}.daytabs span{font-size:11px}
+ .todaypanel{margin-top:24px;padding-top:16px}.todayheading h2{font-size:25px}.todayheading{gap:8px}.todayheading .quietbutton{font-size:13px}.nextaction{padding:20px 16px}.nextaction h3{font-size:22px}.homeactions{gap:8px}.homeactions>a:first-child{padding-inline:16px}.homeactions>button{padding-inline:8px}.homeactions>*{font-size:13px!important}.homeprogress>span{display:block;margin-left:0}.todaydate{font-size:13px}
+ .toolbar{gap:0 12px}.toolbar label{font-size:13px}.toolbar>button{margin-left:0}.dayhero h3{font-size:23px}.dayprogress>span{display:block;margin-left:0}.dayprogress{font-size:14px}.dayhero{margin-top:16px}.dayhero .meta{margin-top:8px}.dayhero p{font-size:14px}
+ .travelstop .event summary{padding:16px}.eventactions{margin-inline:16px;gap:4px 16px}.event-status-label{margin-left:0;flex:1 1 140px;justify-content:flex-end}.event-status-label select{max-width:120px;width:auto}.fromplace{margin-inline:16px;font-size:13px}.reservation-inline .important{font-size:13px}.travelstop h4{font-size:17px}.placename{font-size:14px}.movement,.dishshort{font-size:14px}.detail{font-size:15px}
+ .reservationgrid{grid-template-columns:minmax(0,1fr);gap:20px}.reservationcard{padding:20px 16px}.reservationcard input[type=date],.reservationcard input[type=time]{min-width:0;max-width:100%}.reswhen{grid-template-columns:minmax(0,1fr) minmax(0,.9fr);gap:8px}.rescardhead h3{font-size:18px}.restaurant{padding:20px 16px}.restaurant h3{font-size:20px}.restaurantactions{gap:4px 16px}.restaurantactions>*{font-size:13px}.section{padding-top:40px}
+ .numberedmap{height:360px}.journeylist .mapstop{display:flex}.journeylist .pinlinks{margin-left:32px}.mapleg{padding-left:32px}.maphead h4{font-size:18px}.maplegend{display:block}.maplegend>span{min-height:32px;font-size:12px}.mapcaption{font-size:13px}.backupactions button{flex:1 1 140px}.sectionhead p:not(.eyebrow){font-size:14px}
+ .appstatus{font-size:13px}.budget dd{overflow-wrap:anywhere}.sources ul{columns:1}
+}
+@media(max-width:360px){.daytabs span{display:none}.daytabs{min-height:60px}.top nav a,.top nav button{min-width:40px}.todayheading h2{font-size:23px}.eventactions{gap:4px 12px}.event-status-label{flex-basis:130px}.reswhen{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+@media print{
+ body>header,main,#appstatus,footer,dialog{display:none!important}#printcontent{display:block!important;max-width:none;padding:0 16px}.dayhero,.dayblock{display:block!important}.eventactions,.fromplace,.detailhint,.textbutton,.journeydetail,.daynote,.viewbar,.homeactions{display:none!important}.travelstop{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;break-inside:avoid}.eventrow{border:0}.event summary{display:block}.event .detail{display:block!important;font-size:11px}.event summary:after{display:none}.statusbadge,.placename,.movement,.important,.reservation-plan{font-size:10px}.actualtime{font-size:11px}.dayblock{break-before:page}.dayblock:first-child{break-before:auto}.dayhero h3{font-size:22px}.dayhero p,.dayprogress{font-size:11px}.event h4{font-size:14px}.detail>p{font-size:11px}
+}
+
+@media(max-width:760px){.daytabs span{display:none}.daytabs small{white-space:nowrap}.daytabs{min-height:64px}.top nav a,.top nav button{min-width:44px}.fieldtoggle{margin-bottom:12px}}
+
+.todayheading>div{min-width:0}.todayheading h2{word-break:keep-all;text-wrap:initial}.resedit{margin-top:12px;border-top:1px solid var(--line)}.resedit>summary{min-height:44px;cursor:pointer;display:flex;align-items:center;font-size:14px;text-decoration:underline}.resedit>label{display:block;font-size:14px;margin-top:16px}
+
+html{scroll-padding-top:0}.fieldtoggle{margin-bottom:12px}
+
+.actual-slot{display:block;font-size:17px;color:var(--status-good);font-variant-numeric:tabular-nums}.actual-slot small{font-size:12px;font-weight:400;color:var(--muted)}.time:has(.actual-slot){display:block}.time:has(.actual-slot)>small{display:block;font-size:12px;line-height:1.6;margin-top:4px}

@@ -1,4 +1,4 @@
-/* Coordinates checked 2026-11-05. OSM contributors / GSI address search, transformed to lat/lng. */
+/* Coordinates checked 2026-11-05; Kamimaezu checked 2026-11-06. OSM contributors / GSI address search. */
 const MAP_LOCATIONS={
  "hotel": {
   "lat": 35.173293,
@@ -205,5 +205,11 @@ const MAP_LOCATIONS={
   "kind": "address",
   "source": "https://msearch.gsi.go.jp/address-search/AddressSearch",
   "address": "愛知県名古屋市中区錦三丁目１７番１５号"
+ },
+ "kamimaezu": {
+  "lat": 35.157374,
+  "lng": 136.906699,
+  "kind": "place",
+  "source": "https://www.openstreetmap.org/node/5408459629"
  }
 };
