@@ -1,0 +1,83 @@
+/* Hallmark · shape: app screen · genre: editorial · theme: retained travel system · redesign: refinement · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V3 · weakest: V; retain the travel identity and move time-based actions ahead of the map */
+:root{--muted:#516155;--accent:#93452f;--line:#c8d1c4;--header-height:76px;--date-height:80px;--focus:#93452f;--ui-surface:#eef2e8}
+html,body{overflow-x:clip}
+html{scroll-padding-top:calc(var(--header-height) + var(--date-height) + 20px)}
+.top{min-height:64px;padding-block:8px;max-width:none}
+.top nav a,.top nav button{min-height:44px;display:inline-flex;align-items:center;font-size:13px}
+.hero{padding-block:40px}.intro{font-size:16px}.tripdate small{font-size:13px}
+.facts span,.facts small{font-size:13px}.facts strong{font-size:18px}
+.daytabs{position:sticky;top:var(--header-height);z-index:9;background:var(--paper);min-height:80px;box-shadow:0 1px 0 var(--line)}
+.daytabs button{min-width:0;padding:8px 4px}.daytabs small{font-size:12px;opacity:1}.daytabs span{font-size:12px}.daytabs b{font-size:20px}
+.toolbar{font-size:13px;padding:8px 0;gap:8px 16px}.toolbar label{min-height:44px;display:inline-flex;align-items:center;gap:8px;cursor:pointer}.toolbar button{min-height:44px;font-size:13px}
+.toolbar input{width:18px;height:18px;margin:0;flex-shrink:0}
+.dayhero{margin-top:24px;margin-bottom:12px}.dayhero h3{font-size:25px}.dayhero p{font-size:15px;max-width:70ch}.dayhero .meta{font-size:13px}.dayhero .eyebrow{font-size:13px;margin-bottom:8px}
+.route{font-size:13px;padding:8px 0 16px;gap:8px;line-height:1.7}
+.viewbar{display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line);margin-bottom:24px;flex-wrap:wrap}
+.viewbar button{background:var(--clear);border:0;border-bottom:2px solid var(--clear);padding:8px 16px;color:var(--muted);font-size:14px;min-height:44px}
+.viewbar button[aria-pressed=true]{color:var(--ink);border-color:var(--ink);font-weight:600}
+.viewbar>span{font-size:13px;color:var(--muted);margin-left:auto}
+.stop{grid-template-columns:80px minmax(0,1fr);gap:16px;padding-bottom:20px}.time{font-size:15px;font-variant-numeric:tabular-nums}.time small{font-size:13px}
+.eventrow{border:1px solid var(--line);border-radius:8px;background:var(--white);min-width:0}
+.eventrow>.event{border:0;border-radius:8px;background:var(--clear)}
+.event summary{padding:16px 20px;gap:12px}.event summary:after{color:var(--muted)}.event h4{font-size:18px}
+.placename{font-size:13px;margin-bottom:8px;overflow-wrap:anywhere}.event .sub{font-size:15px;line-height:1.75}
+.tag{font-size:12px}.dishpreview{font-size:14px}.dishpreview>span{font-weight:600}
+.detail{font-size:16px;padding:0 20px 20px;line-height:1.8}.detail ul{max-width:75ch;padding-left:20px}.detail li{margin:8px 0}
+.tip{font-size:14px;background:var(--clear);border-top:1px solid var(--line);padding:16px 0 0;border-radius:0;line-height:1.8}
+.stopactions{display:flex;align-items:center;flex-wrap:wrap;gap:4px 16px;margin:0 20px;border-top:1px solid var(--line);padding:0}
+.stopactions a{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;font-size:13px;text-decoration:none;border-bottom:1px solid var(--clear)}
+.stopactions a:first-child{font-weight:600}.stopactions a:hover{color:var(--accent);border-color:var(--accent)}
+.links a,.book{font-size:13px;min-width:44px;min-height:44px;padding:8px 4px;display:inline-flex;align-items:center;justify-content:center}
+.daynote{font-size:15px;margin-left:96px;line-height:1.8}
+.menudetail p{font-size:15px;line-height:1.8}.menudetail h5,.menudetail [lang=ja]{font-size:13px}
+.reviewnotes,.reviewnotes p{font-size:14px}.reviewnotes small{font-size:13px}.reviewnotes summary{font-size:14px;min-height:44px;padding:8px 0;line-height:1.8}
+.foodintro{font-size:15px;line-height:1.8}.restaurant p{font-size:15px;line-height:1.8}.restaurant .jp{font-size:14px}.restaurant dl{font-size:14px}.restaurant dl div{grid-template-columns:76px minmax(0,1fr)}.rhead small{font-size:13px}
+.booking{font-size:14px;background:var(--clear);border-radius:0;border-top:1px solid var(--line);padding:16px 0 0}.booking small{font-size:13px}
+.search{position:relative;border-color:var(--muted);font-size:14px;display:block}.search input{font-size:16px;min-height:44px}.search:focus-within{outline:2px solid var(--focus);outline-offset:4px}
+.searchlabel{display:block;font-size:13px;color:var(--muted)}.reservelabel{font-size:13px;color:var(--muted);align-self:center}
+select{min-height:44px;font-size:14px;border-color:var(--muted)}
+.panel p,#checklist label,.budget div,.daynote{font-size:15px}.panel a,.panel h3 small,.memo label,#savestatus,.muted{font-size:13px!important}
+#checklist label{min-height:44px;cursor:pointer}.budget dd{min-width:0}#checklist label:has(input:checked){color:var(--muted)}
+.maphead h4{font-size:18px}.mapmodes button{min-height:44px;font-size:13px}.daymap{border-top:0;padding-top:0}
+.mapstage{scroll-margin-top:calc(var(--header-height) + var(--date-height) + 16px)}
+#selectedmapplace{font-size:16px;margin:0 0 8px;font-weight:600}
+.mapwarning{font-size:14px;margin:8px 0 12px;background:var(--ui-surface);padding:12px 16px;border-radius:4px;line-height:1.8}
+.mapwarning button{background:var(--clear);border:0;text-decoration:underline;color:var(--ink);padding:0 4px;min-height:44px;font-size:14px}
+.mapcaption{font-size:13px;line-height:1.8}.googlemap{height:360px}
+.mapfallback{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+.mapfallback a,.mapfallback button{font-size:13px;min-height:44px;display:inline-flex;align-items:center;min-width:44px;padding:8px 4px}
+.mapfallback button{border:0;background:var(--clear);color:var(--ink);text-decoration:underline}
+.mapfallbackroutes{display:flex;gap:4px 16px;flex-wrap:wrap}
+.pinselect{font-size:15px;min-height:44px;padding:8px 0}.pinselect small{font-size:13px}.pinselect>span:last-child{min-width:0;overflow-wrap:anywhere}.pinindex{font-size:13px}
+.pinlist li{flex-wrap:wrap;gap:4px 16px;padding:8px 0}.pinselect{flex:1 1 220px}.pinlinks{font-size:13px;gap:8px;margin-left:32px}.pinlinks a{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:8px 4px}
+.optional-places{border-top:1px solid var(--line);margin-top:16px}.optional-places>summary{padding:12px 0;min-height:44px;cursor:pointer;font-size:15px}.optional-places>p{font-size:14px;color:var(--muted)}
+.sources{font-size:14px}.sources summary{min-height:44px}.sources a{display:inline-block;padding:8px 0}.sectionhead p:not(.eyebrow){font-size:14px}
+button,a,summary{touch-action:manipulation}button:hover{color:var(--ink)}button:active,a:active{transform:translateY(1px)}
+button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,#selectedmapplace:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+button:disabled,button[aria-disabled=true]{opacity:.55;cursor:not-allowed;transform:none}button[aria-busy=true]{cursor:progress}
+[hidden]{display:none!important}
+@media(max-width:760px){
+ :root{--date-height:72px}
+ .top{padding-inline:16px}.top nav a{font-size:13px;padding:4px 0}.top nav{gap:12px}.top nav button{display:none}.brand{font-size:15px}
+ main{padding-inline:16px}.hero{padding-block:24px;gap:16px}.hero .intro{font-size:15px}.tripdate{font-size:15px}.tripdate small{font-size:12px}.primary{font-size:14px;min-height:44px;padding:10px 16px;display:inline-flex;align-items:center}
+ .facts{gap:12px}.facts span,.facts small{font-size:12px}.facts strong{font-size:14px}.facts div{padding:0;min-width:0}
+ .notice{font-size:14px;line-height:1.8}.notice a{display:inline-flex;align-items:center;min-height:44px;font-size:13px}
+ .daytabs{margin-inline:-16px;padding-inline:12px;min-height:72px}.daytabs span{font-size:11px}.daytabs small{font-size:12px}.daytabs b{font-size:18px}.daytabs button{padding:8px 2px;line-height:1.5}
+ .toolbar label{font-size:13px}.toolbar button{font-size:13px;margin-left:0}.toolbar{gap:4px 12px}
+ .dayhero{margin-top:20px}.dayhero h3{font-size:23px}.dayhero p{font-size:15px}.dayhero .meta{font-size:13px;margin-top:12px}
+ .route{font-size:13px;line-height:1.8;display:none}.viewbar>span{display:none}.viewbar{gap:4px;margin-bottom:20px;margin-top:16px}.viewbar button{font-size:14px;padding:8px 16px}
+ .stop{grid-template-columns:minmax(0,1fr);gap:4px;padding-bottom:20px}.time{display:flex;align-items:baseline;gap:8px;padding:0 0 4px;font-size:15px}.time small{font-size:13px}
+ .event summary{padding:16px;gap:8px}.event h4{font-size:17px;margin:4px 0 8px}.placename{font-size:13px;line-height:1.75}.event .sub{font-size:15px}.dishpreview{font-size:14px;line-height:1.8}
+ .detail{font-size:16px;padding:0 16px 16px}.detail li{margin:8px 0}.stopactions{margin-inline:16px;gap:0 12px}.stopactions a{font-size:13px;min-height:44px}
+ .menudetail p{font-size:15px}.tip{font-size:14px}.reviewnotes p{font-size:14px}.daynote{margin-left:0;font-size:15px;padding:16px}
+ .restaurant,.panel{padding:20px}.restaurant h3{font-size:20px}.restaurant p{font-size:15px}.restaurant dl{font-size:14px}.rhead{align-items:start}.rhead small{font-size:13px}
+ .filters{flex-wrap:wrap;gap:16px}.search{width:100%}select{max-width:100%;width:100%;font-size:14px;padding:8px 12px}.foodintro{font-size:15px}
+ .maphead{margin-bottom:16px}.mapmodes{gap:4px}.mapmodes button{font-size:13px;padding:8px}.googlemap{height:300px}.mapcaption{font-size:13px}
+ .pinlist li{display:block;padding:8px 0}.pinselect{font-size:15px;width:100%}.pinselect small{font-size:13px}.pinlinks{font-size:13px;gap:12px}.pinlinks a{min-width:44px;min-height:44px}
+ .budget div{flex-wrap:wrap;font-size:14px}.sources ul{overflow-wrap:anywhere}.sources{font-size:14px}.sources p{font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+@media print{.daytabs,.viewbar,.stopactions,.mapstage,.daymap{display:none!important}.top{position:static}.detail{font-size:12px}.eventrow{break-inside:avoid}.event summary{padding:8px}.dayhero .meta{font-size:11px}}
+
+@media(max-width:360px){.daytabs{min-height:64px}.daytabs span{display:none}}
