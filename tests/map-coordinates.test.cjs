@@ -14,7 +14,8 @@ for(let day=0;day<5;day++)for(const foodOnly of [false,true])for(const optional 
  vm.runInContext(`fitDayMap('${extent}');spreadMapPins()`,c);
  const points=JSON.parse(vm.runInContext('JSON.stringify([...mapMarkers.values()].map(e=>({coord:e.marker.coords,expected:[e.point.location.lat,e.point.location.lng]})))',c));for(const p of points)assert.deepEqual(p.coord,p.expected);
  }}
- const clusters=JSON.parse(vm.runInContext('JSON.stringify(mapClusters.map(m=>m.coords))',c));const actual=JSON.parse(vm.runInContext('JSON.stringify(numberedPlaces(active).map(p=>[p.location.lat,p.location.lng]))',c));for(const pos of clusters)assert.ok(actual.some(p=>p[0]===pos[0]&&p[1]===pos[1]));
+ const count=vm.runInContext('mapMarkers.size',c);assert.equal(count,vm.runInContext('numberedPlaces(active).length',c));assert.ok(vm.runInContext('[...mapMarkers.values()].every(e=>dayMap.hasLayer(e.marker))',c));
+
 }
 assert.ok(!fs.readFileSync('numbered-map.js','utf8').includes('.setLatLng('));
-console.log('PASS 5 days × 4 filters × 4 zoom scales: every marker equals MAP_LOCATIONS, clusters anchored to real member coordinates; no coordinate mutation, no route polylines.');
+console.log('PASS 5 days × 4 filters × 4 zoom scales: every marker equals MAP_LOCATIONS, every stop remains an individual visible marker; no coordinate mutation, no route polylines.');

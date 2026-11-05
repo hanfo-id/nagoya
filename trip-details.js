@@ -83,3 +83,11 @@ function placeForEvent(e){
 function foodPreview(r){return r?.dish?`<p class="dishpreview"><span>${r.dish.kind}</span>추천 <b>${r.dish.order}</b></p>`:''}
 function menuDetails(r){return r?.dish?`<div class="menudetail"><h5>무엇을 먹을까</h5><p><strong>${r.dish.order}</strong><span lang="ja">${r.dish.jp}</span></p><p>${r.dish.explain}</p></div>`:''}
 function reviewLinks(r){if(!r)return '';const blogs=r.blogs||[];return `<details class="reviewnotes"><summary>한국어 후기 참고</summary>${blogs.map(b=>`<p>${link(b.url,b.name)}<small>${b.note}</small></p>`).join('')}${blogs.length?'':`<p>확인된 한국어 블로그 원문이 없어 검색 링크를 제공합니다. 검색 결과의 지점명·방문일을 확인하세요.</p>`}<p>${link('https://search.naver.com/search.naver?where=blog&query='+encodeURIComponent('나고야 '+r.name+' 후기'),'네이버 블로그 더 찾기')}</p><small>방문 경험 참고용입니다. 가격·운영·예약 조건은 위 공식·타베로그 안내를 우선하세요.</small></details>`}
+
+const SHOP_GUIDE={
+ parco:{day:1,event:'d2-shopping',name:'애니메이트 나고야 PARCO',jp:'アニメイト名古屋パルコ',query:'アニメイト名古屋パルコ',lat:35.1642,lng:136.907303,tag:'신작 굿즈·만화',hours:'10:00–20:00',address:'栄3丁目29-1 名古屋PARCO東館4階',url:'https://www.animate.co.jp/shop/sakae/',note:'라무치 식사 후 PARCO → 라시크 순으로 둘러보기. 11/13 확장 재개장 예정이므로 출발 전 층·운영 확인.',picks:['좋아하는 작품의 아크릴 스탠드·문구 찾기','만화·캐릭터 굿즈 코너 둘러보기'],minutes:'30–45분'},
+ mandarake:{day:3,event:'d4-osu',name:'만다라케 나고야점',jp:'まんだらけ 名古屋店',query:'まんだらけ 名古屋店 大須3丁目18-21',lat:35.159882,lng:136.904587,tag:'중고 피규어·만화',hours:'12:00–20:00',address:'大須3丁目18-21',url:'https://www.mandarake.co.jp/dir/ngy/',note:'12시 개점 후 오스 쇼핑 시간에 선택. 중고 상품은 상태·부속품·가격표 확인. 원하는 작품의 재고는 보장되지 않습니다.',picks:['절판 만화와 중고 피규어 구경','작품별 상품을 비교하고 상태 확인'],minutes:'30–45분'},
+ animate:{day:4,event:'d5-shopping',name:'애니메이트 나고야점',jp:'アニメイト名古屋',query:'アニメイト名古屋 椿町18-4',lat:35.168011,lng:136.880798,tag:'굿즈·서적·음반',hours:'10:00–20:00',address:'椿町18-4 椿太閤ビル',url:'https://www.animate.co.jp/shop/nagoya/',note:'나고야역 다이코도리 출구에서 도보 5분. 월요일 역 쇼핑 시간 중 선택하고, 12:20 호텔 짐 회수 이동을 지키세요.',picks:['좋아하는 작품의 굿즈·만화 찾기','음반·영상물 코너와 행사 공간 확인'],minutes:'30–45분'}
+};
+
+Object.entries(SHOP_GUIDE).forEach(([id,s])=>{PLACE['shop-'+id]={name:s.name,jp:s.jp,query:s.query}});
