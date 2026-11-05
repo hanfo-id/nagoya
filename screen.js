@@ -14,8 +14,8 @@ function routeDayHTML(i){
 }
 function selectedActions(p){
  const box=document.querySelector('#selected-actions');if(!box)return;
- selectedStopNumber=p.number;
- box.innerHTML=`<div><small>${p.number}번 <span>${esc(p.time)}</span></small><strong>${esc(p.name)}</strong></div><div class="selected-buttons">${actionLink(directions(p.query,'transit'),'길찾기','primary')}<button class="btn btn-secondary" data-place-detail="${p.eventId}" data-detail-number="${p.number}">상세</button></div>`;
+ selectedStopNumber=p.number;const slot=confirmedTime(baseEvents(active).find(e=>e.id===p.eventId))||p.time;
+ box.innerHTML=`<div><small>${p.number}번 <span>${esc(slot)}</span></small><strong>${esc(p.name)}</strong></div><div class="selected-buttons">${actionLink(directions(p.query,'transit'),'길찾기','primary')}<button class="btn btn-secondary" data-place-detail="${p.eventId}" data-detail-number="${p.number}">상세</button></div>`;
 }
 function renderHomeCompact(){
  document.body.classList.toggle('is-travelling',travelPhase()==='during'||state.options.fieldMode);
