@@ -13,17 +13,18 @@ function writeRoute(push=true){
  if(state.selectedEvent)url.searchParams.set('event',state.selectedEvent);else url.searchParams.delete('event');
  if(url.href!==location.href)history[push?'pushState':'replaceState']({},'',url);persist();
 }
-function chooseDay(index){if(index<0||index>4)return;active=index;state.selectionMode='manual';state.selectedEvent='';writeRoute();renderDay();renderHome()}
+function chooseDay(index){if(index<0||index>4)return;active=index;state.selectionMode='manual';state.selectedEvent='';writeRoute();renderDay();renderHome();markNav(view==='map'?'map':'plan')}
 function allEventsOpen(){const events=[...document.querySelectorAll('#daycontent .event')];return events.length>0&&events.every(d=>d.open)}
-function refreshExpandControl(){const button=document.querySelector('#expand');if(button)button.textContent=allEventsOpen()?'상세 모두 접기':'상세 모두 펼치기'}
+function refreshExpandControl(){document.querySelectorAll('#expand,[data-expand-all]').forEach(button=>button.textContent=allEventsOpen()?'상세 모두 접기':'상세 모두 펼치기')}
 function scrollTarget(selector,focus=true){const el=document.querySelector(selector);if(!el)return;el.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});if(focus){el.setAttribute('tabindex','-1');el.focus({preventScroll:true})}}
 function focusEvent(id){
  const day=Number(id[1])-1;if(day<0||day>4||!EVENT_IDS.has(id))return;
  if(id.startsWith('d4-zoo'))state.options.zoo=true;
  if(id==='d5-ramen-alternative')state.overrides.ramenMonday=true;
- active=day;state.selectionMode='manual';state.selectedEvent=id;if(!getVisibleEvents(state,day).some(e=>e.id===id)){state.filters.foodOnly=false;state.filters.optional=true}state.expanded[id]=true;view='schedule';writeRoute();renderDay();renderHome();scrollTarget('#event-'+id);
+ active=day;state.selectionMode='manual';state.selectedEvent=id;if(!getVisibleEvents(state,day).some(e=>e.id===id)){state.filters.foodOnly=false;state.filters.optional=true}state.expanded[id]=true;view='schedule';writeRoute();renderDay();renderHome();markNav('plan');scrollTarget('#event-'+id);
 }
-function openReservation(id){const card=$('#reservation-'+id);if(card){card.querySelector('.resedit').open=true;scrollTarget('#reservation-'+id);card.querySelector('select')?.focus({preventScroll:true})}announce('예약 상태는 직접 기록하며 실제 예약을 실행하지 않습니다.')}
+function markNav(name){document.querySelectorAll('.top nav [data-nav]').forEach(b=>{if(b.dataset.nav===name)b.setAttribute('aria-current','location');else b.removeAttribute('aria-current')})}
+function openReservation(id){markNav('reservations');const card=$('#reservation-'+id);if(card){card.querySelector('.resedit').open=true;scrollTarget('#reservation-'+id);card.querySelector('select')?.focus({preventScroll:true})}announce('예약 상태는 직접 기록하며 실제 예약을 실행하지 않습니다.')}
 function dialogConfirm(message,callback){
  const dialog=$('#confirmdialog');$('#confirmtext').textContent=message;dialog.returnValue='cancel';dialog.showModal();
  const finish=e=>{dialog.removeEventListener('close',finish);if(dialog.returnValue==='confirm')callback()};dialog.addEventListener('close',finish);
@@ -57,9 +58,10 @@ function initUx(){
  $('#daytabs').addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?4:(active+(e.key==='ArrowRight'?1:4))%5;chooseDay(next);$('#tab'+next).focus()}});
  document.addEventListener('click',e=>{
   if(e.target.closest('[data-fieldmode]')){state.options.fieldMode=!state.options.fieldMode;persist();renderHome();scrollTarget('#todaypanel')}
-  const mode=e.target.closest('[data-view]');if(mode){view=mode.dataset.view;writeRoute();renderDay();$(`.viewbar [data-view="${view}"]`)?.focus({preventScroll:true});if(view==='schedule'&&state.selectedEvent)scrollTarget('#event-'+state.selectedEvent);if(view==='map'&&state.selectedEvent)showMapSelection({eventId:state.selectedEvent})}
+  const nav=e.target.closest('[data-nav]');if(nav){markNav(nav.dataset.nav);if(nav.dataset.nav==='plan'){view='schedule';writeRoute();renderDay()}}
+  const mode=e.target.closest('[data-view]');if(mode){view=mode.dataset.view;markNav(view==='map'?'map':'plan');writeRoute();renderDay();$(`.viewbar [data-view="${view}"]`)?.focus({preventScroll:true});if(view==='schedule'&&state.selectedEvent)scrollTarget('#event-'+state.selectedEvent);if(view==='map'&&state.selectedEvent)showMapSelection({eventId:state.selectedEvent})}
   const today=e.target.closest('[data-today]');if(today){const n=dayIndexForDate(japanClock().date);if(n>=0){active=n;state.selectionMode='auto';state.selectedEvent='';view='schedule';writeRoute();renderDay();renderHome()}scrollTarget(n>=0?'#todaypanel':'#plan')}
-  if(e.target.closest('[data-home-map]')){view='map';writeRoute();renderDay();scrollTarget('#daycontent')}
+  if(e.target.closest('[data-home-map]')){view='map';markNav('map');writeRoute();renderDay();scrollTarget('#daycontent')}
   const focus=e.target.closest('[data-focus-event]');if(focus)focusEvent(focus.dataset.focusEvent);
   const map=e.target.closest('[data-event-map]');if(map){state.selectedEvent=map.dataset.eventMap;view='map';writeRoute();renderDay();showMapSelection({eventId:state.selectedEvent});scrollTarget('#selectedmapplace')}
   const pin=e.target.closest('[data-pin]');if(pin)showMapSelection({number:Number(pin.dataset.pin)});
@@ -73,7 +75,7 @@ function initUx(){
   if(e.target.closest('#exportbackup'))exportBackup();
   if(e.target.closest('#importbackup'))$('#backupfile').click();
   if(e.target.closest('#resetdata'))dialogConfirm('이 기기의 모든 여행 기록을 초기화할까요? 먼저 JSON 백업을 권장합니다. 직전 변경 되돌리기로 복구할 수 있습니다.',()=>{remember();state=freshState();active=dayIndexForDate(japanClock().date);if(active<0)active=0;view='schedule';writeRoute();renderAll();announce(persist()?'여행 기록을 초기화했습니다.':storageMessage)});
-  if(e.target.closest('#expand')){const open=!allEventsOpen();document.querySelectorAll('#daycontent .event').forEach(d=>{d.open=open;state.expanded[d.dataset.eventKey]=open});persist();refreshExpandControl()}
+  if(e.target.closest('#expand,[data-expand-all]')){const open=!allEventsOpen();document.querySelectorAll('#daycontent .event').forEach(d=>{d.open=open;state.expanded[d.dataset.eventKey]=open});persist();refreshExpandControl()}
   if(e.target.closest('#print'))window.print();
   if(e.target.closest('#applyupdate')){if(window.waitingWorker){navigator.serviceWorker.addEventListener('controllerchange',()=>location.reload(),{once:true});window.waitingWorker.postMessage({type:'SKIP_WAITING'})}else location.reload()}
  });
@@ -94,8 +96,10 @@ function initUx(){
   if(t.matches('[data-res-note]'))changeReservation(t.dataset.resNote,'note',t.value);
  });
  document.addEventListener('toggle',e=>{if(!printing&&e.target.matches?.('#daycontent .event')&&e.target.isConnected){const key=e.target.dataset.eventKey;state.expanded[key]=e.target.open;const hint=e.target.querySelector('.detailhint');if(hint)hint.textContent=e.target.open?'상세 접기':'상세 보기';persist();refreshExpandControl()}},true);
- window.addEventListener('popstate',()=>{({active,view}=readRoute());state.selectedDay=active;state.selectedView=view;const id=new URL(location.href).searchParams.get('event');state.selectedEvent=EVENT_IDS.has(id)?id:'';persist();renderDay();renderHome()});
+ window.addEventListener('popstate',()=>{({active,view}=readRoute());state.selectedDay=active;state.selectedView=view;const id=new URL(location.href).searchParams.get('event');state.selectedEvent=EVENT_IDS.has(id)?id:'';persist();renderDay();renderHome();markNav(location.hash==='#reservations'?'reservations':location.hash==='#prepare'?'prepare':view==='map'?'map':'plan')});
  window.addEventListener('beforeprint',beforePrint);window.addEventListener('afterprint',afterPrint);
+ window.addEventListener('hashchange',()=>markNav(location.hash==='#reservations'?'reservations':location.hash==='#prepare'?'prepare':'plan'));
+ markNav(location.hash==='#reservations'?'reservations':location.hash==='#prepare'?'prepare':view==='map'?'map':'plan');
  const network=()=>{$('#networkstatus').textContent=navigator.onLine?'외부 지도·예약 페이지는 인터넷 연결이 필요합니다.':'오프라인입니다. 저장된 일정·기록은 볼 수 있으며, 외부 지도·예약은 연결 후 이용하세요.'};network();window.addEventListener('online',network);window.addEventListener('offline',network);
  if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').then(reg=>{const offer=()=>{window.waitingWorker=reg.waiting;$('#updateavailable').hidden=false};if(reg.waiting)offer();reg.addEventListener('updatefound',()=>reg.installing?.addEventListener('statechange',()=>{if(reg.waiting&&navigator.serviceWorker.controller)offer()}));navigator.serviceWorker.ready.then(()=>{$('#offlinestatus').textContent='핵심 일정의 오프라인 저장이 준비되었습니다. 지도 타일과 외부 페이지는 제외됩니다.'})}).catch(()=>{$('#offlinestatus').textContent='오프라인 저장을 사용할 수 없습니다. 전체 일정 문서를 미리 저장하거나 인쇄하세요.'})}
  let last=japanClock().date+' '+japanClock().time;setInterval(()=>{const c=japanClock(),key=c.date+' '+c.time;if(key===last)return;last=key;const n=dayIndexForDate(c.date);if(state.selectionMode==='auto'&&n>=0&&active!==n&&!readRoute().explicit){active=n;state.selectedDay=n;renderDay();persist()}renderHome()},30000);

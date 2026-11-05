@@ -6,19 +6,13 @@ h1,h2,h3,h4{overflow-wrap:break-word;min-width:0;text-wrap:balance}
 h1{color:var(--ink)}
 .hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 .eyebrow{font-size:13px;letter-spacing:0;font-weight:500;color:var(--muted)}
-.brand,.brand span,.art-label,.tripdate,.tripdate small,.facts span,footer span,.daytabs small,.tag{letter-spacing:0}
+.brand,.brand span,.art-label,.tripdate,.tripdate small,.facts span,footer span,.tag{letter-spacing:0}
 .notice{border-left:0;border:1px solid var(--line)}
-.top{padding-block:16px}
-.top nav{gap:24px}
-.top nav a{padding-block:8px}
-.top nav button{padding:4px 12px;min-height:32px}
-.daytabs{gap:0;border-bottom:1px solid var(--line)}
-.daytabs button{border:0;border-bottom:2px solid var(--clear);border-radius:0;background:var(--clear);padding:12px 8px;color:var(--muted)}
-.daytabs button[aria-selected=true]{color:var(--ink);background:var(--clear);border-color:var(--ink)}
-.daytabs b{font-size:21px;font-variant-numeric:tabular-nums;line-height:1.4}
-.daytabs small{font-size:11px}.daytabs span{font-size:12px}
-.toolbar{gap:16px;padding:12px 0}.toolbar button{border:0;padding:4px 8px;font-size:12px;min-height:32px;text-decoration:underline;text-underline-offset:4px}
-.event summary{padding:16px 20px}.event h4{font-size:18px;margin:4px 0;line-height:1.6}.event summary:after{font-size:20px}
+.toolbar{gap:16px;padding:12px 0}
+.toolbar button{border:0;padding:4px 8px;font-size:12px;min-height:32px;text-decoration:underline;text-underline-offset:4px}
+.event summary{padding:16px 20px}
+.event h4{font-size:18px;margin:4px 0;line-height:1.6}
+.event summary:after{font-size:20px}
 .placename{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
 .event .sub{font-size:13px;line-height:1.7}
 .dishpreview{font-size:13px;line-height:1.7;margin:8px 0!important;color:var(--ink)}
@@ -26,7 +20,7 @@ h1{color:var(--ink)}
 .dishpreview b{font-weight:500}
 .links{gap:8px 16px;align-items:center;margin-top:12px;min-width:0}
 .links a,.book{background:var(--clear);border:0;border-bottom:1px solid var(--line);border-radius:0;padding:4px 0;font-size:12px;line-height:1.7;min-height:30px}
-.links a:hover,.pinlinks a:hover{border-color:var(--ink);color:var(--accent)}
+.links a:hover{border-color:var(--ink);color:var(--accent)}
 .links a:active,button:active{transform:translateY(1px)}
 button:disabled,[aria-disabled=true]{opacity:.5;cursor:not-allowed}
 button[aria-busy=true]{cursor:progress}
@@ -38,7 +32,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .reviewnotes{margin-top:16px;border-top:1px solid var(--line);padding-top:8px;font-size:12px}
 .reviewnotes summary{display:list-item;padding:4px 0;cursor:pointer;color:var(--ink);font-size:12px}
 .reviewnotes summary:after{display:none}
-.reviewnotes p{font-size:12px;margin:8px 0!important}.reviewnotes small{display:block;color:var(--muted);font-size:11px;line-height:1.7;margin-top:4px}
+.reviewnotes p{font-size:12px;margin:8px 0!important}
+.reviewnotes small{display:block;color:var(--muted);font-size:11px;line-height:1.7;margin-top:4px}
 .daymap{margin:0 0 32px;border-top:1px solid var(--ink);padding-top:16px}
 .maphead{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}
 .maphead h4{font-size:16px;margin:0;font-weight:600}
@@ -47,16 +42,36 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .mapmodes button[aria-pressed=true]{color:var(--ink);border-color:var(--ink)}
 .googlemap{width:100%;height:360px;border:1px solid var(--map-line);border-radius:4px;background:var(--map-surface);display:block}
 .mapcaption{font-size:12px;line-height:1.7;color:var(--muted);margin:8px 0 16px;max-width:90ch}
-.pinlist{padding:0;margin:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px}
-.pinlist li{border-bottom:1px solid var(--line);padding:8px 0;display:flex;justify-content:space-between;gap:8px;min-width:0;align-items:center}
-.pinselect{display:flex;align-items:center;gap:8px;text-align:left;padding:4px 0;border:0;background:var(--clear);color:var(--ink);font-size:13px;line-height:1.6;min-width:0;min-height:44px}
-.pinselect:hover>span:last-child{text-decoration:underline;text-underline-offset:3px}
-.pinselect[aria-pressed=true]{font-weight:600;color:var(--accent)}
 .pinindex{width:24px;height:28px;border:1px solid var(--ink);border-radius:12px 12px 12px 2px;display:grid;place-items:center;flex-shrink:0;font-size:12px;font-variant-numeric:tabular-nums}
-.pinselect small{font-size:10px;display:block;color:var(--muted);font-weight:400}
-.pinlinks{display:flex;gap:8px;flex-shrink:0;font-size:11px;white-space:nowrap}
-.pinlinks a{padding:8px 0;text-decoration:none;border-bottom:1px solid var(--line)}
-.print-map{font-size:12px}.restaurant{min-width:0}.restaurant .jp{overflow-wrap:anywhere}
-@media(max-width:760px){.top nav{gap:12px}.top nav a{font-size:11px}.hero{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}.daytabs button{padding:8px 4px}.daytabs b{font-size:19px}.daytabs span{font-size:10px}.dayhero{margin:24px 0 16px}.dayhero h3{font-size:22px}.maphead{display:block}.mapmodes{margin-top:8px}.googlemap{height:300px}.pinlist{grid-template-columns:minmax(0,1fr)}.pinselect{font-size:12px}.pinlinks{gap:12px;font-size:11px}.pinselect small{font-size:10px}.stop{grid-template-columns:52px minmax(0,1fr)}.event summary{padding:12px}.event h4{font-size:16px}.placename{font-size:11px}.dishpreview{font-size:12px}.links{gap:4px 12px}.links a{font-size:11px}.toolbar{gap:8px 12px}.mapcaption{font-size:11px}.mapmodes button{padding:4px 8px}.notice{padding:16px}.menudetail p{font-size:12px}.daymap{margin-bottom:24px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
-@media print{.daymap{display:none}.pinlist{display:none}.reviewnotes{break-inside:avoid}.placename{font-size:10px}.links a{font-size:10px}.menudetail{margin-top:8px}}
+.print-map{font-size:12px}
+.restaurant{min-width:0}
+.restaurant .jp{overflow-wrap:anywhere}
+@media (max-width:760px){.hero{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+.dayhero{margin:24px 0 16px}
+.dayhero h3{font-size:22px}
+.maphead{display:block}
+.mapmodes{margin-top:8px}
+.googlemap{height:300px}
+.stop{grid-template-columns:52px minmax(0,1fr)}
+.event summary{padding:12px}
+.event h4{font-size:16px}
+.placename{font-size:11px}
+.dishpreview{font-size:12px}
+.links{gap:4px 12px}
+.links a{font-size:11px}
+.toolbar{gap:8px 12px}
+.mapcaption{font-size:11px}
+.mapmodes button{padding:4px 8px}
+.notice{padding:16px}
+.menudetail p{font-size:12px}
+.daymap{margin-bottom:24px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
+*,*:before,*:after{animation:none!important;transition:none!important}
+}
+@media  print{.daymap{display:none}
+.reviewnotes{break-inside:avoid}
+.placename{font-size:10px}
+.links a{font-size:10px}
+.menudetail{margin-top:8px}
+}
