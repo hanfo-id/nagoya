@@ -5,7 +5,7 @@ html,body{overflow-x:clip}
 main{display:flex;flex-direction:column;min-width:0}
 main>section{min-width:0}
 section[id],article[id],.eventrow{scroll-margin-top:calc(var(--header-height) + var(--date-height) + 16px)}
-.todaypanel{margin:32px 0 16px;border-top:2px solid var(--ink);padding-top:24px}
+
 .todayheading{display:flex;justify-content:space-between;align-items:start;gap:16px}
 .todayheading h2{font-family:var(--font-display);font-size:32px;line-height:1.5;margin:0 0 16px;font-weight:500}
 .todaydate{font-size:14px;color:var(--muted);margin:0 0 8px}
@@ -28,11 +28,11 @@ section[id],article[id],.eventrow{scroll-margin-top:calc(var(--header-height) + 
 .is-travelling .todaypanel{order:-2;margin-top:16px}
 .is-travelling .reservation-summary{order:-1}
 .dayprogress{font-size:14px;margin:12px 0 20px}
-.dayhero h3{font-size:26px}
-.dayhero .eyebrow{margin-bottom:8px}
-.toolbar{gap:4px 16px}
-.toolbar label{font-size:14px}
-.toolbar>button{margin-left:auto}
+
+
+
+
+
 .travelstop{padding-bottom:20px}
 .travelstop .event summary{padding:16px 20px}
 .travelstop .event summary:after{display:none}
@@ -92,7 +92,7 @@ section[id],article[id],.eventrow{scroll-margin-top:calc(var(--header-height) + 
 .placepopup button{font-size:14px}
 .numberpin.is-skipped>span{border-style:dashed;background:var(--paper);color:var(--muted)}
 .is-skipped .pinindex{border-style:dashed}
-.maplegend{font-size:13px}
+
 .numberedmap{height:440px}
 .backupactions{align-items:stretch}
 .backupactions button{flex:0 1 auto}
@@ -105,11 +105,11 @@ dialog p{font-size:15px}
 .dialogactions{justify-content:flex-end}
 .dialogactions button:last-child{background:var(--ink);color:var(--white)}
 .printing #printcontent{display:block!important}
-@media (max-width:760px){.brand{font-size:14px}
+@media  (max-width:760px){.brand{font-size:14px}
 .brand span{display:none}
 main{padding-inline:max(16px,env(safe-area-inset-left))}
 .hero{margin-top:8px}
-.todaypanel{margin-top:24px;padding-top:16px}
+
 .todayheading h2{font-size:25px}
 .todayheading{gap:8px}
 .todayheading .quietbutton{font-size:13px}
@@ -121,15 +121,15 @@ main{padding-inline:max(16px,env(safe-area-inset-left))}
 .homeactions>*{font-size:13px!important}
 .homeprogress>span{display:block;margin-left:0}
 .todaydate{font-size:13px}
-.toolbar{gap:0 12px}
-.toolbar label{font-size:13px}
-.toolbar>button{margin-left:0}
-.dayhero h3{font-size:23px}
+
+
+
+
 .dayprogress>span{display:block;margin-left:0}
 .dayprogress{font-size:14px}
-.dayhero{margin-top:16px}
-.dayhero .meta{margin-top:8px}
-.dayhero p{font-size:14px}
+
+
+
 .travelstop .event summary{padding:16px}
 .event-status-label{margin-left:0;flex:1 1 140px;justify-content:flex-end}
 .event-status-label select{max-width:120px;width:auto}
@@ -148,8 +148,8 @@ main{padding-inline:max(16px,env(safe-area-inset-left))}
 .section{padding-top:40px}
 .numberedmap{height:360px}
 .maphead h4{font-size:18px}
-.maplegend{display:block}
-.maplegend>span{min-height:32px;font-size:12px}
+
+
 .mapcaption{font-size:13px}
 .backupactions button{flex:1 1 140px}
 .sectionhead p:not(.eyebrow){font-size:14px}
@@ -157,15 +157,15 @@ main{padding-inline:max(16px,env(safe-area-inset-left))}
 .budget dd{overflow-wrap:anywhere}
 .sources ul{columns:1}
 }
-@media (max-width:360px){.todayheading h2{font-size:23px}
+@media  (max-width:360px){.todayheading h2{font-size:23px}
 .event-status-label{flex-basis:130px}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
+@media  (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
 *,*:before,*:after{animation:none!important;transition:none!important}
 }
-@media  print{body>header,main,#appstatus,footer,dialog{display:none!important}
+@media   print{body>header,main,#appstatus,footer,dialog{display:none!important}
 #printcontent{display:block!important;max-width:none;padding:0 16px}
-.dayhero,.dayblock{display:block!important}
+.dayblock{display:block!important}
 .fromplace,.detailhint,.journeydetail,.daynote,.homeactions{display:none!important}
 .travelstop{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;break-inside:avoid}
 .eventrow{border:0}
@@ -176,12 +176,12 @@ main{padding-inline:max(16px,env(safe-area-inset-left))}
 .actualtime{font-size:11px}
 .dayblock{break-before:page}
 .dayblock:first-child{break-before:auto}
-.dayhero h3{font-size:22px}
-.dayhero p,.dayprogress{font-size:11px}
+
+.dayprogress{font-size:11px}
 .event h4{font-size:14px}
 .detail>p{font-size:11px}
 }
-@media (max-width:760px){.fieldtoggle{margin-bottom:12px}
+@media  (max-width:760px){.fieldtoggle{margin-bottom:12px}
 }
 .todayheading>div{min-width:0}
 .todayheading h2{word-break:keep-all;text-wrap:initial}

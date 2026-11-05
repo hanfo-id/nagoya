@@ -8,6 +8,7 @@ function readRoute(s=state,href=location.href,clock=japanClock()){
 function writeRoute(push=true){
  state.selectedDay=active;state.selectedView=view;
  const url=new URL(location.href);
+ if(typeof screenPage!=='undefined')url.searchParams.set('page',screenPage);
  if(state.selectionMode==='manual')url.searchParams.set('day',days[active].date.replace('.','-'));else url.searchParams.delete('day');
  url.searchParams.set('view',view);
  if(state.selectedEvent)url.searchParams.set('event',state.selectedEvent);else url.searchParams.delete('event');
@@ -21,10 +22,12 @@ function focusEvent(id){
  const day=Number(id[1])-1;if(day<0||day>4||!EVENT_IDS.has(id))return;
  if(id.startsWith('d4-zoo'))state.options.zoo=true;
  if(id==='d5-ramen-alternative')state.overrides.ramenMonday=true;
- active=day;state.selectionMode='manual';state.selectedEvent=id;if(!getVisibleEvents(state,day).some(e=>e.id===id)){state.filters.foodOnly=false;state.filters.optional=true}state.expanded[id]=true;view='schedule';writeRoute();renderDay();renderHome();markNav('plan');scrollTarget('#event-'+id);
+ active=day;state.selectionMode='manual';state.selectedEvent=id;
+ if(!getVisibleEvents(state,day).some(e=>e.id===id)){state.filters.foodOnly=false;state.filters.optional=true}
+ openScreen('plan');showMapSelection({eventId:id});openPlace(id);
 }
 function markNav(name){document.querySelectorAll('.top nav [data-nav]').forEach(b=>{if(b.dataset.nav===name)b.setAttribute('aria-current','location');else b.removeAttribute('aria-current')})}
-function openReservation(id){markNav('reservations');const card=$('#reservation-'+id);if(card){card.querySelector('.resedit').open=true;scrollTarget('#reservation-'+id);card.querySelector('select')?.focus({preventScroll:true})}announce('예약 상태는 직접 기록하며 실제 예약을 실행하지 않습니다.')}
+function openReservation(id){if(!RESERVATIONS.some(r=>r.id===id))return;$('#place-dialog')?.close();openScreen('reservations');const card=$('#reservation-'+id);if(card){card.querySelector('.resedit').open=true;scrollTarget('#reservation-'+id);card.querySelector('select')?.focus({preventScroll:true})}announce('예약 상태는 직접 기록하며 실제 예약을 실행하지 않습니다.')}
 function dialogConfirm(message,callback){
  const dialog=$('#confirmdialog');$('#confirmtext').textContent=message;dialog.returnValue='cancel';dialog.showModal();
  const finish=e=>{dialog.removeEventListener('close',finish);if(dialog.returnValue==='confirm')callback()};dialog.addEventListener('close',finish);
@@ -60,14 +63,14 @@ function initUx(){
   if(e.target.closest('[data-fieldmode]')){state.options.fieldMode=!state.options.fieldMode;persist();renderHome();scrollTarget('#todaypanel')}
   const nav=e.target.closest('[data-nav]');if(nav){markNav(nav.dataset.nav);if(nav.dataset.nav==='plan'){view='schedule';writeRoute();renderDay()}}
   const mode=e.target.closest('[data-view]');if(mode){view=mode.dataset.view;markNav(view==='map'?'map':'plan');writeRoute();renderDay();$(`.viewbar [data-view="${view}"]`)?.focus({preventScroll:true});if(view==='schedule'&&state.selectedEvent)scrollTarget('#event-'+state.selectedEvent);if(view==='map'&&state.selectedEvent)showMapSelection({eventId:state.selectedEvent})}
-  const today=e.target.closest('[data-today]');if(today){const n=dayIndexForDate(japanClock().date);if(n>=0){active=n;state.selectionMode='auto';state.selectedEvent='';view='schedule';writeRoute();renderDay();renderHome()}scrollTarget(n>=0?'#todaypanel':'#plan')}
-  if(e.target.closest('[data-home-map]')){view='map';markNav('map');writeRoute();renderDay();scrollTarget('#daycontent')}
+  const today=e.target.closest('[data-today]');if(today){const n=dayIndexForDate(japanClock().date);if(n>=0){active=n;state.selectionMode='auto';state.selectedEvent='';view='schedule';writeRoute();renderDay();renderHome()}openScreen('home')}
+  if(e.target.closest('[data-home-map]')){view='map';openScreen('plan');markNav('map');writeRoute();renderDay();scrollTarget('#daycontent')}
   const focus=e.target.closest('[data-focus-event]');if(focus)focusEvent(focus.dataset.focusEvent);
-  const map=e.target.closest('[data-event-map]');if(map){state.selectedEvent=map.dataset.eventMap;view='map';writeRoute();renderDay();showMapSelection({eventId:state.selectedEvent});scrollTarget('#selectedmapplace')}
+  const map=e.target.closest('[data-event-map]');if(map){state.selectedEvent=map.dataset.eventMap;view='map';openScreen('plan');writeRoute();renderDay();showMapSelection({eventId:state.selectedEvent});scrollTarget('#selectedmapplace')}
   const pin=e.target.closest('[data-pin]');if(pin)showMapSelection({number:Number(pin.dataset.pin)});
   if(e.target.closest('[data-map-retry]'))try{initDayMap()}catch{announce('지도를 불러오지 못했습니다. 장소별 Google Maps 링크를 이용하세요.')}
   const reservation=e.target.closest('[data-res-jump]');if(reservation)openReservation(reservation.dataset.resJump);
-  const food=e.target.closest('[data-food-jump]');if(food){state.filters.search='';state.filters.reserve='all';$('#search').value='';$('#reservefilter').value='all';persist();renderFood();scrollTarget('#restaurant-'+food.dataset.foodJump)}
+  const food=e.target.closest('[data-food-jump]');if(food){$('#place-dialog')?.close();openScreen('food');state.filters.search='';state.filters.reserve='all';$('#search').value='';$('#reservefilter').value='all';persist();renderFood();scrollTarget('#restaurant-'+food.dataset.foodJump)}
   const reset=e.target.closest('[data-reset-res]');if(reset)dialogConfirm('이 예약의 수동 기록만 초기화할까요? 외부 예약은 취소되지 않습니다.',()=>{remember();delete state.reservations[reset.dataset.resetRes];commit('예약 기록을 초기화했습니다.')});
   const adjust=e.target.closest('[data-adjust]');if(adjust){remember();if(adjust.dataset.adjust==='delay'){for(const id of ['d1-ramen','d1-night-park','d1-night-oasis','d1-night-shop'])state.events[id]={status:'skipped',updatedAt:new Date().toISOString()};state.selectedEvent='d1-checkin'}else{state.filters.optional=false;state.options.zoo=false}commit(adjust.dataset.adjust==='delay'?'첫날 라멘·밤 일정을 건너뜀으로 기록했습니다. 체크인 후 월요일 대체안을 확인하세요.':'선택 방문을 제외했습니다. 원할 때 다시 포함할 수 있습니다.');if(adjust.dataset.adjust==='delay')focusEvent('d1-checkin')}
   const restore=e.target.closest('[data-restore-day]');if(restore)dialogConfirm('이 날짜의 진행·건너뜀 기록을 지우고 원래 계획으로 되돌릴까요? 예약·메모는 유지합니다.',()=>{remember();const i=Number(restore.dataset.restoreDay);for(const id of EVENT_IDS)if(id.startsWith('d'+(i+1)+'-'))delete state.events[id];if(i===4)state.overrides.ramenMonday=false;if(i===3)state.options.zoo=false;state.filters.optional=true;commit('선택 날짜의 원래 계획을 복원했습니다.')});

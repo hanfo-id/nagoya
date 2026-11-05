@@ -38,3 +38,12 @@ const blocked=context({},true);assert.equal(vm.runInContext('persist()',blocked)
 const unchanged=json('({days,restaurants,zooEvents})');for(const d of unchanged.days)for(const e of d.events){delete e.id;delete e.placeId}for(const e of unchanged.zooEvents){delete e.id;delete e.placeId}assert.deepEqual(unchanged,facts);
 const url=run("routeBetween(PLACE.hotel,PLACE.mutsumi,'transit')"),params=new URL(url).searchParams;assert.equal(params.get('origin'),run('PLACE.hotel.query'));assert.equal(params.get('destination'),run('PLACE.mutsumi.query'));assert.equal(params.get('travelmode'),'transit');
 console.log('PASS: Tokyo boundaries; URL/manual/auto precedence; 80 shared-filter combinations; stable IDs; unchanged travel facts; alternatives; explicit progress; legacy migration; backup validation; corrupted/blocked storage; origin/destination links.');
+
+// Route revision retains IDs and fixed meal bookings while grouping city visits.
+run('state=freshState()');
+assert.deepEqual(json('baseEvents(3).map(e=>e.id)'),['d4-morning','d4-osu-transfer','d4-osu','d4-osu-lunch','d4-market-transfer','d4-old-town','d4-sushi','d4-return']);
+for(let i=0;i<5;i++)assert.ok(json(`baseEvents(${i}).map(e=>e.time)`).every((t,j,a)=>j===0||a[j-1]<=t),'chronological day '+i);
+assert.equal(run("baseEvents(3).find(e=>e.id==='d4-sushi').time"),'17:30');
+assert.equal(run("baseEvents(1).find(e=>e.id==='d2-rest').placeId"),'lachic');
+assert.equal(run("reservationFor(baseEvents(0).find(e=>e.id==='d1-checkin'))"),undefined);
+console.log('PASS revised city route order, chronological times, unchanged sushi time and hotel without reservation target.');

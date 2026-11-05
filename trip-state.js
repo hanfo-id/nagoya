@@ -81,6 +81,12 @@ function dayIndexForDate(date){return days.findIndex((_,i)=>isoDay(i)===date)}
 function baseEvents(i,s=state){
  let list=days[i].events.map(e=>({...e}));
  if(i===3&&s.options.zoo)list=[{...list[0],time:'07:30',end:'08:10'},...zooEvents.map(e=>({...e})),{...list[4],time:'14:00'},...list.slice(5)];
+ if(i===1)list=list.map(e=>e.id==='d2-park'?{...e,title:'히사야오도리 공원',desc:'호텔에서 남쪽으로 공원을 걸어 라무치 방향으로 이동합니다.',steps:['공원과 타워 외관을 보고 사카에 방향으로 이동.','호텔로 돌아가지 않고 지하상가 또는 근처 카페에서 쉬기.','예약된 점심 시각을 우선합니다.']}:e.id==='d2-rest'?{...e,placeId:'lachic',title:'사카에 카페 휴식',desc:'라시크·사카에 남쪽에서 쉬고 가까운 무츠미로 이동합니다.',steps:['라시크 주변 영업 중인 카페에서 휴식.','무츠미 예약과 본점 주소 확인.','17시경 무츠미 방향으로 출발. 호텔 휴식이 필요하면 선택적으로 복귀.']}:e);
+ if(i===1){const by=Object.fromEntries(list.map(e=>[e.id,e]));list=[by['d2-morning'],{...by['d2-park'],end:'09:15'},{...by['d2-oasis'],time:'09:20',end:'10:15'},by['d2-lunch'],{...by['d2-shopping'],end:'15:15'},by['d2-rest'],by['d2-wings'],by['d2-tower'],by['d2-pack']]}
+ if(i===3&&!s.options.zoo){
+  const by=Object.fromEntries(list.map(e=>[e.id,e]));
+  list=[by['d4-morning'],{...by['d4-osu-transfer'],time:'09:15',end:'09:45',title:'오스칸논으로 이동',desc:'히사야오도리에서 사카에·가미마에즈를 거쳐 오스 방면. 당일 지도에서 경로 확인.',steps:['오스칸논 주변에서 시작해 상점가로 걷기.','오전에는 아직 열지 않은 점포가 있어 사찰과 거리 풍경부터 관람.']},{...by['d4-osu'],time:'09:45',end:'12:00',title:'오스칸논·오스상점가',steps:['오스칸논 → 니오몬도리 → 반쇼지 주변 순서.','관심 있는 소품·전자제품 매장을 고르고 12시 개점하는 만다라케는 점심 뒤 선택.']},{...by['d4-osu-lunch'],time:'12:00',end:'13:15'}, {...by['d4-market-transfer'],time:'13:15',end:'14:00',placeId:'kokusai',title:'국제센터·시케미치로 이동',desc:'오스에서 국제센터 방면으로 한 번 이동한 뒤 골목 산책과 저녁을 나고야역 쪽에서 이어갑니다.',steps:['지하철 환승 또는 버스 경로를 당일 확인.','짐을 두러 호텔에 왕복하지 않고 시케미치·엔도지에서 휴식.']},{...by['d4-old-town'],time:'14:00',end:'16:45',desc:'오스 → 시케미치·엔도지 → 야나기바시 순으로 이동합니다.',steps:['시케미치 외관과 엔도지 상점가 구경.','카페 휴식을 포함하고 16:45경 야나기바시 방향으로 출발.','개인 주택 촬영과 점포 영업 방해에 주의.']},by['d4-sushi'],by['d4-return']];
+ }
  if(i===4&&s.overrides.ramenMonday)list=list.map(e=>e.id==='d5-shopping'?{...days[0].events[2],id:'d5-ramen-alternative',time:'11:00',end:'12:00',title:'첫날 대신 / 시시마루 라멘',desc:'기존 10:30–12:20 기념품 자유시간을 대체한 수동 선택입니다. 13:15 짐 회수 원칙을 유지하세요.'}:e);
  return list.map(e=>({...e,optional:['d1-night-park','d1-night-oasis','d1-night-shop','d3-extra','d4-old-town','d4-zoo-transfer','d4-zoo-visit','d4-zoo-lunch','d4-return'].includes(e.id)}));
 }
@@ -114,13 +120,13 @@ function routeBetween(from,to,mode='transit'){return directions(to.query,mode,fr
 function transitHint(e,prev){
  if(['d3-entrance','d3-warehouse','d3-cafe','d3-valley','d3-extra'].includes(e.id))return '공원 안 도보 / 구역별 이동·대기 확인';
  if(e.id==='d1-checkin')return '사쿠라도리선 → 히사야오도리 / 짐 회수 포함';
- if(['d4-old-town','d5-keshiki'].includes(e.id))return '사쿠라도리선 국제센터 → 도보';
+ if(['d5-keshiki'].includes(e.id))return '사쿠라도리선 국제센터 → 도보';
  if(e.id==='d4-zoo-transfer')return '히가시야마선 → 히가시야마코엔 / 정문 도보';
  if(e.id==='d4-zoo-lunch')return '히가시야마선 ↔ 메이조선 / 환승 확인';
  if(e.id==='d3-outbound'||e.id==='d3-return')return '지하철 ↔ 리니모 / 후지가오카 환승';
  if(['d1-train-in','d5-airport-transfer'].includes(e.id))return '메이테츠·지하철 / 환승 확인';
- if(e.id==='d4-osu-transfer')return '지하철 / 마루노우치 환승';
- if(e.id==='d4-market-transfer')return '지하철 / 후시미 환승';
+ if(e.id==='d4-osu-transfer')return '지하철 → 가미마에즈 / 오스 방면';
+ if(e.id==='d4-market-transfer')return state.options.zoo?'오스 → 야나기바시':'오스 → 국제센터 / 당일 교통편 확인';
  if(e.kind==='이동')return '대중교통·도보 / 상세 이동 안내 확인';
  if(prev?.placeId===e.placeId)return '같은 장소에서 이어서';
  return '도보·대중교통 중 현장 선택';

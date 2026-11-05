@@ -8,8 +8,8 @@ h1{color:var(--ink)}
 .eyebrow{font-size:13px;letter-spacing:0;font-weight:500;color:var(--muted)}
 .brand,.brand span,.art-label,.tripdate,.tripdate small,.facts span,footer span,.tag{letter-spacing:0}
 .notice{border-left:0;border:1px solid var(--line)}
-.toolbar{gap:16px;padding:12px 0}
-.toolbar button{border:0;padding:4px 8px;font-size:12px;min-height:32px;text-decoration:underline;text-underline-offset:4px}
+
+
 .event summary{padding:16px 20px}
 .event h4{font-size:18px;margin:4px 0;line-height:1.6}
 .event summary:after{font-size:20px}
@@ -46,9 +46,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .print-map{font-size:12px}
 .restaurant{min-width:0}
 .restaurant .jp{overflow-wrap:anywhere}
-@media (max-width:760px){.hero{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
-.dayhero{margin:24px 0 16px}
-.dayhero h3{font-size:22px}
+@media  (max-width:760px){.hero{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+
+
 .maphead{display:block}
 .mapmodes{margin-top:8px}
 .googlemap{height:300px}
@@ -59,17 +59,17 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .dishpreview{font-size:12px}
 .links{gap:4px 12px}
 .links a{font-size:11px}
-.toolbar{gap:8px 12px}
+
 .mapcaption{font-size:11px}
 .mapmodes button{padding:4px 8px}
 .notice{padding:16px}
 .menudetail p{font-size:12px}
 .daymap{margin-bottom:24px}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
+@media  (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
 *,*:before,*:after{animation:none!important;transition:none!important}
 }
-@media  print{.daymap{display:none}
+@media   print{.daymap{display:none}
 .reviewnotes{break-inside:avoid}
 .placename{font-size:10px}
 .links a{font-size:10px}

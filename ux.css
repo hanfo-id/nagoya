@@ -8,15 +8,15 @@ html{scroll-padding-top:calc(var(--header-height) + var(--date-height) + 20px)}
 .tripdate small{font-size:13px}
 .facts span,.facts small{font-size:13px}
 .facts strong{font-size:18px}
-.toolbar{font-size:13px;padding:8px 0;gap:8px 16px}
-.toolbar label{min-height:44px;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
-.toolbar button{min-height:44px;font-size:13px}
-.toolbar input{width:18px;height:18px;margin:0;flex-shrink:0}
-.dayhero{margin-top:24px;margin-bottom:12px}
-.dayhero h3{font-size:25px}
-.dayhero p{font-size:15px;max-width:70ch}
-.dayhero .meta{font-size:13px}
-.dayhero .eyebrow{font-size:13px;margin-bottom:8px}
+
+
+
+
+
+
+
+
+
 .route{font-size:13px;padding:8px 0 16px;gap:8px;line-height:1.7}
 .stop{grid-template-columns:80px minmax(0,1fr);gap:16px;padding-bottom:20px}
 .time{font-size:15px;font-variant-numeric:tabular-nums}
@@ -87,7 +87,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,s
 button:disabled,button[aria-disabled=true]{opacity:.55;cursor:not-allowed;transform:none}
 button[aria-busy=true]{cursor:progress}
 [hidden]{display:none!important}
-@media (max-width:760px){:root{--date-height:72px}
+@media  (max-width:760px){:root{--date-height:72px}
 .brand{font-size:15px}
 main{padding-inline:16px}
 .hero{padding-block:24px;gap:16px}
@@ -101,13 +101,13 @@ main{padding-inline:16px}
 .facts div{padding:0;min-width:0}
 .notice{font-size:14px;line-height:1.8}
 .notice a{display:inline-flex;align-items:center;min-height:44px;font-size:13px}
-.toolbar label{font-size:13px}
-.toolbar button{font-size:13px;margin-left:0}
-.toolbar{gap:4px 12px}
-.dayhero{margin-top:20px}
-.dayhero h3{font-size:23px}
-.dayhero p{font-size:15px}
-.dayhero .meta{font-size:13px;margin-top:12px}
+
+
+
+
+
+
+
 .route{font-size:13px;line-height:1.8;display:none}
 .stop{grid-template-columns:minmax(0,1fr);gap:4px;padding-bottom:20px}
 .time{display:flex;align-items:baseline;gap:8px;padding:0 0 4px;font-size:15px}
@@ -143,21 +143,21 @@ select{max-width:100%;width:100%;font-size:14px;padding:8px 12px}
 .sources{font-size:14px}
 .sources p{font-size:14px}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
+@media  (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
 *,*:before,*:after{animation:none!important;transition:none!important}
 }
-@media  print{.mapstage,.daymap{display:none!important}
+@media   print{.mapstage,.daymap{display:none!important}
 .detail{font-size:12px}
 .eventrow{break-inside:avoid}
 .event summary{padding:8px}
-.dayhero .meta{font-size:11px}
+
 }
 /* Numbered place map: the same small green markers repeat in the list. */
 :root{--map-surface:#e8ede4;--map-marker:#163d35;--map-marker-text:#fffdf7;--map-shadow:rgba(22,61,53,.2)}
 .numberedmap{height:480px;position:relative;z-index:0;isolation:isolate;background:var(--map-surface);border:1px solid var(--line);border-radius:8px;font-family:var(--font-body)}
-.maplegend{display:flex;align-items:center;flex-wrap:wrap;gap:8px 24px;font-size:13px;margin-bottom:12px;color:var(--muted)}
-.maplegend>span,.maplegend label{display:inline-flex;align-items:center;gap:8px;min-height:44px}
-.maplegend input{width:18px;height:18px}
+
+
+
 .legendpin{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;width:24px;height:24px;background:var(--map-marker);color:var(--map-marker-text);font-size:12px}
 .numberpin{background:var(--clear);border:0;display:grid;place-items:center}
 .numberpin>span{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:2px solid var(--map-marker-text);background:var(--map-marker);color:var(--map-marker-text);font-size:14px;font-weight:700;box-shadow:0 2px 5px var(--map-shadow)}
@@ -177,8 +177,8 @@ select{max-width:100%;width:100%;font-size:14px;padding:8px 12px}
 .numberedmap .leaflet-control-attribution{font-size:11px;background:var(--paper);color:var(--muted);padding:2px 6px}
 .numberedmap .leaflet-control-attribution a{color:var(--ink)}
 .numberedmap a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-@media (max-width:760px){.numberedmap{height:400px}
-.maplegend{gap:0 16px}
+@media  (max-width:760px){.numberedmap{height:400px}
+
 .maphead{align-items:flex-start}
 .mapmodes{flex-wrap:wrap}
 .mapmodes button{padding-inline:8px}
