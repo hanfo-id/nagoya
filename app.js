@@ -6,7 +6,7 @@ function styleActions(root=document){root.querySelectorAll('button').forEach(b=>
 let active=0,view='schedule',printing=false;
 const $=selector=>document.querySelector(selector);
 function badge(text,kind=''){return `<span class="statusbadge ${kind}">${esc(text)}</span>`}
-function reservationBadge(def){if(!def)return '';const r=reservationValue(def);return badge('예약 '+RES_STATUS[r.status],r.status)}
+function reservationBadge(def){if(!def)return '';const r=reservationValue(def);return badge(r.status==='walkin'?'현장 방문':r.status==='requested'?'예약 요청 중':'예약 '+RES_STATUS[r.status],r.status)}
 function reservationTiming(def,planDay=def?.day,planTime=def?.plan){
  if(!def)return '';const r=reservationValue(def),changed=r.status==='confirmed'&&(r.date&&r.date!==isoDay(planDay)||r.time&&r.time!==planTime);
  return `<span class="reservation-plan">계획 ${days[planDay].date} ${planTime||'교체 선택'}</span>${r.status==='confirmed'?`<strong class="actualtime">수동 기록: ${r.date?esc(r.date.slice(5).replace('-','.')):'날짜 미입력'} ${esc(r.time||'확정 시각 미입력')}</strong>`:''}${changed?'<span class="important">확정 기록이 원래 계획과 다릅니다. 주변 일정을 확인하세요. 시간표는 자동 변경하지 않았습니다.</span>':''}`;
@@ -32,7 +32,7 @@ function journeyContext(e,i,print=false){
 }
 function journeyLinks(e,i){
  const {prev,next,from,to,nextPlace}=journeyContext(e,i);if(!to)return '';
- return `<details class="journeydetail"><summary>구간별 길찾기</summary>${from?`<p>이전 장소 ${esc(from.name)} → ${esc(to.name)}</p><div class="compactlinks">${link(routeBetween(from,to,'transit'),'이전 → 여기 / 대중교통')}${link(routeBetween(from,to,'walking'),'이전 → 여기 / 도보')}</div>`:'<p>첫 표시 장소입니다. 현재 위치에서 목적지를 검색합니다.</p>'}${nextPlace?`<p>여기 ${esc(to.name)} → 다음 ${esc(nextPlace.name)}</p><div class="compactlinks">${link(routeBetween(to,nextPlace,'transit'),'여기 → 다음 / 대중교통')}${link(routeBetween(to,nextPlace,'walking'),'여기 → 다음 / 도보')}</div>`:''}<p class="muted">실제 운행·환승·소요 시간은 Google Maps에서 확인하세요.</p></details>`;
+ return `<details class="journeydetail"><summary>구간별 길찾기</summary>${from?`<p>이전 장소 ${esc(from.name)} → ${esc(to.name)}</p><div class="compactlinks">${link(routeBetween(from,to,'transit'),'대중교통')}${link(routeBetween(from,to,'walking'),'도보')}</div>`:'<p>첫 표시 장소입니다. 현재 위치에서 목적지를 검색합니다.</p>'}${nextPlace?`<p>여기 ${esc(to.name)} → 다음 ${esc(nextPlace.name)}</p><div class="compactlinks">${link(routeBetween(to,nextPlace,'transit'),'대중교통')}${link(routeBetween(to,nextPlace,'walking'),'도보')}</div>`:''}<p class="muted">실제 운행·환승·소요 시간은 Google Maps에서 확인하세요.</p></details>`;
 }
 function eventHTML(e,i,print=false){
  const p=eventPlace(e),r=restaurants.find(x=>x.id===e.food),def=reservationFor(e),status=eventStatus(e),clock=japanClock();

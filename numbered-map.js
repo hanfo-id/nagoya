@@ -18,7 +18,7 @@ function destroyDayMap(){
  mapTiles=null;mapMarkers.clear();mapClusters=[];
 }
 function popupContent(p){
- return `<div class="placepopup"><span class="popupnumber">${p.number}번 / ${esc(p.time)} / ${EVENT_STATUS[p.status]}${p.optional?' / 선택 방문':''}${p.optional?' / 선택':''}</span><strong>${esc(p.name)}</strong><span lang="ja">${esc(p.jp)}</span>${p.location?.kind==='address'?'<small>주소 기준 위치 / 출입구는 현장 확인</small>':''}<div><button class="btn btn-secondary" data-focus-event="${p.eventId}">이 일정 카드 보기</button>${link(appMap(p.query),'Google Maps 열기')}${link(directions(p.query,'transit'),'현재 위치에서 길찾기')}</div></div>`;
+ return `<div class="placepopup"><span class="popupnumber">${p.number}번 / ${esc(p.time)} / ${EVENT_STATUS[p.status]}${p.optional?' / 선택 방문':''}${p.optional?' / 선택':''}</span><strong>${esc(p.name)}</strong><span lang="ja">${esc(p.jp)}</span>${p.location?.kind==='address'?'<small>주소 기준 위치 / 출입구는 현장 확인</small>':''}<div><button class="btn btn-secondary" data-focus-event="${p.eventId}">일정 상세</button>${link(appMap(p.query),'Google Maps 열기')}${link(directions(p.query,'transit'),'현재 위치에서 길찾기')}</div></div>`;
 }
 function selectPin(p){
  markNav('map');
