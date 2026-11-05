@@ -8,4 +8,4 @@
 
 모든 예약은 방문 제안이며 실제 예약을 대신하지 않습니다. 정보 확인일: 2026-11-05. 출처는 웹사이트 안에 포함되어 있습니다.
 
-GitHub Pages: main 브랜치의 루트를 게시하거나 포함된 Actions 배포 워크플로를 사용합니다.
+GitHub Pages는 main 브랜치의 루트에서 자동 게시됩니다: https://hanfo-id.github.io/nagoya/
