@@ -81,3 +81,28 @@ button:disabled,button[aria-disabled=true]{opacity:.55;cursor:not-allowed;transf
 @media print{.daytabs,.viewbar,.stopactions,.mapstage,.daymap{display:none!important}.top{position:static}.detail{font-size:12px}.eventrow{break-inside:avoid}.event summary{padding:8px}.dayhero .meta{font-size:11px}}
 
 @media(max-width:360px){.daytabs{min-height:64px}.daytabs span{display:none}}
+
+/* Numbered place map: the same small green markers repeat in the list. */
+:root{--map-surface:#e8ede4;--map-marker:#163d35;--map-marker-text:#fffdf7;--map-shadow:rgba(22,61,53,.2)}
+.numberedmap{height:480px;position:relative;z-index:0;isolation:isolate;background:var(--map-surface);border:1px solid var(--line);border-radius:8px;font-family:var(--font-body)}
+.maplegend{display:flex;align-items:center;flex-wrap:wrap;gap:8px 24px;font-size:13px;margin-bottom:12px;color:var(--muted)}
+.maplegend>span,.maplegend label{display:inline-flex;align-items:center;gap:8px;min-height:44px}.maplegend input{width:18px;height:18px}
+.legendpin{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;width:24px;height:24px;background:var(--map-marker);color:var(--map-marker-text);font-size:12px}
+.numberpin{background:var(--clear);border:0;display:grid;place-items:center}
+.numberpin>span{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;border:2px solid var(--map-marker-text);background:var(--map-marker);color:var(--map-marker-text);font-size:14px;font-weight:700;box-shadow:0 2px 5px var(--map-shadow)}
+.numberpin.is-optional>span{background:var(--paper);color:var(--ink);border:2px solid var(--map-marker)}
+.numberpin.is-selected>span{background:var(--accent);color:var(--map-marker-text);outline:3px solid var(--paper)}
+.numberpin:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:50%}
+.pinindex.is-optional{background:var(--paper);color:var(--ink);border:1px solid var(--ink)}
+.pinselect[aria-pressed=true]{color:var(--accent)}
+.placepopup{font-family:var(--font-body);color:var(--ink);line-height:1.65}
+.placepopup strong{display:block;font-size:16px;margin:4px 0}.placepopup>span[lang]{display:block;font-size:13px;color:var(--muted)}
+.placepopup .popupnumber,.placepopup>small{font-size:12px;color:var(--muted)}
+.placepopup>div{display:flex;flex-direction:column;align-items:flex-start;margin-top:8px;border-top:1px solid var(--line)}
+.placepopup a{display:inline-flex;align-items:center;min-height:44px;font-size:13px;color:var(--ink)!important;text-decoration:underline}
+.numberedmap .leaflet-popup-content{margin:16px 20px;max-width:240px}
+.numberedmap .leaflet-control-zoom a{width:44px;height:44px;line-height:44px;color:var(--ink);background:var(--white)}
+.numberedmap .leaflet-popup-close-button{width:44px!important;height:44px!important;font-size:24px!important;font-variant-numeric:tabular-nums;line-height:40px!important;color:var(--muted)!important}
+.numberedmap .leaflet-control-attribution{font-size:11px;background:var(--paper);color:var(--muted);padding:2px 6px}.numberedmap .leaflet-control-attribution a{color:var(--ink)}
+.numberedmap a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+@media(max-width:760px){.numberedmap{height:400px}.maplegend{gap:0 16px}.maphead{align-items:flex-start}.mapmodes{flex-wrap:wrap}.mapmodes button{padding-inline:8px}.placepopup strong{font-size:15px}}

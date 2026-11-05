@@ -31,43 +31,12 @@ function mapRouteLinks(points){
   return link('https://www.google.com/maps/dir/?'+params.toString(),'Google Maps에서 동선 열기'+(segments.length>1?' ('+(i+1)+'/'+segments.length+')':''));
  }).join(' ');
 }
-let mapWaitTimer;
-function initDayMap(){
- clearTimeout(mapWaitTimer);
- const frame=document.querySelector('#daymapframe');if(!frame)return;
- const status=document.querySelector('#maploadstatus');
- const waiting=()=>{
-  status.textContent='지도를 불러오는 중입니다.';frame.setAttribute('aria-busy','true');
-  clearTimeout(mapWaitTimer);mapWaitTimer=setTimeout(()=>{if(status.isConnected)status.textContent='지도가 늦게 표시되면 아래 Google Maps 링크로 직접 열어주세요.'},12000);
- };
- frame.addEventListener('load',()=>{clearTimeout(mapWaitTimer);frame.setAttribute('aria-busy','false');status.textContent='지도가 보이지 않으면 Google Maps에서 직접 확인할 수 있습니다.'});
- frame.addEventListener('error',()=>{clearTimeout(mapWaitTimer);status.textContent='지도를 불러오지 못했습니다. Google Maps에서 열거나 다시 시도해 주세요.';frame.setAttribute('aria-busy','false')});
- frame.addEventListener('map-loading',waiting);waiting();
-}
 function mapGroups(i,points){
  return i===2?[
   {label:'시내에서 공원',points:points.slice(0,5)},
   {label:'공원 핵심 구역',points:points.filter(p=>['park','warehouse','cafe','valley'].includes(p.id))},
   {label:'공원에서 저녁',points:[points.find(p=>p.id==='parkstation'),points.find(p=>p.id==='monja'),points.find(p=>p.id==='hotel')]}
  ]:[{label:'하루 위치 개요',points:points.filter(p=>!p.optional)}];
-}
-function showMapSelection(point,groupIndex){
- const frame=document.querySelector('#daymapframe');if(!frame)return;
- const groups=mapGroups(active,placesForDay(active));
- const group=groups[groupIndex];
- const heading=document.querySelector('#selectedmapplace');
- heading.textContent=point?point.name:group.label;
- document.querySelector('#mapcaption').textContent=point?point.jp+' / 선택한 장소의 위치입니다.':'파란 선은 위치를 살펴보기 위한 참고 경로입니다. 실제 이동 수단과 순서는 시간별 일정을 확인하세요.';
- const target=point||group.points[0];
- document.querySelector('.mapfallbackroutes').innerHTML=point?link(appMap(target.query),'Google Maps에서 장소 열기'):mapRouteLinks(group.points);
- frame.dispatchEvent(new Event('map-loading'));
- frame.src=point?singleEmbed(point):mapEmbed(group.points);
- document.querySelectorAll('[data-mapgroup]').forEach(b=>b.setAttribute('aria-pressed',!point&&Number(b.dataset.mapgroup)===groupIndex?'true':'false'));
- document.querySelectorAll('[data-pin]').forEach(b=>b.setAttribute('aria-pressed',point&&b.dataset.pin===point.id?'true':'false'));
- if(point){
-  heading.focus({preventScroll:true});
-  document.querySelector('.mapstage').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
- }
 }
 function initUx(){
  const header=document.querySelector('.top');
@@ -80,7 +49,7 @@ function initUx(){
   const pin=e.target.closest('[data-pin]'),group=e.target.closest('[data-mapgroup]');
   if(pin)showMapSelection(placesForDay(active).find(p=>p.id===pin.dataset.pin));
   if(group)showMapSelection(null,Number(group.dataset.mapgroup));
-  if(e.target.closest('[data-map-retry]')){const frame=document.querySelector('#daymapframe');frame.dispatchEvent(new Event('map-loading'));frame.src=frame.src}
+  if(e.target.closest('[data-map-retry]'))initDayMap();
  });
  document.addEventListener('toggle',e=>{if(e.target.matches?.('.event')&&e.target.isConnected){detailState.set(e.target.dataset.eventKey,e.target.open);refreshExpandControl()}},true);
  window.addEventListener('popstate',()=>{({active,view}=readRoute(saved));renderDay()});
