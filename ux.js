@@ -26,7 +26,7 @@ function focusEvent(id){
  if(!getVisibleEvents(state,day).some(e=>e.id===id)){state.filters.foodOnly=false;state.filters.optional=true}
  openScreen('plan');showMapSelection({eventId:id});openPlace(id);
 }
-function markNav(name){document.querySelectorAll('.top nav [data-nav]').forEach(b=>{if(b.dataset.nav===name)b.setAttribute('aria-current','location');else b.removeAttribute('aria-current')})}
+function markNav(name){if(name==='map')name='plan';document.querySelectorAll('.top nav [data-nav]').forEach(b=>{if(b.dataset.nav===name)b.setAttribute('aria-current','location');else b.removeAttribute('aria-current')})}
 function openReservation(id){if(!RESERVATIONS.some(r=>r.id===id))return;$('#place-dialog')?.close();openScreen('reservations');const card=$('#reservation-'+id);if(card){card.querySelector('.resedit').open=true;scrollTarget('#reservation-'+id);card.querySelector('select')?.focus({preventScroll:true})}announce('예약 상태는 직접 기록하며 실제 예약을 실행하지 않습니다.')}
 function dialogConfirm(message,callback){
  const dialog=$('#confirmdialog');$('#confirmtext').textContent=message;dialog.returnValue='cancel';dialog.showModal();

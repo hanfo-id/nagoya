@@ -107,7 +107,10 @@ function getMapStops(s=state,i=s.selectedDay){
   for(const id of ids.filter(Boolean)){if(!PLACE[id])continue;stops.push({id,...PLACE[id],eventId:e.id,eventIds:e.id==='d2-shopping'?['d2-shopping','d2-rest']:[e.id],time:e.time,end:e.end,kind:e.kind,optional:e.optional,status:s.events[e.id]?.status||'planned',number:stops.length+1,location:typeof MAP_LOCATIONS!=='undefined'?MAP_LOCATIONS[id]:null})}
 
  }
- return stops;
+ const merged=[];
+ for(const point of stops){const candidateIndex=merged.findLastIndex((prior,index)=>prior.id===point.id&&merged.slice(index+1).every(item=>item.eventIds.every(id=>prior.eventIds.includes(id))));const previous=candidateIndex>=0?merged[candidateIndex]:null;if(previous){previous.eventIds=[...new Set([...previous.eventIds,...point.eventIds])];if(previous.kind==='이동'&&point.kind!=='이동'){previous.eventId=point.eventId;previous.kind=point.kind}previous.optional=previous.optional&&point.optional;previous.end=[previous.end||previous.time,point.end||point.time].sort().at(-1)}else merged.push({...point,eventIds:[...point.eventIds]})}
+ const all=baseEvents(i,s);
+ return merged.map((point,index)=>{const activities=all.filter(e=>point.eventIds.includes(e.id));const statuses=activities.map(e=>s.events[e.id]?.status||'planned');return {...point,number:index+1,activities:activities.map(e=>e.id),time:activities.map(e=>e.time).sort()[0]||point.time,end:activities.map(e=>e.end||e.time).sort().at(-1)||point.end,status:statuses.every(v=>v==='skipped')?'skipped':statuses.every(v=>v==='done')?'done':statuses.includes('progress')?'progress':'planned'}});
 }
 function nextEvent(s=state,i=s.selectedDay,clock=japanClock()){
  const list=getVisibleEvents(s,i),remaining=list.filter(e=>!['done','skipped'].includes(s.events[e.id]?.status));
