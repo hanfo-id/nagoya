@@ -12,7 +12,7 @@ const EXPERIENCES={
   "time": "추천 90분 이상 / 대기 제외",
   "priority": "시간이 짧으면 명장면 전시 한 곳과 중앙 계단. 단편을 좋아하면 상영 시간을 먼저 확인.",
   "who": "여러 작품을 한 번에 보고 싶은 사람",
-  "note": "대창고 지정 입장 시각·구매한 표가 우선. 사진·영상은 일부 장소만 허용되며 실내 플래시는 금지.",
+  "note": "스탠다드 포함 구역. 지정 시각부터 1시간 이내 입장, 조기 입장·재입장 불가. 사진·영상은 일부 장소만 허용되며 실내 플래시는 금지.",
   "url": "https://ghibli-park.jp/en/about/ghiblisgrandwarehouse.html"
  },
  "valley": {
@@ -20,14 +20,14 @@ const EXPERIENCES={
   "works": "마녀 배달부 키키 / 하울의 움직이는 성 / 아야와 마녀",
   "do": [
    "하울의 성 외관과 움직이는 부분 관찰",
-   "구초키빵집의 빵 장식·다락방 주변 살펴보기",
+   "구초키빵집과 키키를 떠올리게 하는 외관 살펴보기",
    "소피의 모자 가게 주변 거리를 천천히 걷기"
   ],
   "photo": "하울의 성과 빵집 외관 중 현장에서 촬영을 허용한 지점.",
   "time": "추천 90~120분 / 대기 제외",
   "priority": "시간이 짧으면 하울의 성 외관과 빵집을 우선. 건물 내부는 티켓 범위부터 확인.",
   "who": "키키·하울 팬과 건축·소품을 좋아하는 사람",
-  "note": "오키노 저택·하울의 성·마녀의 집 내부 포함 여부는 티켓에 따라 다름. 당일 추가권은 매진될 수 있어 보장하지 않음.",
+  "note": "스탠다드는 구역 입장만 포함. 오키노 저택·하울의 성·마녀의 집 내부는 별도 당일권 필요. 주말 09:00 교환권 선착순 배부로 오후에는 매진 가능.",
   "url": "https://ghibli-park.jp/en/about/valleyofwitches.html"
  },
  "hill": {
@@ -42,7 +42,7 @@ const EXPERIENCES={
   "time": "추천 40~60분 / 대기 제외",
   "priority": "지구옥을 우선하고 고양이 사무소의 작은 창을 살펴보기.",
   "who": "귀를 기울이면의 일상적인 분위기를 좋아하는 사람",
-  "note": "엘리베이터 타워는 라퓨타·하울에 등장하는 19세기 말 SF 건축의 영향을 받은 시설이며 두 작품의 실제 촬영지는 아님. 구역 내부는 티켓 확인.",
+  "note": "엘리베이터 타워는 라퓨타·하울에 등장하는 19세기 말 SF 건축의 영향을 받은 시설이며 두 작품의 실제 촬영지는 아님. 이번 스탠다드에는 구역 입장이 포함되지 않아 방문 동선에서 제외.",
   "url": "https://ghibli-park.jp/en/about/hillofyouth.html"
  },
  "forest": {
@@ -57,7 +57,7 @@ const EXPERIENCES={
   "time": "추천 45~60분 / 왕복 이동 별도",
   "priority": "집 관람을 우선. 언덕까지 다녀오면 다른 구역을 하나 줄이기.",
   "who": "토토로 팬과 숲길 산책을 원하는 사람",
-  "note": "돈도코당 내부 놀이시설은 12세 이하 대상. 성인 내부 이용으로 계획하지 않기. 집·언덕의 입장 범위는 표를 확인.",
+  "note": "돈도코당 내부 놀이시설은 12세 이하 대상. 성인 내부 이용으로 계획하지 않기. 이번 스탠다드에는 돈도코 숲이 포함되지 않아 방문 동선에서 제외.",
   "url": "https://ghibli-park.jp/en/about/dondokoforest.html"
  },
  "mononoke": {
@@ -72,7 +72,7 @@ const EXPERIENCES={
   "time": "추천 30~45분 / 체험·대기 별도",
   "priority": "시간이 짧으면 야외 구조물만 관찰. 체험은 실제 접수·체력에 맞춰 선택.",
   "who": "원령공주 팬과 지역 음식 체험에 관심 있는 사람",
-  "note": "체험은 별도 요금·연령 조건과 운영 변동이 있음. 우천 시 옷코토누시 미끄럼틀은 이용 불가. 입장권 포함 범위를 확인.",
+  "note": "체험은 별도 요금·연령 조건과 운영 변동이 있음. 우천 시 옷코토누시 미끄럼틀은 이용 불가. 스탠다드 포함 구역. 최종 입장 16:30, 재입장 불가.",
   "url": "https://ghibli-park.jp/en/about/mononoke.html"
  },
  "osu": {
@@ -165,7 +165,7 @@ const EXPERIENCES={
   "time": "추천 30~45분",
   "priority": "시케미치 산책 후 카페 휴식 한 번으로 연결.",
   "who": "큰 쇼핑몰보다 동네 상점가를 좋아하는 사람",
-  "note": "일요일 아침에는 문을 닫은 점포도 있음. 특정 가게 영업은 개별 확인.",
+  "note": "아침에는 문을 닫은 점포도 있음. 특정 가게 영업은 개별 확인.",
   "url": "https://aichinow.pref.aichi.jp/en/spots/detail/923/"
  },
  "zoo": {
@@ -183,4 +183,4 @@ const EXPERIENCES={
  }
 };
 function experienceHTML(id){const x=EXPERIENCES[id];if(!x)return '';return `<section class="experience"><h5>${esc(PLACE[id]?.name||id)}에서 할 것</h5><p>${esc(x.why)}</p>${x.works?`<p><b>관련 작품·관심사</b><br>${esc(x.works)}</p>`:''}<ul>${x.do.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><dl><div><dt>사진 포인트 / 추천</dt><dd>${esc(x.photo)}</dd></div><div><dt>시간·대상 / 추천</dt><dd>${esc(x.time)}<br>${esc(x.who)}</dd></div></dl><p><b>시간이 짧다면</b> ${esc(x.priority)}</p><p><b>알아두기</b> ${esc(x.note)}</p><p class="sourcecheck">시설 사실: ${link(x.url,'공식 안내')}${['warehouse','valley','hill','forest','mononoke'].includes(id)?' / '+link('https://ghibli-park.jp/en/faq/','촬영·티켓 FAQ'):''} / 2026.11.06 확인. 소요 시간·우선순위·사진 구도는 추천이며 현장 허용 표시가 우선입니다.</p></section>`}
-function experiencesForEvent(e){let ids=e.id==='d3-extra'?['forest','hill','mononoke']:e.id==='d4-old-town'?['shike','endoji']:e.id==='d4-osu'?['osu','kannon']:[e.placeId];return ids.map(id=>ids.length>1?`<details class="experiencechoice"><summary>${esc(PLACE[id]?.name||id)} 추천 경험</summary>${experienceHTML(id)}</details>`:experienceHTML(id)).join('')}
+function experiencesForEvent(e){let ids=e.id==='d3-extra'?['mononoke']:e.id==='d4-old-town'?['shike','endoji']:e.id==='d4-osu'?['osu','kannon']:[e.placeId];return ids.map(id=>ids.length>1?`<details class="experiencechoice"><summary>${esc(PLACE[id]?.name||id)} 추천 경험</summary>${experienceHTML(id)}</details>`:experienceHTML(id)).join('')}

@@ -17,11 +17,11 @@ for(const height of [500,722,900]){assert.equal(run(`nearestSheetLevel(${height}
 console.log('PASS single Lachic stop with both legacy activity IDs; 26 child choices belong to 9 areas, never numbered or counted as itinerary events; old rest status and backup retained; home is independent of browsed place; sheet snap boundaries.');
 
 // Consecutive location visits are one visible stop; original records stay separately editable.
-run('state=freshState();state.selectedDay=3');
-const sunday=json('getMapStops(state,3)');assert.equal(sunday.filter(p=>p.id==='kannon').length,1);assert.equal(sunday.filter(p=>p.id==='kokusai').length,1);assert.equal(sunday.filter(p=>p.id==='osu').length,1);assert.ok(sunday.find(p=>p.id==='osu').eventIds.includes('d4-osu-lunch'));
-const temple=sunday.find(p=>p.id==='kannon');assert.deepEqual(temple.eventIds,['d4-osu-transfer','d4-osu']);assert.equal(temple.time,'09:15');assert.equal(temple.end,'12:00');
-run("state.events['d4-osu-transfer']={status:'done'}");assert.equal(run("getMapStops(state,3).find(p=>p.id==='kannon').status"),'planned');
-run("state.events['d4-osu']={status:'done'}");assert.equal(run("getMapStops(state,3).find(p=>p.id==='kannon').status"),'done');assert.equal(run("validateBackup(JSON.stringify(backupEnvelope())).events['d4-osu-transfer'].status"),'done');
+run('state=freshState();state.selectedDay=CITY_DAY');
+const city=json('getMapStops(state,CITY_DAY)');assert.equal(city.filter(p=>p.id==='kannon').length,1);assert.equal(city.filter(p=>p.id==='kokusai').length,1);assert.equal(city.filter(p=>p.id==='osu').length,1);assert.ok(city.find(p=>p.id==='osu').eventIds.includes('d4-osu-lunch'));
+const temple=city.find(p=>p.id==='kannon');assert.deepEqual(temple.eventIds,['d4-osu-transfer','d4-osu']);assert.equal(temple.time,'09:15');assert.equal(temple.end,'12:00');
+run("state.events['d4-osu-transfer']={status:'done'}");assert.equal(run("getMapStops(state,CITY_DAY).find(p=>p.id==='kannon').status"),'planned');
+run("state.events['d4-osu']={status:'done'}");assert.equal(run("getMapStops(state,CITY_DAY).find(p=>p.id==='kannon').status"),'done');assert.equal(run("validateBackup(JSON.stringify(backupEnvelope())).events['d4-osu-transfer'].status"),'done');
 assert.equal(run("getMapStops(state,4).filter(p=>p.id==='hotel').length"),2);assert.equal(run("getMapStops(state,4).filter(p=>p.id==='airport').length"),1);
 for(let day=0;day<5;day++)for(const p of json(`getMapStops(state,${day})`))assert.ok(run(`!!PLACE_INTROS['${p.id}']`),'missing place purpose '+p.id);
 assert.equal(run("Object.values(SHOP_GUIDE).filter(p=>choiceCategory(p)==='clothes').length"),6);

@@ -43,7 +43,7 @@ function eventHTML(e,i,print=false){
 function scheduleViews(){return `<div class="viewbar" role="group" aria-label="일정 보기 방식"><button type="button" data-view="schedule" aria-pressed="${view==='schedule'}">시간별 일정</button><button type="button" data-view="map" aria-pressed="${view==='map'}">동선 지도</button><span>같은 필터·같은 방문 순서</span></div>`}
 function detailedDayHTML(i,print=false){
  const d=days[i],events=print?baseEvents(i):getVisibleEvents(state,i),all=baseEvents(i),done=all.filter(e=>eventStatus(e)==='done').length,skipped=all.filter(e=>eventStatus(e)==='skipped').length;
- const briefs=['입국과 체크인, 가벼운 저녁','평일 맛집과 사카에 산책','든든한 아침 후 지브리의 세계로','주말 상점가와 취향대로 고르는 오전','텐무스 모닝과 여유 있는 귀국'];
+ const briefs=['입국과 체크인, 가벼운 저녁','평일 맛집과 사카에 산책','오스·시케미치와 시장 스시','일요일 스탠다드로 지브리 3개 구역','텐무스 모닝과 여유 있는 귀국'];
  return `<article class="dayblock"><div class="dayhero"><p class="eyebrow">${i+1}일차 / ${d.date} ${d.dow}</p><h3>${esc(d.title)}</h3><p class="dayblurb">${briefs[i]}</p><div class="daystats"><div><span>예상 도보</span><b>${esc(d.walk.replace('도보 약 ',''))}</b></div><div><span>예상 지출 / 1인</span><b>${esc(d.cost.replace('약 ',''))}</b></div><div><span>완료${skipped?' / '+skipped+'개 건너뜀':''}</span><b>${done} / ${all.length}</b></div></div><details class="dayintro"><summary>하루 안내·예산 전제</summary><p>${esc(d.subtitle)}</p><p>예산은 쇼핑 제외 추정값입니다. 진행 기록은 선택 사항이며 시간이 지나도 자동 완료하지 않습니다.</p></details></div>${print?'':scheduleViews()}${!print&&view==='schedule'?'<div class="timeline-tools"><button class="btn btn-quiet" data-expand-all>상세 모두 펼치기</button></div>':''}${print||view==='schedule'?`<div class="timeline">${events.length?events.map(e=>eventHTML(e,i,print)).join(''):'<p class="empty">이 필터에 맞는 일정이 없습니다. 식사만 보기 또는 선택 방문 제외를 해제해 보세요.</p>'}</div>`:mapPanel(i,false)}<details class="daynote"><summary>일정 조정·대안 보기</summary><p>${esc(d.note)}</p><div class="adjustactions">${i===0?'<button data-adjust="delay">항공 지연 / 첫날 단축</button><p>첫날 라멘과 밤 산책·쇼핑을 건너뛴 상태로 기록합니다. 체크인으로 이동하고, 라멘은 월요일 대체안을 확인할 수 있습니다.</p>':''}${i===4?`<label><input type="checkbox" id="ramen-alternative" ${state.overrides.ramenMonday?'checked':''}> 11:00 시시마루로 자유시간 교체</label><p>기념품 자유시간과 교체됩니다. 케시키·13:15 짐 회수와 충돌하는지 직접 확인하세요.</p>`:''}<button data-adjust="essential">체력 부족 / 선택 방문 제외</button>${link(directions(PLACE.hotel.query,'transit'),'현재 위치에서 호텔 복귀')}<button data-restore-day="${i}">이 날짜의 원래 계획 복원</button></div></details></article>`;
 }
 function dayHTML(i,print=false){return print?detailedDayHTML(i,true):routeDayHTML(i)}
@@ -54,7 +54,7 @@ function renderDay(){
  $('#daycontent').innerHTML=dayHTML(active);$('#daycontent').setAttribute('aria-labelledby','tab'+active);
  $('#route-tabs-slot').append(tabs);$('#route-filters-slot').append(tools);
  document.querySelectorAll('#daytabs button').forEach((b,i)=>{b.setAttribute('aria-selected',String(i===active));b.tabIndex=i===active?0:-1});
- $('#foodonly').checked=state.filters.foodOnly;$('#optional').checked=state.filters.optional;$('#zoo').checked=state.options.zoo;$('#zoo').closest('label').hidden=active!==3;
+ $('#foodonly').checked=state.filters.foodOnly;$('#optional').checked=state.filters.optional;$('#zoo').checked=state.options.zoo;$('#zoo').closest('label').hidden=active!==CITY_DAY;
  $('#expand').hidden=true;refreshExpandControl();
  styleActions($('#daycontent'));if(screenPage==='plan')try{initDayMap();initRouteObserver()}catch(error){console.error('Map initialization failed',error);const status=$('#maploadstatus');if(status)status.textContent='지도 초기화에 실패했습니다. 장소 목록과 Google Maps 링크를 이용하세요.'}
 }

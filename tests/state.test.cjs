@@ -20,13 +20,13 @@ for(let day=0;day<5;day++)for(const foodOnly of [false,true])for(const optional 
  for(const stop of stops){assert.ok(stop.eventIds.every(id=>events.some(e=>e.id===id)));assert.ok(stop.location,stop.id)}
  if(foodOnly)assert.ok(events.every(e=>e.kind==='식사'));if(!optional)assert.ok(events.every(e=>!e.optional));
 }
-run("state=freshState();state.options.zoo=true");assert.ok(json('baseEvents(3)').some(e=>e.id==='d4-zoo-visit'));assert.ok(!json('baseEvents(3)').some(e=>e.id==='d4-old-town'));
+run("state=freshState();state.options.zoo=true");assert.ok(json('baseEvents(CITY_DAY)').some(e=>e.id==='d4-zoo-visit'));assert.ok(!json('baseEvents(CITY_DAY)').some(e=>e.id==='d4-old-town'));
 run("state=freshState();state.overrides.ramenMonday=true");assert.ok(json('baseEvents(4)').some(e=>e.id==='d5-ramen-alternative'));assert.ok(!json('baseEvents(4)').some(e=>e.id==='d5-shopping'));assert.equal(run("days[4].events[2].id"),'d5-shopping');
-run('state=freshState();state.selectedDay=2');
-assert.equal(run("nextEvent(state,2,{date:'2026-12-12',time:'08:30'}).event.id"),'d3-outbound');
+run('state=freshState();state.selectedDay=PARK_DAY');
+assert.equal(run("nextEvent(state,PARK_DAY,{date:'2026-12-13',time:'08:30'}).event.id"),'d3-outbound');
 assert.deepEqual(json('state.events'),{}); // Passing time never writes completion.
-run("state.events['d3-outbound']={status:'done'}");assert.notEqual(run("nextEvent(state,2,{date:'2026-12-12',time:'08:30'}).event.id"),'d3-outbound');
-run("state.events['d3-valley']={status:'progress'}");assert.equal(run("nextEvent(state,2,{date:'2026-12-12',time:'08:30'}).event.id"),'d3-valley');
+run("state.events['d3-outbound']={status:'done'}");assert.notEqual(run("nextEvent(state,PARK_DAY,{date:'2026-12-13',time:'08:30'}).event.id"),'d3-outbound');
+run("state.events['d3-valley']={status:'progress'}");assert.equal(run("nextEvent(state,PARK_DAY,{date:'2026-12-13',time:'08:30'}).event.id"),'d3-valley');
 const migrated=json("migrateLegacy({memo:'여행 메모',zoo:true,day:3,c0:true,c1:true,c6:true,c7:true})");assert.equal(migrated.reservations['ghibli-ticket'].status,'confirmed');assert.equal(migrated.reservations.mutsumi.time,'');assert.equal(migrated.memo,'여행 메모');assert.equal(migrated.checks.flight,true);
 run('state=freshState()');assert.deepEqual(json('validateBackup(JSON.stringify(backupEnvelope()))'),json('state'));
 assert.throws(()=>run("validateBackup('{bad')"));assert.throws(()=>run("validateBackup(JSON.stringify({app:'nagoya-trip',state:{version:99}}))"));assert.throws(()=>run("validateBackup(JSON.stringify({app:'nagoya-trip',state:{version:2}}))"));
@@ -41,9 +41,9 @@ console.log('PASS: Tokyo boundaries; URL/manual/auto precedence; 80 shared-filte
 
 // Route revision retains IDs and fixed meal bookings while grouping city visits.
 run('state=freshState()');
-assert.deepEqual(json('baseEvents(3).map(e=>e.id)'),['d4-morning','d4-osu-transfer','d4-osu','d4-osu-lunch','d4-market-transfer','d4-old-town','d4-sushi','d4-return']);
+assert.deepEqual(json('baseEvents(CITY_DAY).map(e=>e.id)'),['d4-morning','d4-osu-transfer','d4-osu','d4-osu-lunch','d4-market-transfer','d4-old-town','d4-sushi','d4-return']);
 for(let i=0;i<5;i++)assert.ok(json(`baseEvents(${i}).map(e=>e.time)`).every((t,j,a)=>j===0||a[j-1]<=t),'chronological day '+i);
-assert.equal(run("baseEvents(3).find(e=>e.id==='d4-sushi').time"),'17:30');
+assert.equal(run("baseEvents(CITY_DAY).find(e=>e.id==='d4-sushi').time"),'17:30');
 assert.equal(run("baseEvents(1).find(e=>e.id==='d2-rest').placeId"),'lachic');
 assert.equal(run("reservationFor(baseEvents(0).find(e=>e.id==='d1-checkin'))"),undefined);
 console.log('PASS revised city route order, chronological times, unchanged sushi time and hotel without reservation target.');

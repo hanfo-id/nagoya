@@ -19,7 +19,7 @@ function allEventsOpen(){const events=[...document.querySelectorAll('#daycontent
 function refreshExpandControl(){document.querySelectorAll('#expand,[data-expand-all]').forEach(button=>button.textContent=allEventsOpen()?'상세 모두 접기':'상세 모두 펼치기')}
 function scrollTarget(selector,focus=true){const el=document.querySelector(selector);if(!el)return;el.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});if(focus){el.setAttribute('tabindex','-1');el.focus({preventScroll:true})}}
 function focusEvent(id){
- const day=Number(id[1])-1;if(day<0||day>4||!EVENT_IDS.has(id))return;
+ const day=eventDayIndex(id);if(day<0||day>4||!EVENT_IDS.has(id))return;
  if(id.startsWith('d4-zoo'))state.options.zoo=true;
  if(id==='d5-ramen-alternative')state.overrides.ramenMonday=true;
  active=day;state.selectionMode='manual';state.selectedEvent=id;
@@ -54,9 +54,9 @@ function initUx(){
  const header=$('.top'),dates=$('#daytabs');
  if(typeof ResizeObserver!=='undefined'){new ResizeObserver(()=>document.documentElement.style.setProperty('--header-height',header.getBoundingClientRect().height+'px')).observe(header);new ResizeObserver(()=>document.documentElement.style.setProperty('--date-height',dates.getBoundingClientRect().height+'px')).observe(dates)}
  const params=new URL(location.href).searchParams,initialEvent=params.get('event');
- if(EVENT_IDS.has(initialEvent)&&Number(initialEvent[1])-1===active)state.selectedEvent=initialEvent;
+ if(EVENT_IDS.has(initialEvent)&&eventDayIndex(initialEvent)===active)state.selectedEvent=initialEvent;
  if(readRoute().explicit)state.selectionMode='manual';
- if(state.selectedEvent&&Number(state.selectedEvent[1])-1!==active)state.selectedEvent='';persist();
+ if(state.selectedEvent&&eventDayIndex(state.selectedEvent)!==active)state.selectedEvent='';persist();
  $('#daytabs').addEventListener('click',e=>{const b=e.target.closest('[data-day]');if(b)chooseDay(Number(b.dataset.day))});
  $('#daytabs').addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?4:(active+(e.key==='ArrowRight'?1:4))%5;chooseDay(next);$('#tab'+next).focus()}});
  document.addEventListener('click',e=>{
@@ -73,7 +73,7 @@ function initUx(){
   const food=e.target.closest('[data-food-jump]');if(food){$('#place-dialog')?.close();openScreen('food');state.filters.search='';state.filters.reserve='all';$('#search').value='';$('#reservefilter').value='all';persist();renderFood();scrollTarget('#restaurant-'+food.dataset.foodJump)}
   const reset=e.target.closest('[data-reset-res]');if(reset)dialogConfirm('이 예약의 수동 기록만 초기화할까요? 외부 예약은 취소되지 않습니다.',()=>{remember();delete state.reservations[reset.dataset.resetRes];commit('예약 기록을 초기화했습니다.')});
   const adjust=e.target.closest('[data-adjust]');if(adjust){remember();if(adjust.dataset.adjust==='delay'){for(const id of ['d1-ramen','d1-night-park','d1-night-oasis','d1-night-shop'])state.events[id]={status:'skipped',updatedAt:new Date().toISOString()};state.selectedEvent='d1-checkin'}else{state.filters.optional=false;state.options.zoo=false}commit(adjust.dataset.adjust==='delay'?'첫날 라멘·밤 일정을 건너뜀으로 기록했습니다. 체크인 후 월요일 대체안을 확인하세요.':'선택 방문을 제외했습니다. 원할 때 다시 포함할 수 있습니다.');if(adjust.dataset.adjust==='delay')focusEvent('d1-checkin')}
-  const restore=e.target.closest('[data-restore-day]');if(restore)dialogConfirm('이 날짜의 진행·건너뜀 기록을 지우고 원래 계획으로 되돌릴까요? 예약·메모는 유지합니다.',()=>{remember();const i=Number(restore.dataset.restoreDay);for(const id of EVENT_IDS)if(id.startsWith('d'+(i+1)+'-'))delete state.events[id];if(i===4)state.overrides.ramenMonday=false;if(i===3)state.options.zoo=false;state.filters.optional=true;commit('선택 날짜의 원래 계획을 복원했습니다.')});
+  const restore=e.target.closest('[data-restore-day]');if(restore)dialogConfirm('이 날짜의 진행·건너뜀 기록을 지우고 원래 계획으로 되돌릴까요? 예약·메모는 유지합니다.',()=>{remember();const i=Number(restore.dataset.restoreDay);for(const id of EVENT_IDS)if(eventDayIndex(id)===i)delete state.events[id];if(i===4)state.overrides.ramenMonday=false;if(i===CITY_DAY)state.options.zoo=false;state.filters.optional=true;commit('선택 날짜의 원래 계획을 복원했습니다.')});
   if(e.target.closest('#undolast')){if(!undoState){announce('되돌릴 직전 변경이 없습니다. 각 상태 선택으로도 수정할 수 있습니다.');return}const previous=state;state=undoState;undoState=previous;active=state.selectedDay;view=state.selectedView;writeRoute(false);renderAll();announce(persist()?'직전 변경을 되돌렸습니다.':storageMessage)}
   if(e.target.closest('#exportbackup'))exportBackup();
   if(e.target.closest('#importbackup'))$('#backupfile').click();
