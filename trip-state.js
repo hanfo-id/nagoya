@@ -105,10 +105,7 @@ function getMapStops(s=state,i=s.selectedDay){
    if(e.id==='d3-extra')ids=['forest','hill','mononoke'];
   }
   for(const id of ids.filter(Boolean)){if(!PLACE[id])continue;stops.push({id,...PLACE[id],eventId:e.id,eventIds:e.id==='d2-shopping'?['d2-shopping','d2-rest']:[e.id],time:e.time,end:e.end,kind:e.kind,optional:e.optional,status:s.events[e.id]?.status||'planned',number:stops.length+1,location:typeof MAP_LOCATIONS!=='undefined'?MAP_LOCATIONS[id]:null})}
-  if(!s.filters.foodOnly&&s.filters.optional)for(const [shopId,shop] of Object.entries(SHOP_GUIDE)){
-   const anchor=shopId==='parco'?'d2-lunch':shopId==='mandarake'?(s.options.zoo?'d4-osu':'d4-osu-lunch'):'d5-shopping';
-   if(shop.day===i&&e.id===anchor){const id='shop-'+shopId;stops.push({id,...PLACE[id],shopId,eventId:e.id,eventIds:[e.id],time:shopId==='parco'?'12:10':shopId==='mandarake'?(s.options.zoo?'14:00':'12:30'):'10:45',kind:'쇼핑',optional:true,status:'planned',number:stops.length+1,location:typeof MAP_LOCATIONS!=='undefined'?MAP_LOCATIONS[id]:null})}
-  }
+
  }
  return stops;
 }

@@ -1,5 +1,5 @@
 /* Cache only this project's application files. Never cache OSM or external pages. */
-const CACHE='nagoya-trip-20261106-spacing3';
+const CACHE='nagoya-trip-20261106-area4';
 const FILES=['./','index.html','guide.html','style.css','controls.css','ux.css','travel.css','components.css','screen.css','screen.js','place-experiences.js','trip-details.js','trip-data.js','map-locations.js','trip-state.js','ux.js','numbered-map.js','app.js','vendor/leaflet/leaflet.css','vendor/leaflet/leaflet.js','vendor/leaflet/images/layers.png','vendor/leaflet/images/layers-2x.png'];
 const urls=FILES.map(file=>new URL(file,self.registration.scope).href);
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(urls))));

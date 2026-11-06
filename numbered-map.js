@@ -5,7 +5,7 @@ function destroyDayMap(){
  if(dayMap){dayMap.remove();dayMap=null}
  mapTiles=null;mapMarkers.clear();
 }
-function popupContent(p){return `<div class="placepopup"><strong>${p.number}. ${esc(p.name)}</strong><span lang="ja">${esc(p.jp)}</span><button class="btn btn-secondary" ${p.shopId?`data-shop="${p.shopId}"`:`data-place-detail="${p.eventId}" data-detail-number="${p.number}"`}>상세 보기</button></div>`}
+function popupContent(p){return `<div class="placepopup"><strong>${p.number}. ${esc(p.name)}</strong><span lang="ja">${esc(p.jp)}</span><button class="btn btn-secondary" data-place-detail="${p.eventId}" data-detail-number="${p.number}">상세 보기</button></div>`}
 function selectPin(p){
  document.querySelector('#selectedmapplace').textContent=p.number+'번 '+p.name;
  document.querySelector('#mapcaption').textContent=p.name;
@@ -13,7 +13,7 @@ function selectPin(p){
  document.querySelectorAll('.route-item').forEach(c=>c.classList.toggle('is-selected',c.id==='mapstop-'+p.number));
  mapMarkers.forEach(({marker,point})=>{marker.getElement()?.classList.toggle('is-selected',point.number===p.number);marker.setZIndexOffset?.(point.number===p.number?1000:0)});
  if(typeof selectedActions==='function')selectedActions(p);
- if(!p.shopId&&!p.eventIds.includes(state.selectedEvent))state.selectedEvent=p.eventId;writeRoute(false);
+ if(!p.eventIds.includes(state.selectedEvent))state.selectedEvent=p.eventId;writeRoute(false);
 }
 function fitDayMap(extent='all'){
  if(!dayMap)return;

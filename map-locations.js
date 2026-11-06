@@ -213,5 +213,3 @@ const MAP_LOCATIONS={
   "source": "https://www.openstreetmap.org/node/5408459629"
  }
 };
-
-Object.entries(SHOP_GUIDE).forEach(([id,s])=>{MAP_LOCATIONS['shop-'+id]={lat:s.lat,lng:s.lng,kind:'address',source:'https://msearch.gsi.go.jp/address-search/AddressSearch'}});
