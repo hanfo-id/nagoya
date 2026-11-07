@@ -2,8 +2,8 @@ const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
 function context(store={},blocked=false){const c=vm.createContext({URL,URLSearchParams,Intl,Date,Set,Map,location:{href:'https://hanfo-id.github.io/nagoya/'},localStorage:{getItem(k){if(blocked)throw Error('blocked');return store[k]??null},setItem(k,v){if(blocked)throw Error('blocked');store[k]=v}}});for(const name of ['trip-details.js','trip-data.js','map-locations.js','trip-state.js','ux.js'])vm.runInContext(fs.readFileSync(name,'utf8'),c);return c}
 const c=context(),run=s=>vm.runInContext(s,c),json=s=>JSON.parse(run('JSON.stringify('+s+')'));
 const original=vm.createContext({});vm.runInContext(fs.readFileSync('trip-details.js','utf8'),original);vm.runInContext(fs.readFileSync('trip-data.js','utf8'),original);
-const facts=JSON.parse(vm.runInContext('JSON.stringify({days,restaurants,zooEvents})',original));
-assert.equal(json('days.flatMap(d=>d.events)').length,40);assert.equal(run('EVENT_IDS.size'),44);
+const facts=JSON.parse(vm.runInContext('JSON.stringify({days,restaurants,zooEvents})',original));for(const d of facts.days)for(const e of d.events){delete e.id;delete e.placeId}
+assert.equal(json('days.flatMap(d=>d.events)').length,40);assert.equal(run('EVENT_IDS.size'),52);
 assert.equal(new Set(json('days.flatMap(d=>d.events.map(e=>e.id))')).size,40);
 // Date boundaries use Tokyo, independent of host timezone. Explicit URLs win over saved or automatic choices.
 assert.deepEqual(json("japanClock(new Date('2026-12-09T15:01:00Z'))"),{date:'2026-12-10',time:'00:01'});
@@ -20,13 +20,13 @@ for(let day=0;day<5;day++)for(const foodOnly of [false,true])for(const optional 
  for(const stop of stops){assert.ok(stop.eventIds.every(id=>events.some(e=>e.id===id)));assert.ok(stop.location,stop.id)}
  if(foodOnly)assert.ok(events.every(e=>e.kind==='식사'));if(!optional)assert.ok(events.every(e=>!e.optional));
 }
-run("state=freshState();state.options.zoo=true");assert.ok(json('baseEvents(CITY_DAY)').some(e=>e.id==='d4-zoo-visit'));assert.ok(!json('baseEvents(CITY_DAY)').some(e=>e.id==='d4-old-town'));
+run("state=freshState();state.options.zoo=true");assert.ok(json('baseEvents(CITY_DAY)').some(e=>e.id==='d4-zoo-visit'));assert.equal(run("baseEvents(CITY_DAY).find(e=>e.id==='d4-old-town').time"),'16:45');
 run("state=freshState();state.overrides.ramenMonday=true");assert.ok(json('baseEvents(4)').some(e=>e.id==='d5-ramen-alternative'));assert.ok(!json('baseEvents(4)').some(e=>e.id==='d5-shopping'));assert.equal(run("days[4].events[2].id"),'d5-shopping');
-run('state=freshState();state.selectedDay=PARK_DAY');
-assert.equal(run("nextEvent(state,PARK_DAY,{date:'2026-12-13',time:'08:30'}).event.id"),'d3-outbound');
+run('state=freshState();state.selectedDay=EXCURSION_DAY');
+assert.equal(run("nextEvent(state,EXCURSION_DAY,{date:'2026-12-13',time:'08:30'}).event.id"),'sun-gero-outbound');
 assert.deepEqual(json('state.events'),{}); // Passing time never writes completion.
-run("state.events['d3-outbound']={status:'done'}");assert.notEqual(run("nextEvent(state,PARK_DAY,{date:'2026-12-13',time:'08:30'}).event.id"),'d3-outbound');
-run("state.events['d3-valley']={status:'progress'}");assert.equal(run("nextEvent(state,PARK_DAY,{date:'2026-12-13',time:'08:30'}).event.id"),'d3-valley');
+run("state.events['sun-gero-outbound']={status:'done'}");assert.notEqual(run("nextEvent(state,EXCURSION_DAY,{date:'2026-12-13',time:'08:30'}).event.id"),'sun-gero-outbound');
+run("state.events['sun-gero-town-am']={status:'progress'}");assert.equal(run("nextEvent(state,EXCURSION_DAY,{date:'2026-12-13',time:'08:30'}).event.id"),'sun-gero-town-am');
 const migrated=json("migrateLegacy({memo:'여행 메모',zoo:true,day:3,c0:true,c1:true,c6:true,c7:true})");assert.equal(migrated.reservations['ghibli-ticket'].status,'confirmed');assert.equal(migrated.reservations.mutsumi.time,'');assert.equal(migrated.memo,'여행 메모');assert.equal(migrated.checks.flight,true);
 run('state=freshState()');assert.deepEqual(json('validateBackup(JSON.stringify(backupEnvelope()))'),json('state'));
 assert.throws(()=>run("validateBackup('{bad')"));assert.throws(()=>run("validateBackup(JSON.stringify({app:'nagoya-trip',state:{version:99}}))"));assert.throws(()=>run("validateBackup(JSON.stringify({app:'nagoya-trip',state:{version:2}}))"));

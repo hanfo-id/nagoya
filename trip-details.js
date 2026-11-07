@@ -78,12 +78,119 @@ function applyTripUpdates(){
  zooEvents[0].steps[0]='이동 약 35–45분. 토요일 오전의 교체 선택지입니다.';
  days[2]={...city,date:'12.12',dow:'토요일',stableDay:3};
  days[3]={...park,date:'12.13',dow:'일요일',stableDay:2};
+ applyGeroItinerary();
+}
 
+const GERO_LINKS={
+ bath:'https://www.gero-ogawaya.net/how_to_spend/daytrip/',
+ rail:'https://railway.jr-central.co.jp/ticketless/index.html',
+ timetable:'https://railway.jr-central.co.jp/timetable/nr_doc/search.html?s=1',
+ footbaths:'https://www.city.gero.lg.jp/site/kanko/1246.html'
+};
+
+// Apply the revised itinerary while keeping existing IDs for carried-over activities.
+function applyGeroItinerary(){
+ Object.assign(PLACE,{
+  geroStation:{name:"JR 게로역",jp:"JR下呂駅",query:"JR下呂駅"},
+  geroTown:{name:"게로 온천마을",jp:"下呂温泉街",query:"下呂温泉街"},
+  geroLunch:{name:"게로 온천마을 식당",jp:"下呂温泉 食事処",query:"下呂温泉 飛騨牛 ランチ"},
+  ogawaya:{name:"게로 온천 오가와야",jp:"下呂温泉 小川屋",query:"下呂温泉 小川屋"},
+  geroRiver:{name:"게로 온천마을",jp:"下呂温泉街 飛騨川",query:"下呂温泉街 飛騨川"},
+  jrNagoya:{name:"JR 나고야역",jp:"JR名古屋駅",query:"JR名古屋駅"}
+ });
+ const visit=(id,placeId,time,end,title,kind,description,steps,food='')=>({
+  ...E(time,end,title,kind,description,steps,PLACE[placeId].jp,food),id,placeId
+ });
+ days[3]={
+  ...days[3],
+  short:"게로 온천 당일치기",
+  title:"게로 온천 당일치기",
+  subtitle:"특급 히다 → 온천마을 산책·점심 → 오가와야 대절탕 → 족욕·카페 → 15:32 열차로 나고야 복귀 → 몬자.",
+  note:"지브리 예약 불가에 따른 최종 대체 일정. 12/13(일) 오가와야 별관 유라기 대절탕 12:30 시작 목표, 45분 기본 ¥4,400/실(정원 2명, 객실별 요금 확인)을 예약하는 구성을 추천합니다. 사전예약이 필수이며 실제 이용 시각은 예약 화면에서 확인합니다. 본관 대절탕 ¥3,300/45분은 일요일 이용 시작이 15:30이라 추천 복귀 열차와 겹칩니다. JR 특급 히다 3호 08:43 나고야→10:14 게로, 히다 14호 15:32 게로→17:05 나고야는 현재 공개 시간표를 기준으로 한 계획값이며, 12월 실제 운행·좌석은 출발 전 재확인하고 지정석을 확보합니다. 15:32 편을 놓치면 16:18 편은 저녁 여유가 줄어드니 몬자에 연락하거나 유연한 저녁으로 변경합니다.",
+  walk:'도보 약 3–5km',
+  cost:'대절탕 ¥2,200 (2인 이용 기준) + 열차·식사',
+  route:['고메다','JR 나고야역','JR 게로역','온천마을','오가와야','JR 나고야역','호텔','오코게'],
+  events:[
+   visit("sun-gero-morning", "komeda", "07:00", "07:40", "고메다 모닝 / 게로 나들이 준비", "식사", "아침을 간단히 먹고 나고야역으로 이동합니다.", [
+    "07:45까지 호텔을 출발해 나고야역에 08:15 전후 도착하는 계획.",
+    "아침 대기가 길면 테이크아웃 또는 간단식으로 바꾸고 특급 승차 시간을 우선합니다.",
+    "작은 가방, 보온 겉옷, 갈아입을 속옷을 준비합니다."
+   ], "komeda"),
+   visit("sun-gero-outbound", "geroStation", "07:45", "10:14", "나고야역 → 게로역 / 특급 히다 3호", "이동", "JR 나고야역에서 다카야마선 특급 히다를 타고 게로로 이동합니다.", [
+    "현재 공개 시간표의 계획 예시: 나고야 08:43 출발, 게로 10:14 도착.",
+    "호텔에서 나고야역까지 지하철·역내 이동을 포함해 30–40분 확보.",
+    "특급권·지정석을 미리 확인하고 실제 12/13 운행 시각을 출발 전 재확인합니다."
+   ]),
+   visit("sun-gero-town-am", "geroTown", "10:14", "11:30", "게로 온천마을 산책 / 강변·족욕", "산책", "역에서 온천마을 중심부로 걸어가 강변과 족욕을 둘러봅니다.", [
+    "게로역→오가와야는 도보 약 7분. 짐을 맡길 수 있는지는 현장 확인.",
+    "공공 족욕은 수건을 지참하고, 혼잡하면 강변 산책만 합니다.",
+    "오전 산책은 평탄한 중심가 위주로 두어 온천사 계단과 중복 보행을 피합니다."
+   ]),
+   visit("sun-gero-lunch", "geroLunch", "11:30", "12:15", "게로에서 히다 지역 점심", "식사", "온천마을에서 점심을 먹고 대절탕 예약 시간에 맞춥니다.", [
+    "비예약 식당을 기본으로 하며 대기 20분을 넘으면 다른 영업 중인 가게로 변경.",
+    "점심을 길게 먹지 않고 12:20까지 오가와야에 도착하는 것을 목표로 합니다.",
+    "개별 점포의 12월 영업·메뉴·예약은 출발 전 확인합니다."
+   ]),
+   visit("sun-gero-private-bath", "ogawaya", "12:30", "13:15", "오가와야 대절탕 / 2인 프라이빗 온천", "온천", "오가와야 별관 유라기의 2인 대절탕을 12:30으로 계획합니다. 사전 예약이 필요합니다.", [
+    "본관 대절탕은 45분 ¥3,300/실(최대 4명)이지만 일요일 첫 슬롯은 15:30이라 15:32 복귀 열차와 양립하지 않습니다. 이번 일정은 12:30부터 이용 가능한 별관 유라기 대절탕 45분 ¥4,400/실(정원 2명) 기준.",
+    "12:30은 별관 이용 가능 시간대에 맞춘 계획값이며 해당 날짜 예약 가능한 시작 시각은 예약 화면에서 확정해야 합니다.",
+    "별관은 서로 다른 7종. 사전예약 필수. 예약이 없으면 공용 족욕·온천마을 산책으로 전환합니다.",
+    "대절탕만 이용하면 2인 총 ¥4,400. 공용 대욕장도 추가하면 성인 1인 ¥1,500이 더해져 2인 총 ¥7,400. 이용 조합·당일 추가 요금은 현장 재확인."
+   ]),
+   visit("sun-gero-town-pm", "geroRiver", "13:15", "15:05", "온천마을 후식·강변 산책 / 선택 온천사", "산책", "목욕 후 따뜻한 음료와 강변 산책으로 여유를 둡니다.", [
+    "카페·온천 디저트·족욕 중 두 가지 정도만 고릅니다.",
+    "온천사는 게로역에서 도보 약 15분, 일몰 전 자유 참배 안내. 오르막이 있으므로 컨디션이 좋고 시간이 남을 때만 선택.",
+    "15:05에는 역 방향으로 이동해 15:15까지 게로역 도착. 기념품 쇼핑을 늘려 열차를 놓치지 않습니다."
+   ]),
+   visit("sun-gero-return", "jrNagoya", "15:05", "17:30", "게로역 → 나고야역 / 특급 히다 14호", "이동", "15:32 게로 출발, 17:05 나고야 도착 편을 우선 목표로 돌아옵니다.", [
+    "현재 공개 시간표 기준 계획 예시: 게로 15:32→나고야 17:05.",
+    "호텔까지 지하철·도보 포함 약 25–35분 추정.",
+    "15:32 편을 놓칠 때의 다음 16:18→18:06 편은 저녁 준비 시간을 크게 줄입니다. 몬자 예약이 확정됐다면 지연 시 매장에 연락합니다."
+   ]),
+   visit("sun-gero-rest", "hotel", "17:30", "18:45", "호텔 휴식 / 온천 후 정리", "휴식", "호텔로 돌아와 쉬고 저녁 식사 전 여유를 둡니다.", [
+    "젖은 옷·수건 정리, 수분 보충, 잠깐 다리 쉬기.",
+    "열차가 늦으면 산책·쇼핑 없이 바로 호텔로 이동."
+   ]),
+   visit("d3-monja", "monja", "19:15", "20:30", "오코게에서 몬자야키", "식사", "게로에서 돌아온 뒤 기존 저녁 계획을 이어갑니다.", [
+    "일요일 19:15는 계획 시각이며 실제 예약 확정 여부는 매장 확인.",
+    "호텔에서 도보 약 15–25분. 시간 여유가 부족하면 사전 연락 후 유연한 저녁으로 변경.",
+    "15:32 게로 출발편을 기준으로 한 구성. 다음 열차로 돌아오면 식사 전 휴식이 거의 없어 변경을 판단합니다."
+   ], "monja")
+  ]
+ };
+ const saturday=days[2];
+ saturday.subtitle="오스칸논·상점가 → 호텔 휴식 → 야나기바시 스시. 다음 날 게로 장거리 당일치기를 위해 오후 보행을 줄입니다.";
+ saturday.note="토요일은 오스에서 점심을 먹은 뒤 호텔에서 쉬고 17:30 야나기바시 스시로 이동합니다. 동물원은 오전 교체 선택이며, 고르면 오스는 14시부터 둘러봅니다. 저녁에는 일요일 히다 왕복 열차와 오가와야 대절탕 예약을 확인합니다.";
+ saturday.route=['호텔','오스칸논','오스상점가','호텔 휴식','야나기바시','호텔'];
+ saturday.events[1]=visit("d4-old-town", "hotel", "14:00", "16:45", "호텔 휴식 / 저녁 스시 전 여유", "휴식", "객실에서 쉬거나 주변 카페에서 앉아 다음 날 장거리 이동에 대비합니다.", [
+    "기존 14:00–16:45 시케미치·엔도지 산책을 호텔 휴식으로 바꿉니다.",
+    "17:10 전후 호텔을 출발해 야나기바시 시장 식당에 도착. 실제 예약 시각·위치를 확인합니다.",
+    "체력이 충분해도 골목 방문을 추가하지 않고 다음 날 준비와 휴식을 우선합니다."
+   ]);
+ saturday.events[5]=visit("d4-market-transfer", "hotel", "13:15", "14:00", "오스에서 호텔로 복귀", "이동", "오스 관람을 마치고 숙소로 돌아가 저녁 식사 전 휴식을 확보합니다.", [
+    "히사야오도리역까지 지하철 이동. 환승·역 보행 포함 30–45분 계획.",
+    "시케미치·엔도지는 이번 여행에서 생략해 토요일 보행과 다음 날 게로 왕복 피로를 낮춥니다.",
+    "14:00 전후 호텔 도착을 목표로 하고 필요하면 점심·상점가 체류를 조금 줄입니다."
+   ]);
+ saturday.events[6]=visit("d4-sushi", "sushi", "17:30", "18:45", "시장 안 카운터에서 스시", "식사", "전화로 예약 여부를 확인한 후 방문합니다.", [
+    "스시 저녁 계획 유지. 실제 예약 여부·시간은 매장에 재확인.",
+    "저녁 식사 뒤 호텔 복귀 후 다음 날 특급 열차권과 대절탕 예약 정보를 확인합니다.",
+    "일요일은 07:45 호텔 출발 목표이므로 22시 무렵까지 휴식합니다."
+   ], "sushi");
+ saturday.events[7]=visit("d4-return", "hotel", "19:00", "20:30", "호텔 복귀 / 내일 게로 준비", "휴식", "저녁 식사 뒤 호텔에서 쉬고 다음 날 나들이를 준비합니다.", [
+    "일요일 07:45 호텔 출발. 히다 왕복 지정석·열차 시각과 오가와야 대절탕 예약을 확인합니다.",
+    "따뜻한 겉옷, 작은 가방, 수건과 갈아입을 옷을 준비합니다."
+   ]);
+ days[0].events[3].steps[2]='체크인 시 일요일 게로 나들이·대욕장 운영·체크아웃 후 짐 보관 확인.';
+ days[1].events[8].steps[2]='일요일은 07:45 호텔 출발. 토요일 밤에 히다 열차와 게로 대절탕 예약 확인.';
+ restaurants.find(r=>r.id==='komeda').day='금 07:30 · 일 07:00';
+ restaurants.find(r=>r.id==='monja').why='게로에서 돌아온 뒤 숙소 근처에서 즐기는 몬자야키 저녁.';
+ restaurants.find(r=>r.id==='ramen').hours='11:00–14:30(LO),17:30–21:30(LO21:00). 공식2026.11.07 확인.';
 }
 function placesForDay(i){
  const zoo=document.querySelector('#zoo')?.checked;
- const city=zoo?['hotel','zoo','kannon','osu','bansho','sushi']:['hotel','kannon','osu','bansho','kokusai','shike','endoji','sushi'];
- const keys=[['airport','station','ramen','hotel','hisaya','tower','oasis','donki'],['hotel','komeda','hisaya','ramuchi','lachic','oasis','mutsumi','tower'],city,['komeda','sake','fuji','parkstation','park','warehouse','cafe','valley','mononoke','monja','hotel'],['hotel','kokusai','keshiki','nagoya','station','airport']][i];
+ const city=zoo?['hotel','zoo','kannon','osu','bansho','sushi']:['hotel','kannon','osu','bansho','hotel','sushi'];
+ const keys=[['airport','station','ramen','hotel','hisaya','tower','oasis','donki'],['hotel','komeda','hisaya','ramuchi','lachic','oasis','mutsumi','tower'],city,['komeda','jrNagoya','geroStation','geroTown','geroLunch','ogawaya','geroRiver','geroStation','jrNagoya','hotel','monja'],['hotel','kokusai','keshiki','nagoya','station','airport']][i];
  return keys.map(k=>({id:k,...PLACE[k],optional:i===0&&['oasis','donki'].includes(k)}));
 }
 function mapEmbed(points){return 'https://maps.google.com/maps?'+new URLSearchParams({saddr:points[0].query,daddr:points.slice(1).map(p=>p.query).join(' to:'),output:'embed',hl:'ko',...(points.every(p=>['park','warehouse','cafe','valley','forest','hill','mononoke'].includes(p.id))?{dirflg:'w'}:{})}).toString()}
@@ -153,3 +260,11 @@ AREA_GUIDES.osu.intro='옷·빈티지, 굿즈·소품, 간식 중 관심 있는 
 AREA_GUIDES.lachic.places=['wegoParco','parco','jump'];
 AREA_GUIDES.nagoya.places=['guGate','uniqloGate','hands','animate','donguriGate','takashimaya'];
 function choiceCategory(place){return ['옷','빈티지'].includes(place.category)?'clothes':['간식','카페','식품관'].includes(place.category)?'food':'goods'}
+Object.assign(PLACE_INTROS,{
+ jrNagoya:'특급 히다를 타고 내리는 JR 나고야역.',
+ geroStation:'온천마을의 관문. 돌아갈 때는 15:15까지 역 도착 목표.',
+ geroTown:'히다강 옆 온천 거리. 산책과 무료 족욕을 즐기는 구역.',
+ geroLunch:'히다 지역 음식을 고르는 자유 점심. 지도 핀은 온천마을 중심부를 표시합니다.',
+ ogawaya:'별관 유라기의 2인 대절탕. 12:30 시작을 목표로 사전 예약.',
+ geroRiver:'히다강 주변에서 후식·족욕·산책을 즐기고 15:05에 역으로 이동.'
+});

@@ -18,7 +18,7 @@ console.log('PASS single Lachic stop with both legacy activity IDs; 26 child cho
 
 // Consecutive location visits are one visible stop; original records stay separately editable.
 run('state=freshState();state.selectedDay=CITY_DAY');
-const city=json('getMapStops(state,CITY_DAY)');assert.equal(city.filter(p=>p.id==='kannon').length,1);assert.equal(city.filter(p=>p.id==='kokusai').length,1);assert.equal(city.filter(p=>p.id==='osu').length,1);assert.ok(city.find(p=>p.id==='osu').eventIds.includes('d4-osu-lunch'));
+const city=json('getMapStops(state,CITY_DAY)');assert.equal(city.filter(p=>p.id==='kannon').length,1);assert.ok(!city.some(p=>['kokusai','shike','endoji'].includes(p.id)));assert.ok(city.find(p=>p.id==='hotel'&&p.eventIds.includes('d4-market-transfer')).eventIds.includes('d4-old-town'));assert.equal(city.filter(p=>p.id==='osu').length,1);assert.ok(city.find(p=>p.id==='osu').eventIds.includes('d4-osu-lunch'));
 const temple=city.find(p=>p.id==='kannon');assert.deepEqual(temple.eventIds,['d4-osu-transfer','d4-osu']);assert.equal(temple.time,'09:15');assert.equal(temple.end,'12:00');
 run("state.events['d4-osu-transfer']={status:'done'}");assert.equal(run("getMapStops(state,CITY_DAY).find(p=>p.id==='kannon').status"),'planned');
 run("state.events['d4-osu']={status:'done'}");assert.equal(run("getMapStops(state,CITY_DAY).find(p=>p.id==='kannon').status"),'done');assert.equal(run("validateBackup(JSON.stringify(backupEnvelope())).events['d4-osu-transfer'].status"),'done');

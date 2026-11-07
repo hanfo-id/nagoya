@@ -10,7 +10,7 @@ for(let day=0;day<5;day++)for(const foodOnly of [false,true])for(const optional 
  c.active=day;vm.runInContext(`state.selectedDay=${day};state.filters.foodOnly=${foodOnly};state.filters.optional=${optional};initDayMap()`,c);
  vm.runInContext("showMapSelection({number:1,fromScroll:true})",c);
  const focused=JSON.parse(vm.runInContext('JSON.stringify({center:dayMap.center,expected:[numberedPlaces(active)[0].location.lat,numberedPlaces(active)[0].location.lng]})',c));assert.deepEqual(focused.center,focused.expected);
- for(const scale of [100,1000,10000,100000]){c.scale=scale;for(const extent of ['all','city','all',...(day===vm.runInContext('PARK_DAY',c)?['park','all']:[])]){
+ for(const scale of [100,1000,10000,100000]){c.scale=scale;for(const extent of ['all','city','all',...(day===vm.runInContext('EXCURSION_DAY',c)?['gero','all']:[])]){
  vm.runInContext(`fitDayMap('${extent}');spreadMapPins()`,c);
  const points=JSON.parse(vm.runInContext('JSON.stringify([...mapMarkers.values()].map(e=>({coord:e.marker.coords,expected:[e.point.location.lat,e.point.location.lng]})))',c));for(const p of points)assert.deepEqual(p.coord,p.expected);
  }}

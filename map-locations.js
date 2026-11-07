@@ -1,5 +1,11 @@
 /* Coordinates checked 2026-11-05; Kamimaezu checked 2026-11-06. OSM contributors / GSI address search. */
 const MAP_LOCATIONS={
+ "jrNagoya":{"lat":35.1706232,"lng":136.8821911,"kind":"place","source":"https://www.openstreetmap.org/relation/20258665"},
+ "geroStation":{"lat":35.80582,"lng":137.23955,"kind":"place","source":"https://mapcarta.com/27454068"},
+ "geroTown":{"lat":35.80937,"lng":137.241474,"kind":"area-anchor","source":"https://www.city.gero.lg.jp/site/kanko/1246.html","note":"온천마을의 비너스 족욕 부근을 대표점으로 사용."},
+ "geroLunch":{"lat":35.807199,"lng":137.24178,"kind":"area-anchor","source":"https://www.city.gero.lg.jp/site/kanko/1246.html","note":"유아미야 인근 온천마을 중심부. 지정 식당 위치가 아님."},
+ "ogawaya":{"lat":35.8086519,"lng":137.2418786,"kind":"place","source":"https://mapfan.com/spots/SC5CC,J,CR9"},
+ "geroRiver":{"lat":35.808193,"lng":137.242994,"kind":"area-anchor","source":"https://nightview.useless-landscape.com/details/gero-spa/","note":"히다강 주변 산책 구간의 대표점."},
  "hotel": {
   "lat": 35.173293,
   "lng": 136.9055994,

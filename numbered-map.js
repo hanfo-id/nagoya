@@ -17,14 +17,14 @@ function selectPin(p){
 }
 function fitDayMap(extent='all'){
  if(!dayMap)return;
- const points=[...mapMarkers.values()].filter(({marker,point})=>(extent==='park'?PARK_IDS.has(point.id):extent==='city'?CITY_IDS.has(point.id):true));
+ const points=[...mapMarkers.values()].filter(({marker,point})=>(extent==='gero'?GERO_IDS.has(point.id):extent==='city'?CITY_IDS.has(point.id):true));
  if(!points.length)return;
  dayMap.closePopup();dayMap.fitBounds(L.latLngBounds(points.map(({point})=>[point.location.lat,point.location.lng])),{padding:[48,48],maxZoom:16,animate:false});
  document.querySelectorAll('[data-mapextent]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mapextent===extent)));
  spreadMapPins();
 }
-const PARK_IDS=new Set(['parkstation','park','warehouse','cafe','valley','forest','hill','mononoke']);
-const CITY_IDS=new Set(Object.keys(MAP_LOCATIONS).filter(id=>!PARK_IDS.has(id)&&!['airport','zoo'].includes(id)));
+const GERO_IDS=new Set(['geroStation','geroTown','geroLunch','ogawaya','geroRiver']);
+const CITY_IDS=new Set(Object.keys(MAP_LOCATIONS).filter(id=>!GERO_IDS.has(id)&&!['airport','zoo'].includes(id)));
 function spreadMapPins(){if(dayMap)mapMarkers.forEach(({marker})=>{if(!dayMap.hasLayer(marker))marker.addTo(dayMap)})}
 function initDayMap(){
  destroyDayMap();
