@@ -20,10 +20,15 @@ assert.equal(backup.reservations.monja.time,'19:15');assert.equal(backup.selecte
 assert.equal(run("eventStatus(baseEvents(EXCURSION_DAY).find(e=>e.id==='sun-gero-private-bath'))"),'planned');
 run("let active=0;function openScreen(){};function showMapSelection(){};function openPlace(){};focusEvent('sun-gero-private-bath')");assert.equal(run('active'),3);
 run("focusEvent('d4-sushi')");assert.equal(run('active'),2);
-assert.deepEqual(json("baseEvents(EXCURSION_DAY).map(e=>e.time)"),['07:00','07:45','10:14','11:30','12:30','13:15','15:05','17:30','19:15']);
+assert.deepEqual(json("baseEvents(EXCURSION_DAY).map(e=>e.time)"),['07:00','07:45','10:14','11:20','12:30','13:25','14:55','17:05','17:40','19:15']);
 for(const [event,time] of [['sun-gero-outbound','08:43'],['sun-gero-private-bath','12:30'],['sun-gero-return','15:32']]){
  const def=json(`reservationFor(baseEvents(EXCURSION_DAY).find(e=>e.id==='${event}'))`);
  assert.equal(def.day,3);assert.equal(def.plan,time);assert.ok(def.url.startsWith('https://'));
 }
 assert.equal(run("baseEvents(CITY_DAY).find(e=>e.id==='d4-old-town').placeId"),'hotel');
-console.log('PASS Gero itinerary, Hida and bath reservation targets, Saturday hotel rest, and legacy backups.');
+assert.deepEqual(json("baseEvents(0).map(e=>[e.placeId,e.time])"),[['airport','16:50'],['station','18:05'],['hotel','18:55'],['shoraku','19:55'],['hisaya','20:45']]);
+const monday=json('getMapStops(freshState(),4)');
+assert.ok(monday.some(p=>p.id==='kanayama'&&p.time==='11:00'));
+assert.ok(monday.find(p=>p.id==='airport').eventIds.includes('d5-airport-break'));
+assert.equal(run("baseEvents(4).find(e=>e.id==='d5-airport-transfer').end"),'12:30');
+console.log('PASS final arrival and departure, Gero itinerary, Hida and bath reservation targets, Saturday hotel rest, and legacy backups.');

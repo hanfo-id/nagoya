@@ -3,8 +3,8 @@ function context(store={},blocked=false){const c=vm.createContext({URL,URLSearch
 const c=context(),run=s=>vm.runInContext(s,c),json=s=>JSON.parse(run('JSON.stringify('+s+')'));
 const original=vm.createContext({});vm.runInContext(fs.readFileSync('trip-details.js','utf8'),original);vm.runInContext(fs.readFileSync('trip-data.js','utf8'),original);
 const facts=JSON.parse(vm.runInContext('JSON.stringify({days,restaurants,zooEvents})',original));for(const d of facts.days)for(const e of d.events){delete e.id;delete e.placeId}
-assert.equal(json('days.flatMap(d=>d.events)').length,40);assert.equal(run('EVENT_IDS.size'),52);
-assert.equal(new Set(json('days.flatMap(d=>d.events.map(e=>e.id))')).size,40);
+assert.equal(json('days.flatMap(d=>d.events)').length,41);assert.equal(run('EVENT_IDS.size'),58);
+assert.equal(new Set(json('days.flatMap(d=>d.events.map(e=>e.id))')).size,41);
 // Date boundaries use Tokyo, independent of host timezone. Explicit URLs win over saved or automatic choices.
 assert.deepEqual(json("japanClock(new Date('2026-12-09T15:01:00Z'))"),{date:'2026-12-10',time:'00:01'});
 assert.equal(run("travelPhase(japanClock(new Date('2026-12-09T14:59:00Z')))"),'before');
@@ -20,8 +20,14 @@ for(let day=0;day<5;day++)for(const foodOnly of [false,true])for(const optional 
  for(const stop of stops){assert.ok(stop.eventIds.every(id=>events.some(e=>e.id===id)));assert.ok(stop.location,stop.id)}
  if(foodOnly)assert.ok(events.every(e=>e.kind==='식사'));if(!optional)assert.ok(events.every(e=>!e.optional));
 }
-run("state=freshState();state.options.zoo=true");assert.ok(json('baseEvents(CITY_DAY)').some(e=>e.id==='d4-zoo-visit'));assert.equal(run("baseEvents(CITY_DAY).find(e=>e.id==='d4-old-town').time"),'16:45');
-run("state=freshState();state.overrides.ramenMonday=true");assert.ok(json('baseEvents(4)').some(e=>e.id==='d5-ramen-alternative'));assert.ok(!json('baseEvents(4)').some(e=>e.id==='d5-shopping'));assert.equal(run("days[4].events[2].id"),'d5-shopping');
+run("state=freshState();state.options.zoo=true");assert.ok(json('baseEvents(CITY_DAY)').some(e=>e.id==='d4-zoo-visit'));assert.equal(run("baseEvents(CITY_DAY).find(e=>e.id==='d4-old-town').time"),'16:25');
+run("state=freshState();state.overrides.shishimaruThursday=true");
+assert.deepEqual(json('baseEvents(0).map(e=>e.id)'),['d1-arrival','d1-train-in','d1-shishimaru','d1-checkin','d1-night-park']);
+assert.equal(run("baseEvents(0).find(e=>e.id==='d1-checkin').time"),'20:20');
+run("state=normalizeState({...freshState(),overrides:{ramenMonday:true},events:{'d5-shopping':{status:'done'}}})");
+assert.equal(run("eventDayIndex('d5-ramen-alternative')"),-1);
+assert.equal(run("validateBackup(JSON.stringify(backupEnvelope())).events['d5-shopping'].status"),'done');
+assert.ok(!json('baseEvents(4)').some(e=>e.id==='d5-ramen-alternative'||e.id==='d5-shopping'));
 run('state=freshState();state.selectedDay=EXCURSION_DAY');
 assert.equal(run("nextEvent(state,EXCURSION_DAY,{date:'2026-12-13',time:'08:30'}).event.id"),'sun-gero-outbound');
 assert.deepEqual(json('state.events'),{}); // Passing time never writes completion.
@@ -33,7 +39,7 @@ assert.throws(()=>run("validateBackup('{bad')"));assert.throws(()=>run("validate
 assert.equal(run("normalizeState({...freshState(),selectedDay:99,events:{'d1-arrival':{status:'invented'}}}).selectedDay"),0);
 assert.deepEqual(json("normalizeState({...freshState(),events:{'__proto__':{status:'done'},'unknown':{status:'done'}}}).events"),{});
 const brokenStore={'nagoya26-v2':'{bad'},broken=context(brokenStore);assert.equal(vm.runInContext('state.version',broken),2);assert.equal(brokenStore['nagoya26-v2-unreadable'],'{bad');
-const blocked=context({},true);assert.equal(vm.runInContext('persist()',blocked),false);assert.equal(vm.runInContext('baseEvents(0).length',blocked),7);
+const blocked=context({},true);assert.equal(vm.runInContext('persist()',blocked),false);assert.equal(vm.runInContext('baseEvents(0).length',blocked),5);
 // All travel facts survive state mutations. Only stable IDs / place IDs are added to the original events.
 const unchanged=json('({days,restaurants,zooEvents})');for(const d of unchanged.days)for(const e of d.events){delete e.id;delete e.placeId}for(const e of unchanged.zooEvents){delete e.id;delete e.placeId}assert.deepEqual(unchanged,facts);
 const url=run("routeBetween(PLACE.hotel,PLACE.mutsumi,'transit')"),params=new URL(url).searchParams;assert.equal(params.get('origin'),run('PLACE.hotel.query'));assert.equal(params.get('destination'),run('PLACE.mutsumi.query'));assert.equal(params.get('travelmode'),'transit');
@@ -41,7 +47,7 @@ console.log('PASS: Tokyo boundaries; URL/manual/auto precedence; 80 shared-filte
 
 // Route revision retains IDs and fixed meal bookings while grouping city visits.
 run('state=freshState()');
-assert.deepEqual(json('baseEvents(CITY_DAY).map(e=>e.id)'),['d4-morning','d4-osu-transfer','d4-osu','d4-osu-lunch','d4-market-transfer','d4-old-town','d4-sushi','d4-return']);
+assert.deepEqual(json('baseEvents(CITY_DAY).map(e=>e.id)'),['d4-morning','d4-osu-transfer','d4-osu','d4-osu-lunch','d4-market-transfer','d4-old-town','d4-sushi-transfer','d4-sushi','d4-return']);
 for(let i=0;i<5;i++)assert.ok(json(`baseEvents(${i}).map(e=>e.time)`).every((t,j,a)=>j===0||a[j-1]<=t),'chronological day '+i);
 assert.equal(run("baseEvents(CITY_DAY).find(e=>e.id==='d4-sushi').time"),'17:30');
 assert.equal(run("baseEvents(1).find(e=>e.id==='d2-rest').placeId"),'lachic');

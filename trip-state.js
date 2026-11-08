@@ -3,34 +3,35 @@ PLACE.kamimaezu={name:'가미마에즈역',jp:'上前津駅',query:'上前津駅
 const STORAGE_KEY='nagoya26-v2',STATE_VERSION=2;
 const EVENT_STATUS={planned:'예정',progress:'진행 중',done:'완료',skipped:'건너뜀'};
 const RES_STATUS={unconfirmed:'미확정',requested:'예약 요청 중',confirmed:'확정',walkin:'예약 불필요 / 현장 방문',cancelled:'취소'};
-const DAY_IDS=[
- ['arrival','train-in','ramen','checkin','night-park','night-oasis','night-shop'],
- ['morning','park','lunch','shopping','oasis','rest','wings','tower','pack'],
- ['morning','outbound','entrance','warehouse','cafe','valley','extra','return','monja'],
- ['morning','old-town','osu-transfer','osu-lunch','osu','market-transfer','sushi','return'],
- ['checkout','keshiki','shopping','luggage','airport-transfer','departure-check','flight']
+const LEGACY_EVENT_IDS=[
+ 'd3-morning','d3-outbound','d3-entrance','d3-warehouse','d3-cafe','d3-valley','d3-extra','d3-return',
+ 'd1-night-oasis','d1-night-shop','d5-shopping','d5-luggage','d5-ramen-alternative'
 ];
-const PRIMARY_PLACES=[
- ['airport','station','ramen','hotel','hisaya','oasis','donki'],
- ['komeda','hisaya','ramuchi','lachic','oasis','hotel','mutsumi','tower','hotel'],
- ['komeda','parkstation','park','warehouse','cafe','valley','forest','hotel','monja'],
- ['hotel','shike','kannon','osu','osu','sushi','sushi','hotel'],
- ['hotel','keshiki','nagoya','hotel','airport','airport','airport']
-];
-// Content identities survive calendar moves so existing progress and backups remain valid.
-days.forEach((d,i)=>d.events.forEach((e,j)=>{const original=d.stableDay??i;e.id=e.id||'d'+(original+1)+'-'+DAY_IDS[original][j];e.placeId=e.placeId||PRIMARY_PLACES[original][j];if(e.id==='d3-extra')e.placeId='mononoke'}));
-zooEvents.forEach((e,j)=>{e.id='d4-zoo-'+['transfer','visit','lunch'][j];e.placeId=j===2?'kamimaezu':'zoo'});
-const EXCURSION_DAY=days.findIndex(d=>d.events.some(e=>e.id==='sun-gero-private-bath'));
-const LEGACY_EVENT_IDS=DAY_IDS[2].map(id=>'d3-'+id).filter(id=>id!=='d3-monja');
-const CITY_DAY=days.findIndex(d=>d.events.some(e=>e.id==='d4-osu'));
-function eventDayIndex(id){if(id.startsWith('d4-zoo-'))return CITY_DAY;if(id==='d5-ramen-alternative')return 4;return days.findIndex(d=>d.events.some(e=>e.id===id))}
+const SHISHIMARU_STOP=itineraryEvent(
+ 'd1-shishimaru','ramen','19:25','20:20','역에서 시시마루 라멘 / 저녁 교체','식사',
+ '메이테츠 나고야에 19:00까지 도착하고 짐을 바로 맡길 수 있을 때 선택합니다.',
+ ['다이코도리구치 방향으로 20–35분을 잡습니다.','20:15까지 매장 도착이 어렵거나 줄이 길면 호텔 먼저 일정으로 돌아갑니다.','식사 뒤 짐을 찾아 호텔로 이동합니다. 주문 마감 21:00.'],
+ {food:'ramen'}
+);
+zooEvents.forEach((event,index)=>{
+ event.id='d4-zoo-'+['transfer','visit','lunch'][index];
+ event.placeId=index===2?'kamimaezu':'zoo';
+});
+const EXCURSION_DAY=days.findIndex(day=>day.events.some(event=>event.id==='sun-gero-private-bath'));
+const CITY_DAY=days.findIndex(day=>day.events.some(event=>event.id==='d4-osu'));
+function eventDayIndex(id){
+ if(id===SHISHIMARU_STOP.id)return 0;
+ if(zooEvents.some(event=>event.id===id))return CITY_DAY;
+ return days.findIndex(day=>day.events.some(event=>event.id===id));
+}
 const RESERVATIONS=[
  {id:'hida-outbound',name:'특급 히다 3호 · 나고야 → 게로',day:EXCURSION_DAY,plan:'08:43',event:'sun-gero-outbound',url:GERO_LINKS.rail,required:true},
  {id:'ogawaya-bath',name:'오가와야 별관 유라기 대절탕',day:EXCURSION_DAY,plan:'12:30',event:'sun-gero-private-bath',url:GERO_LINKS.bath,required:true},
  {id:'hida-return',name:'특급 히다 14호 · 게로 → 나고야',day:EXCURSION_DAY,plan:'15:32',event:'sun-gero-return',url:GERO_LINKS.rail,required:true},
  ...['ramuchi','mutsumi','monja','sushi','keshiki'].map((id,j)=>({id,name:PLACE[id].name,day:days.findIndex(d=>d.events.some(e=>e.food===id)),plan:['11:00','17:30','19:15','17:30','09:30'][j],food:id,url:restaurants.find(r=>r.id===id).book||'tel:+81'+restaurants.find(r=>r.id===id).phone.replace(/-/g,'').slice(1),required:true})),
- {id:'ramen',name:PLACE.ramen.name,day:0,plan:'19:00',food:'ramen',walkin:true},
- {id:'komeda',name:PLACE.komeda.name,day:1,plan:'07:30',food:'komeda',walkin:true},
+ {id:'shoraku',name:PLACE.shoraku.name,day:0,plan:'19:55',food:'shoraku',walkin:true},
+ {id:'ramen',name:PLACE.ramen.name,day:0,plan:SHISHIMARU_STOP.time,food:'ramen',walkin:true,optional:true},
+ {id:'komeda',name:PLACE.komeda.name,day:1,plan:'08:25',food:'komeda',walkin:true},
  {id:'eel',name:PLACE.eel.name,day:1,plan:'',food:'eel',url:S.eel,optional:true}
 ];
 const PREP_GROUPS={
@@ -38,11 +39,11 @@ const PREP_GROUPS={
  '현지 확인':{airport:'귀국일 공항 이동·항공사 마감 확인',opening:'관광지 휴관·입장 시각 재확인'}
 };
 function plainObject(v){return v!==null&&typeof v==='object'&&!Array.isArray(v)}
-function freshState(){return {version:2,selectedDay:0,selectedView:'schedule',selectionMode:'auto',selectedEvent:'',filters:{foodOnly:false,optional:true,search:'',reserve:'all'},options:{zoo:false,fieldMode:false},events:{},reservations:{},overrides:{ramenMonday:false},expanded:{},checks:Object.fromEntries(Object.values(PREP_GROUPS).flatMap(Object.keys).map(id=>[id,false])),memo:'',updatedAt:''}}
+function freshState(){return {version:2,selectedDay:0,selectedView:'schedule',selectionMode:'auto',selectedEvent:'',filters:{foodOnly:false,optional:true,search:'',reserve:'all'},options:{zoo:false,fieldMode:false},events:{},reservations:{},overrides:{ramenMonday:false,shishimaruThursday:false},expanded:{},checks:Object.fromEntries(Object.values(PREP_GROUPS).flatMap(Object.keys).map(id=>[id,false])),memo:'',updatedAt:''}}
 function cleanText(v,max=2000){return typeof v==='string'?v.slice(0,max):''}
 function validDate(v){return typeof v==='string'&&/^2026-12-(10|11|12|13|14)$/.test(v)}
 function validTime(v){return typeof v==='string'&&/^([01]\d|2[0-3]):[0-5]\d$/.test(v)}
-const EVENT_IDS=new Set([...LEGACY_EVENT_IDS,...days.flatMap(d=>d.events.map(e=>e.id)),...zooEvents.map(e=>e.id),'d5-ramen-alternative']);
+const EVENT_IDS=new Set([...LEGACY_EVENT_IDS,...days.flatMap(d=>d.events.map(e=>e.id)),...zooEvents.map(e=>e.id),SHISHIMARU_STOP.id]);
 function normalizeState(raw,strict=false){
  if(!plainObject(raw)||raw.version!==2)throw new Error('지원하는 나고야 여행 백업(version 2)이 아닙니다.');
  if(strict&&(!plainObject(raw.events)||!plainObject(raw.reservations)||!plainObject(raw.filters)||!plainObject(raw.options)||!plainObject(raw.overrides)||!plainObject(raw.checks)||typeof raw.memo!=='string'))throw new Error('백업 파일의 필수 데이터 구조가 올바르지 않습니다.');
@@ -51,7 +52,7 @@ function normalizeState(raw,strict=false){
  s.selectedEvent=EVENT_IDS.has(raw.selectedEvent)&&eventDayIndex(raw.selectedEvent)>=0?raw.selectedEvent:'';
  s.selectedView=raw.selectedView==='map'?'map':'schedule';s.selectionMode=raw.selectionMode==='manual'?'manual':'auto';
  if(plainObject(raw.filters)){s.filters.foodOnly=raw.filters.foodOnly===true;s.filters.optional=raw.filters.optional!==false;s.filters.search=cleanText(raw.filters.search,200);s.filters.reserve=['all','web','phone','walk'].includes(raw.filters.reserve)?raw.filters.reserve:'all'}
- s.options.zoo=raw.options?.zoo===true;s.options.fieldMode=raw.options?.fieldMode===true;s.overrides.ramenMonday=raw.overrides?.ramenMonday===true;
+ s.options.zoo=raw.options?.zoo===true;s.options.fieldMode=raw.options?.fieldMode===true;s.overrides.ramenMonday=raw.overrides?.ramenMonday===true;s.overrides.shishimaruThursday=raw.overrides?.shishimaruThursday===true;
  for(const [id,v] of Object.entries(plainObject(raw.events)?raw.events:{}))if(EVENT_IDS.has(id)&&plainObject(v)&&Object.hasOwn(EVENT_STATUS,v.status))s.events[id]={status:v.status,updatedAt:cleanText(v.updatedAt,40)};
  for(const def of [...RESERVATIONS,{id:'ghibli-ticket'}]){const r=raw.reservations?.[def.id];if(plainObject(r)&&Object.hasOwn(RES_STATUS,r.status))s.reservations[def.id]={status:r.status,date:validDate(r.date)?r.date:'',time:validTime(r.time)?r.time:'',note:cleanText(r.note),updatedAt:cleanText(r.updatedAt,40)}}
  for(const [id,v] of Object.entries(plainObject(raw.expanded)?raw.expanded:{}))if(EVENT_IDS.has(id)&&typeof v==='boolean')s.expanded[id]=v;
@@ -86,41 +87,37 @@ function japanClock(now=new Date()){
 function travelPhase(clock=japanClock()){return clock.date<'2026-12-10'?'before':clock.date>'2026-12-14'?'after':'during'}
 function dayIndexForDate(date){return days.findIndex((_,i)=>isoDay(i)===date)}
 function baseEvents(i,s=state){
- let list=days[i].events.map(e=>({...e}));
+ const list=days[i].events.map(event=>({...event}));
+ if(i===0&&s.overrides.shishimaruThursday){
+  const [arrival,train,checkin,,walk]=list;
+  return [
+   arrival,train,{...SHISHIMARU_STOP},
+   {...checkin,time:'20:20',end:'21:05',desc:'라멘을 먹고 짐을 찾아 사쿠라도리선 히사야오도리역을 거쳐 호텔로 갑니다.',steps:['역에서 캐리어를 찾아 호텔에 체크인합니다.']},
+   {...walk,time:'21:05',end:'21:30',desc:'체력이 남으면 체크인 후 공원 북쪽을 잠깐 걷습니다.'}
+  ];
+ }
  if(i===CITY_DAY&&s.options.zoo){
-  list=[
-   {...list[0],time:'07:30',end:'08:10'},
-   ...zooEvents.map(e=>({...e})),
-   {...list[4],time:'14:00'},
-   {...list[5],time:'16:00',end:'16:45',steps:['오스에서 숙소로 지하철 이동. 16:45 전후 호텔 도착을 목표로 합니다.']},
-   {...list[1],time:'16:45',end:'17:05',steps:['호텔에서 잠시 쉰 뒤 17:10 전후 저녁 식당으로 출발합니다.']},
-   ...list.slice(6)
+  const byId=Object.fromEntries(list.map(event=>[event.id,event]));
+  return [
+   {...byId['d4-morning'],time:'07:30',end:'08:10'},
+   ...zooEvents.map(event=>({...event,optional:true})),
+   {...byId['d4-osu'],time:'14:00',end:'15:50'},
+   {...byId['d4-market-transfer'],time:'15:50',end:'16:25',steps:['가미마에즈역에서 메이조선을 타고 숙소로 돌아갑니다.']},
+   {...byId['d4-old-town'],time:'16:25',end:'16:50',steps:['호텔에서 잠시 쉰 뒤 16:50에 식당으로 출발합니다.']},
+   byId['d4-sushi-transfer'],byId['d4-sushi'],byId['d4-return']
   ];
  }
- if(i===1)list=list.map(e=>e.id==='d2-park'?{...e,title:'히사야오도리 공원',desc:'호텔에서 남쪽으로 공원을 걸어 라무치 방향으로 이동합니다.',steps:['공원과 타워 외관을 보고 사카에 방향으로 이동.','호텔로 돌아가지 않고 지하상가 또는 근처 카페에서 쉬기.','예약된 점심 시각을 우선합니다.']}:e.id==='d2-rest'?{...e,placeId:'lachic',title:'사카에 카페 휴식',desc:'라시크·사카에 남쪽에서 쉬고 가까운 무츠미로 이동합니다.',steps:['라시크 주변 영업 중인 카페에서 휴식.','무츠미 예약과 본점 주소 확인.','17시경 무츠미 방향으로 출발. 호텔 휴식이 필요하면 선택적으로 복귀.']}:e);
- if(i===1){const by=Object.fromEntries(list.map(e=>[e.id,e]));list=[by['d2-morning'],{...by['d2-park'],end:'09:15'},{...by['d2-oasis'],time:'09:20',end:'10:15'},by['d2-lunch'],{...by['d2-shopping'],end:'15:15'},by['d2-rest'],by['d2-wings'],by['d2-tower'],by['d2-pack']]}
- if(i===CITY_DAY&&!s.options.zoo){
-  const by=Object.fromEntries(list.map(e=>[e.id,e]));
-  list=[
-   by['d4-morning'],
-   {...by['d4-osu-transfer'],time:'09:15',end:'09:45',title:'오스칸논으로 이동',desc:'히사야오도리에서 사카에·가미마에즈를 거쳐 오스 방면. 당일 지도에서 경로 확인.',steps:['오스칸논 주변에서 시작해 상점가로 걷기.','오전에는 아직 열지 않은 점포가 있어 사찰과 거리 풍경부터 관람.']},
-   {...by['d4-osu'],time:'09:45',end:'12:00',title:'오스칸논·오스상점가',steps:['오스칸논 → 니오몬도리 → 반쇼지 주변 순서.','관심 있는 소품·전자제품 매장을 고르고 12시 개점하는 만다라케는 점심 뒤 선택.']},
-   {...by['d4-osu-lunch'],time:'12:00',end:'13:15'},
-   by['d4-market-transfer'],by['d4-old-town'],by['d4-sushi'],by['d4-return']
-  ];
- }
- if(i===4&&s.overrides.ramenMonday)list=list.map(e=>e.id==='d5-shopping'?{...days[0].events[2],id:'d5-ramen-alternative',time:'11:00',end:'12:00',title:'첫날 대신 / 시시마루 라멘',desc:'기존 10:30–12:20 기념품 자유시간을 대체한 수동 선택입니다. 13:15 짐 회수 원칙을 유지하세요.'}:e);
- return list.map(e=>({...e,optional:['d1-night-park','d1-night-oasis','d1-night-shop','d4-old-town','d4-zoo-transfer','d4-zoo-visit','d4-zoo-lunch','d4-return'].includes(e.id)}));
+ return list;
 }
 function getVisibleEvents(s=state,i=s.selectedDay,{unfiltered=false}={}){return baseEvents(i,s).filter(e=>unfiltered||(!s.filters.foodOnly||e.kind==='식사')&&(s.filters.optional||!e.optional))}
-function eventPlace(e){return e?.placeId&&PLACE[e.placeId]?{id:e.placeId,...PLACE[e.placeId]}:null}
+function eventPlace(e){return e?.placeId&&PLACE[e.placeId]?{id:e.placeId,...PLACE[e.placeId],query:e.mapQuery||PLACE[e.placeId].query}:null}
 function getMapStops(s=state,i=s.selectedDay){
  const stops=[];
  for(const e of getVisibleEvents(s,i)){
   if(e.id==='d2-rest')continue; // Its stable status remains editable inside the shopping stop.
   let ids=[e.placeId];
   if(!s.filters.foodOnly){
-   if(e.id==='d1-night-park')ids=['hisaya','tower'];
+   if(e.id==='d5-airport-transfer')ids=['kanayama','airport'];
    if(e.id==='sun-gero-outbound')ids=['jrNagoya','geroStation'];
    if(e.id==='sun-gero-return')ids=['geroStation','jrNagoya'];
    if(e.id==='d4-osu')ids=['kannon','osu','bansho'];
@@ -146,13 +143,15 @@ function routeBetween(from,to,mode='transit'){return directions(to.query,mode,fr
 function transitHint(e,prev){
  if(['sun-gero-outbound','sun-gero-return'].includes(e.id))return 'JR 특급 히다 / 지정석과 실제 출발 시각 확인';
  if(['geroTown','geroLunch','ogawaya','geroRiver'].includes(e.placeId))return '게로 온천마을 안 도보';
- if(e.id==='d1-checkin')return '사쿠라도리선 → 히사야오도리 / 짐 회수 포함';
- if(['d5-keshiki'].includes(e.id))return '사쿠라도리선 국제센터 → 도보';
+ if(e.id==='d1-checkin')return '사쿠라도리선 → 히사야오도리 / 호텔 체크인';
+ if(['d5-breakfast-transfer','d5-hotel-return'].includes(e.id))return '사쿠라도리선 국제센터 → 도보';
  if(e.id==='d4-zoo-transfer')return '히가시야마선 → 히가시야마코엔 / 정문 도보';
  if(e.id==='d4-zoo-lunch')return '히가시야마선 ↔ 메이조선 / 환승 확인';
- if(['d1-train-in','d5-airport-transfer'].includes(e.id))return '메이테츠·지하철 / 환승 확인';
- if(e.id==='d4-osu-transfer')return '지하철 → 가미마에즈 / 오스 방면';
- if(e.id==='d4-market-transfer')return '오스 → 히사야오도리 / 호텔 복귀';
+ if(e.id==='d1-train-in')return '메이테츠 공항선 / 메이테츠 나고야역';
+ if(e.id==='d5-airport-transfer')return '메이조선 → 가나야마 → 메이테츠 공항행';
+ if(e.id==='d4-osu-transfer')return '마루노우치 환승 → 쓰루마이선 오스칸논';
+ if(e.id==='d4-market-transfer')return '가미마에즈 → 메이조선 히사야오도리';
+ if(e.id==='d4-sushi-transfer')return '사쿠라도리선 국제센터 → 야나기바시 도보';
  if(e.kind==='이동')return '대중교통·도보 / 상세 이동 안내 확인';
  if(prev?.placeId===e.placeId)return '같은 장소에서 이어서';
  return '도보·대중교통 중 현장 선택';

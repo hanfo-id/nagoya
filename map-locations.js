@@ -1,5 +1,7 @@
 /* Coordinates checked 2026-11-05; Kamimaezu checked 2026-11-06. OSM contributors / GSI address search. */
 const MAP_LOCATIONS={
+ "shoraku":{"lat":35.178307,"lng":136.911362,"kind":"address","source":"https://msearch.gsi.go.jp/address-search/AddressSearch"},
+ "kanayama":{"lat":35.14303,"lng":136.90083,"kind":"place","source":"https://mapcarta.com/27464318"},
  "jrNagoya":{"lat":35.1706232,"lng":136.8821911,"kind":"place","source":"https://www.openstreetmap.org/relation/20258665"},
  "geroStation":{"lat":35.80582,"lng":137.23955,"kind":"place","source":"https://mapcarta.com/27454068"},
  "geroTown":{"lat":35.80937,"lng":137.241474,"kind":"area-anchor","source":"https://www.city.gero.lg.jp/site/kanko/1246.html","note":"온천마을의 비너스 족욕 부근을 대표점으로 사용."},
