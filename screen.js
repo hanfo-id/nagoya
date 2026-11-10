@@ -26,7 +26,7 @@ function routeDayHTML(i){
   <div class="mapmodes"><button data-mapextent="all" aria-pressed="true">전체</button><button data-mapextent="city" aria-pressed="false">시내</button>${region}</div>
   <p id="maploadstatus" role="status"></p><span id="selectedmapplace" class="sr-only" tabindex="-1">장소를 선택하세요</span><span id="mapcaption" class="sr-only"></span></div>
   <div class="route-sheet"><button type="button" class="sheet-handle" aria-label="일정 펼치기" aria-expanded="false"><span aria-hidden="true"></span></button><div id="route-tabs-slot"></div>
-  <div class="route-day-head"><h2>${day.date} ${day.dow} <span>${esc(day.short)}</span></h2><small>완료 ${done}/${day.events.length}</small></div>${planControls()}
+  <div class="route-day-head"><h2>${day.date} ${day.dow} <span>${esc(day.short)}</span></h2><small>완료 ${done}/${day.events.length}</small></div>${i===SUNDAY?planControls():''}
   <div id="route-filters-slot"></div><div class="route-scroll" tabindex="0" aria-label="방문 순서">
   ${i===SUNDAY?`<details class="route-options"><summary>${esc(day.summary)}</summary><p>${esc(day.note)}</p></details>`:''}
   <section id="map-choices" class="pin-choices" aria-label="같은 위치의 일정" hidden></section><ol class="route-list">${rows||'<li class="empty">이 조건에 맞는 일정이 없습니다.</li>'}</ol><details class="route-options"><summary>일정 변경·하루 안내</summary>

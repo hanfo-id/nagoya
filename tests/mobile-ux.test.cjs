@@ -19,7 +19,8 @@ for(const plan of ['A','B']){
   run('active='+i);
   const events=JSON.parse(run('JSON.stringify(baseEvents(active))')),collapsed=run('routeDayHTML(active)');
   assert.equal([...collapsed.matchAll(/data-event-id="/g)].length,events.length);
-  assert.match(collapsed,/aria-label="12월 13일 일정 선택"/);
+  assert.equal(collapsed.includes('aria-label="12월 13일 일정 선택"'),i===run('SUNDAY'));
+  assert.equal([...collapsed.matchAll(/data-plan="[AB]"/g)].length,i===run('SUNDAY')?2:0);
   for(const e of events){
    assert.ok(collapsed.includes(run('esc(EVENTS_BY_ID.get("'+e.id+'").desc)')),e.id);
    run('state.selectedEvent="'+e.id+'";state.expanded[state.selectedEvent]=true');

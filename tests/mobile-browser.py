@@ -53,6 +53,12 @@ def verify_mobile(browser, url, server, engine):
     expect(plan("A")).to_have_attribute("aria-pressed", "true")
     page.go_forward(wait_until="domcontentloaded")
     expect(plan("B")).to_have_attribute("aria-pressed", "true")
+    for tab in (0, 1, 2, 4):
+        page.locator(f"#tab{tab}").tap()
+        expect(page.locator("#plan [data-plan]")).to_have_count(0)
+    page.locator("#tab3").tap()
+    expect(plan("B")).to_have_attribute("aria-pressed", "true")
+    expect(page.locator(".route-item")).to_have_count(17)
     plan("A").tap()
 
     bath = row("d4-bath")
@@ -195,7 +201,7 @@ def verify_mobile(browser, url, server, engine):
     row("s22").locator(".route-more").tap()
     row("s22").locator(".inline-section").first.locator("summary").tap()
     expect(row("s22")).to_contain_text("12/11 금요일 포함")
-    for selector in (".route-sheet", "#tab4", "[data-plan=B]", ".selected-buttons"):
+    for selector in (".route-sheet", "#tab4", ".selected-buttons"):
         target = page.locator("#plan " + selector).first.bounding_box()
         assert target["x"] + target["width"] <= 390, (selector, target)
     screenshot = os.getenv("NAGOYA_TEST_SCREENSHOT")
