@@ -4,7 +4,7 @@ function readRoute(s=state,href=location.href,clock=japanClock()){
  const today=dayIndexForDate(clock.date),day=explicit>=0?explicit:s.selectionMode==='auto'&&today>=0?today:s.selectedDay;
  const wanted=params.get('view'),mode=wanted==='map'||wanted==='schedule'?wanted:s.selectedView;
  const plan=params.get('plan')==='B'?'B':params.get('plan')==='A'?'A':s.plan;
- return {active:day,view:mode,plan,explicit:explicit>=0};
+ return {active:explicit>=0?migratedRouteDay(day,params.get('event')):day,view:mode,plan,explicit:explicit>=0};
 }
 function applyRoute({history=false}={}){
  const route=readRoute();

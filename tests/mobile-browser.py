@@ -134,11 +134,23 @@ def verify_mobile(browser, url, server, engine):
     expect(row("d4-return")).not_to_contain_text("완료")
     print("PASS v2 UI import, archived legacy reservation and colliding event ID isolation")
 
+    page.evaluate("""() => {
+        const saved = JSON.parse(localStorage.getItem('nagoya26-v3'));
+        Object.assign(saved,{selectedDay:2,selectedEvent:'s18',selectionMode:'manual'});
+        Object.assign(saved.events,{s18:{status:'done'},s17:{status:'skipped'}});
+        localStorage.setItem('nagoya26-v3',JSON.stringify(saved));
+    }""")
+    page.goto(url + "?page=plan&day=12-12&plan=B&event=s18", wait_until="domcontentloaded")
+    expect(page).to_have_url(re.compile(r"day=12-11"))
+    expect(row("s18")).to_contain_text("완료")
+    assert page.evaluate("state.events.s17.status") == "skipped"
+    expect(page.locator(".route-item")).to_have_count(28)
+
     for width in (320, 360, 375, 390, 430, 768, 1280):
         height = 568 if width == 320 else 640
         page.set_viewport_size({"width": width, "height": height})
         page.goto(url + "?page=plan&day=12-11&plan=A", wait_until="domcontentloaded")
-        expect(page.locator(".route-item")).to_have_count(25)
+        expect(page.locator(".route-item")).to_have_count(28)
         assert page.evaluate("document.documentElement.scrollWidth === innerWidth"), width
         assert page.locator(".route-scroll").bounding_box()["height"] > 60, width
         assert page.locator("#selected-actions").bounding_box()["y"] < height, width
@@ -153,7 +165,11 @@ def verify_mobile(browser, url, server, engine):
         assert page.locator(".route-scroll").evaluate("node=>node.scrollTop") > 0
     page.set_viewport_size({"width": 390, "height": 700})
     page.goto(url + "?page=plan&day=12-12&plan=A", wait_until="domcontentloaded")
-    for event_id in ("s10", "s12", "s14", "s16", "s18", "s20", "s22"):
+    expect(page.locator(".route-item")).to_have_count(22)
+    expect(page.locator(".numberpin")).to_have_count(22)
+    for moved in ("s18", "s20", "s22"):
+        expect(row(moved)).to_have_count(0)
+    for event_id in ("s10", "s12", "s14", "s16", "s-coffee-buriko", "s-osu-walk"):
         row(event_id).locator(".route-more").tap()
         expect(row(event_id).locator(".inline-jp")).not_to_be_empty()
         expect(row(event_id).locator(".info-bullets").first).not_to_be_empty()
@@ -162,15 +178,23 @@ def verify_mobile(browser, url, server, engine):
     assert page.evaluate("Array.from(mapMarkers.values()).every(({marker,point})=>marker.getLatLng().lat===point.location.lat && marker.getLatLng().lng===point.location.lng)")
     page.evaluate("mapMarkers.get(8).marker.fire('click')")
     expect(row("s08").locator(".inline-stop-detail")).to_be_visible()
-    page.evaluate("mapMarkers.get(18).marker.fire('click')")
-    choice = page.locator("#map-choices .pin-visits [data-place-detail=s17]")
+    page.evaluate("[...mapMarkers.values()].find(({point})=>point.eventId==='s-coffee-buriko').marker.fire('click')")
+    choice = page.locator("#map-choices .pin-visits [data-place-detail=s-coffee-buriko]")
     expect(choice).to_be_visible()
     choice.tap()
-    expect(row("s17").locator(".inline-stop-detail")).to_be_visible()
+    expect(row("s-coffee-buriko").locator(".inline-stop-detail")).to_be_visible()
     expect(row("s08").locator(".inline-stop-detail")).to_have_count(0)
+    page.locator("#optional").uncheck()
+    expect(row("s-osu-walk")).to_have_count(0)
+    page.locator("#optional").check()
+    expect(row("s-osu-walk")).to_be_visible()
+    page.goto(url + "?page=food&day=12-12&plan=A", wait_until="domcontentloaded")
+    page.locator("#search").fill("부리코")
+    expect(page.locator("#restaurant-s-coffee-buriko")).to_be_visible()
+    page.goto(url + "?page=plan&day=12-11&plan=A", wait_until="domcontentloaded")
     row("s22").locator(".route-more").tap()
     row("s22").locator(".inline-section").first.locator("summary").tap()
-    expect(row("s22")).to_contain_text("12/12 토요일 포함")
+    expect(row("s22")).to_contain_text("12/11 금요일 포함")
     for selector in (".route-sheet", "#tab4", "[data-plan=B]", ".selected-buttons"):
         target = page.locator("#plan " + selector).first.bounding_box()
         assert target["x"] + target["width"] <= 390, (selector, target)
@@ -206,6 +230,10 @@ def verify_mobile(browser, url, server, engine):
     expect(page.locator(".route-item")).to_have_count(11)
     bath.locator(".route-more").tap()
     expect(bath.locator(".inline-stop-detail")).to_be_visible()
+    page.goto(url + "?page=plan&day=12-12&plan=B", wait_until="domcontentloaded")
+    expect(page.locator(".route-item")).to_have_count(22)
+    row("s-coffee-buriko").locator(".route-more").tap()
+    expect(row("s-coffee-buriko").locator(".inline-jp")).to_have_text("珈琲ぶりこ")
     page.goto(url + "guide.html#sunday-b", wait_until="domcontentloaded")
     expect(page.locator("#sunday-b [data-guide-event]")).to_have_count(17)
     expect(page.locator("#sunday-a")).to_be_hidden()

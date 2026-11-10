@@ -40,15 +40,15 @@ for(const plan of ['A','B']){
 assert.match(run('restaurantCard(EVENTS_BY_ID.get("s05"))'),/data-res-jump="sushi-lunch"/);
 assert.doesNotMatch(run('restaurantCard(EVENTS_BY_ID.get("s01"))'),/data-res-jump/);
 const checked=run('Object.keys(SHOP_WALKS)');
-assert.equal(checked.length,16);
+assert.equal(checked.length,18);
 for(const id of checked){
  const html=run('eventInfo(EVENTS_BY_ID.get("'+id+'"),{open:true})');
  assert.match(html,/오는 길 · 계획/);
  assert.match(html,/다음 장소 · 계획/);
- assert.match(html,/추천 방문/);
+ assert.match(html,/추천 방문|추천 메뉴/);
  assert.match(html,/영업·이용/);
  assert.match(html,/https:\/\//);
 }
-assert.match(run('eventInfo(EVENTS_BY_ID.get("s22"),{open:true})'),/12\/12 토요일 포함/);
+assert.match(run('eventInfo(EVENTS_BY_ID.get("s22"),{open:true})'),/12\/11 금요일 포함/);
 assert.doesNotMatch(fs.readFileSync('index.html','utf8'),/id="zoo"|place-experiences\.js/);
 console.log('PASS: every collapsed/expanded/printed event, all detail text, inline progress and routes, hotel without booking and mobile sheet snaps.');

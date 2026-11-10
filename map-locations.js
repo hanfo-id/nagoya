@@ -1,5 +1,7 @@
 /* Venue map links, named buildings, and GSI/OSM address points. Indoor pins are explicitly building-level. */
 const MAP_LOCATIONS={
+ "coffeeBuriko":{"lat":35.158421,"lng":136.903702,"kind":"address","source":"https://msearch.gsi.go.jp/address-search/AddressSearch?q=%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%883-35-22","note":"일본 국토지리원 오스 3-35-22 주소 기준점."},
+ "osu-area":{"lat":35.160444,"lng":136.903633,"kind":"area-anchor","source":"https://anime-tourism.jp/t/81/261-2/","note":"오스 북동쪽 산책의 기준점인 아카몬도리 교차로입니다. 특정 매장은 지정하지 않습니다."},
  "flightOfDreams":{"lat":34.855313,"lng":136.817046,"kind":"place","source":"https://aichinow.pref.aichi.jp/spots/detail/2446","note":"T2 연결통로 쪽 시설입니다."},
  "gateTower":{"lat":35.17211,"lng":136.88283,"kind":"area-anchor","source":"https://mapcarta.com/W51080885","note":"JR 게이트타워 건물 기준점 · 카페는 층별 안내를 참고하세요."},
  "stussy":{"lat":35.1643941,"lng":136.9063534,"kind":"address","source":"https://www.stussy.com/blogs/chapters/stussy-nagoya","note":"공식 매장 안내에서 연결한 3-27-24 주소 지점입니다."},

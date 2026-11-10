@@ -26,7 +26,7 @@ const html = vm.runInContext(`
  <link rel="stylesheet" href="ux.css?v=\${guideRelease}"><link rel="stylesheet" href="screen.css?v=\${guideRelease}"></head>
  <body class="static-guide"><main><p><a href="index.html">여행 웹앱으로 돌아가기</a></p><h1>나고야 전체 일정</h1>
  <p>2026.12.10–14 · 일본 현지 시간 · 12월 13일만 A/B 중 하나를 선택합니다.</p>
- <nav aria-label="날짜별 일정"><a href="#day-1">12.10</a> · <a href="#day-2">12.11</a> · <a href="#day-3">12.12</a> ·
+ <nav aria-label="날짜별 일정"><a href="#day-1">12.10</a> · <a href="#day-2">12.11 \${esc(commonDays[1].short)}</a> · <a href="#day-3">12.12 \${esc(commonDays[2].short)}</a> ·
   <a href="#sunday-a">12.13 A 게로 온천</a> · <a href="#sunday-b">12.13 B 나바나노사토</a> · <a href="#day-5">12.14</a></nav>
  \${commonDays.slice(0,3).map((day,i)=>guideDay(day,'day-'+(i+1))).join('')}
  \${guideDay(sundayDays.A,'sunday-a')}\${guideDay(sundayDays.B,'sunday-b')}\${guideDay(commonDays[3],'day-5')}

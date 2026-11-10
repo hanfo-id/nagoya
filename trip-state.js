@@ -3,6 +3,10 @@ const STORAGE_KEY='nagoya26-v3', PREVIOUS_STORAGE_KEY='nagoya26-v2', STATE_VERSI
 const EVENT_STATUS={planned:'예정',progress:'진행 중',done:'완료',skipped:'건너뜀'};
 const RES_STATUS={unconfirmed:'미확정',requested:'예약 요청 중',confirmed:'확정',walkin:'현장 방문',cancelled:'취소'};
 const EVENT_IDS=new Set(ALL_EVENTS.map(event=>event.id));
+const FRIDAY_MOVED_EVENTS=new Set(['s18','s20','s22']);
+// Keep old transfer records in v3 and JSON backups without adding them to the live itinerary.
+const RETIRED_ROUTE_EVENTS=['s17','s19','s21'];
+function migratedRouteDay(day,eventId){return day===2&&FRIDAY_MOVED_EVENTS.has(eventId)?1:day}
 const EVENTS_BY_ID=new Map(ALL_EVENTS.map(event=>[event.id,event]));
 const RESERVATIONS=ALL_EVENTS.filter(event=>event.booking).map(event=>({
  ...event.booking,day:event.day,plan:event.booking.time,planKey:event.plan,event:event.id,
@@ -57,13 +61,14 @@ function normalizeState(raw,strict=false){
  const s=freshState();
  s.plan=raw.plan==='B'?'B':'A';
  if(Number.isInteger(raw.selectedDay)&&raw.selectedDay>=0&&raw.selectedDay<5)s.selectedDay=raw.selectedDay;
+ s.selectedDay=migratedRouteDay(s.selectedDay,raw.selectedEvent);
  if(eventDayIndex(raw.selectedEvent,s.plan)===s.selectedDay)s.selectedEvent=raw.selectedEvent;
  s.selectedView=raw.selectedView==='map'?'map':'schedule';
  s.selectionMode=raw.selectionMode==='manual'?'manual':'auto';
  s.filters={foodOnly:raw.filters?.foodOnly===true,optional:raw.filters?.optional!==false,search:cleanText(raw.filters?.search,200),
   reserve:['all','web','phone','walk'].includes(raw.filters?.reserve)?raw.filters.reserve:'all'};
  s.options.fieldMode=raw.options?.fieldMode===true;
- for(const id of EVENT_IDS){
+ for(const id of [...EVENT_IDS,...RETIRED_ROUTE_EVENTS]){
   const value=raw.events?.[id];
   if(plainObject(value)&&Object.hasOwn(EVENT_STATUS,value.status))s.events[id]={status:value.status,updatedAt:cleanText(value.updatedAt,40)};
   if(typeof raw.expanded?.[id]==='boolean')s.expanded[id]=raw.expanded[id];

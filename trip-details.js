@@ -101,7 +101,7 @@ const VENUE_VISITS = {
  volks:{hours:'평일 11:00–20:00 / 토·일·공휴일 10:00–20:00 · 건물 휴관 시 휴무',picks:'PVC 완성품, 캐릭터 프라모델과 조립·도색 용품. 전시품과 판매품을 구분하세요.',source:'https://hobby.volks.co.jp/shop/sr_nagoya.html'},
  animateParco:{hours:'10:00–20:00 · PARCO 영업 일정에 따름',picks:'최신 작품의 공식 신품 굿즈·서적. 오스 중고점과 달리 신작 코너 위주로 보세요.',source:'https://www.animate.co.jp/shop/sakae/'},
  mugiwara:{hours:'10:00–20:00 · PARCO 영업 일정에 따름',picks:'원피스 공식 피규어·키링·문구. 좋아하는 캐릭터부터 찾아보세요.',source:'https://www.mugiwara-store.com/store/'},
- heroPopup:{hours:'12/5–12/20 10:00–20:00 · 12/12 토요일 포함 · 최종일 18:00 마감',picks:'히로아카 10주년 한정 팝업의 캐릭터 굿즈. 혼잡 시 현장 정리권과 구매 제한 안내를 확인하세요.',source:'https://nagoya.parco.jp/event/detail/?id=38619',extra:'https://x.com/ngparco_gallery'},
+ heroPopup:{hours:'12/5–12/20 10:00–20:00 · 12/11 금요일 포함 · 최종일 18:00 마감',picks:'히로아카 10주년 한정 팝업의 캐릭터 굿즈. 혼잡 시 현장 정리권과 구매 제한 안내를 확인하세요.',source:'https://nagoya.parco.jp/event/detail/?id=38619',extra:'https://x.com/ngparco_gallery'},
  oasis:{hours:'옥상 물의 우주선은 2027/4/30까지 공사로 폐쇄. 지상·지하도 구간별 통제.',picks:'열린 지상 구간에서 유리 지붕과 미라이타워를 한 프레임에 담기.',source:'https://www.sakaepark.co.jp/news/news-8135/'},
  tower:{hours:'12/11 금요일 17:00–21:00, 마지막 입장 20:40 · 야간 성인 ¥1,800.',picks:'야경과 겨울 프로젝션 매핑. 야간 입장 시각과 요금은 해당 기간 공지를 확인하세요.',source:'https://www.nagoya-tv-tower.co.jp/news/202611011053/'},
  hands:{hours:'다카시마야 영업 일정에 따름. 해당 점포는 2027/1/11 영업 종료 예정.',picks:'문구·여행용 소품·생활용품. 열차 이동을 앞두고 5~10층 중 관심 층부터 보세요.',source:'https://nagoya.hands.net/',extra:'https://info.hands.net/news/20260204-nagoya-close.html'},
@@ -113,17 +113,19 @@ const SHOP_WALKS = {
  f11:['라시크 → 사카에 3초메 남서쪽 도보 10~15분','BAPE까지 도보 5~10분'],
  f13:['Stüssy에서 인근 도로를 따라 도보 5~10분','HOODS까지 도보 5~10분'],
  f15:['BAPE에서 SK빌딩 1층까지 도보 5~10분','PARCO 서관까지 도보 약 10분'],
- f17:['HOODS에서 PARCO 서관까지 도보 약 10분','서관 2층 FREAK’S STORE로 내부 이동 약 5분'],
- f18:['서관 1층 BlackEyePatch에서 내부 이동 약 5분','같은 서관 1층 atmos로 내부 이동 약 5분'],
- f19:['서관 2층 FREAK’S STORE에서 1층까지 약 5분','서관 1층 HARBS로 같은 층 이동'],
+ f17:['HOODS에서 PARCO 서관까지 도보 약 10분','같은 서관 1층 atmos로 이동'],
+ f19:['BlackEyePatch에서 같은 1층 통로','서관 2층 FREAK’S STORE로 이동'],
+ f18:['서관 1층 atmos에서 2층으로 이동','서관 1층 HARBS로 내려가기'],
+ f20:['서관 2층 FREAK’S STORE에서 1층으로 이동','엘리베이터로 서관 8층 무기와라 스토어로 이동'],
+ s20:['HARBS 서관 1층에서 서관 8층까지 엘리베이터','동관으로 건너가 애니메이트 4층. 이동 시간은 일정에 포함'],
+ s18:['무기와라 스토어 서관 8층에서 동관 4층까지 건물·층 이동','남관 10층 EVENT SPACE로 이동'],
+ s22:['애니메이트 동관 4층에서 남관 10층 EVENT SPACE로 이동','17:00 남관 출발, 무츠미 본점까지 도보·여유 포함 20분'],
  s08:['오스칸논에서 니오몬도리 아케이드로 도보','만다라케까지 오스 골목 도보 5~10분'],
- s10:['다루마야에서 오스 골목 도보 5~10분','MultinaBox 2층 라신반까지 도보 5~10분'],
- s12:['만다라케에서 MultinaBox까지 도보 5~10분','스루가야 오스 본관까지 도보 5~10분'],
- s14:['라신반에서 오스 본관까지 도보 5~10분','오스 동쪽으로 걸어 보크스까지 10~15분'],
- s16:['스루가야에서 야바초 방면 도보 10~15분','오쓰도리에서 야바초 방향으로 걸어 PARCO 동관 4층. 계획 10분'],
- s18:['보크스에서 도보로 PARCO 동관에 진입해 4층으로. 계획 10분','서관으로 이동해 엘리베이터로 8층. 계획 5~10분'],
- s20:['동관 4층에서 서관 8층으로 건물·층 이동 5~10분','남관 10층 EVENT SPACE까지 5~10분'],
- s22:['서관 8층에서 남관 10층으로 이동 5~10분','후시미 이부시긴까지 도보 또는 지하철 25~35분']
+ s10:['다루마야에서 오스 골목 도보 5~10분','스루가야 오스 본관까지 도보 5~10분'],
+ s14:['만다라케에서 오스 본관까지 도보 5~10분','히가시니오몬도리의 커피 부리코까지 도보 10분 배정'],
+ 's-coffee-buriko':['스루가야에서 히가시니오몬도리 쪽 도보 10분 배정','MultinaBox 2층 라신반까지 도보·층간 이동 10분 배정'],
+ s12:['커피 부리코에서 MultinaBox 2층까지 도보·층간 이동 10분 배정','보크스 쇼룸까지 도보·2층 이동 10분 배정'],
+ s16:['라신반에서 야바초 방면으로 걸어 쇼룸 2층까지 10분 배정','오스 북동쪽 소품·간식 골목에서 자유 산책']
 };
 
 function appMap(q){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q)}

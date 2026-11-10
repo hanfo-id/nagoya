@@ -185,9 +185,9 @@
     {
       "date": "2026-12-11",
       "weekday": "금요일",
-      "title": "사카에 남하 스트리트웨어 8곳 · 미소카츠 · 테바사키 · 야경",
-      "summary": "BEAMS→UNITED ARROWS→Stüssy→BAPE→HOODS→BlackEyePatch→FREAK’S STORE→atmos. 오전 공원·점심, 저녁 무츠미·타워.",
-      "note": "쇼핑 공백 3시간 제거, 실제 이름을 가진 매장과 5~15분 이동 구간으로 시간표 완성. 쇼핑 시간이 늘면 HARBS 휴식을 줄이지 말고 관심 낮은 매장을 1곳 건너뛴다.",
+      "title": "사카에·야바초 PARCO 의류와 애니 굿즈 · 무츠미 · 야경",
+      "summary": "사카에 의류 쇼핑 후 PARCO 서관→동관→남관을 한 번에. 저녁은 무츠미와 미라이타워.",
+      "note": "PARCO 방문 시간에는 층간 이동이 포함됩니다. 히로아카 팝업 정리권이 배부되면 안내 시각에 맞춰 atmos나 FREAK’S STORE 중 관심이 낮은 매장을 건너뛸 수 있습니다.",
       "events": [
         {
           "id": "f01",
@@ -256,7 +256,7 @@
         {
           "id": "f03",
           "start": "09:20",
-          "end": "09:55",
+          "end": "09:50",
           "title": "히사야오도리 공원·미라이타워 외관",
           "category": "산책",
           "place": {
@@ -287,9 +287,9 @@
         },
         {
           "id": "f04",
-          "start": "09:55",
-          "end": "10:20",
-          "title": "오아시스21 외관·사진",
+          "start": "09:50",
+          "end": "10:10",
+          "title": "오아시스21 외관",
           "category": "관광",
           "place": {
             "id": "oasis",
@@ -319,9 +319,9 @@
         },
         {
           "id": "f05",
-          "start": "10:20",
+          "start": "10:10",
           "end": "10:45",
-          "title": "사카에 남쪽 라무치 이동·대기",
+          "title": "라무치 이동·대기",
           "category": "이동",
           "place": {
             "id": "ramuchi",
@@ -352,7 +352,7 @@
         {
           "id": "f06",
           "start": "10:45",
-          "end": "12:10",
+          "end": "12:00",
           "title": "쿠로부타야 라무치 미소카츠",
           "category": "식사",
           "place": {
@@ -384,9 +384,9 @@
         },
         {
           "id": "f07",
-          "start": "12:10",
-          "end": "12:20",
-          "title": "라무치 → 라시크 2F 이동",
+          "start": "12:00",
+          "end": "12:10",
+          "title": "라무치→라시크 2F",
           "category": "이동",
           "place": {
             "id": "beams",
@@ -416,9 +416,9 @@
         },
         {
           "id": "f08",
-          "start": "12:20",
-          "end": "12:50",
-          "title": "BEAMS 나고야 (라시크 2F)",
+          "start": "12:10",
+          "end": "12:35",
+          "title": "BEAMS 나고야",
           "category": "쇼핑",
           "place": {
             "id": "beams",
@@ -429,7 +429,7 @@
           },
           "description": "라시크 2층에서 BEAMS PLUS 아우터와 BEAMS T 그래픽 상의를 비교.",
           "details": [
-            "30분 중 피팅을 먼저 하고, 모자·작은 잡화는 결제 대기를 고려해 마지막에 고르세요.",
+            "25분 중 피팅을 먼저 하고, 모자·작은 잡화는 결제 대기를 고려해 마지막에 고르세요.",
             "첫 번째 핵심 쇼핑 매장이므로 마음에 드는 제품이 있다면 피팅을 우선하고, 다음 UNITED ARROWS는 같은 건물 안에서 이동합니다.",
             "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
           ],
@@ -441,16 +441,16 @@
           "transport_from_previous": "라시크 2F",
           "source_url": "https://www.beams.co.jp/shop/bna/",
           "card_notes": {
-            "visit_tip": "30분 중 피팅을 먼저 하고, 모자·작은 잡화는 결제 대기를 고려해 마지막에 고르세요.",
+            "visit_tip": "25분 중 피팅을 먼저 하고, 모자·작은 잡화는 결제 대기를 고려해 마지막에 고르세요.",
             "transport": "라시크 2F",
             "reservation_requirement": "불필요"
           }
         },
         {
           "id": "f09",
-          "start": "12:50",
-          "end": "13:15",
-          "title": "UNITED ARROWS 나고야점 (라시크 2F)",
+          "start": "12:35",
+          "end": "12:50",
+          "title": "UNITED ARROWS 나고야점",
           "category": "쇼핑",
           "place": {
             "id": "unitedArrows",
@@ -480,9 +480,9 @@
         },
         {
           "id": "f10",
-          "start": "13:15",
-          "end": "13:30",
-          "title": "라시크 → Stüssy 이동",
+          "start": "12:50",
+          "end": "13:05",
+          "title": "라시크→Stüssy 이동",
           "category": "이동",
           "place": {
             "id": "stussy",
@@ -512,8 +512,8 @@
         },
         {
           "id": "f11",
-          "start": "13:30",
-          "end": "14:00",
+          "start": "13:05",
+          "end": "13:30",
           "title": "Stüssy Nagoya",
           "category": "쇼핑",
           "place": {
@@ -526,7 +526,7 @@
           "description": "Stüssy 공식 챕터. 그래픽 상의와 캡을 우선 보는 핵심 방문.",
           "details": [
             "자주 입는 사이즈부터 살펴보세요. 나고야 전용 상품과 재고는 현장 진열을 기준으로 보세요.",
-            "이번 쇼핑에서 중요도가 높은 곳이므로 30분 배정했습니다. 방문 후 가까운 BAPE로 이동합니다.",
+            "이번 쇼핑에서 중요도가 높은 곳이므로 25분 배정했습니다. 방문 후 가까운 BAPE로 이동합니다.",
             "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
           ],
           "optional": false,
@@ -544,9 +544,9 @@
         },
         {
           "id": "f12",
-          "start": "14:00",
-          "end": "14:10",
-          "title": "Stüssy → BAPE 도보",
+          "start": "13:30",
+          "end": "13:40",
+          "title": "Stüssy→BAPE 이동",
           "category": "이동",
           "place": {
             "id": "bape",
@@ -576,8 +576,8 @@
         },
         {
           "id": "f13",
-          "start": "14:10",
-          "end": "14:35",
+          "start": "13:40",
+          "end": "14:00",
           "title": "BAPE STORE NAGOYA",
           "category": "쇼핑",
           "place": {
@@ -608,9 +608,9 @@
         },
         {
           "id": "f14",
-          "start": "14:35",
-          "end": "14:45",
-          "title": "BAPE → HOODS 이동",
+          "start": "14:00",
+          "end": "14:10",
+          "title": "BAPE→HOODS 이동",
           "category": "이동",
           "place": {
             "id": "hoods",
@@ -640,8 +640,8 @@
         },
         {
           "id": "f15",
-          "start": "14:45",
-          "end": "15:05",
+          "start": "14:10",
+          "end": "14:30",
           "title": "HOODS NAGOYA",
           "category": "쇼핑",
           "place": {
@@ -672,9 +672,9 @@
         },
         {
           "id": "f16",
-          "start": "15:05",
-          "end": "15:15",
-          "title": "HOODS → PARCO 이동",
+          "start": "14:30",
+          "end": "14:40",
+          "title": "HOODS→PARCO 이동",
           "category": "이동",
           "place": {
             "id": "blackeye",
@@ -704,8 +704,8 @@
         },
         {
           "id": "f17",
-          "start": "15:15",
-          "end": "15:35",
+          "start": "14:40",
+          "end": "14:55",
           "title": "BlackEyePatch PARCO 서관 1F",
           "category": "쇼핑",
           "place": {
@@ -726,50 +726,18 @@
             "requirement": "불필요",
             "status": "미확정"
           },
-          "transport_from_previous": "PARCO 서관 1F",
+          "transport_from_previous": "HOODS에서 도보 약 10분. PARCO 서관 1층에서 atmos까지 같은 층으로 연결.",
           "source_url": "https://nagoya.parco.jp/shop/detail/?cd=029194",
           "card_notes": {
             "visit_tip": "로고 티셔츠와 후드의 색을 먼저 보고, 소품은 시간이 남을 때 고르세요.",
-            "transport": "PARCO 서관 1F",
-            "reservation_requirement": "불필요"
-          }
-        },
-        {
-          "id": "f18",
-          "start": "15:35",
-          "end": "15:55",
-          "title": "FREAK’S STORE PARCO 서관 2F",
-          "category": "쇼핑",
-          "place": {
-            "id": "freaks",
-            "name": "FREAK’S STORE 나고야 PARCO",
-            "japaneseName": "FREAK’S STORE 名古屋パルコ店",
-            "address": "愛知県名古屋市中区栄3-29-1 名古屋PARCO西館2F",
-            "mapUrl": "https://www.google.com/maps/search/?api=1&query=FREAK%E2%80%99S%20STORE%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%91%E3%83%AB%E3%82%B3%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-29-1%20%E5%90%8D%E5%8F%A4%E5%B1%8BPARCO%E8%A5%BF%E9%A4%A82F"
-          },
-          "description": "BEAMS 취향과 가까운 아메리칸 캐주얼",
-          "details": [
-            "FREAK’S STORE의 아메리칸 캐주얼·아우터·액세서리를 BEAMS와 비교해 보세요.",
-            "같은 PARCO 건물 내 쇼핑이므로 층간 이동시간을 계산하세요.",
-            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
-          ],
-          "optional": false,
-          "reservation": {
-            "requirement": "불필요",
-            "status": "미확정"
-          },
-          "transport_from_previous": "PARCO 내부 이동 5분",
-          "source_url": "https://nagoya.parco.jp/shop/detail/?cd=009015",
-          "card_notes": {
-            "visit_tip": "FREAK’S STORE의 아메리칸 캐주얼·아우터·액세서리를 BEAMS와 비교해 보세요.",
-            "transport": "PARCO 내부 이동 5분",
+            "transport": "HOODS에서 도보 약 10분. PARCO 서관 1층에서 atmos까지 같은 층으로 연결.",
             "reservation_requirement": "불필요"
           }
         },
         {
           "id": "f19",
-          "start": "15:55",
-          "end": "16:10",
+          "start": "14:55",
+          "end": "15:10",
           "title": "atmos PARCO 서관 1F",
           "category": "쇼핑",
           "place": {
@@ -782,7 +750,7 @@
           "description": "PARCO 서관 1층에서 스니커즈와 스트리트 의류를 함께 보는 매장.",
           "details": [
             "일본 cm 표기로 사이즈를 확인하고 시착하세요. 협업 모델과 한정 컬러는 현장 진열을 기준으로 보세요.",
-            "짧게 방문하고 이어지는 HARBS에서 앉아서 쉬는 시간을 확보합니다.",
+            "둘러본 뒤 같은 건물의 FREAK’S STORE 2층으로 올라갑니다.",
             "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
           ],
           "optional": false,
@@ -790,18 +758,50 @@
             "requirement": "불필요",
             "status": "미확정"
           },
-          "transport_from_previous": "PARCO 내부 이동 5분",
+          "transport_from_previous": "BlackEyePatch에서 같은 서관 1층 통로로 이동.",
           "source_url": "https://nagoya.parco.jp/shop/detail/?cd=009187",
           "card_notes": {
             "visit_tip": "일본 cm 표기로 사이즈를 확인하고 시착하세요. 협업 모델과 한정 컬러는 현장 진열을 기준으로 보세요.",
-            "transport": "PARCO 내부 이동 5분",
+            "transport": "BlackEyePatch에서 같은 서관 1층 통로로 이동.",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f18",
+          "start": "15:10",
+          "end": "15:25",
+          "title": "FREAK’S STORE PARCO 서관 2F",
+          "category": "쇼핑",
+          "place": {
+            "id": "freaks",
+            "name": "FREAK’S STORE 나고야 PARCO",
+            "japaneseName": "FREAK’S STORE 名古屋パルコ店",
+            "address": "愛知県名古屋市中区栄3-29-1 名古屋PARCO西館2F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=FREAK%E2%80%99S%20STORE%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%91%E3%83%AB%E3%82%B3%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-29-1%20%E5%90%8D%E5%8F%A4%E5%B1%8BPARCO%E8%A5%BF%E9%A4%A82F"
+          },
+          "description": "BEAMS 취향과 가까운 아메리칸 캐주얼",
+          "details": [
+            "FREAK’S STORE의 아메리칸 캐주얼·아우터·액세서리를 BEAMS와 비교해 보세요.",
+            "둘러본 뒤 같은 건물 1층의 HARBS로 내려갑니다.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "atmos에서 같은 서관 2층으로 이동. 이동은 방문 블록에 포함.",
+          "source_url": "https://nagoya.parco.jp/shop/detail/?cd=009015",
+          "card_notes": {
+            "visit_tip": "FREAK’S STORE의 아메리칸 캐주얼·아우터·액세서리를 BEAMS와 비교해 보세요.",
+            "transport": "atmos에서 같은 서관 2층으로 이동. 이동은 방문 블록에 포함.",
             "reservation_requirement": "불필요"
           }
         },
         {
           "id": "f20",
-          "start": "16:10",
-          "end": "16:45",
+          "start": "15:25",
+          "end": "15:55",
           "title": "HARBS PARCO 서관 1F 카페",
           "category": "휴식",
           "place": {
@@ -811,30 +811,127 @@
             "address": "愛知県名古屋市中区栄3-29-1 名古屋PARCO西館1F",
             "mapUrl": "https://www.google.com/maps/search/?api=1&query=HARBS%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%91%E3%83%AB%E3%82%B3%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-29-1%20%E5%90%8D%E5%8F%A4%E5%B1%8BPARCO%E8%A5%BF%E9%A4%A81F"
           },
-          "description": "디저트·따뜻한 음료 35분. 대기가 길면 PARCO 다른 카페로 전환",
+          "description": "PARCO 서관 1층에서 케이크와 따뜻한 음료로 30분 휴식.",
           "details": [
             "HARBS에서 따뜻한 음료와 케이크를 나눠 먹으며 쇼핑 중 휴식하세요.",
             "대기줄이 길면 인근 다른 카페로 전환하되 17:20 무츠미 도착 목표를 우선합니다.",
-            "체력 회복이 목적이므로 불필요한 추가 이동은 하지 않습니다."
+            "휴식 뒤 서관 엘리베이터를 타고 8층 무기와라 스토어로 올라갑니다."
           ],
           "optional": false,
           "reservation": {
             "requirement": "불필요",
             "status": "미확정"
           },
-          "transport_from_previous": "같은 1F",
+          "transport_from_previous": "FREAK’S STORE에서 같은 서관 1층으로 이동.",
           "source_url": "https://nagoya.parco.jp/shop/detail/?cd=027522",
           "card_notes": {
             "visit_tip": "HARBS에서 따뜻한 음료와 케이크를 나눠 먹으며 쇼핑 중 휴식하세요.",
-            "transport": "같은 1F",
+            "transport": "FREAK’S STORE에서 같은 서관 1층으로 이동.",
             "reservation_requirement": "불필요"
           }
         },
         {
+          "id": "s20",
+          "start": "15:55",
+          "end": "16:15",
+          "title": "ONE PIECE 무기와라 스토어 PARCO 서관 8F",
+          "category": "쇼핑",
+          "place": {
+            "id": "mugiwara",
+            "name": "ONE PIECE 무기와라 스토어 나고야점",
+            "japaneseName": "ONE PIECE 麦わらストア 名古屋店",
+            "address": "愛知県名古屋市中区栄3-29-1 名古屋PARCO西館8F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=ONE%20PIECE%20%E9%BA%A6%E3%82%8F%E3%82%89%E3%82%B9%E3%83%88%E3%82%A2%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-29-1%20%E5%90%8D%E5%8F%A4%E5%B1%8BPARCO%E8%A5%BF%E9%A4%A88F"
+          },
+          "description": "원피스 공식 굿즈 전문점, 서관 8F",
+          "details": [
+            "ONE PIECE 무기와라 스토어에서 원피스 공식 캐릭터 굿즈를 구경하세요.",
+            "피규어·키링·문구를 비교한 뒤 동관 4층 애니메이트로 이동합니다.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "HARBS 서관 1층에서 엘리베이터로 서관 8층. 층간 이동 포함.",
+          "source_url": "https://nagoya.parco.jp/shop/detail/?cd=031218",
+          "card_notes": {
+            "visit_tip": "ONE PIECE 무기와라 스토어에서 원피스 공식 캐릭터 굿즈를 구경하세요.",
+            "transport": "HARBS 서관 1층에서 엘리베이터로 서관 8층. 층간 이동 포함.",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s18",
+          "start": "16:15",
+          "end": "16:40",
+          "title": "애니메이트 나고야 PARCO점 동관 4F",
+          "category": "쇼핑",
+          "place": {
+            "id": "animateParco",
+            "name": "애니메이트 나고야 PARCO점",
+            "japaneseName": "アニメイト名古屋パルコ",
+            "address": "愛知県名古屋市中区栄3-29-1 名古屋PARCO東館4F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%8B%E3%83%A1%E3%82%A4%E3%83%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%91%E3%83%AB%E3%82%B3%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-29-1%20%E5%90%8D%E5%8F%A4%E5%B1%8BPARCO%E6%9D%B1%E9%A4%A84F"
+          },
+          "description": "PARCO 동관 4층에서 최신 작품의 공식 신상품을 보는 애니메이트.",
+          "details": [
+            "작품별 진열대에서 서적, 아크릴 스탠드와 캐릭터 상품을 찾아보세요.",
+            "신상품 중심으로 둘러본 뒤 남관 10층 EVENT SPACE로 이어갑니다.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "무기와라 스토어 서관 8층에서 동관 4층까지 건물·층 이동 포함.",
+          "source_url": "https://nagoya.parco.jp/shop/detail/?cd=009990",
+          "card_notes": {
+            "visit_tip": "작품별 진열대에서 서적, 아크릴 스탠드와 캐릭터 상품을 찾아보세요.",
+            "transport": "무기와라 스토어 서관 8층에서 동관 4층까지 건물·층 이동 포함.",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s22",
+          "start": "16:40",
+          "end": "17:00",
+          "title": "나히아 10주년 × bones store POP UP 남관 10F",
+          "category": "관광",
+          "place": {
+            "id": "heroPopup",
+            "name": "나의 히어로 아카데미아 10주년 × bones store 팝업",
+            "japaneseName": "「僕のヒーローアカデミア」10周年 × bones store POP UP",
+            "address": "愛知県名古屋市中区栄3-29-1 名古屋PARCO南館10F EVENT SPACE",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%80%8C%E5%83%95%E3%81%AE%E3%83%92%E3%83%BC%E3%83%AD%E3%83%BC%E3%82%A2%E3%82%AB%E3%83%87%E3%83%9F%E3%82%A2%E3%80%8D10%E5%91%A8%E5%B9%B4%20%C3%97%20bones%20store%20POP%20UP%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-29-1%20%E5%90%8D%E5%8F%A4%E5%B1%8BPARCO%E5%8D%97%E9%A4%A810F%20EVENT%20SPACE"
+          },
+          "description": "12월 11일 금요일 방문. PARCO 남관 10층의 히로아카 10주년 공식 팝업.",
+          "details": [
+            "관심 캐릭터의 공식 굿즈를 먼저 찾고, 구매 제한과 품절 공지는 현장 표기를 확인하세요.",
+            "2026년 12월 5~20일 개최 안내 기준이며, 혼잡 시 정리권·입장 제한이 있을 수 있습니다. 당일 운영 공지를 확인하세요.",
+            "17:00에는 남관에서 나와 무츠미 본점으로 이동합니다. 혼잡 시 정리권 안내를 우선 확인하세요.",
+            "예약 안내: 혼잡 시 현장 정리권. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "혼잡 시 현장 정리권",
+            "status": "미확정"
+          },
+          "transport_from_previous": "애니메이트 동관 4층에서 남관 10층 EVENT SPACE까지 이동 포함.",
+          "source_url": "https://nagoya.parco.jp/event/detail/?id=38619",
+          "card_notes": {
+            "visit_tip": "관심 캐릭터의 공식 굿즈를 먼저 찾고, 구매 제한과 품절 공지는 현장 표기를 확인하세요.",
+            "transport": "애니메이트 동관 4층에서 남관 10층 EVENT SPACE까지 이동 포함.",
+            "reservation_requirement": "혼잡 시 현장 정리권"
+          }
+        },
+        {
           "id": "f21",
-          "start": "16:45",
+          "start": "17:00",
           "end": "17:20",
-          "title": "PARCO → 무츠미 본점 이동·예약 준비",
+          "title": "PARCO→무츠미 본점 이동",
           "category": "이동",
           "place": {
             "id": "mutsumi",
@@ -843,9 +940,9 @@
             "address": "愛知県名古屋市中区栄3-8-125",
             "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%89%8B%E7%BE%BD%E5%85%88%E3%82%80%E3%81%A4%E3%81%BF%20%E6%9C%AC%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-8-125"
           },
-          "description": "도보 15~25분 + 여유 10분",
+          "description": "PARCO 남관에서 무츠미 본점까지 도보. 17:20 도착 목표.",
           "details": [
-            "테바사키 무츠미 본점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "남관에서 사카에 3초메의 무츠미 본점으로 걸어갑니다. 유사 상호 지점과 구분하세요.",
             "이동 안내: 도보.",
             "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
           ],
@@ -854,11 +951,11 @@
             "requirement": "불필요",
             "status": "미확정"
           },
-          "transport_from_previous": "PARCO 서관에서 사카에 3초메 무츠미 본점으로 도보. 일정에 35분 배정.",
+          "transport_from_previous": "PARCO 남관에서 사카에 3초메 무츠미 본점까지 도보. 이동·대기 포함 20분 배정.",
           "source_url": "",
           "card_notes": {
-            "visit_tip": "테바사키 무츠미 본점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "transport": "PARCO 서관에서 사카에 3초메 무츠미 본점으로 도보. 일정에 35분 배정.",
+            "visit_tip": "남관에서 사카에 3초메의 무츠미 본점으로 걸어갑니다. 유사 상호 지점과 구분하세요.",
+            "transport": "PARCO 남관에서 사카에 3초메 무츠미 본점까지 도보. 이동·대기 포함 20분 배정.",
             "reservation_requirement": "불필요"
           }
         },
@@ -866,7 +963,7 @@
           "id": "f22",
           "start": "17:20",
           "end": "18:55",
-          "title": "테바사키 무츠미 본점",
+          "title": "테바사키 무츠미 본점 저녁",
           "category": "식사",
           "place": {
             "id": "mutsumi",
@@ -899,7 +996,7 @@
           "id": "f23",
           "start": "18:55",
           "end": "19:25",
-          "title": "무츠미 → 미라이타워 이동",
+          "title": "무츠미→미라이타워 이동",
           "category": "이동",
           "place": {
             "id": "tower",
@@ -996,15 +1093,15 @@
     {
       "date": "2026-12-12",
       "weekday": "토요일",
-      "title": "야나기바시 스시 · 오스 피규어 집중 · 나히아 팝업 · 겨울 이자카야",
-      "summary": "스시 점심 이후 오스 서→동, PARCO 동관→서관→남관, 후시미 이자카야로 연결.",
-      "note": "피규어는 정확한 상호·층수 중심. PARCO 남관 10F 나히아 10주년 팝업은 12/5~20 기간확인. 전 일정 매장을 무조건 소화할 필요는 없고 각 20~30분 기준이며 우선순위에 따라 스킵 가능.",
+      "title": "나고야역·오스·후시미 · 시장 스시 · 피규어 · 전통 가옥 카페",
+      "summary": "나고야역 선로드와 야나기바시 스시 → 오스 완구·피규어와 커피 부리코 → 후시미 이부시긴.",
+      "note": "오스는 다루마야→만다라케→스루가야→커피 부리코→라신반→보크스 순서입니다. 17:15부터는 북동쪽에서 소품과 간식을 자유롭게 구경하고, 17:40에 후시미로 이동합니다.",
       "events": [
         {
           "id": "s01",
           "start": "08:40",
           "end": "09:25",
-          "title": "호텔 조식 및 출발 준비",
+          "title": "호텔 조식·출발 준비",
           "category": "식사",
           "place": {
             "id": "hotel",
@@ -1035,7 +1132,7 @@
           "id": "s02",
           "start": "09:25",
           "end": "10:15",
-          "title": "호텔 → 나고야역·메이에키 지하상가 이동",
+          "title": "호텔→나고야역 이동",
           "category": "이동",
           "place": {
             "id": "sunroad",
@@ -1067,7 +1164,7 @@
           "id": "s03",
           "start": "10:15",
           "end": "10:45",
-          "title": "메이에키 선로드 지하상가 가볍게 구경",
+          "title": "메이에키 선로드 지하상가",
           "category": "쇼핑",
           "place": {
             "id": "sunroad",
@@ -1099,7 +1196,7 @@
           "id": "s04",
           "start": "10:45",
           "end": "11:30",
-          "title": "선로드 → 야나기바시 장내점 이동·입장 대기",
+          "title": "야나기바시 장내점 이동·입장 대기",
           "category": "이동",
           "place": {
             "id": "sushi",
@@ -1132,7 +1229,7 @@
           "id": "s05",
           "start": "11:30",
           "end": "12:35",
-          "title": "야나기바시 키타로 장내점 카운터 스시",
+          "title": "야나기바시 키타로 장내점 스시",
           "category": "식사",
           "place": {
             "id": "sushi",
@@ -1165,7 +1262,7 @@
           "id": "s06",
           "start": "12:35",
           "end": "13:20",
-          "title": "야나기바시 → 오스칸논 이동",
+          "title": "야나기바시→오스칸논 이동",
           "category": "이동",
           "place": {
             "id": "kannon",
@@ -1197,7 +1294,7 @@
           "id": "s07",
           "start": "13:20",
           "end": "13:40",
-          "title": "오스칸논 사찰 참배·사진",
+          "title": "오스칸논 사찰·사진",
           "category": "관광",
           "place": {
             "id": "kannon",
@@ -1228,15 +1325,15 @@
         {
           "id": "s08",
           "start": "13:40",
-          "end": "13:55",
-          "title": "오모차노오쿠니 다루마야",
+          "end": "14:00",
+          "title": "오모차노오쿠니 다루마야 완구",
           "category": "쇼핑",
           "place": {
             "id": "darumaya",
             "name": "오모차노오쿠니 다루마야",
             "japaneseName": "おもちゃのおくに だるまや",
-            "address": "愛知県名古屋市中区大須2-18-41",
-            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%8A%E3%82%82%E3%81%A1%E3%82%83%E3%81%AE%E3%81%8A%E3%81%8F%E3%81%AB%20%E3%81%A0%E3%82%8B%E3%81%BE%E3%82%84%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%882-18-41"
+            "address": "名古屋市中区大須2-18-41",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%8A%E3%82%82%E3%81%A1%E3%82%83%E3%81%AE%E3%81%8A%E3%81%8F%E3%81%AB%20%E3%81%A0%E3%82%8B%E3%81%BE%E3%82%84%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%882-18-41"
           },
           "description": "오스 니오몬도리 장난감·피규어 매장",
           "details": [
@@ -1250,7 +1347,7 @@
             "status": "미확정"
           },
           "transport_from_previous": "도보",
-          "source_url": "https://osu.nagoya/ja/shop.php?s=8PeQ2P",
+          "source_url": "https://www.kinsyachi.com/shop/darumaya/",
           "card_notes": {
             "visit_tip": "오스 니오몬도리의 장난감·캐릭터 상품을 빠르게 살펴보세요.",
             "transport": "도보",
@@ -1259,9 +1356,9 @@
         },
         {
           "id": "s09",
-          "start": "13:55",
-          "end": "14:05",
-          "title": "다루마야 → 만다라케 이동",
+          "start": "14:00",
+          "end": "14:10",
+          "title": "다루마야→만다라케 이동",
           "category": "이동",
           "place": {
             "id": "mandarake",
@@ -1291,8 +1388,8 @@
         },
         {
           "id": "s10",
-          "start": "14:05",
-          "end": "14:35",
+          "start": "14:10",
+          "end": "14:40",
           "title": "만다라케 나고야점 2F·4F",
           "category": "쇼핑",
           "place": {
@@ -1306,7 +1403,7 @@
           "details": [
             "박스·부품·개봉 상태가 표시된 가격표를 확인하세요. 로봇이 목적이면 4층부터 보세요.",
             "관심 층을 먼저 방문하고 상품 상태·박스 유무·가격표를 확인하세요. 매장 내 사진촬영 규정은 직원 안내를 따릅니다.",
-            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+            "만다라케를 나서면 라신반보다 먼저 스루가야 오스 본관으로 이동합니다."
           ],
           "optional": false,
           "reservation": {
@@ -1322,21 +1419,21 @@
           }
         },
         {
-          "id": "s11",
-          "start": "14:35",
-          "end": "14:45",
-          "title": "만다라케 → 라신반 이동",
+          "id": "s13",
+          "start": "14:40",
+          "end": "14:50",
+          "title": "만다라케→스루가야 이동",
           "category": "이동",
           "place": {
-            "id": "lashinbang",
-            "name": "라신반 나고야 오스점",
-            "japaneseName": "らしんばん 名古屋大須店",
-            "address": "愛知県名古屋市中区大須3-10-35 MultinaBox 2F",
-            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%82%89%E3%81%97%E3%82%93%E3%81%B0%E3%82%93%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%A4%A7%E9%A0%88%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%883-10-35%20MultinaBox%202F"
+            "id": "surugaya",
+            "name": "스루가야 나고야 오스 본관",
+            "japaneseName": "駿河屋 名古屋大須本館",
+            "address": "愛知県名古屋市中区大須3-32-23 3～5F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%A7%BF%E6%B2%B3%E5%B1%8B%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%A4%A7%E9%A0%88%E6%9C%AC%E9%A4%A8%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%883-32-23%203%EF%BD%9E5F"
           },
-          "description": "오스 상점가 이동",
+          "description": "만다라케에서 스루가야 오스 본관까지 도보.",
           "details": [
-            "라신반 나고야 오스점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "만다라케에서 오스 골목을 걸어 스루가야 오스 본관에 도착합니다. 별관과 구별하세요.",
             "이동 안내: 도보 5~10분.",
             "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
           ],
@@ -1345,19 +1442,137 @@
             "requirement": "불필요",
             "status": "미확정"
           },
-          "transport_from_previous": "도보 5~10분",
+          "transport_from_previous": "만다라케에서 오스 본관까지 상점가 도보 5~10분.",
           "source_url": "",
           "card_notes": {
-            "visit_tip": "라신반 나고야 오스점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "transport": "도보 5~10분",
+            "visit_tip": "만다라케에서 오스 골목을 걸어 스루가야 오스 본관에 도착합니다. 별관과 구별하세요.",
+            "transport": "만다라케에서 오스 본관까지 상점가 도보 5~10분.",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s14",
+          "start": "14:50",
+          "end": "15:20",
+          "title": "스루가야 나고야 오스 본관 3F·5F",
+          "category": "쇼핑",
+          "place": {
+            "id": "surugaya",
+            "name": "스루가야 나고야 오스 본관",
+            "japaneseName": "駿河屋 名古屋大須本館",
+            "address": "愛知県名古屋市中区大須3-32-23 3～5F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%A7%BF%E6%B2%B3%E5%B1%8B%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%A4%A7%E9%A0%88%E6%9C%AC%E9%A4%A8%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%883-32-23%203%EF%BD%9E5F"
+          },
+          "description": "3층 애니 굿즈와 5층 피규어·프라모델을 한 건물에서 비교.",
+          "details": [
+            "모형이 우선이면 5층부터, 작품 굿즈가 우선이면 3층부터 보세요. 공구는 다음 보크스까지 비교할 수 있습니다.",
+            "층별 상품 분류는 변동될 수 있으므로 안내도를 확인하고, 무거운 상품은 이후 이동을 고려해 구매하세요.",
+            "둘러본 뒤 히가시니오몬도리의 커피 부리코로 이동합니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "https://www.suruga-ya.jp/feature/realstore/osu_main/index.html",
+          "card_notes": {
+            "visit_tip": "모형이 우선이면 5층부터, 작품 굿즈가 우선이면 3층부터 보세요. 공구는 다음 보크스까지 비교할 수 있습니다.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s-coffee-transfer",
+          "start": "15:20",
+          "end": "15:30",
+          "title": "스루가야→커피 부리코 이동",
+          "category": "이동",
+          "place": {
+            "id": "coffeeBuriko",
+            "name": "커피 부리코",
+            "japaneseName": "珈琲ぶりこ",
+            "address": "名古屋市中区大須3-35-22",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%8F%88%E7%90%B2%E3%81%B6%E3%82%8A%E3%81%93%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%883-35-22"
+          },
+          "description": "스루가야에서 커피 부리코로 이동",
+          "details": [
+            "상점가를 따라 도보 이동합니다.",
+            "15:30까지 카페에 도착합니다."
+          ],
+          "optional": false,
+          "transport_from_previous": "스루가야 오스 본관에서 히가시니오몬도리를 따라 도보. 계획 10분.",
+          "source_url": "https://osu.nagoya/ja/shop.php?s=3OoboP",
+          "card_notes": {
+            "visit_tip": "상점가를 따라 도보 이동합니다.",
+            "transport": "스루가야 오스 본관에서 히가시니오몬도리를 따라 도보. 계획 10분.",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s-coffee-buriko",
+          "start": "15:30",
+          "end": "16:00",
+          "title": "커피 부리코(珈琲ぶりこ) 전통 가옥 카페",
+          "category": "휴식",
+          "place": {
+            "id": "coffeeBuriko",
+            "name": "커피 부리코",
+            "japaneseName": "珈琲ぶりこ",
+            "address": "名古屋市中区大須3-35-22",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%8F%88%E7%90%B2%E3%81%B6%E3%82%8A%E3%81%93%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%883-35-22"
+          },
+          "description": "오스의 전통 가옥 카페에서 휴식",
+          "details": [
+            "일본식 주택을 개조한 카페에서 커피나 말차 음료를 즐깁니다.",
+            "30분 휴식 후 라신반으로 이동합니다."
+          ],
+          "optional": false,
+          "transport_from_previous": "스루가야에서 히가시니오몬도리로 도보. 휴식 뒤 라신반으로 이동.",
+          "source_url": "https://osu.nagoya/ja/shop.php?s=3OoboP",
+          "card_notes": {
+            "visit_tip": "일본식 주택을 개조한 카페에서 커피나 말차 음료를 즐깁니다.",
+            "transport": "스루가야에서 히가시니오몬도리로 도보. 휴식 뒤 라신반으로 이동.",
+            "reservation_requirement": "현장 방문"
+          }
+        },
+        {
+          "id": "s11",
+          "start": "16:00",
+          "end": "16:10",
+          "title": "커피 부리코→라신반 이동",
+          "category": "이동",
+          "place": {
+            "id": "lashinbang",
+            "name": "라신반 나고야 오스점",
+            "japaneseName": "らしんばん 名古屋大須店",
+            "address": "愛知県名古屋市中区大須3-10-35 MultinaBox 2F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%82%89%E3%81%97%E3%82%93%E3%81%B0%E3%82%93%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%A4%A7%E9%A0%88%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%883-10-35%20MultinaBox%202F"
+          },
+          "description": "커피 부리코에서 MultinaBox 2층 라신반까지 도보.",
+          "details": [
+            "커피 부리코에서 MultinaBox를 찾아 2층 라신반으로 올라갑니다.",
+            "이동 안내: 도보 5~10분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "커피 부리코에서 라신반까지 도보·층간 이동 5~10분.",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "커피 부리코에서 MultinaBox를 찾아 2층 라신반으로 올라갑니다.",
+            "transport": "커피 부리코에서 라신반까지 도보·층간 이동 5~10분.",
             "reservation_requirement": "불필요"
           }
         },
         {
           "id": "s12",
-          "start": "14:45",
-          "end": "15:10",
-          "title": "라신반 나고야 오스점 MultinaBox 2F",
+          "start": "16:10",
+          "end": "16:40",
+          "title": "라신반 나고야 오스점",
           "category": "쇼핑",
           "place": {
             "id": "lashinbang",
@@ -1369,7 +1584,7 @@
           "description": "MultinaBox 2층의 중고 애니 굿즈·피규어 전문점.",
           "details": [
             "아크릴 스탠드나 소형 굿즈를 찾아보고, 만다라케에서 본 상품의 상태와 가격을 비교하세요.",
-            "만다라케에서 본 동일 작품 상품과 가격·상태를 비교하며, 다음 스루가야로 이동합니다.",
+            "만다라케·스루가야에서 본 상품과 상태를 비교하고 다음 보크스까지 시간을 남기세요.",
             "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
           ],
           "optional": false,
@@ -1386,74 +1601,10 @@
           }
         },
         {
-          "id": "s13",
-          "start": "15:10",
-          "end": "15:20",
-          "title": "라신반 → 스루가야 이동",
-          "category": "이동",
-          "place": {
-            "id": "surugaya",
-            "name": "스루가야 나고야 오스 본관",
-            "japaneseName": "駿河屋 名古屋大須本館",
-            "address": "愛知県名古屋市中区大須3-32-23 3～5F",
-            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%A7%BF%E6%B2%B3%E5%B1%8B%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%A4%A7%E9%A0%88%E6%9C%AC%E9%A4%A8%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%883-32-23%203%EF%BD%9E5F"
-          },
-          "description": "동쪽 방향",
-          "details": [
-            "스루가야 나고야 오스 본관 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "이동 안내: 도보 5~10분.",
-            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
-          ],
-          "optional": false,
-          "reservation": {
-            "requirement": "불필요",
-            "status": "미확정"
-          },
-          "transport_from_previous": "도보 5~10분",
-          "source_url": "",
-          "card_notes": {
-            "visit_tip": "스루가야 나고야 오스 본관 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "transport": "도보 5~10분",
-            "reservation_requirement": "불필요"
-          }
-        },
-        {
-          "id": "s14",
-          "start": "15:20",
-          "end": "15:50",
-          "title": "스루가야 나고야 오스 본관 3F·5F",
-          "category": "쇼핑",
-          "place": {
-            "id": "surugaya",
-            "name": "스루가야 나고야 오스 본관",
-            "japaneseName": "駿河屋 名古屋大須本館",
-            "address": "愛知県名古屋市中区大須3-32-23 3～5F",
-            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%A7%BF%E6%B2%B3%E5%B1%8B%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%A4%A7%E9%A0%88%E6%9C%AC%E9%A4%A8%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%883-32-23%203%EF%BD%9E5F"
-          },
-          "description": "3층 애니 굿즈와 5층 피규어·프라모델을 한 건물에서 비교.",
-          "details": [
-            "모형이 우선이면 5층부터, 작품 굿즈가 우선이면 3층부터 보세요. 공구는 다음 보크스까지 비교할 수 있습니다.",
-            "층별 상품 분류는 변동될 수 있으므로 안내도를 확인하고, 무거운 상품은 이후 이동을 고려해 구매하세요.",
-            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
-          ],
-          "optional": false,
-          "reservation": {
-            "requirement": "불필요",
-            "status": "미확정"
-          },
-          "transport_from_previous": "도보",
-          "source_url": "https://www.suruga-ya.jp/feature/realstore/osu_main/index.html",
-          "card_notes": {
-            "visit_tip": "모형이 우선이면 5층부터, 작품 굿즈가 우선이면 3층부터 보세요. 공구는 다음 보크스까지 비교할 수 있습니다.",
-            "transport": "도보",
-            "reservation_requirement": "불필요"
-          }
-        },
-        {
           "id": "s15",
-          "start": "15:50",
-          "end": "16:05",
-          "title": "스루가야 → 보크스 이동",
+          "start": "16:40",
+          "end": "16:50",
+          "title": "라신반→보크스 이동",
           "category": "이동",
           "place": {
             "id": "volks",
@@ -1462,10 +1613,10 @@
             "address": "愛知県名古屋市中区大須4-1-71 矢場町中駒ビル2F",
             "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%83%9C%E3%83%BC%E3%82%AF%E3%82%B9%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%82%B7%E3%83%A7%E3%83%BC%E3%83%AB%E3%83%BC%E3%83%A0%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%884-1-71%20%E7%9F%A2%E5%A0%B4%E7%94%BA%E4%B8%AD%E9%A7%92%E3%83%93%E3%83%AB2F"
           },
-          "description": "야바초 방면 북쪽으로",
+          "description": "라신반에서 오스 동쪽 보크스 쇼룸으로 도보.",
           "details": [
-            "보크스 나고야 쇼룸 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "이동 안내: 도보 10~15분.",
+            "MultinaBox를 나와 야바초 방향으로 걸어 야바초나카코마 빌딩 2층으로 올라갑니다.",
+            "이동 안내: 도보·층간 이동 10분.",
             "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
           ],
           "optional": false,
@@ -1473,19 +1624,19 @@
             "requirement": "불필요",
             "status": "미확정"
           },
-          "transport_from_previous": "도보 10~15분",
+          "transport_from_previous": "라신반에서 보크스 쇼룸까지 도보·2층 이동, 10분 배정.",
           "source_url": "",
           "card_notes": {
-            "visit_tip": "보크스 나고야 쇼룸 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "transport": "도보 10~15분",
+            "visit_tip": "MultinaBox를 나와 야바초 방향으로 걸어 야바초나카코마 빌딩 2층으로 올라갑니다.",
+            "transport": "라신반에서 보크스 쇼룸까지 도보·2층 이동, 10분 배정.",
             "reservation_requirement": "불필요"
           }
         },
         {
           "id": "s16",
-          "start": "16:05",
-          "end": "16:30",
-          "title": "보크스 나고야 쇼룸 2F",
+          "start": "16:50",
+          "end": "17:15",
+          "title": "보크스 나고야 쇼룸",
           "category": "쇼핑",
           "place": {
             "id": "volks",
@@ -1497,7 +1648,7 @@
           "description": "PVC 피규어·프라모델 전문",
           "details": [
             "보크스 나고야 쇼룸에서 완성품 피규어와 프라모델을 살펴보세요.",
-            "관심 상품에 따라 전시품과 판매상품을 구분하고, 다음 PARCO 동관으로 이동하세요.",
+            "전시품과 판매품을 구분해 보고, 다음에는 오스 북동쪽 소품·간식 골목으로 이어갑니다.",
             "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
           ],
           "optional": false,
@@ -1514,203 +1665,37 @@
           }
         },
         {
-          "id": "s17",
-          "start": "16:30",
-          "end": "16:40",
-          "title": "보크스 → PARCO 동관 이동",
-          "category": "이동",
-          "place": {
-            "id": "animateParco",
-            "name": "애니메이트 나고야 PARCO점",
-            "japaneseName": "アニメイト名古屋パルコ",
-            "address": "愛知県名古屋市中区栄3-29-1 名古屋PARCO東館4F",
-            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%8B%E3%83%A1%E3%82%A4%E3%83%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%91%E3%83%AB%E3%82%B3%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-29-1%20%E5%90%8D%E5%8F%A4%E5%B1%8BPARCO%E6%9D%B1%E9%A4%A84F"
-          },
-          "description": "동관 엘리베이터로 4F",
-          "details": [
-            "애니메이트 나고야 PARCO점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "이동 안내: 도보·건물 이동.",
-            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
-          ],
-          "optional": false,
-          "reservation": {
-            "requirement": "불필요",
-            "status": "미확정"
-          },
-          "transport_from_previous": "오스 동쪽에서 오쓰도리를 따라 야바초 쪽으로 걸어 PARCO 동관 4층으로 이동. 일정에 10분 배정.",
-          "source_url": "",
-          "card_notes": {
-            "visit_tip": "애니메이트 나고야 PARCO점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "transport": "오스 동쪽에서 오쓰도리를 따라 야바초 쪽으로 걸어 PARCO 동관 4층으로 이동. 일정에 10분 배정.",
-            "reservation_requirement": "불필요"
-          }
-        },
-        {
-          "id": "s18",
-          "start": "16:40",
-          "end": "17:05",
-          "title": "애니메이트 나고야 PARCO점 동관 4F",
-          "category": "쇼핑",
-          "place": {
-            "id": "animateParco",
-            "name": "애니메이트 나고야 PARCO점",
-            "japaneseName": "アニメイト名古屋パルコ",
-            "address": "愛知県名古屋市中区栄3-29-1 名古屋PARCO東館4F",
-            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%82%A2%E3%83%8B%E3%83%A1%E3%82%A4%E3%83%88%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%91%E3%83%AB%E3%82%B3%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-29-1%20%E5%90%8D%E5%8F%A4%E5%B1%8BPARCO%E6%9D%B1%E9%A4%A84F"
-          },
-          "description": "PARCO 동관 4층에서 최신 작품의 공식 신상품을 보는 애니메이트.",
-          "details": [
-            "작품별 진열대에서 서적, 아크릴 스탠드와 캐릭터 상품을 찾아보세요.",
-            "중고 매장과 달리 신상품 중심이므로 출시된 작품별 코너를 살펴보세요.",
-            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
-          ],
-          "optional": false,
-          "reservation": {
-            "requirement": "불필요",
-            "status": "미확정"
-          },
-          "transport_from_previous": "PARCO 동관",
-          "source_url": "https://nagoya.parco.jp/shop/detail/?cd=009990",
-          "card_notes": {
-            "visit_tip": "작품별 진열대에서 서적, 아크릴 스탠드와 캐릭터 상품을 찾아보세요.",
-            "transport": "PARCO 동관",
-            "reservation_requirement": "불필요"
-          }
-        },
-        {
-          "id": "s19",
-          "start": "17:05",
-          "end": "17:15",
-          "title": "PARCO 서관 8F 이동",
-          "category": "이동",
-          "place": {
-            "id": "mugiwara",
-            "name": "ONE PIECE 무기와라 스토어 나고야점",
-            "japaneseName": "ONE PIECE 麦わらストア 名古屋店",
-            "address": "愛知県名古屋市中区栄3-29-1 名古屋PARCO西館8F",
-            "mapUrl": "https://www.google.com/maps/search/?api=1&query=ONE%20PIECE%20%E9%BA%A6%E3%82%8F%E3%82%89%E3%82%B9%E3%83%88%E3%82%A2%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-29-1%20%E5%90%8D%E5%8F%A4%E5%B1%8BPARCO%E8%A5%BF%E9%A4%A88F"
-          },
-          "description": "동관→서관 건물 이동·엘리베이터",
-          "details": [
-            "ONE PIECE 무기와라 스토어 나고야점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "이동 안내: 도보 5~10분.",
-            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
-          ],
-          "optional": false,
-          "reservation": {
-            "requirement": "불필요",
-            "status": "미확정"
-          },
-          "transport_from_previous": "도보 5~10분",
-          "source_url": "",
-          "card_notes": {
-            "visit_tip": "ONE PIECE 무기와라 스토어 나고야점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "transport": "도보 5~10분",
-            "reservation_requirement": "불필요"
-          }
-        },
-        {
-          "id": "s20",
+          "id": "s-osu-walk",
           "start": "17:15",
-          "end": "17:35",
-          "title": "ONE PIECE 무기와라 스토어 나고야점",
-          "category": "쇼핑",
+          "end": "17:40",
+          "title": "오스 북동쪽 소품점·간식 자유 산책",
+          "category": "산책",
           "place": {
-            "id": "mugiwara",
-            "name": "ONE PIECE 무기와라 스토어 나고야점",
-            "japaneseName": "ONE PIECE 麦わらストア 名古屋店",
-            "address": "愛知県名古屋市中区栄3-29-1 名古屋PARCO西館8F",
-            "mapUrl": "https://www.google.com/maps/search/?api=1&query=ONE%20PIECE%20%E9%BA%A6%E3%82%8F%E3%82%89%E3%82%B9%E3%83%88%E3%82%A2%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-29-1%20%E5%90%8D%E5%8F%A4%E5%B1%8BPARCO%E8%A5%BF%E9%A4%A88F"
+            "id": "osu-area",
+            "name": "오스 상점가 북동쪽",
+            "japaneseName": "大須商店街 赤門通交差点",
+            "address": "名古屋市中区大須",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%A0%88%E5%95%86%E5%BA%97%E8%A1%97%20%E8%B5%A4%E9%96%80%E9%80%9A%E4%BA%A4%E5%B7%AE%E7%82%B9%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%88"
           },
-          "description": "원피스 공식 굿즈 전문점, 서관 8F",
+          "description": "오스 상점가에서 소품점과 간식을 자유롭게 구경",
           "details": [
-            "ONE PIECE 무기와라 스토어에서 원피스 공식 캐릭터 굿즈를 구경하세요.",
-            "피규어뿐 아니라 키링·문구·기념상품도 비교하고, 다음 팝업 일정까지 시간을 확인하세요.",
-            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+            "특정 상호를 고정하지 않는 의도적인 선택 산책입니다.",
+            "17:40부터 이부시긴으로 이동합니다."
           ],
-          "optional": false,
-          "reservation": {
-            "requirement": "불필요",
-            "status": "미확정"
-          },
-          "transport_from_previous": "같은 층",
-          "source_url": "https://nagoya.parco.jp/shop/detail/?cd=031218",
+          "optional": true,
+          "transport_from_previous": "보크스에서 오스 북동쪽 골목을 도보로 둘러보고 17:40에 후시미로 이동.",
+          "source_url": "https://osu.nagoya/ja/osumap.php",
           "card_notes": {
-            "visit_tip": "ONE PIECE 무기와라 스토어에서 원피스 공식 캐릭터 굿즈를 구경하세요.",
-            "transport": "같은 층",
+            "visit_tip": "특정 상호를 고정하지 않는 의도적인 선택 산책입니다.",
+            "transport": "보크스에서 오스 북동쪽 골목을 도보로 둘러보고 17:40에 후시미로 이동.",
             "reservation_requirement": "불필요"
-          }
-        },
-        {
-          "id": "s21",
-          "start": "17:35",
-          "end": "17:45",
-          "title": "서관 → 남관 10F 이동",
-          "category": "이동",
-          "place": {
-            "id": "heroPopup",
-            "name": "나의 히어로 아카데미아 10주년 × bones store 팝업",
-            "japaneseName": "「僕のヒーローアカデミア」10周年 × bones store POP UP",
-            "address": "愛知県名古屋市中区栄3-29-1 名古屋PARCO南館10F EVENT SPACE",
-            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%80%8C%E5%83%95%E3%81%AE%E3%83%92%E3%83%BC%E3%83%AD%E3%83%BC%E3%82%A2%E3%82%AB%E3%83%87%E3%83%9F%E3%82%A2%E3%80%8D10%E5%91%A8%E5%B9%B4%20%C3%97%20bones%20store%20POP%20UP%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-29-1%20%E5%90%8D%E5%8F%A4%E5%B1%8BPARCO%E5%8D%97%E9%A4%A810F%20EVENT%20SPACE"
-          },
-          "description": "PARCO 건물 간 이동·엘리베이터",
-          "details": [
-            "나의 히어로 아카데미아 10주년 × bones store 팝업 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "이동 안내: 도보 5~10분.",
-            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
-          ],
-          "optional": false,
-          "reservation": {
-            "requirement": "불필요",
-            "status": "미확정"
-          },
-          "transport_from_previous": "도보 5~10분",
-          "source_url": "",
-          "card_notes": {
-            "visit_tip": "나의 히어로 아카데미아 10주년 × bones store 팝업 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "transport": "도보 5~10분",
-            "reservation_requirement": "불필요"
-          }
-        },
-        {
-          "id": "s22",
-          "start": "17:45",
-          "end": "18:05",
-          "title": "나히아 10주년 × bones store POP UP",
-          "category": "관광",
-          "place": {
-            "id": "heroPopup",
-            "name": "나의 히어로 아카데미아 10주년 × bones store 팝업",
-            "japaneseName": "「僕のヒーローアカデミア」10周年 × bones store POP UP",
-            "address": "愛知県名古屋市中区栄3-29-1 名古屋PARCO南館10F EVENT SPACE",
-            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%80%8C%E5%83%95%E3%81%AE%E3%83%92%E3%83%BC%E3%83%AD%E3%83%BC%E3%82%A2%E3%82%AB%E3%83%87%E3%83%9F%E3%82%A2%E3%80%8D10%E5%91%A8%E5%B9%B4%20%C3%97%20bones%20store%20POP%20UP%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-29-1%20%E5%90%8D%E5%8F%A4%E5%B1%8BPARCO%E5%8D%97%E9%A4%A810F%20EVENT%20SPACE"
-          },
-          "description": "12월 12일 방문 예정. 남관 10층 EVENT SPACE의 히로아카 10주년 공식 팝업.",
-          "details": [
-            "관심 캐릭터의 공식 굿즈를 먼저 찾고, 구매 제한과 품절 공지는 현장 표기를 확인하세요.",
-            "2026년 12월 5~20일 개최 안내 기준이며, 혼잡 시 정리권·입장 제한이 있을 수 있습니다. 당일 운영 공지를 확인하세요.",
-            "사진 촬영·동선 확인 시간을 포함합니다. 입장 및 통제 안내는 현장에서 확인하세요.",
-            "예약 안내: 혼잡 시 현장 정리권. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
-          ],
-          "optional": false,
-          "reservation": {
-            "requirement": "혼잡 시 현장 정리권",
-            "status": "미확정"
-          },
-          "transport_from_previous": "남관 10F",
-          "source_url": "https://nagoya.parco.jp/event/detail/?id=38619",
-          "card_notes": {
-            "visit_tip": "관심 캐릭터의 공식 굿즈를 먼저 찾고, 구매 제한과 품절 공지는 현장 표기를 확인하세요.",
-            "transport": "남관 10F",
-            "reservation_requirement": "혼잡 시 현장 정리권"
           }
         },
         {
           "id": "s23",
-          "start": "18:05",
+          "start": "17:40",
           "end": "18:40",
-          "title": "PARCO → 이부시긴 후시미점 이동",
+          "title": "오스→후시미 이부시긴 이동·여유",
           "category": "이동",
           "place": {
             "id": "ibushigin",
@@ -1719,10 +1704,10 @@
             "address": "名古屋市中区栄2-1-14 マルイチセンタービル1F",
             "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%82%89%E7%AB%AF%E7%84%BC%E3%81%8D%20%E7%87%BB%E9%8A%80%20%E4%BC%8F%E8%A6%8B%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%842-1-14%20%E3%83%9E%E3%83%AB%E3%82%A4%E3%83%81%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%93%E3%83%AB1F"
           },
-          "description": "후시미 방향으로 도보·필요 시 지하철; 18:40 도착 목표",
+          "description": "오스 북동쪽에서 후시미로 이동. 18:40 도착까지 여유 포함.",
           "details": [
-            "로바타야키 이부시긴 후시미점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "이동 안내: 도보/지하철 약 25~35분.",
+            "오스 산책을 마치고 후시미 이부시긴으로 이동합니다. 지하철은 오스칸논역 또는 가미마에즈역에서 후시미역으로 향하는 쓰루마이선을 이용하세요.",
+            "18:40 저녁에 맞춰 17:40에 출발하고, 남는 시간은 후시미 인근에서 대기합니다.",
             "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
           ],
           "optional": false,
@@ -1730,11 +1715,11 @@
             "requirement": "불필요",
             "status": "미확정"
           },
-          "transport_from_previous": "도보/지하철 약 25~35분",
+          "transport_from_previous": "오스에서 후시미 방면 도보 또는 쓰루마이선. 이동과 여유 시간을 합쳐 60분 배정.",
           "source_url": "",
           "card_notes": {
-            "visit_tip": "로바타야키 이부시긴 후시미점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "transport": "도보/지하철 약 25~35분",
+            "visit_tip": "오스 산책을 마치고 후시미 이부시긴으로 이동합니다. 지하철은 오스칸논역 또는 가미마에즈역에서 후시미역으로 향하는 쓰루마이선을 이용하세요.",
+            "transport": "오스에서 후시미 방면 도보 또는 쓰루마이선. 이동과 여유 시간을 합쳐 60분 배정.",
             "reservation_requirement": "불필요"
           }
         },
@@ -1742,7 +1727,7 @@
           "id": "s24",
           "start": "18:40",
           "end": "20:55",
-          "title": "이부시긴 후시미점 로바타야키·사케",
+          "title": "로바타야키 이부시긴 후시미점 이자카야",
           "category": "식사",
           "place": {
             "id": "ibushigin",

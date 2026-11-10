@@ -17,6 +17,7 @@ const BOOKING_RULES = {
  'd5-keshiki':{id:'keshiki',modes:['web','walk'],name:'케시키 · 우선 안내',time:'09:30',requirement:'우선 안내 선택',links:[['TableCheck 우선 안내','https://www.tablecheck.com/ja/shops/tenmusudokorokeshiki/reserve']]}
 };
 const VISIT_LINKS = {
+ 's-coffee-buriko':[['타베로그 영업시간 표기','https://tabelog.com/aichi/A2301/A230105/23003902/']],
  f04:[['오아시스21 공사 공지','https://www.sakaepark.co.jp/news/news-8135/']],
  f22:[['본점 주소·영업','https://tebasaki623.co.jp/ja/shops']],
  f24:[['12월 야간 전망대 안내','https://www.nagoya-tv-tower.co.jp/news/202611011053/']],
@@ -33,6 +34,7 @@ const VISIT_LINKS = {
 };
 const VISIT_REQUIREMENTS = {f24:'야간 전망대 입장권',s22:'무료 입장 · 혼잡 시 현장 정리권 또는 입장 제한',b12:'개인 현장 방문 · 15명 이상 단체는 별도 사전 예약'};
 const MEAL_INFO = {
+ coffeeBuriko:['전통 가옥 카페','커피·말차 라테·말차 파르페','오스 상점가 안내 10:00–20:00(연말연시 제외). 타베로그는 토·일 10:30–18:00으로 표기합니다.','https://osu.nagoya/ja/shop.php?s=3OoboP'],
  shoraku:['마늘 라멘','닌니쿠 라멘 · 마늘 양 선택','목요일 18:00–23:00, 주문 마감 22:45. 재료 소진 시 조기 종료.','https://tabelog.com/aichi/A2301/A230103/23000137/'],
  komeda:['나고야 모닝','커피·토스트에 오구라앙(단팥)','매일 07:00 개점. 모닝은 개점부터 11:00까지. 현재 지점 안내상 월~토 21:00, 일·공휴일 19:00 마감.','https://www.komeda.co.jp/shop/detail.html?id=350'],
  ramuchi:['미소카츠','파가 올라간 미소카츠 정식','공개 점심 영업 11:00–15:30, 주문 마감 15:00.','https://tabelog.com/aichi/A2301/A230103/23001001/'],
@@ -61,7 +63,7 @@ function normalizeEvent(raw, index, plan) {
 }
 function normalizeDay(raw, index, plan=null) {
  return {...raw, date:raw.date.slice(5).replace('-','.'), iso:raw.date, dow:raw.weekday,
-  short:['도착','사카에 쇼핑','오스·피규어',plan==='A'?'게로 온천':'나바나노사토','귀국'][index],
+  short:['도착','사카에·PARCO','나고야역·오스·후시미',plan==='A'?'게로 온천':'나바나노사토','귀국'][index],
   subtitle:raw.summary, events:raw.events.map(event=>normalizeEvent(event,index,plan))};
 }
 const commonDays = ITINERARY_SOURCE.shared.map((day,i)=>normalizeDay(day,i===3?4:i));
