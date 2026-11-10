@@ -9,6 +9,7 @@ const previous={
  reservations:{sushi:{status:'confirmed',date:'2026-12-12',time:'18:00',note:'old dinner'},
   'ogawaya-bath':{status:'confirmed',note:'old bath'},'ghibli-ticket':{status:'confirmed',note:'old ticket'},
   'hida-outbound':{status:'confirmed',date:'2026-12-13',time:'08:43',note:'JR QR'},
+  keshiki:{status:'confirmed',date:'2026-12-14',time:'09:30',note:'old Monday booking'},
   mutsumi:{status:'confirmed',date:'2026-12-11',time:'17:30',note:'wing memo'}},
  expanded:{'sun-gero-outbound':true},memo:'개인 메모',checks:{flight:true},filters:{optional:true},options:{fieldMode:true,zoo:true}
 };
@@ -38,8 +39,15 @@ assert.equal(storage.get('nagoya26-v2'),JSON.stringify(previous));
 assert.equal(snapshot('baseEvents(SUNDAY).map(e=>e.id)').length,17);
 assert.equal(run('eventDayIndex("d4-train")'),-1);
 assert.equal(run('eventDayIndex("b07")'),3);
+assert.equal(run('eventDayIndex("d5-keshiki")'),2);
+assert.equal(run('state.events["d5-keshiki"].status'),'progress');
+assert.equal(run('state.reservations.keshiki.note'),'old Monday booking');
+assert.equal(run('reservationValue(RESERVATIONS.find(r=>r.id==="keshiki-saturday")).status'),'unconfirmed');
+assert.equal(run('RESERVATIONS.find(r=>r.id==="keshiki-saturday").required'),false);
+assert.equal(run('readRoute(state,"https://example.com/nagoya/?day=12-14&event=d5-keshiki").active'),2);
+
 const bookings=snapshot('activeReservations().map(r=>r.id)');
-assert.deepEqual(bookings,['ramuchi','mutsumi','sushi-lunch','monja-saturday','unayasu-lunch','nabana-ticket','keshiki']);
+assert.deepEqual(bookings,['ramuchi','mutsumi','keshiki-saturday','monja-saturday','unayasu-lunch','nabana-ticket']);
 for(let day=0;day<5;day++){
  for(const food of [true,false])for(const optional of [true,false]){
   run('state.filters.foodOnly='+food+';state.filters.optional='+optional);
@@ -72,8 +80,8 @@ const route=snapshot('readRoute(state,"https://example.com/nagoya/?page=plan&day
 assert.deepEqual(route,{active:3,view:'map',explicit:true});
 const oldV3=snapshot('freshState()');
 Object.assign(oldV3,{plan:'B',selectedDay:2,selectedEvent:'s18',selectionMode:'manual',memo:'v3 travel notes',
- events:{s18:{status:'done'},s17:{status:'done'},s19:{status:'skipped'},s21:{status:'progress'},s24:{status:'done'},'d4-bath':{status:'done'},b03:{status:'done'}},
- expanded:{s18:true,s17:true},reservations:{mutsumi:{status:'confirmed',date:'2026-12-11',time:'17:30',note:'Friday booking'},monja:{status:'confirmed',date:'2026-12-13',time:'19:15'},ibushigin:{status:'confirmed',note:'Old Saturday dinner'}}});
+ events:{s18:{status:'done'},s17:{status:'done'},s19:{status:'skipped'},s21:{status:'progress'},s24:{status:'done'},'d4-bath':{status:'done'},b03:{status:'done'},s05:{status:'done'},'s-coffee-buriko':{status:'progress'}},
+ expanded:{s18:true,s17:true},reservations:{mutsumi:{status:'confirmed',date:'2026-12-11',time:'17:30',note:'Friday booking'},monja:{status:'confirmed',date:'2026-12-13',time:'19:15'},ibushigin:{status:'confirmed',note:'Old Saturday dinner'},'sushi-lunch':{status:'confirmed',note:'Archived lunch'}}});
 const routeStorage=new Map([['nagoya26-v3',JSON.stringify(oldV3)]]);
 const routeContext=loadItinerary({localStorage:{getItem:key=>routeStorage.get(key)??null,setItem:(key,value)=>routeStorage.set(key,value)}});
 const routeRun=code=>vm.runInContext(code,routeContext);
@@ -93,6 +101,10 @@ assert.equal(preserved.expanded.s17,true);
 assert.equal(preserved.events.s24.status,'done');
 assert.equal(preserved.events['d4-bath'].status,'done');
 assert.equal(preserved.events.b03.status,'done');
+assert.equal(preserved.events.s05.status,'done');
+assert.equal(preserved.events['s-coffee-buriko'].status,'progress');
+assert.equal(preserved.reservations['sushi-lunch'].note,'Archived lunch');
+assert.equal(preserved.events['s-kurin'],undefined);
 assert.equal(preserved.events['sun-unayasu'],undefined);
 assert.equal(preserved.reservations.monja.status,'confirmed');
 assert.equal(preserved.reservations.ibushigin.note,'Old Saturday dinner');
@@ -104,7 +116,8 @@ for(const plan of ['A','B']){
 }
 assert.equal(run('eventDayIndex("s17")'),-1);
 assert.equal(run('state.filters.foodOnly=false;state.filters.optional=false;getVisibleEvents(state,2).some(e=>e.id==="s-osu-walk")'),false);
-assert.equal(run('state.filters.foodOnly=true;getVisibleEvents(state,2).some(e=>e.id==="s-coffee-buriko")'),true);
+assert.equal(run('state.filters.foodOnly=true;getVisibleEvents(state,2).some(e=>e.id==="s-kurin")'),false);
+assert.equal(run('state.filters.optional=true;getVisibleEvents(state,2).some(e=>e.id==="s-kurin")'),true);
 const corrupt=new Map([['nagoya26-v3','{broken'],['nagoya26-v2',JSON.stringify(previous)]]);
 const recovered=loadItinerary({localStorage:{getItem:key=>corrupt.get(key)??null,setItem:(key,value)=>corrupt.set(key,value)}});
 assert.equal(vm.runInContext('state.memo',recovered),'개인 메모');

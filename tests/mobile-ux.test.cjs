@@ -46,7 +46,7 @@ for(let i=0;i<5;i++){
 assert.deepEqual([...renderedCategories].sort(),['lodging','meal','rest','shopping','sight','transit']);
 for(const [id,category] of Object.entries({
  'd1-checkin':'lodging','b16':'lodging','b01':'meal','b15':'transit','d5-security':'transit','d5-flight':'transit',
- 'f08':'shopping','s07':'sight','s-osu-walk':'sight','f20':'rest','f-chiikawa':'rest','s-coffee-buriko':'rest',
+ 'f08':'shopping','s07':'sight','s-osu-walk':'sight','f20':'rest','f-chiikawa':'rest','s-kurin':'rest','s-kurin-transfer':'transit','s-donki':'shopping','d5-kato':'meal','d5-keshiki':'meal','d5-lunch':'meal','d5-flight-park':'sight',
  's-shinsuzume':'rest','sun-unayasu':'meal','s-okoge':'meal'
 })){
  assert.equal(run('eventCategory(EVENTS_BY_ID.get("'+id+'"))'),category,id);
@@ -54,10 +54,10 @@ for(const [id,category] of Object.entries({
 const guide=fs.readFileSync('guide.html','utf8');
 assert.match(guide,/components\.css\?v=/);
 assert.match(guide,/data-guide-event="f-chiikawa">[\s\S]*?category-badge" data-category="rest"/);
-assert.match(run('restaurantCard(EVENTS_BY_ID.get("s05"))'),/data-res-jump="sushi-lunch"/);
-assert.doesNotMatch(run('restaurantCard(EVENTS_BY_ID.get("s01"))'),/data-res-jump/);
+assert.match(run('restaurantCard(EVENTS_BY_ID.get("d5-keshiki"))'),/data-res-jump="keshiki-saturday"/);
+assert.equal(run('EVENTS_BY_ID.get("s01").meal'),null);
 const checked=run('Object.keys(SHOP_WALKS)');
-assert.equal(checked.length,21);
+assert.equal(checked.length,23);
 for(const id of checked){
  const html=run('eventInfo(EVENTS_BY_ID.get("'+id+'"),{open:true})');
  assert.match(html,/오는 길 · 계획/);
@@ -66,12 +66,13 @@ for(const id of checked){
  assert.match(html,/영업·이용/);
  assert.match(html,/https:\/\//);
 }
-for(const id of ['f-chiikawa','s-shinsuzume','s-okoge','sun-unayasu']){
+for(const id of ['f-chiikawa','s-shinsuzume','s-okoge','sun-unayasu','d5-keshiki','s-kurin','d5-kato','d5-lunch']){
  const html=run('restaurantCard(EVENTS_BY_ID.get("'+id+'"))');
  assert.match(html,/추천 메뉴/);
  assert.match(html,/영업·이용/);
  assert.match(html,/google\.com\/maps\/dir/);
 }
+assert.match(run('eventInfo(EVENTS_BY_ID.get("s-okoge"),{open:true})'),/돈키호테 본점까지/);
 assert.match(run('eventInfo(EVENTS_BY_ID.get("s22"),{open:true})'),/12\/11 금요일 포함/);
 assert.doesNotMatch(fs.readFileSync('index.html','utf8'),/id="zoo"|place-experiences\.js/);
 console.log('PASS: six shared visual categories, every collapsed/expanded/printed event, all detail text, inline progress and routes, hotel without booking and mobile sheet snaps.');

@@ -1,13 +1,11 @@
 /* Venue map links, named buildings, and GSI/OSM address points. Indoor pins are explicitly building-level. */
 const MAP_LOCATIONS={
- "coffeeBuriko":{"lat":35.158421,"lng":136.903702,"kind":"address","source":"https://msearch.gsi.go.jp/address-search/AddressSearch?q=%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%883-35-22","note":"일본 국토지리원 오스 3-35-22 주소 기준점."},
  "osu-area":{"lat":35.160444,"lng":136.903633,"kind":"area-anchor","source":"https://anime-tourism.jp/t/81/261-2/","note":"오스 북동쪽 산책의 기준점인 아카몬도리 교차로입니다. 특정 매장은 지정하지 않습니다."},
  "flightOfDreams":{"lat":34.855313,"lng":136.817046,"kind":"place","source":"https://aichinow.pref.aichi.jp/spots/detail/2446","note":"T2 연결통로 쪽 시설입니다."},
  "gateTower":{"lat":35.17211,"lng":136.88283,"kind":"area-anchor","source":"https://mapcarta.com/W51080885","note":"JR 게이트타워 건물 기준점 · 카페는 층별 안내를 참고하세요."},
  "stussy":{"lat":35.1643941,"lng":136.9063534,"kind":"address","source":"https://www.stussy.com/blogs/chapters/stussy-nagoya","note":"공식 매장 안내에서 연결한 3-27-24 주소 지점입니다."},
  "bape":{"lat":35.164868,"lng":136.9047401,"kind":"place","source":"https://jp.bape.com/pages/store-list/nagoya"},
  "hoods":{"lat":35.1637678,"lng":136.9047608,"kind":"place","source":"https://www.doubledutch-jp.com/hoods-nagoya"},
- "sunroad":{"lat":35.169647,"lng":136.884903,"kind":"area-anchor","source":"https://www.sunroad.org/access","note":"지하상가의 대표 지점입니다."},
  "darumaya":{"lat":35.158974,"lng":136.900482,"kind":"address","source":"https://msearch.gsi.go.jp/address-search/AddressSearch"},
  "mandarake":{"lat":35.159882,"lng":136.904587,"kind":"address","source":"https://msearch.gsi.go.jp/address-search/AddressSearch"},
  "lashinbang":{"lat":35.160427,"lng":136.905197,"kind":"address","source":"https://msearch.gsi.go.jp/address-search/AddressSearch"},
@@ -218,13 +216,8 @@ const MAP_LOCATIONS={
   "source": "https://msearch.gsi.go.jp/address-search/AddressSearch",
   "address": "愛知県名古屋市中区栄三丁目９番２９号"
  },
- "sushi": {
-  "lat": 35.170147,
-  "lng": 136.888519,
-  "kind": "address",
-  "source": "https://msearch.gsi.go.jp/address-search/AddressSearch",
-  "address": "愛知県名古屋市中村区名駅四丁目１５番２号"
- },
+ "kurin":{"lat":35.158714,"lng":136.901642,"kind":"address","source":"https://msearch.gsi.go.jp/address-search/AddressSearch"},
+ "katoCoffee":{"lat":35.173687,"lng":136.910431,"kind":"address","source":"https://msearch.gsi.go.jp/address-search/AddressSearch"},
  "keshiki": {
   "lat": 35.173725,
   "lng": 136.890091,

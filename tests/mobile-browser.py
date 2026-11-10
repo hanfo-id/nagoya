@@ -99,7 +99,7 @@ def verify_mobile(browser, url, server, engine):
     with page.expect_download() as download:
         page.locator("[data-export-itinerary]").tap()
     exported = json.loads(download.value.path().read_text(encoding="utf8"))
-    assert "plan" not in exported and sum(len(day["events"]) for day in exported["days"]) == 83
+    assert "plan" not in exported and sum(len(day["events"]) for day in exported["days"]) == 85
     with page.expect_download() as download:
         page.locator("#exportbackup").tap()
     backup = json.loads(download.value.path().read_text(encoding="utf8"))
@@ -122,7 +122,8 @@ def verify_mobile(browser, url, server, engine):
     page.locator("#confirmdialog button[value=confirm]").tap()
     expect(page.locator("#memo")).to_have_value("v2 memo")
     page.locator("[data-nav=reservations]").tap()
-    expect(page.locator("#reservation-sushi-lunch")).to_contain_text("미확정")
+    expect(page.locator("#reservation-sushi-lunch")).to_have_count(0)
+    expect(page.locator("#reservation-keshiki-saturday")).to_contain_text("미확정")
     page.locator(".reservation-archive summary").tap()
     expect(page.locator(".reservation-archive")).to_contain_text("old dinner")
     page.goto(sunday+"&plan=A", wait_until="domcontentloaded")
@@ -133,7 +134,11 @@ def verify_mobile(browser, url, server, engine):
     page.evaluate("""() => {
         const saved = JSON.parse(localStorage.getItem('nagoya26-v3'));
         Object.assign(saved,{selectedDay:2,selectedEvent:'s18',selectionMode:'manual'});
-        Object.assign(saved.events,{s18:{status:'done'},s17:{status:'skipped'}});
+        Object.assign(saved.events,{s18:{status:'done'},s17:{status:'skipped'},s05:{status:'done'}});
+        Object.assign(saved.reservations,{
+            'sushi-lunch':{status:'confirmed',note:'old Saturday sushi'},
+            keshiki:{status:'confirmed',date:'2026-12-14',time:'09:30',note:'old Monday Keshiki'}
+        });
         localStorage.setItem('nagoya26-v3',JSON.stringify(saved));
     }""")
     page.goto(url + "?page=plan&day=12-12&plan=B&event=s18", wait_until="domcontentloaded")
@@ -177,11 +182,11 @@ def verify_mobile(browser, url, server, engine):
     expect(page.locator(".home-next .category-badge")).to_have_text("이동")
     page.set_viewport_size({"width": 390, "height": 700})
     page.goto(url + "?page=plan&day=12-12&plan=A", wait_until="domcontentloaded")
-    expect(page.locator(".route-item")).to_have_count(23)
-    expect(page.locator(".numberpin")).to_have_count(23)
-    for moved in ("s18", "s20", "s22"):
+    expect(page.locator(".route-item")).to_have_count(24)
+    expect(page.locator(".numberpin")).to_have_count(24)
+    for moved in ("s18", "s20", "s22", "s03", "s05", "s-coffee-buriko"):
         expect(row(moved)).to_have_count(0)
-    for event_id in ("s10", "s12", "s14", "s16", "s-coffee-buriko", "s-osu-walk", "s-shinsuzume", "s-okoge"):
+    for event_id in ("s10", "s12", "s14", "s16", "s-kurin", "s-osu-walk", "s-shinsuzume", "s-okoge", "s-donki", "d5-keshiki"):
         row(event_id).locator(".route-more").tap()
         expect(row(event_id).locator(".inline-jp")).not_to_be_empty()
         expect(row(event_id).locator(".info-bullets").first).not_to_be_empty()
@@ -195,15 +200,23 @@ def verify_mobile(browser, url, server, engine):
         return marker.getElement().dataset.category===row.dataset.category &&
             marker.getElement().textContent===String(point.number);
     })""")
-    page.evaluate("[...mapMarkers.values()].find(({point})=>point.eventId==='s-coffee-buriko').marker.fire('click')")
-    choice = page.locator("#map-choices .pin-visits [data-place-detail=s-coffee-buriko]")
+    page.evaluate("[...mapMarkers.values()].find(({point})=>point.eventId==='s-kurin').marker.fire('click')")
+    choice = page.locator("#map-choices .pin-visits [data-place-detail=s-kurin]")
     expect(choice).to_be_visible()
     choice.tap()
-    expect(row("s-coffee-buriko").locator(".inline-stop-detail")).to_be_visible()
+    expect(row("s-kurin").locator(".inline-stop-detail")).to_be_visible()
     expect(row("s08").locator(".inline-stop-detail")).to_have_count(0)
+    expect(row("s-kurin")).to_contain_text("카누레와 아이스크림")
+    expect(row("s-donki").locator(".category-badge")).to_have_text("쇼핑")
+    expect(row("s-donki")).to_contain_text("21:00–22:00")
+    expect(page.locator(".route-item").last).to_have_attribute("data-event-id", "s-hotel-return")
+    expect(row("d5-keshiki")).to_contain_text("10:00–12:00")
     page.locator("#optional").uncheck()
     expect(row("s-osu-walk")).to_have_count(0)
     expect(row("s-shinsuzume")).to_have_count(0)
+    expect(row("s-kurin")).to_have_count(0)
+    expect(row("s-kurin-transfer")).to_have_count(0)
+    expect(row("d5-keshiki")).to_be_visible()
     expect(row("s-okoge")).to_be_visible()
     page.locator("#optional").check()
     expect(row("s-osu-walk")).to_be_visible()
@@ -222,7 +235,7 @@ def verify_mobile(browser, url, server, engine):
 
     page.goto(url + "?page=food&day=12-12&plan=A", wait_until="domcontentloaded")
     for query, event_id in (
-        ("부리코", "s-coffee-buriko"), ("치이카와", "f-chiikawa"), ("당고", "s-shinsuzume"),
+        ("쿠리린", "s-kurin"), ("케시키", "d5-keshiki"), ("카토커피", "d5-kato"), ("자유 점심", "d5-lunch"), ("치이카와", "f-chiikawa"), ("당고", "s-shinsuzume"),
         ("오코게", "s-okoge"), ("우나야스", "sun-unayasu"),
     ):
         page.locator("#search").fill(query)
@@ -232,8 +245,29 @@ def verify_mobile(browser, url, server, engine):
     expect(unayasu.locator(".optional-label")).to_have_text("선택")
     expect(unayasu.locator(".statusbadge")).to_have_text("예약 미확정")
     assert unayasu.locator(".food-card-meta").evaluate("(node)=>node.scrollWidth<=node.clientWidth")
-    page.locator("#search").fill("이부시긴")
-    expect(page.locator("#foodcount")).to_contain_text("0개")
+    for removed in ("이부시긴", "키타로", "부리코"):
+        page.locator("#search").fill(removed)
+        expect(page.locator("#foodcount")).to_contain_text("0개")
+    page.locator("[data-nav=reservations]").tap()
+    expect(page.locator("#reservation-keshiki-saturday")).to_contain_text("계획 12.12 10:00")
+    expect(page.locator("#reservation-keshiki-saturday")).to_contain_text("예약 미확정")
+    expect(page.locator("#reservation-sushi-lunch")).to_have_count(0)
+    page.locator(".reservation-archive summary").tap()
+    expect(page.locator(".reservation-archive")).to_contain_text("old Saturday sushi")
+    expect(page.locator(".reservation-archive")).to_contain_text("old Monday Keshiki")
+
+    page.goto(url + "?page=plan&day=12-14&event=d5-keshiki", wait_until="domcontentloaded")
+    expect(page).to_have_url(re.compile(r"day=12-12"))
+    expect(row("d5-keshiki")).to_be_visible()
+    page.locator("#tab4").tap()
+    expect(page.locator(".route-item")).to_have_count(9)
+    expect(page.locator(".numberpin")).to_have_count(9)
+    expect(row("d5-keshiki")).to_have_count(0)
+    expect(row("d5-kato")).to_contain_text("08:00–08:50")
+    expect(row("d5-lunch")).to_contain_text("공항 자유 점심")
+    expect(row("d5-flight-park").locator(".category-badge")).to_have_text("관광")
+    expect(row("d5-flight")).to_contain_text("17:50")
+    assert page.locator(".route-meta").evaluate_all("(rows)=>rows.every(row=>row.scrollWidth<=row.clientWidth)")
 
     page.goto(url + "?page=plan&day=12-11&plan=A", wait_until="domcontentloaded")
     row("s22").locator(".route-more").tap()
@@ -247,11 +281,11 @@ def verify_mobile(browser, url, server, engine):
         row("s22").locator(".inline-section").first.scroll_into_view_if_needed()
         page.screenshot(path=screenshot)
     page.evaluate("beforePrint()")
-    expect(page.locator("[data-printed-event] .category-badge")).to_have_count(83)
+    expect(page.locator("[data-printed-event] .category-badge")).to_have_count(85)
     page.evaluate("afterPrint()")
     page.goto(sunday + "&plan=B", wait_until="domcontentloaded")
     page.evaluate("beforePrint()")
-    expect(page.locator("[data-printed-event]")).to_have_count(83)
+    expect(page.locator("[data-printed-event]")).to_have_count(85)
     expect(page.locator("[data-printed-event=d4-bath]")).to_have_count(0)
     page.evaluate("afterPrint()")
     print("PASS 320–1280 px, category labels, combined status, touch, scroll, marker choice and print")
@@ -298,15 +332,15 @@ def verify_mobile(browser, url, server, engine):
     expect(page.locator("[data-plan]")).to_have_count(0)
 
     page.goto(url + "?page=plan&day=12-12&plan=B", wait_until="domcontentloaded")
-    expect(page.locator(".route-item")).to_have_count(23)
-    row("s-coffee-buriko").locator(".route-more").tap()
-    expect(row("s-coffee-buriko").locator(".inline-jp")).to_have_text("珈琲ぶりこ")
+    expect(page.locator(".route-item")).to_have_count(24)
+    row("s-kurin").locator(".route-more").tap()
+    expect(row("s-kurin").locator(".inline-jp")).to_have_text("和栗モンブラン専門店 栗りん")
     page.goto(url + "guide.html#sunday-b", wait_until="domcontentloaded")
     expect(page.locator("#day-4 [data-guide-event]")).to_have_count(17)
     expect(page.locator('[data-guide-event="s-okoge"] .category-badge')).to_have_css(
         "background-color", "rgb(250, 236, 230)"
     )
-    expect(page.locator("[data-guide-event]")).to_have_count(83)
+    expect(page.locator("[data-guide-event]")).to_have_count(85)
     expect(page.locator("#sunday-a")).to_have_count(0)
     expect(page.locator("[data-guide-event=s-okoge]")).to_contain_text("몬자야키")
     assert not errors, errors

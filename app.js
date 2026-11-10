@@ -48,8 +48,11 @@ function renderReservations(){
 }
 function archivedReservations(){
  const records=Object.entries(state.legacy?.reservations||{}).filter(([id,r])=>!V2_RES_IDS.includes(id)&&id!=='ogawaya-bath'&&plainObject(r));
+ for(const id of ['sushi-lunch','keshiki']){
+  if(state.reservations[id])records.push([id,state.reservations[id]]);
+ }
  if(!records.length)return '';
- const names={sushi:'키타로 · 이전 저녁 일정','ghibli-ticket':'지브리파크 · 이전 일정'};
+ const names={sushi:'키타로 · 이전 저녁 일정','sushi-lunch':'키타로 · 이전 토요일 점심',keshiki:'케시키 · 이전 월요일 우선 안내','ghibli-ticket':'지브리파크 · 이전 일정'};
  return `<details class="panel reservation-archive"><summary>이전 일정에서 보관한 예약 기록</summary><ul class="info-bullets">
   ${records.map(([id,r])=>`<li><b>${esc(names[id]||id)}</b><br>${esc([Object.hasOwn(RES_STATUS,r.status)?RES_STATUS[r.status]:'',cleanText(r.date,20),cleanText(r.time,20),cleanText(r.note)].filter(Boolean).join(' · '))}</li>`).join('')}
  </ul></details>`;

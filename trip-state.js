@@ -4,15 +4,20 @@ const EVENT_STATUS={planned:'예정',progress:'진행 중',done:'완료',skipped
 const RES_STATUS={unconfirmed:'미확정',requested:'예약 요청 중',confirmed:'확정',walkin:'현장 방문',cancelled:'취소'};
 const EVENT_IDS=new Set(ALL_EVENTS.map(event=>event.id));
 const FRIDAY_MOVED_EVENTS=new Set(['s18','s20','s22']);
-// Keep old transfer records in v3 and JSON backups without adding them to the live itinerary.
-const RETIRED_ROUTE_EVENTS=['s17','s19','s21','s23','s24','b03',
+// Keep records for removed activities in v3 and JSON backups.
+const RETIRED_ROUTE_EVENTS=['s02','s03','s04','s05','s06','s-coffee-transfer','s-coffee-buriko','s25','d5-morningtransfer','d5-return',
+ 's17','s19','s21','s23','s24','b03',
  'd4-breakfast','d4-train','d4-town','d4-beef','d4-lunch','d4-bath','d4-pudding','d4-returnwalk','d4-return','d4-hotel','d4-monja'];
-const RETIRED_RESERVATIONS=['hida-outbound','ogawaya-ruri','hida-return','monja','ibushigin'];
-function migratedRouteDay(day,eventId){return day===2&&FRIDAY_MOVED_EVENTS.has(eventId)?1:day}
+const RETIRED_RESERVATIONS=['hida-outbound','ogawaya-ruri','hida-return','monja','ibushigin','sushi-lunch','keshiki'];
+function migratedRouteDay(day,eventId){
+ if(day===2&&FRIDAY_MOVED_EVENTS.has(eventId))return 1;
+ if(day===4&&eventId==='d5-keshiki')return 2;
+ return day;
+}
 const EVENTS_BY_ID=new Map(ALL_EVENTS.map(event=>[event.id,event]));
 const RESERVATIONS=ALL_EVENTS.filter(event=>event.booking).map(event=>({
  ...event.booking,day:event.day,plan:event.booking.time,event:event.id,
- optional:event.optional||event.booking.id==='keshiki',required:!event.optional&&event.booking.id!=='keshiki'
+ optional:event.optional||event.booking.optional===true,required:!event.optional&&event.booking.optional!==true
 }));
 const PREP_GROUPS={
  '출발 준비':{flight:'항공편 NGO·터미널·출발 시각 확인',passport:'여권·티켓 QR 준비',hotel:'숙소 예약·주소 확인',connect:'통신·교통카드·현금 준비',insurance:'여행자 보험 가입 여부 확인'},
