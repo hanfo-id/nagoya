@@ -42,12 +42,6 @@ const BLOGS={
  mutsumi:[{name:'방문기 | 테바사키 무츠미 본점',url:'https://msbahng.tistory.com/m/1570',note:'흑·백 맛과 주문 사진 참고. 과거 영업·휴무 정보는 최신 공식 안내와 다릅니다.'}],
  keshiki:[{name:'토게키스 | 케시키 아침식사·웨이팅 후기',url:'https://togekiss.tistory.com/35',note:'2026년 10월 게시. 텐무스·키시멘 사진과 대기 경험 참고.'}]
 };
-const GERO_LINKS={
- bath:'https://www.gero-ogawaya.net/how_to_spend/daytrip/',
- rail:'https://railway.jr-central.co.jp/ticketless/index.html',
- timetable:'https://railway.jr-central.co.jp/timetable/nr_doc/search.html?s=1',
- footbaths:'https://www.city.gero.lg.jp/site/kanko/1246.html'
-};
 function prepareTripPlaces(){
  for(const restaurant of restaurants){
   const {id,name,jp,address}=restaurant;
@@ -56,11 +50,6 @@ function prepareTripPlaces(){
   PLACE[id]={name,jp,query:jp+' '+address};
  }
  Object.assign(PLACE,{
-  geroStation:{name:'JR 게로역',jp:'JR下呂駅',query:'JR下呂駅'},
-  geroTown:{name:'게로 온천마을',jp:'下呂温泉街',query:'下呂温泉街'},
-  geroLunch:{name:'게로 온천마을 식당',jp:'下呂温泉 食事処',query:'下呂温泉 飛騨牛 ランチ'},
-  ogawaya:{name:'게로 온천 오가와야',jp:'下呂温泉 小川屋',query:'下呂温泉 小川屋'},
-  geroRiver:{name:'게로 온천마을',jp:'下呂温泉街 飛騨川',query:'下呂温泉街 飛騨川'},
   jrNagoya:{name:'JR 나고야역',jp:'JR名古屋駅',query:'JR名古屋駅'},
   kanayama:{name:'가나야마역',jp:'金山駅',query:'金山駅 名鉄 名古屋'},
   cafe:{name:'대륙횡단비행 카페',jp:'大陸横断飛行',query:'大陸横断飛行 ジブリパーク'}
@@ -71,10 +60,6 @@ function prepareTripPlaces(){
  const komeda=restaurants.find(r=>r.id==='komeda');
  komeda.day='금 08:25 · 일 07:00';
  komeda.booking='현장 방문. 일요일 아침에는 바로 입장하기 어렵다면 준비한 간단식으로 바꿉니다.';
- const monja=restaurants.find(r=>r.id==='monja');
- monja.day='일 19:15';
- monja.booking=monja.booking.replace('토요일','일요일');
- monja.why='게로에서 돌아온 뒤 숙소 근처에서 즐기는 몬자야키 저녁.';
  const sushi=restaurants.find(r=>r.id==='sushi');
  sushi.day='토 17:30';
  for(const key of ['menu','why','booking'])sushi[key]=sushi[key].replaceAll('일요일','토요일');
@@ -108,6 +93,9 @@ const VENUE_VISITS = {
  flightOfDreams:{hours:'플라이트 파크 10:00–17:00 · 무료 전시, 일부 체험 유료. 식당별 시간은 상이.',picks:'1층 B787 초호기 전시와 시애틀 테라스 점심. 수하물 수속과 터미널 이동 시간을 먼저 확보하세요.',source:'https://www.centrair.jp/flight-of-dreams/access.html'}
 };
 const SHOP_WALKS = {
+ 'f-chiikawa':['HARBS에서 서관 지하 1층으로 이동','같은 서관 8층 무기와라 스토어로 엘리베이터'],
+ 's-shinsuzume':['오스칸논에서 니오몬도리로 도보 3~4분 계획','같은 아케이드 다루마야까지 도보 1~2분'],
+ 's-okoge':['오스 북동쪽에서 와카미야오도리를 건너 사카에 스미요시까지 도보 15~20분 계획','사카에 대로와 히사야오도리 공원 쪽을 걸어 호텔로 복귀'],
  f08:['라무치 → 라시크 2층 도보·에스컬레이터 5~10분','같은 2층에서 UNITED ARROWS로 이동'],
  f09:['BEAMS에서 같은 2층 통로','라시크 밖으로 나와 Stüssy까지 도보 10~15분'],
  f11:['라시크 → 사카에 3초메 남서쪽 도보 10~15분','BAPE까지 도보 5~10분'],
@@ -116,11 +104,11 @@ const SHOP_WALKS = {
  f17:['HOODS에서 PARCO 서관까지 도보 약 10분','같은 서관 1층 atmos로 이동'],
  f19:['BlackEyePatch에서 같은 1층 통로','서관 2층 FREAK’S STORE로 이동'],
  f18:['서관 1층 atmos에서 2층으로 이동','서관 1층 HARBS로 내려가기'],
- f20:['서관 2층 FREAK’S STORE에서 1층으로 이동','엘리베이터로 서관 8층 무기와라 스토어로 이동'],
- s20:['HARBS 서관 1층에서 서관 8층까지 엘리베이터','동관으로 건너가 애니메이트 4층. 이동 시간은 일정에 포함'],
+ f20:['서관 2층 FREAK’S STORE에서 1층으로 이동','서관 지하 1층 치이카와야키. 생략하면 서관 8층으로 직행'],
+ s20:['서관 지하 1층 치이카와야키에서 8층까지 엘리베이터. 간식 생략 시 HARBS 1층 출발','동관으로 건너가 애니메이트 4층. 이동 시간은 일정에 포함'],
  s18:['무기와라 스토어 서관 8층에서 동관 4층까지 건물·층 이동','남관 10층 EVENT SPACE로 이동'],
  s22:['애니메이트 동관 4층에서 남관 10층 EVENT SPACE로 이동','17:00 남관 출발, 무츠미 본점까지 도보·여유 포함 20분'],
- s08:['오스칸논에서 니오몬도리 아케이드로 도보','만다라케까지 오스 골목 도보 5~10분'],
+ s08:['신스즈메에서 니오몬도리 아케이드 도보 1~2분. 간식 생략 시 오스칸논 출발','만다라케까지 오스 골목 도보 5~10분'],
  s10:['다루마야에서 오스 골목 도보 5~10분','스루가야 오스 본관까지 도보 5~10분'],
  s14:['만다라케에서 오스 본관까지 도보 5~10분','히가시니오몬도리의 커피 부리코까지 도보 10분 배정'],
  's-coffee-buriko':['스루가야에서 히가시니오몬도리 쪽 도보 10분 배정','MultinaBox 2층 라신반까지 도보·층간 이동 10분 배정'],
@@ -194,12 +182,7 @@ AREA_GUIDES.lachic.places=['wegoParco','parco','jump'];
 AREA_GUIDES.nagoya.places=['guGate','uniqloGate','hands','animate','donguriGate','takashimaya'];
 function choiceCategory(place){return ['옷','빈티지'].includes(place.category)?'clothes':['간식','카페','식품관'].includes(place.category)?'food':'goods'}
 Object.assign(PLACE_INTROS,{
- jrNagoya:'특급 히다를 타고 내리는 JR 나고야역.',
- geroStation:'온천마을의 관문. 돌아갈 때는 15:10–15:15 역 도착 목표.',
- geroTown:'히다강 옆 온천 거리. 산책과 무료 족욕을 즐기는 구역.',
- geroLunch:'히다 지역 음식을 고르는 자유 점심. 지도 핀은 온천마을 중심부를 표시합니다.',
- ogawaya:'별관 유라기의 2인 대절탕. 12:30 시작을 목표로 사전 예약.',
- geroRiver:'온천 뒤 카페와 짧은 산책을 즐기고 14:55에 역으로 이동.',
+ jrNagoya:'백화점·지하상가와 연결되는 JR 나고야역.',
  shoraku:'체크인 후 호텔에서 걸어갈 수 있는 이즈미의 마늘 라멘집.',
  kanayama:'메이조선에서 메이테츠 공항행으로 갈아타는 역.'
 });

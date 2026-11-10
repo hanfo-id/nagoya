@@ -33,7 +33,7 @@ function renderDay(){
  $('#route-tabs-slot').append(tabs);$('#route-filters-slot').append(tools);
  document.querySelectorAll('#daytabs button').forEach((b,i)=>{b.setAttribute('aria-selected',String(i===active));b.tabIndex=i===active?0:-1});
  $('#foodonly').checked=state.filters.foodOnly;$('#optional').checked=state.filters.optional;
- const list=$('.route-scroll');list.dataset.scrollKey=active+'-'+(active===SUNDAY?state.plan:'common');
+ const list=$('.route-scroll');list.dataset.scrollKey=String(active);
  if(oldScrollKey===list.dataset.scrollKey)list.scrollTop=oldScrollTop;
  if(!list.querySelector('[data-event-id]'))$('#selected-actions').hidden=true;
  styleActions($('#daycontent'));if(screenPage==='plan')try{initDayMap();initRouteObserver()}catch(error){console.error('Map initialization failed',error);const status=$('#maploadstatus');if(status)status.textContent='지도 초기화에 실패했습니다. 장소 목록과 Google Maps 링크를 이용하세요.'}
@@ -42,22 +42,21 @@ function renderHome(){renderHomeCompact()}
 function reservationTotals(){const defs=activeReservations(),confirmed=defs.filter(r=>reservationValue(r).status==='confirmed').length,requested=defs.filter(r=>reservationValue(r).status==='requested').length,attention=defs.filter(r=>['unconfirmed','cancelled'].includes(reservationValue(r).status)).length;return {total:defs.length,confirmed,requested,attention}}
 function renderReservationSummary(){const t=reservationTotals();$('#reservation-summary').innerHTML=`<strong>예약 기록 ${t.confirmed} / ${t.total} 확정${t.requested?' / '+t.requested+'건 요청 중':''}</strong><p>직접 기록한 상태입니다. 실제 예약·티켓 확보와 외부 확정 연락을 확인하세요.</p><button class="textbutton" data-res-jump="mutsumi">예약·티켓 기록 관리</button>`}
 function renderReservations(){
- $('#reservation-plan').innerHTML=planControls();
  const totals=reservationTotals();$('#reservationstats').innerHTML=[['확정',totals.confirmed],['확인 필요',totals.attention],['요청 중',totals.requested]].map(([label,n])=>`<div><span>${label}</span><b>${n}건</b></div>`).join('');
  const opened=new Set([...document.querySelectorAll('.reservationcard')].filter(c=>c.querySelector('.resedit')?.open).map(c=>c.id.replace('reservation-','')));
  $('#reservationlist').innerHTML=activeReservations().map(def=>{const r=reservationValue(def);return `<article class="reservationcard" id="reservation-${def.id}"><div class="rescardhead"><h3>${esc(def.name)}</h3>${reservationBadge(def)}</div><p class="muted">${esc(def.requirement)}</p>${reservationTiming(def)}<details class="resedit" ${opened.has(def.id)?'open':''}><summary>예약 정보 수정</summary><label>내 예약 상태<select data-res-status="${def.id}" aria-label="${esc(def.name)} 예약 상태">${Object.entries(RES_STATUS).map(([key,label])=>`<option value="${key}" ${key===r.status?'selected':''}>${label}</option>`).join('')}</select></label><div class="reswhen"><label>실제 확정 날짜<input type="date" min="2026-12-10" max="2026-12-14" data-res-date="${def.id}" value="${esc(r.date)}"></label><label>실제 확정 시각<input type="time" data-res-time="${def.id}" value="${esc(r.time)}"></label></div><label>예약 메모<textarea rows="2" maxlength="2000" data-res-note="${def.id}" aria-label="${esc(def.name)} 예약 메모">${esc(r.note)}</textarea></label><div class="compactlinks">${bookingLinks(def.links)}<button class="textbutton" data-reset-res="${def.id}">이 예약 기록 초기화</button></div></details></article>`}).join('')+archivedReservations();styleActions($('#reservationlist'));
 }
 function archivedReservations(){
- const records=Object.entries(state.legacy?.reservations||{}).filter(([id,r])=>!V2_RES_IDS.includes(id)&&plainObject(r));
+ const records=Object.entries(state.legacy?.reservations||{}).filter(([id,r])=>!V2_RES_IDS.includes(id)&&id!=='ogawaya-bath'&&plainObject(r));
  if(!records.length)return '';
- const names={sushi:'키타로 · 이전 저녁 일정','ghibli-ticket':'지브리파크 · 이전 일정','ogawaya-bath':'오가와야 · 이전 욕탕 기록'};
+ const names={sushi:'키타로 · 이전 저녁 일정','ghibli-ticket':'지브리파크 · 이전 일정'};
  return `<details class="panel reservation-archive"><summary>이전 일정에서 보관한 예약 기록</summary><ul class="info-bullets">
   ${records.map(([id,r])=>`<li><b>${esc(names[id]||id)}</b><br>${esc([Object.hasOwn(RES_STATUS,r.status)?RES_STATUS[r.status]:'',cleanText(r.date,20),cleanText(r.time,20),cleanText(r.note)].filter(Boolean).join(' · '))}</li>`).join('')}
  </ul></details>`;
 }
 function renderFood(){
  const q=state.filters.search.trim().toLowerCase(),filter=state.filters.reserve;
- const list=daysForPlan(state.plan).flatMap(day=>day.events).filter(e=>{
+ const list=ALL_EVENTS.filter(e=>{
   if(!e.meal)return false;
   const modes=e.booking?.modes||['walk',...(VISIT_LINKS[e.id]?.some(([,url])=>url.startsWith('tel:'))?['phone']:[])];
   return (filter==='all'||modes.includes(filter))&&[e.place.name,e.place.japaneseName,e.title,e.desc,...e.meal,e.requirement].join(' ').toLowerCase().includes(q);
@@ -66,26 +65,24 @@ function renderFood(){
  $('#foodcount').textContent=list.length+'개 식사·카페 일정';styleActions($('#restaurants'));
 }
 function renderChecklist(){
- $('#checklist').innerHTML=`<div class="checkgroup"><h4>예약 확인 · ${esc(PLAN_LABELS[state.plan])}</h4>${activeReservations().filter(d=>d.required).map(def=>`<div class="reservationcheck"><span>${esc(def.name)}</span>${reservationBadge(def)}<button class="textbutton" data-res-jump="${def.id}">관리</button></div>`).join('')}</div>`+Object.entries(PREP_GROUPS).map(([group,items])=>`<div class="checkgroup"><h4>${group}</h4>${Object.entries(items).map(([id,text])=>`<label><input type="checkbox" data-check="${id}" ${state.checks[id]?'checked':''}><span>${esc(text)}</span></label>`).join('')}</div>`).join('');
+ $('#checklist').innerHTML=`<div class="checkgroup"><h4>예약 확인</h4>${activeReservations().filter(d=>d.required).map(def=>`<div class="reservationcheck"><span>${esc(def.name)}</span>${reservationBadge(def)}<button class="textbutton" data-res-jump="${def.id}">관리</button></div>`).join('')}</div>`+Object.entries(PREP_GROUPS).map(([group,items])=>`<div class="checkgroup"><h4>${group}</h4>${Object.entries(items).map(([id,text])=>`<label><input type="checkbox" data-check="${id}" ${state.checks[id]?'checked':''}><span>${esc(text)}</span></label>`).join('')}</div>`).join('');
  const total=Object.values(PREP_GROUPS).flatMap(Object.keys);$('#progress').textContent=total.filter(id=>state.checks[id]).length+' / '+total.length;styleActions($('#checklist'));
 }
 function renderDependent({reservations=true}={}){renderDay();renderHome();renderReservationSummary();renderFood();renderChecklist();if(reservations)renderReservations();styleActions()}
 let announcementTimer;
 function announce(message){const el=$('#appstatus');el.textContent=message;el.hidden=false;clearTimeout(announcementTimer);announcementTimer=setTimeout(()=>{el.hidden=true},6000);$('#storagefeedback').textContent=storageMessage}
 function commit(message,{reservations=true}={}){const ok=persist();renderDependent({reservations});announce(ok?message:storageMessage)}
-function buildTabs(){ $('#daytabs').innerHTML=daysForPlan(state.plan).map((d,i)=>`<button role="tab" aria-label="${i+1}일차 ${d.date} ${d.dow} ${esc(d.short)}" id="tab${i}" aria-controls="daycontent" aria-selected="${i===active}" tabindex="${i===active?0:-1}" data-day="${i}"><small>${i+1}일차 ${d.dow[0]}</small><b>${d.date}</b><span>${esc(d.short)}</span></button>`).join('') }
+function buildTabs(){ $('#daytabs').innerHTML=days.map((d,i)=>`<button role="tab" aria-label="${i+1}일차 ${d.date} ${d.dow} ${esc(d.short)}" id="tab${i}" aria-controls="daycontent" aria-selected="${i===active}" tabindex="${i===active?0:-1}" data-day="${i}"><small>${i+1}일차 ${d.dow[0]}</small><b>${d.date}</b><span>${esc(d.short)}</span></button>`).join('') }
 function renderAll(){buildTabs();$('#search').value=state.filters.search;$('#reservefilter').value=state.filters.reserve;$('#memo').value=state.memo;renderDependent();renderSources();if(storageMessage)announce(storageMessage)}
 function renderSources(){
- $('[data-plan-guide]').href='guide.html#sunday-'+state.plan.toLowerCase();
  const sources=new Map(activeReservations().flatMap(def=>def.links).filter(([,url])=>url.startsWith('https:')).map(([label,url])=>[url,label]));
- for(const [label,url] of state.plan==='A'?[['게로 족욕 지도','https://www.city.gero.lg.jp/site/kanko/1246.html']]:
-  [['긴테쓰 임시 정차 시간표','https://www.kintetsu.co.jp/railway/Dia/dia_nabana_20261017.html'],['직통버스','https://www.sanco.co.jp/shuttle_20261001/'],['12월 13일 점등·운영 안내','https://www.nagashima-onsen.co.jp/nabana/fee/calendar/20261213.html']])sources.set(url,label);
+ for(const [label,url] of [['긴테쓰 임시 정차 시간표','https://www.kintetsu.co.jp/railway/Dia/dia_nabana_20261017.html'],['직통버스','https://www.sanco.co.jp/shuttle_20261001/'],['12월 13일 점등·운영 안내','https://www.nagashima-onsen.co.jp/nabana/fee/calendar/20261213.html']])sources.set(url,label);
  $('#sources').innerHTML='<ul>'+[...sources].map(([url,label])=>'<li>'+link(url,label)+'</li>').join('')+'</ul>';
 }
 function beforePrint(){
  if(printing)return;
  printing=true;destroyDayMap();document.body.classList.add('printing');
- $('#printcontent').innerHTML=`<h1>나고야 여행 · ${esc(PLAN_LABELS[state.plan])}</h1>`+days.map((_,i)=>printedDay(i)).join('');
+ $('#printcontent').innerHTML=`<h1>나고야 여행</h1>`+days.map((_,i)=>printedDay(i)).join('');
  $('#printcontent').hidden=false;
 }
 function afterPrint(){if(!printing)return;printing=false;document.body.classList.remove('printing');$('#printcontent').innerHTML='';$('#printcontent').hidden=true;if(screenPage==='plan')initDayMap()}

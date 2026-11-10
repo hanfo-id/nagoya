@@ -3,12 +3,11 @@ function readRoute(s=state,href=location.href,clock=japanClock()){
  const params=new URL(href).searchParams,explicit=dayIndexForDate('2026-'+params.get('day'));
  const today=dayIndexForDate(clock.date),day=explicit>=0?explicit:s.selectionMode==='auto'&&today>=0?today:s.selectedDay;
  const wanted=params.get('view'),mode=wanted==='map'||wanted==='schedule'?wanted:s.selectedView;
- const plan=params.get('plan')==='B'?'B':params.get('plan')==='A'?'A':s.plan;
- return {active:explicit>=0?migratedRouteDay(day,params.get('event')):day,view:mode,plan,explicit:explicit>=0};
+ return {active:explicit>=0?migratedRouteDay(day,params.get('event')):day,view:mode,explicit:explicit>=0};
 }
 function applyRoute({history=false}={}){
  const route=readRoute();
- ({active,view}=route);state.plan=route.plan;
+ ({active,view}=route);
  if(route.explicit||history)state.selectionMode=route.explicit?'manual':'auto';
  const params=new URL(location.href).searchParams,requested=params.get('event');
  const legacyId=!params.has('plan')&&Object.hasOwn(V2_EVENT_MAP,requested)?V2_EVENT_MAP[requested]:requested;
@@ -16,19 +15,12 @@ function applyRoute({history=false}={}){
  state.selectedEvent=eventDayIndex(id)===active?id:'';
  state.selectedDay=active;state.selectedView=view;
 }
-function choosePlan(plan){
- if(!Object.hasOwn(PLAN_LABELS,plan)||plan===state.plan)return;
- remember();state.plan=plan;
- if(eventDayIndex(state.selectedEvent)!==active)state.selectedEvent='';
- writeRoute();renderAll();document.querySelector(`section:not([hidden]) [data-plan="${plan}"]`)?.focus({preventScroll:true});
- announce(PLAN_LABELS[plan]+' 일정을 표시합니다.');
-}
 function writeRoute(push=true){
  state.selectedDay=active;state.selectedView=view;
  const url=new URL(location.href);
  if(typeof screenPage!=='undefined')url.searchParams.set('page',screenPage);
  if(state.selectionMode==='manual')url.searchParams.set('day',days[active].date.replace('.','-'));else url.searchParams.delete('day');
- url.searchParams.set('view',view);url.searchParams.set('plan',state.plan);
+ url.searchParams.set('view',view);url.searchParams.delete('plan');
  if(state.selectedEvent)url.searchParams.set('event',state.selectedEvent);else url.searchParams.delete('event');
  if(url.href!==location.href)history[push?'pushState':'replaceState']({},'',url);persist();
 }
@@ -76,8 +68,7 @@ function initUx(){
  $('#daytabs').addEventListener('click',e=>{const b=e.target.closest('[data-day]');if(b)chooseDay(Number(b.dataset.day))});
  $('#daytabs').addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?4:(active+(e.key==='ArrowRight'?1:4))%5;chooseDay(next);$('#tab'+next).focus()}});
  document.addEventListener('click',e=>{
-  const plan=e.target.closest('[data-plan]');if(plan){choosePlan(plan.dataset.plan);return}
-  if(e.target.closest('[data-export-itinerary]'))downloadJSON(exportItinerary(state.plan),'nagoya-itinerary-'+state.plan+'.json');
+  if(e.target.closest('[data-export-itinerary]'))downloadJSON(exportItinerary(),'nagoya-itinerary.json');
 
   if(e.target.closest('[data-fieldmode]')){state.options.fieldMode=!state.options.fieldMode;persist();renderHome();scrollTarget('#todaypanel')}
   const nav=e.target.closest('[data-nav]');if(nav){markNav(nav.dataset.nav);if(nav.dataset.nav==='plan'){view='schedule';writeRoute();renderDay()}}

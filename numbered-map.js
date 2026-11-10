@@ -31,10 +31,9 @@ function fitDayMap(extent='all'){
  dayMap.closePopup();dayMap.fitBounds(L.latLngBounds(points.map(({point})=>[point.location.lat,point.location.lng])),{padding:[48,48],maxZoom:16,animate:false});
  document.querySelectorAll('[data-mapextent]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mapextent===extent)));
 }
-const GERO_IDS=new Set(['geroStation','geroTown','yushimaan','senda','ogawaya','geropudding']);
 const NABANA_IDS=new Set(['nagashima','nabana','beerGarden']);
-const REGION_IDS={gero:GERO_IDS,nabana:NABANA_IDS,
- city:new Set(Object.keys(MAP_LOCATIONS).filter(id=>!GERO_IDS.has(id)&&!NABANA_IDS.has(id)&&!['airport','flightOfDreams'].includes(id)))};
+const REGION_IDS={nabana:NABANA_IDS,
+ city:new Set(Object.keys(MAP_LOCATIONS).filter(id=>!NABANA_IDS.has(id)&&!['airport','flightOfDreams'].includes(id)))};
 function initDayMap(){
  destroyDayMap();
  const container=document.querySelector('#numberedmap');if(!container)return;

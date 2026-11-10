@@ -41,53 +41,29 @@ def verify_mobile(browser, url, server, engine):
     def row(event_id):
         return page.locator(f'[data-event-id="{event_id}"]')
 
-    def plan(name):
-        return page.locator(f'#plan [data-plan="{name}"]')
-
-    expect(page.locator(".route-item")).to_have_count(11)
-    expect(page.locator(".numberpin")).to_have_count(11)
-    expect(plan("A")).to_have_attribute("aria-pressed", "true")
-    plan("B").tap()
-    expect(page.locator(".route-item")).to_have_count(17)
-    page.go_back(wait_until="domcontentloaded")
-    expect(plan("A")).to_have_attribute("aria-pressed", "true")
-    page.go_forward(wait_until="domcontentloaded")
-    expect(plan("B")).to_have_attribute("aria-pressed", "true")
-    for tab in (0, 1, 2, 4):
-        page.locator(f"#tab{tab}").tap()
-        expect(page.locator("#plan [data-plan]")).to_have_count(0)
-    page.locator("#tab3").tap()
-    expect(plan("B")).to_have_attribute("aria-pressed", "true")
-    expect(page.locator(".route-item")).to_have_count(17)
-    plan("A").tap()
-
-    bath = row("d4-bath")
-    expect(bath).to_contain_text("사전 예약 필요")
-    bath.locator(".route-more").tap()
-    expect(bath.locator(".inline-stop-detail")).to_be_visible()
-    expect(bath.locator(".inline-jp")).not_to_be_empty()
-    bath.locator(".route-more").tap()
-    expect(bath.locator(".inline-stop-detail")).to_have_count(0)
-    bath.locator(".route-more").tap()
-    bath.locator("[data-event-status]").select_option("done")
-    expect(bath).to_contain_text("완료")
-    bath.locator("[data-res-jump]").tap()
-    expect(page.locator("#reservation-ogawaya-ruri .resedit")).to_have_attribute("open", "")
-    page.locator('[data-res-date="ogawaya-ruri"]').fill("2026-12-13")
-    page.locator('[data-res-time="ogawaya-ruri"]').fill("12:30")
-    page.locator('[data-res-status="ogawaya-ruri"]').select_option("confirmed")
-    page.locator('[data-res-note="ogawaya-ruri"]').fill("test memo A")
-    page.locator("#reservations [data-plan=B]").tap()
-    expect(page.locator("#reservation-ogawaya-ruri")).to_have_count(0)
-    expect(page.locator("#reservation-nabana-ticket")).to_be_visible()
-    page.locator("[data-nav=plan]").tap()
     expect(page.locator(".route-item")).to_have_count(17)
     expect(page.locator(".numberpin")).to_have_count(17)
+    expect(row("sun-unayasu")).to_contain_text("우나야스")
+    expect(row("b12")).to_contain_text("18:40")
     expect(row("b15")).to_contain_text("21:25")
+    expect(page.locator("[data-plan]")).to_have_count(0)
+    expect(row("d4-bath")).to_have_count(0)
+    page.locator("#tab1").tap()
+    expect(row("f-chiikawa")).to_be_visible()
+    page.go_back(wait_until="domcontentloaded")
+    expect(row("sun-unayasu")).to_be_visible()
+    page.go_forward(wait_until="domcontentloaded")
+    expect(row("f-chiikawa")).to_be_visible()
+    page.locator("#tab3").tap()
     page.locator('[data-mapextent="nabana"]').tap()
     page.locator('[data-mapextent="all"]').tap()
 
     nabana = row("b09")
+    nabana.locator(".route-more").tap()
+    expect(nabana.locator(".inline-stop-detail")).to_be_visible()
+    expect(nabana.locator(".inline-jp")).not_to_be_empty()
+    nabana.locator(".route-more").tap()
+    expect(nabana.locator(".inline-stop-detail")).to_have_count(0)
     nabana.locator(".route-more").tap()
     expect(page.locator("#selected-actions a")).to_have_attribute("href", re.compile(r"google\.com/maps/dir"))
     nabana.locator(".segment-options summary").tap()
@@ -95,33 +71,46 @@ def verify_mobile(browser, url, server, engine):
     assert "origin=" in nabana.locator("[data-segment-link]").get_attribute("href")
     nabana.locator("[data-event-status]").select_option("skipped")
     page.reload(wait_until="domcontentloaded")
-    expect(plan("B")).to_have_attribute("aria-pressed", "true")
     expect(nabana).to_contain_text("건너뜀")
-    plan("A").tap()
-    expect(bath).to_contain_text("완료")
-    page.locator("[data-nav=reservations]").tap()
-    expect(page.locator("#reservation-ogawaya-ruri")).to_contain_text("12:30")
-    if not page.locator("#reservation-ogawaya-ruri .resedit").evaluate("(node)=>node.open"):
-        page.locator("#reservation-ogawaya-ruri summary").tap()
-    expect(page.locator('[data-res-note="ogawaya-ruri"]')).to_have_value("test memo A")
-    assert page.locator('[data-res-time="ogawaya-ruri"]').bounding_box()["y"] > page.locator('[data-res-date="ogawaya-ruri"]').bounding_box()["y"]
+
+    page.locator("#tab2").tap()
+    dinner = row("s-okoge")
+    expect(dinner).to_contain_text("19:30–20:45")
+    dinner.locator(".route-more").tap()
+    dinner.locator("[data-res-jump]").tap()
+    expect(page.locator("#reservation-monja-saturday .resedit")).to_have_attribute("open", "")
+    date_input = page.locator('[data-res-date="monja-saturday"]')
+    time_input = page.locator('[data-res-time="monja-saturday"]')
+    note_input = page.locator('[data-res-note="monja-saturday"]')
+    expect(date_input).to_have_value("")
+    date_input.fill("2026-12-12")
+    time_input.fill("19:30")
+    page.locator('[data-res-status="monja-saturday"]').select_option("confirmed")
+    note_input.fill("Saturday dinner test")
+    expect(page.locator("#reservation-ibushigin")).to_have_count(0)
+    expect(page.locator("#reservation-ogawaya-ruri")).to_have_count(0)
+    page.reload(wait_until="domcontentloaded")
+    expect(page.locator("#reservation-monja-saturday")).to_contain_text("19:30")
+    page.locator("#reservation-monja-saturday summary").tap()
+    expect(note_input).to_have_value("Saturday dinner test")
+    assert time_input.bounding_box()["y"] > date_input.bounding_box()["y"]
 
     page.locator("[data-nav=prepare]").tap()
     with page.expect_download() as download:
         page.locator("[data-export-itinerary]").tap()
     exported = json.loads(download.value.path().read_text(encoding="utf8"))
-    assert exported["plan"] == "A" and sum(len(day["events"]) for day in exported["days"]) == 75
+    assert "plan" not in exported and sum(len(day["events"]) for day in exported["days"]) == 83
     with page.expect_download() as download:
         page.locator("#exportbackup").tap()
     backup = json.loads(download.value.path().read_text(encoding="utf8"))
     assert backup["state"]["events"]["b09"]["status"] == "skipped"
-    assert backup["state"]["reservations"]["ogawaya-ruri"]["note"] == "test memo A"
+    assert backup["state"]["reservations"]["monja-saturday"]["note"] == "Saturday dinner test"
     page.locator("#backupfile").set_input_files({
         "name": "backup.json", "mimeType": "application/json", "buffer": json.dumps(backup).encode(),
     })
     page.locator("#confirmdialog button[value=confirm]").tap()
     expect(page.locator("#backupfeedback")).to_contain_text("복원")
-    print("PASS mobile A/B, history, map, inline details, directions, progress, reservation edit, reload, export and restore")
+    print("PASS single Sunday, history, map, inline details, directions, progress, reservation edit, reload, export and restore")
 
     legacy = {**backup["state"], "version": 2, "memo": "v2 memo", "events": {
         "d4-return": {"status": "done"}, "d2-wings": {"status": "done"},
@@ -137,7 +126,8 @@ def verify_mobile(browser, url, server, engine):
     page.locator(".reservation-archive summary").tap()
     expect(page.locator(".reservation-archive")).to_contain_text("old dinner")
     page.goto(sunday+"&plan=A", wait_until="domcontentloaded")
-    expect(row("d4-return")).not_to_contain_text("완료")
+    expect(row("d4-return")).to_have_count(0)
+    expect(row("sun-unayasu")).to_be_visible()
     print("PASS v2 UI import, archived legacy reservation and colliding event ID isolation")
 
     page.evaluate("""() => {
@@ -150,13 +140,13 @@ def verify_mobile(browser, url, server, engine):
     expect(page).to_have_url(re.compile(r"day=12-11"))
     expect(row("s18")).to_contain_text("완료")
     assert page.evaluate("state.events.s17.status") == "skipped"
-    expect(page.locator(".route-item")).to_have_count(28)
+    expect(page.locator(".route-item")).to_have_count(29)
 
     for width in (320, 360, 375, 390, 430, 768, 1280):
         height = 568 if width == 320 else 640
         page.set_viewport_size({"width": width, "height": height})
         page.goto(url + "?page=plan&day=12-11&plan=A", wait_until="domcontentloaded")
-        expect(page.locator(".route-item")).to_have_count(28)
+        expect(page.locator(".route-item")).to_have_count(29)
         assert page.evaluate("document.documentElement.scrollWidth === innerWidth"), width
         assert page.locator(".route-scroll").bounding_box()["height"] > 60, width
         assert page.locator("#selected-actions").bounding_box()["y"] < height, width
@@ -171,18 +161,18 @@ def verify_mobile(browser, url, server, engine):
         assert page.locator(".route-scroll").evaluate("node=>node.scrollTop") > 0
     page.set_viewport_size({"width": 390, "height": 700})
     page.goto(url + "?page=plan&day=12-12&plan=A", wait_until="domcontentloaded")
-    expect(page.locator(".route-item")).to_have_count(22)
-    expect(page.locator(".numberpin")).to_have_count(22)
+    expect(page.locator(".route-item")).to_have_count(23)
+    expect(page.locator(".numberpin")).to_have_count(23)
     for moved in ("s18", "s20", "s22"):
         expect(row(moved)).to_have_count(0)
-    for event_id in ("s10", "s12", "s14", "s16", "s-coffee-buriko", "s-osu-walk"):
+    for event_id in ("s10", "s12", "s14", "s16", "s-coffee-buriko", "s-osu-walk", "s-shinsuzume", "s-okoge"):
         row(event_id).locator(".route-more").tap()
         expect(row(event_id).locator(".inline-jp")).not_to_be_empty()
         expect(row(event_id).locator(".info-bullets").first).not_to_be_empty()
     page.evaluate("dayMap.zoomIn();dayMap.panBy([40,30],{animate:false})")
     page.locator('[data-mapextent="all"]').tap()
     assert page.evaluate("Array.from(mapMarkers.values()).every(({marker,point})=>marker.getLatLng().lat===point.location.lat && marker.getLatLng().lng===point.location.lng)")
-    page.evaluate("mapMarkers.get(8).marker.fire('click')")
+    page.evaluate("[...mapMarkers.values()].find(({point})=>point.eventId==='s08').marker.fire('click')")
     expect(row("s08").locator(".inline-stop-detail")).to_be_visible()
     page.evaluate("[...mapMarkers.values()].find(({point})=>point.eventId==='s-coffee-buriko').marker.fire('click')")
     choice = page.locator("#map-choices .pin-visits [data-place-detail=s-coffee-buriko]")
@@ -192,11 +182,20 @@ def verify_mobile(browser, url, server, engine):
     expect(row("s08").locator(".inline-stop-detail")).to_have_count(0)
     page.locator("#optional").uncheck()
     expect(row("s-osu-walk")).to_have_count(0)
+    expect(row("s-shinsuzume")).to_have_count(0)
+    expect(row("s-okoge")).to_be_visible()
     page.locator("#optional").check()
     expect(row("s-osu-walk")).to_be_visible()
     page.goto(url + "?page=food&day=12-12&plan=A", wait_until="domcontentloaded")
-    page.locator("#search").fill("부리코")
-    expect(page.locator("#restaurant-s-coffee-buriko")).to_be_visible()
+    for query, event_id in (
+        ("부리코", "s-coffee-buriko"), ("치이카와", "f-chiikawa"), ("당고", "s-shinsuzume"),
+        ("오코게", "s-okoge"), ("우나야스", "sun-unayasu"),
+    ):
+        page.locator("#search").fill(query)
+        expect(page.locator("#restaurant-" + event_id)).to_be_visible()
+    page.locator("#search").fill("이부시긴")
+    expect(page.locator("#foodcount")).to_contain_text("0개")
+
     page.goto(url + "?page=plan&day=12-11&plan=A", wait_until="domcontentloaded")
     row("s22").locator(".route-more").tap()
     row("s22").locator(".inline-section").first.locator("summary").tap()
@@ -209,11 +208,11 @@ def verify_mobile(browser, url, server, engine):
         row("s22").locator(".inline-section").first.scroll_into_view_if_needed()
         page.screenshot(path=screenshot)
     page.evaluate("beforePrint()")
-    expect(page.locator("[data-printed-event]")).to_have_count(75)
+    expect(page.locator("[data-printed-event]")).to_have_count(83)
     page.evaluate("afterPrint()")
     page.goto(sunday + "&plan=B", wait_until="domcontentloaded")
     page.evaluate("beforePrint()")
-    expect(page.locator("[data-printed-event]")).to_have_count(81)
+    expect(page.locator("[data-printed-event]")).to_have_count(83)
     expect(page.locator("[data-printed-event=d4-bath]")).to_have_count(0)
     page.evaluate("afterPrint()")
     print("PASS 320–1280 px, touch and scroll, shopping detail samples, same-location marker choice, print")
@@ -232,20 +231,19 @@ def verify_mobile(browser, url, server, engine):
         expect(page.locator("#networkstatus")).to_contain_text("오프라인")
     nabana.locator(".route-more").tap()
     expect(nabana.locator(".inline-stop-detail")).to_be_visible()
-    plan("A").tap()
-    expect(page.locator(".route-item")).to_have_count(11)
-    bath.locator(".route-more").tap()
-    expect(bath.locator(".inline-stop-detail")).to_be_visible()
+    row("sun-unayasu").locator(".route-more").tap()
+    expect(row("sun-unayasu").locator(".inline-stop-detail")).to_be_visible()
+    expect(page.locator("[data-plan]")).to_have_count(0)
+
     page.goto(url + "?page=plan&day=12-12&plan=B", wait_until="domcontentloaded")
-    expect(page.locator(".route-item")).to_have_count(22)
+    expect(page.locator(".route-item")).to_have_count(23)
     row("s-coffee-buriko").locator(".route-more").tap()
     expect(row("s-coffee-buriko").locator(".inline-jp")).to_have_text("珈琲ぶりこ")
     page.goto(url + "guide.html#sunday-b", wait_until="domcontentloaded")
-    expect(page.locator("#sunday-b [data-guide-event]")).to_have_count(17)
-    expect(page.locator("#sunday-a")).to_be_hidden()
-    page.locator('#sunday-b a[href="#sunday-a"]').tap()
-    expect(page.locator("#sunday-b")).to_be_hidden()
-    expect(page.locator("#sunday-a [data-guide-event]")).to_have_count(11)
+    expect(page.locator("#day-4 [data-guide-event]")).to_have_count(17)
+    expect(page.locator("[data-guide-event]")).to_have_count(83)
+    expect(page.locator("#sunday-a")).to_have_count(0)
+    expect(page.locator("[data-guide-event=s-okoge]")).to_contain_text("몬자야키")
     assert not errors, errors
     print("PASS Service Worker offline timeline, details and static guide; no page errors")
     context.close()

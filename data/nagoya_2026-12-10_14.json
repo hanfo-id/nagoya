@@ -2,7 +2,7 @@
   "destination": "나고야",
   "timezone": "Asia/Tokyo",
   "dates": "2026-12-10 to 2026-12-14",
-  "revision": "2026-11-10 two alternative itineraries; verified shop hours and conditional bookings",
+  "revision": "2026-11-10 final food schedule and single Sunday itinerary",
   "planning_assumptions": [
     "2 adults; all reservations unconfirmed unless user independently confirms",
     "Hotel Nishitetsu Croom Nagoya fixed for four nights",
@@ -187,7 +187,7 @@
       "weekday": "금요일",
       "title": "사카에·야바초 PARCO 의류와 애니 굿즈 · 무츠미 · 야경",
       "summary": "사카에 의류 쇼핑 후 PARCO 서관→동관→남관을 한 번에. 저녁은 무츠미와 미라이타워.",
-      "note": "PARCO 방문 시간에는 층간 이동이 포함됩니다. 히로아카 팝업 정리권이 배부되면 안내 시각에 맞춰 atmos나 FREAK’S STORE 중 관심이 낮은 매장을 건너뛸 수 있습니다.",
+      "note": "PARCO 방문 시간에는 층간 이동이 포함됩니다. 히로아카 팝업 정리권이 배부되면 안내 시각에 맞춰 atmos나 FREAK’S STORE 중 관심이 낮은 매장을 건너뛸 수 있습니다. 치이카와야키는 10분 내에 구매할 수 있을 때만 들르고 17:00 PARCO 출발을 지킵니다.",
       "events": [
         {
           "id": "f01",
@@ -801,7 +801,7 @@
         {
           "id": "f20",
           "start": "15:25",
-          "end": "15:55",
+          "end": "15:50",
           "title": "HARBS PARCO 서관 1F 카페",
           "category": "휴식",
           "place": {
@@ -811,11 +811,11 @@
             "address": "愛知県名古屋市中区栄3-29-1 名古屋PARCO西館1F",
             "mapUrl": "https://www.google.com/maps/search/?api=1&query=HARBS%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%91%E3%83%AB%E3%82%B3%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-29-1%20%E5%90%8D%E5%8F%A4%E5%B1%8BPARCO%E8%A5%BF%E9%A4%A81F"
           },
-          "description": "PARCO 서관 1층에서 케이크와 따뜻한 음료로 30분 휴식.",
+          "description": "PARCO 서관 1층에서 케이크와 음료로 25분 휴식.",
           "details": [
-            "HARBS에서 따뜻한 음료와 케이크를 나눠 먹으며 쇼핑 중 휴식하세요.",
-            "대기줄이 길면 인근 다른 카페로 전환하되 17:20 무츠미 도착 목표를 우선합니다.",
-            "휴식 뒤 서관 엘리베이터를 타고 8층 무기와라 스토어로 올라갑니다."
+            "HARBS에서 케이크와 따뜻한 음료를 나눠 먹습니다.",
+            "대기가 길면 테이크아웃 가능 여부를 확인하거나 휴식을 짧게 조정합니다.",
+            "15:50에 서관 지하 1층 치이카와야키로 내려갑니다. 간식을 건너뛰면 바로 서관 8층으로 올라갑니다."
           ],
           "optional": false,
           "reservation": {
@@ -825,14 +825,42 @@
           "transport_from_previous": "FREAK’S STORE에서 같은 서관 1층으로 이동.",
           "source_url": "https://nagoya.parco.jp/shop/detail/?cd=027522",
           "card_notes": {
-            "visit_tip": "HARBS에서 따뜻한 음료와 케이크를 나눠 먹으며 쇼핑 중 휴식하세요.",
+            "visit_tip": "HARBS에서 케이크와 따뜻한 음료를 나눠 먹습니다.",
             "transport": "FREAK’S STORE에서 같은 서관 1층으로 이동.",
             "reservation_requirement": "불필요"
           }
         },
         {
+          "id": "f-chiikawa",
+          "start": "15:50",
+          "end": "16:00",
+          "title": "치이카와야키 캐릭터 과자",
+          "category": "휴식",
+          "place": {
+            "id": "chiikawaYaki",
+            "name": "치이카와야키 나고야 PARCO점",
+            "japaneseName": "ちいかわ焼き 名古屋パルコ店",
+            "address": "愛知県名古屋市中区栄3-29-1 名古屋PARCO西館B1F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%A1%E3%81%84%E3%81%8B%E3%82%8F%E7%84%BC%E3%81%8D%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E3%83%91%E3%83%AB%E3%82%B3%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-29-1%20%E5%90%8D%E5%8F%A4%E5%B1%8BPARCO%E8%A5%BF%E9%A4%A8B1F"
+          },
+          "description": "치이카와 캐릭터 모양의 구운 과자를 고르는 10분 간식.",
+          "details": [
+            "치이카와 단팥, 하치와레 크림, 우사기 초콜릿 중 하나를 고르세요. 당일 재고와 구매 한도가 적용될 수 있습니다.",
+            "매장 공지에서 사전 구매 예약 또는 현장 정리권 적용 여부를 확인하세요. 테이크아웃 전용입니다. 바로 살 수 없으면 생략하고 서관 8층 무기와라 스토어로 이동합니다.",
+            "16:00에 서관 8층으로 출발하고, 17:00 PARCO 출발과 17:20 무츠미 본점 도착을 우선합니다."
+          ],
+          "optional": true,
+          "source_url": "https://www.chiikawa-yaki.com/",
+          "card_notes": {
+            "visit_tip": "치이카와 단팥, 하치와레 크림, 우사기 초콜릿 중 하나를 고르세요. 당일 재고와 구매 한도가 적용될 수 있습니다.",
+            "transport": "HARBS 서관 1층에서 같은 건물 지하 1층으로 이동.",
+            "reservation_requirement": "구매 예약·정리권 적용 여부는 방문일 공지 확인"
+          },
+          "transport_from_previous": "HARBS 서관 1층에서 같은 건물 지하 1층으로 이동."
+        },
+        {
           "id": "s20",
-          "start": "15:55",
+          "start": "16:00",
           "end": "16:15",
           "title": "ONE PIECE 무기와라 스토어 PARCO 서관 8F",
           "category": "쇼핑",
@@ -854,11 +882,11 @@
             "requirement": "불필요",
             "status": "미확정"
           },
-          "transport_from_previous": "HARBS 서관 1층에서 엘리베이터로 서관 8층. 층간 이동 포함.",
+          "transport_from_previous": "치이카와야키 서관 지하 1층 → 서관 8층 엘리베이터. 간식 생략 시 HARBS 1층에서 출발.",
           "source_url": "https://nagoya.parco.jp/shop/detail/?cd=031218",
           "card_notes": {
             "visit_tip": "ONE PIECE 무기와라 스토어에서 원피스 공식 캐릭터 굿즈를 구경하세요.",
-            "transport": "HARBS 서관 1층에서 엘리베이터로 서관 8층. 층간 이동 포함.",
+            "transport": "치이카와야키 서관 지하 1층 → 서관 8층 엘리베이터. 간식 생략 시 HARBS 1층에서 출발.",
             "reservation_requirement": "불필요"
           }
         },
@@ -1093,9 +1121,9 @@
     {
       "date": "2026-12-12",
       "weekday": "토요일",
-      "title": "나고야역·오스·후시미 · 시장 스시 · 피규어 · 전통 가옥 카페",
-      "summary": "나고야역 선로드와 야나기바시 스시 → 오스 완구·피규어와 커피 부리코 → 후시미 이부시긴.",
-      "note": "오스는 다루마야→만다라케→스루가야→커피 부리코→라신반→보크스 순서입니다. 17:15부터는 북동쪽에서 소품과 간식을 자유롭게 구경하고, 17:40에 후시미로 이동합니다.",
+      "title": "나고야역·오스·사카에 · 시장 스시 · 피규어 · 몬자야키",
+      "summary": "나고야역과 야나기바시 시장을 거쳐 오스에서 피규어와 간식을 즐기고 사카에에서 몬자야키로 마무리합니다.",
+      "note": "오스칸논에서 니오몬도리로 들어가 신스즈메와 다루마야를 거칩니다. 만다라케·스루가야·라신반·보크스 관람 시간을 유지하고, 18:00부터 사카에로 걸어갑니다.",
       "events": [
         {
           "id": "s01",
@@ -1110,7 +1138,7 @@
             "address": "愛知県名古屋市中区錦3-4-3",
             "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%A5%BF%E9%89%84%E3%83%9B%E3%83%86%E3%83%AB%20%E3%82%AF%E3%83%AB%E3%83%BC%E3%83%A0%E5%90%8D%E5%8F%A4%E5%B1%8B%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E9%8C%A63-4-3"
           },
-          "description": "일요일 A안은 아침 일찍 출발하므로 토요일 컨디션 조절",
+          "description": "일요일은 아침 일찍 출발하므로 토요일 컨디션 조절",
           "details": [
             "호텔에서 아침을 먹고, 쇼핑용 가방과 보조배터리를 챙긴 뒤 지하철역으로 내려갑니다.",
             "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요."
@@ -1293,7 +1321,7 @@
         {
           "id": "s07",
           "start": "13:20",
-          "end": "13:40",
+          "end": "13:35",
           "title": "오스칸논 사찰·사진",
           "category": "관광",
           "place": {
@@ -1323,8 +1351,36 @@
           }
         },
         {
+          "id": "s-shinsuzume",
+          "start": "13:35",
+          "end": "13:45",
+          "title": "신스즈메 본점 · 당고",
+          "category": "휴식",
+          "place": {
+            "id": "shinSuzume",
+            "name": "신스즈메 본점",
+            "japaneseName": "新雀本店",
+            "address": "愛知県名古屋市中区大須2丁目30-12",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%96%B0%E9%9B%80%E6%9C%AC%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%882%E4%B8%81%E7%9B%AE30-12"
+          },
+          "description": "오스 니오몬도리에서 갓 구운 미타라시·콩가루 당고를 맛보는 간식.",
+          "details": [
+            "단짠 간장 소스의 미타라시 당고와 고소한 콩가루 당고를 한 꼬치씩 맛보세요.",
+            "오스칸논에서 니오몬도리 쪽으로 걷고, 구매 후 같은 아케이드의 다루마야로 이어갑니다. 이동과 구매에 약 10분을 배정했습니다.",
+            "부정기 휴무로 안내되는 현장 구매점입니다. 줄이 길거나 문을 닫았으면 다루마야로 바로 이동하세요."
+          ],
+          "optional": true,
+          "source_url": "https://osu.nagoya/ja/shop.php?s=lOJDBK",
+          "card_notes": {
+            "visit_tip": "단짠 간장 소스의 미타라시 당고와 고소한 콩가루 당고를 한 꼬치씩 맛보세요.",
+            "transport": "오스칸논에서 니오몬도리 아케이드로 도보.",
+            "reservation_requirement": "현장 구매 · 별도 사전 예약 안내 없음"
+          },
+          "transport_from_previous": "오스칸논에서 니오몬도리 아케이드로 도보."
+        },
+        {
           "id": "s08",
-          "start": "13:40",
+          "start": "13:45",
           "end": "14:00",
           "title": "오모차노오쿠니 다루마야 완구",
           "category": "쇼핑",
@@ -1346,11 +1402,11 @@
             "requirement": "불필요",
             "status": "미확정"
           },
-          "transport_from_previous": "도보",
+          "transport_from_previous": "신스즈메에서 같은 니오몬도리 아케이드 도보 1~2분. 간식 생략 시 오스칸논에서 바로 이동.",
           "source_url": "https://www.kinsyachi.com/shop/darumaya/",
           "card_notes": {
             "visit_tip": "오스 니오몬도리의 장난감·캐릭터 상품을 빠르게 살펴보세요.",
-            "transport": "도보",
+            "transport": "신스즈메에서 같은 니오몬도리 아케이드 도보 1~2분. 간식 생략 시 오스칸논에서 바로 이동.",
             "reservation_requirement": "불필요"
           }
         },
@@ -1667,7 +1723,7 @@
         {
           "id": "s-osu-walk",
           "start": "17:15",
-          "end": "17:40",
+          "end": "18:00",
           "title": "오스 북동쪽 소품점·간식 자유 산책",
           "category": "산책",
           "place": {
@@ -1677,90 +1733,79 @@
             "address": "名古屋市中区大須",
             "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E9%A0%88%E5%95%86%E5%BA%97%E8%A1%97%20%E8%B5%A4%E9%96%80%E9%80%9A%E4%BA%A4%E5%B7%AE%E7%82%B9%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E5%A4%A7%E9%A0%88"
           },
-          "description": "오스 상점가에서 소품점과 간식을 자유롭게 구경",
+          "description": "오스 북동쪽에서 빈티지 의류와 소품을 가볍게 둘러보는 자유 시간.",
           "details": [
-            "특정 상호를 고정하지 않는 의도적인 선택 산책입니다.",
-            "17:40부터 이부시긴으로 이동합니다."
+            "보크스에서 나온 뒤 오스 상점가의 소품점, 빈티지 의류와 간식 가게를 자유롭게 구경하세요.",
+            "18:00쯤 오스혼마치도리 쪽으로 나와 사카에 방면으로 북상합니다."
           ],
           "optional": true,
-          "transport_from_previous": "보크스에서 오스 북동쪽 골목을 도보로 둘러보고 17:40에 후시미로 이동.",
+          "transport_from_previous": "보크스에서 오스 북동쪽 골목을 둘러보고 18:00부터 사카에 방향으로 이동.",
           "source_url": "https://osu.nagoya/ja/osumap.php",
           "card_notes": {
-            "visit_tip": "특정 상호를 고정하지 않는 의도적인 선택 산책입니다.",
-            "transport": "보크스에서 오스 북동쪽 골목을 도보로 둘러보고 17:40에 후시미로 이동.",
+            "visit_tip": "보크스에서 나온 뒤 오스 상점가의 소품점, 빈티지 의류와 간식 가게를 자유롭게 구경하세요.",
+            "transport": "보크스에서 오스 북동쪽 골목을 둘러보고 18:00부터 사카에 방향으로 이동.",
             "reservation_requirement": "불필요"
           }
         },
         {
-          "id": "s23",
-          "start": "17:40",
-          "end": "18:40",
-          "title": "오스→후시미 이부시긴 이동·여유",
+          "id": "s-sakae-transfer",
+          "start": "18:00",
+          "end": "19:30",
+          "title": "오스 → 사카에 도보·휴식",
           "category": "이동",
           "place": {
-            "id": "ibushigin",
-            "name": "로바타야키 이부시긴 후시미점",
-            "japaneseName": "炉端焼き 燻銀 伏見店",
-            "address": "名古屋市中区栄2-1-14 マルイチセンタービル1F",
-            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%82%89%E7%AB%AF%E7%84%BC%E3%81%8D%20%E7%87%BB%E9%8A%80%20%E4%BC%8F%E8%A6%8B%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%842-1-14%20%E3%83%9E%E3%83%AB%E3%82%A4%E3%83%81%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%93%E3%83%AB1F"
+            "id": "monja",
+            "name": "츠키시마 몬자 오코게 사카에",
+            "japaneseName": "月島もんじゃ おこげ 栄",
+            "address": "愛知県名古屋市中区栄3-9-29",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%9C%88%E5%B3%B6%E3%82%82%E3%82%93%E3%81%98%E3%82%83%20%E3%81%8A%E3%81%93%E3%81%92%20%E6%A0%84%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-9-29"
           },
-          "description": "오스 북동쪽에서 후시미로 이동. 18:40 도착까지 여유 포함.",
+          "description": "오스에서 북쪽 사카에 스미요시로 걸어가며 저녁 전 휴식.",
           "details": [
-            "오스 산책을 마치고 후시미 이부시긴으로 이동합니다. 지하철은 오스칸논역 또는 가미마에즈역에서 후시미역으로 향하는 쓰루마이선을 이용하세요.",
-            "18:40 저녁에 맞춰 17:40에 출발하고, 남는 시간은 후시미 인근에서 대기합니다.",
-            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+            "오스혼마치도리 방향으로 북상해 와카미야오도리를 건너 사카에 3초메 스미요시 골목으로 들어갑니다.",
+            "도보 약 15~20분을 예상합니다. 남는 시간은 사카에에서 휴식하거나 식당 앞 대기에 쓰고 19:30 식사를 목표로 합니다."
           ],
           "optional": false,
-          "reservation": {
-            "requirement": "불필요",
-            "status": "미확정"
-          },
-          "transport_from_previous": "오스에서 후시미 방면 도보 또는 쓰루마이선. 이동과 여유 시간을 합쳐 60분 배정.",
-          "source_url": "",
           "card_notes": {
-            "visit_tip": "오스 산책을 마치고 후시미 이부시긴으로 이동합니다. 지하철은 오스칸논역 또는 가미마에즈역에서 후시미역으로 향하는 쓰루마이선을 이용하세요.",
-            "transport": "오스에서 후시미 방면 도보 또는 쓰루마이선. 이동과 여유 시간을 합쳐 60분 배정.",
+            "visit_tip": "오스혼마치도리 방향으로 북상해 와카미야오도리를 건너 사카에 3초메 스미요시 골목으로 들어갑니다.",
+            "transport": "오스 북동쪽 → 와카미야오도리 → 사카에 스미요시 도보 15~20분.",
             "reservation_requirement": "불필요"
-          }
+          },
+          "transport_from_previous": "오스 북동쪽 → 와카미야오도리 → 사카에 스미요시 도보 15~20분."
         },
         {
-          "id": "s24",
-          "start": "18:40",
-          "end": "20:55",
-          "title": "로바타야키 이부시긴 후시미점 이자카야",
+          "id": "s-okoge",
+          "start": "19:30",
+          "end": "20:45",
+          "title": "오코게 사카에 · 몬자야키 저녁",
           "category": "식사",
           "place": {
-            "id": "ibushigin",
-            "name": "로바타야키 이부시긴 후시미점",
-            "japaneseName": "炉端焼き 燻銀 伏見店",
-            "address": "名古屋市中区栄2-1-14 マルイチセンタービル1F",
-            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E7%82%89%E7%AB%AF%E7%84%BC%E3%81%8D%20%E7%87%BB%E9%8A%80%20%E4%BC%8F%E8%A6%8B%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%842-1-14%20%E3%83%9E%E3%83%AB%E3%82%A4%E3%83%81%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%93%E3%83%AB1F"
+            "id": "monja",
+            "name": "츠키시마 몬자 오코게 사카에",
+            "japaneseName": "月島もんじゃ おこげ 栄",
+            "address": "愛知県名古屋市中区栄3-9-29",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%9C%88%E5%B3%B6%E3%82%82%E3%82%93%E3%81%98%E3%82%83%20%E3%81%8A%E3%81%93%E3%81%92%20%E6%A0%84%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E6%A0%843-9-29"
           },
-          "description": "토요일 겨울 이자카야 메인. J-POP 재생은 확인 불가",
+          "description": "명란·떡 몬자에 치즈를 올려 철판에서 나눠 먹는 저녁.",
           "details": [
-            "숯불구이 로바타야키와 따뜻한 사케를 즐기는 토요일 밤의 메인 경험입니다.",
-            "카운터석을 선호하면 예약 시 요청하세요. 잔잔한 J-POP 재생은 확인된 사실이 아니므로 보장하지 않습니다.",
-            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요.",
-            "예약 안내: 예약 권장. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
+            "명란·떡 몬자에 치즈 토핑을 추가하고, 처음이라면 직원에게 굽는 방법을 물어보세요.",
+            "토요일 통상 11:00~다음 날 04:00. 마지막 주문과 여행일 예약 가능 여부는 공개 안내에서 확정되지 않아 매장 전화로 확인하세요.",
+            "식사 후 사카에 큰길과 히사야오도리 쪽으로 걸어 호텔로 돌아갑니다."
           ],
           "optional": false,
-          "reservation": {
-            "requirement": "예약 권장",
-            "status": "미확정"
-          },
-          "transport_from_previous": "도보",
-          "source_url": "https://ibushigin-fushimi.com/",
+          "source_url": "https://tabelog.com/aichi/A2301/A230103/23091106/",
           "card_notes": {
-            "visit_tip": "숯불구이 로바타야키와 따뜻한 사케를 즐기는 토요일 밤의 메인 경험입니다.",
-            "transport": "도보",
-            "reservation_requirement": "예약 권장"
-          }
+            "visit_tip": "명란·떡 몬자에 치즈 토핑을 추가하고, 처음이라면 직원에게 굽는 방법을 물어보세요.",
+            "transport": "오스에서 도보로 도착 후 식당 입장.",
+            "reservation_requirement": "예약 가능 · 전화 문의"
+          },
+          "transport_from_previous": "오스에서 도보로 도착 후 식당 입장."
         },
         {
           "id": "s25",
-          "start": "20:55",
-          "end": "21:35",
-          "title": "후시미 밤거리·호텔 복귀",
+          "start": "20:45",
+          "end": "21:30",
+          "title": "사카에 야간 산책·호텔 복귀",
           "category": "산책",
           "place": {
             "id": "hotel",
@@ -1769,21 +1814,21 @@
             "address": "愛知県名古屋市中区錦3-4-3",
             "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%A5%BF%E9%89%84%E3%83%9B%E3%83%86%E3%83%AB%20%E3%82%AF%E3%83%AB%E3%83%BC%E3%83%A0%E5%90%8D%E5%8F%A4%E5%B1%8B%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E9%8C%A63-4-3"
           },
-          "description": "일요일 이른 출발을 위해 21:35 귀가 목표. 2차는 의무 일정이 아님",
+          "description": "사카에 야경을 짧게 보고 히사야오도리 숙소로 복귀.",
           "details": [
-            "후시미 대로의 밝은 길을 따라 숙소 쪽으로 걷고, 날씨가 나쁘면 지하철로 단축하세요.",
-            "사진·휴식을 포함해 천천히 걷고 날씨가 나쁘면 실내 또는 이동 동선으로 단축하세요."
+            "오코게에서 사카에 대로로 나와 히사야오도리 공원 방향의 밝은 길로 걷습니다.",
+            "추우면 공원 산책을 줄이고 바로 호텔로 돌아갑니다."
           ],
           "optional": false,
           "reservation": {
             "requirement": "불필요",
             "status": "미확정"
           },
-          "transport_from_previous": "도보/지하철",
+          "transport_from_previous": "사카에 스미요시 → 히사야오도리 공원 → 호텔 도보 약 15~20분, 산책 시간 별도.",
           "source_url": "",
           "card_notes": {
-            "visit_tip": "후시미 대로의 밝은 길을 따라 숙소 쪽으로 걷고, 날씨가 나쁘면 지하철로 단축하세요.",
-            "transport": "도보/지하철",
+            "visit_tip": "오코게에서 사카에 대로로 나와 히사야오도리 공원 방향의 밝은 길로 걷습니다.",
+            "transport": "사카에 스미요시 → 히사야오도리 공원 → 호텔 도보 약 15~20분, 산책 시간 별도.",
             "reservation_requirement": "불필요"
           }
         }
@@ -1792,9 +1837,9 @@
     {
       "date": "2026-12-13",
       "weekday": "일요일",
-      "title": "2안 · 나바나노사토 일루미네이션 · 히츠마부시",
-      "summary": "JR 나고야역 11시 히츠마부시, 15:01 긴테쓰 급행→15:35 버스→겨울 일루미네이션→20:10 버스 복귀",
-      "note": "공식 2026-12-13 운영 10~22시, 15:01→15:18 긴테쓰 임시정차 급행, 15:35 버스·20:10 복귀버스 기반. 나고야역 점심 대기는 12:15까지 종료 목표.",
+      "title": "나고야 시내 · 나바나노사토 일루미네이션",
+      "summary": "숙소 근처에서 가벼운 장어 점심을 선택하고 나고야역 쇼핑 후 겨울 일루미네이션을 봅니다.",
+      "note": "긴테쓰 15:01 출발, 15:35 셔틀, 20:10 복귀 셔틀을 기준으로 합니다. 니시키 점심 대기가 길면 나고야역에서 간단히 식사하세요.",
       "events": [
         {
           "id": "b01",
@@ -1809,10 +1854,10 @@
             "address": "愛知県名古屋市中区錦3-4-3",
             "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%A5%BF%E9%89%84%E3%83%9B%E3%83%86%E3%83%AB%20%E3%82%AF%E3%83%AB%E3%83%BC%E3%83%A0%E5%90%8D%E5%8F%A4%E5%B1%8B%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E9%8C%A63-4-3"
           },
-          "description": "전날 쇼핑·이자카야 후 휴식",
+          "description": "호텔에서 늦은 조식과 출발 준비.",
           "details": [
-            "호텔에서 아침을 먹고 야외 일루미네이션을 위한 장갑과 보조배터리를 챙기세요.",
-            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요."
+            "장갑과 보조배터리를 챙기세요.",
+            "장어 점심을 먹는다면 10:50 전후 호텔에서 출발합니다. 생략하면 나고야역으로 먼저 이동해도 됩니다."
           ],
           "optional": false,
           "reservation": {
@@ -1822,16 +1867,44 @@
           "transport_from_previous": "호텔",
           "source_url": "",
           "card_notes": {
-            "visit_tip": "호텔에서 아침을 먹고 야외 일루미네이션을 위한 장갑과 보조배터리를 챙기세요.",
+            "visit_tip": "장갑과 보조배터리를 챙기세요.",
             "transport": "호텔",
             "reservation_requirement": "불필요"
           }
         },
         {
+          "id": "sun-unayasu",
+          "start": "11:00",
+          "end": "11:45",
+          "title": "우나야스 니시키점 · 히츠마부시 점심",
+          "category": "식사",
+          "place": {
+            "id": "unayasu",
+            "name": "우나야스 니시키점",
+            "japaneseName": "うなぎのうな泰 錦店",
+            "address": "愛知県名古屋市中区錦3-22-10 1F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%86%E3%81%AA%E3%81%8E%E3%81%AE%E3%81%86%E3%81%AA%E6%B3%B0%20%E9%8C%A6%E5%BA%97%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E9%8C%A63-22-10%201F"
+          },
+          "description": "숙소에서 걸어가는 가성비 장어덮밥. 히츠마부시는 선택 점심.",
+          "details": [
+            "장어 양이 다른 히츠마부시 중 원하는 크기를 고르세요. 그대로 먹고, 고명을 얹고, 마지막에 육수를 부어 맛봅니다.",
+            "일요일 통상 11:00~21:00. 음식 주문 마감 20:00. 방문일의 임시 영업 변경과 예약 가능 시각은 매장 안내를 확인하세요.",
+            "대기가 길면 JR 나고야역 중앙통로의 에키카마 키시멘으로 변경하세요. 공식 안내 07:00~22:00(주문 마감 21:30). 15:01 긴테쓰 출발은 유지합니다."
+          ],
+          "optional": true,
+          "source_url": "https://www.hotpepper.jp/strJ003341409/",
+          "card_notes": {
+            "visit_tip": "장어 양이 다른 히츠마부시 중 원하는 크기를 고르세요. 그대로 먹고, 고명을 얹고, 마지막에 육수를 부어 맛봅니다.",
+            "transport": "호텔에서 니시키 3초메까지 도보 약 5~10분. 식사 후 사카에역에서 히가시야마선 이용.",
+            "reservation_requirement": "예약 없이 방문 가능 · 온라인 예약 선택"
+          },
+          "transport_from_previous": "호텔에서 니시키 3초메까지 도보 약 5~10분. 식사 후 사카에역에서 히가시야마선 이용."
+        },
+        {
           "id": "b02",
-          "start": "10:15",
-          "end": "11:00",
-          "title": "호텔 → JR 나고야역 이동",
+          "start": "11:45",
+          "end": "12:15",
+          "title": "니시키 → JR 나고야역 이동",
           "category": "이동",
           "place": {
             "id": "jrNagoya",
@@ -1840,55 +1913,22 @@
             "address": "名古屋市中村区名駅1-1-4",
             "mapUrl": "https://www.google.com/maps/search/?api=1&query=JR%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E6%9D%91%E5%8C%BA%E5%90%8D%E9%A7%851-1-4"
           },
-          "description": "사쿠라도리선 나고야역 이동 및 식당 방향 보행",
+          "description": "사카에에서 JR 나고야역으로 이동해 역 쇼핑 시작.",
           "details": [
-            "JR 나고야역 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "이동 안내: 지하철+도보 25~40분.",
-            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+            "우나야스에서 사카에역으로 걸어간 뒤 히가시야마선 나고야역 방면으로 이동합니다.",
+            "점심을 건너뛰었다면 호텔 옆 히사야오도리역에서 사쿠라도리선으로 나고야역에 먼저 가도 됩니다."
           ],
           "optional": false,
           "reservation": {
             "requirement": "불필요",
             "status": "미확정"
           },
-          "transport_from_previous": "지하철+도보 25~40분",
+          "transport_from_previous": "니시키 → 사카에역 → 히가시야마선 나고야역 → JR 중앙통로, 도보·대기 포함 20~30분 계획.",
           "source_url": "",
           "card_notes": {
-            "visit_tip": "JR 나고야역 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
-            "transport": "지하철+도보 25~40분",
+            "visit_tip": "우나야스에서 사카에역으로 걸어간 뒤 히가시야마선 나고야역 방면으로 이동합니다.",
+            "transport": "니시키 → 사카에역 → 히가시야마선 나고야역 → JR 중앙통로, 도보·대기 포함 20~30분 계획.",
             "reservation_requirement": "불필요"
-          }
-        },
-        {
-          "id": "b03",
-          "start": "11:00",
-          "end": "12:15",
-          "title": "마루야 본점 JR 나고야역점 히츠마부시 점심",
-          "category": "식사",
-          "place": {
-            "id": "maruya",
-            "name": "마루야 본점 JR 나고야역점",
-            "japaneseName": "まるや本店 JR名古屋駅店",
-            "address": "名古屋市中村区名駅1-1-4 JR名古屋駅構内 うまいもん通り",
-            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E3%81%BE%E3%82%8B%E3%82%84%E6%9C%AC%E5%BA%97%20JR%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E6%9D%91%E5%8C%BA%E5%90%8D%E9%A7%851-1-4%20JR%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E6%A7%8B%E5%86%85%20%E3%81%86%E3%81%BE%E3%81%84%E3%82%82%E3%82%93%E9%80%9A%E3%82%8A"
-          },
-          "description": "JR 나고야역 신칸센 쪽에서 먹는 히츠마부시 점심.",
-          "details": [
-            "그대로 한 입, 파·와사비를 곁들여 한 입, 마지막에는 육수를 부어 맛을 비교하세요.",
-            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요.",
-            "예약 안내: 현장 대기/예약 정책 확인. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
-          ],
-          "optional": false,
-          "reservation": {
-            "requirement": "현장 대기/예약 정책 확인",
-            "status": "미확정"
-          },
-          "transport_from_previous": "도보",
-          "source_url": "https://www.maruya-honten.com/shop/",
-          "card_notes": {
-            "visit_tip": "그대로 한 입, 파·와사비를 곁들여 한 입, 마지막에는 육수를 부어 맛을 비교하세요.",
-            "transport": "도보",
-            "reservation_requirement": "현장 대기/예약 정책 확인"
           }
         },
         {
@@ -2187,23 +2227,23 @@
             "address": "三重県桑名市長島町駒江漆畑270 なばなの里内",
             "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E9%95%B7%E5%B3%B6%E3%83%93%E3%83%BC%E3%83%AB%E5%9C%92%20%E4%B8%89%E9%87%8D%E7%9C%8C%E6%A1%91%E5%90%8D%E5%B8%82%E9%95%B7%E5%B3%B6%E7%94%BA%E9%A7%92%E6%B1%9F%E6%BC%86%E7%95%91270%20%E3%81%AA%E3%81%B0%E3%81%AA%E3%81%AE%E9%87%8C%E5%86%85"
           },
-          "description": "원내 특정 식당. 해당 날짜 영업은 출발 전 확인",
+          "description": "일루미네이션 동선 안에서 미에식 돈테키 또는 스페어립.",
           "details": [
-            "식사 메뉴는 미에식 돈테키나 스페어립을 먼저 보고, 돌아갈 직통버스 시간을 기준으로 주문하세요.",
-            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요.",
-            "예약 안내: 인원·식당별 예약 조건 확인. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
+            "18:40에 원내 비어가든으로 이동해 미에식 돈테키나 스페어립을 주문하세요.",
+            "12/13 개별 영업시간과 주문 마감은 식당 공식 캘린더 또는 전화로 확인하세요. 혼잡 시 주문 마감 전 접수가 끝날 수 있습니다.",
+            "접수가 끝났거나 대기가 길면 원내 돈카츠 카츠마루의 접수 시간을 먼저 확인하세요. 20:10 셔틀을 위해 19:30에 식사를 마치는 계획입니다."
           ],
           "optional": false,
           "reservation": {
             "requirement": "인원·식당별 예약 조건 확인",
             "status": "미확정"
           },
-          "transport_from_previous": "도보",
-          "source_url": "",
+          "transport_from_previous": "메인 일루미네이션 구역에서 원내 도보.",
+          "source_url": "https://www.nagashima-onsen.co.jp/nabana/restaurant/beer.html",
           "card_notes": {
-            "visit_tip": "식사 메뉴는 미에식 돈테키나 스페어립을 먼저 보고, 돌아갈 직통버스 시간을 기준으로 주문하세요.",
-            "transport": "도보",
-            "reservation_requirement": "인원·식당별 예약 조건 확인"
+            "visit_tip": "18:40에 원내 비어가든으로 이동해 미에식 돈테키나 스페어립을 주문하세요.",
+            "transport": "메인 일루미네이션 구역에서 원내 도보.",
+            "reservation_requirement": "개인 현장 방문 · 단체 예약은 15명 이상"
           }
         },
         {
@@ -2371,7 +2411,7 @@
           "id": "d5-keshiki",
           "start": "09:25",
           "end": "10:05",
-          "title": "케시키 텐무스 모닝",
+          "title": "케시키 텐무스·키시멘 모닝",
           "category": "식사",
           "place": {
             "id": "keshiki",
@@ -2380,15 +2420,15 @@
             "address": "名古屋市中村区那古野1-46-12 小鳥ビル1F",
             "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A9%E3%82%80%E3%81%99%E5%87%A6%E3%81%91%E3%81%97%E3%81%8D.%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E6%9C%AC%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E6%9D%91%E5%8C%BA%E9%82%A3%E5%8F%A4%E9%87%8E1-46-12%20%E5%B0%8F%E9%B3%A5%E3%83%93%E3%83%AB1F"
           },
-          "description": "키시멘은 모닝 메뉴 제공 확인 후에만.",
+          "description": "새우 텐무스와 납작한 키시멘을 함께 주문하는 나고야식 아침.",
           "details": [
-            "새우 텐무스를 중심으로 나고야식 아침을 먹습니다. 키시멘은 모닝 시간 제공 여부를 확인하고 주문하세요.",
-            "케시키의 우선안내와 좌석 예약은 다릅니다. 11시 체크아웃을 위해 10:05 전후 식당을 떠나세요.",
-            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요."
+            "매장 메뉴에 나온 케시키 정식에서 새우 텐무스와 키시멘을 고르세요. 모닝에 원하는 면을 주문할 수 없으면 텐무스를 먼저 먹습니다.",
+            "키시멘을 못 먹었다면 공항 점심에 제1터미널 4층 미야 키시멘을 선택하세요.",
+            "케시키 우선 안내는 좌석 예약과 다릅니다. 11:00 체크아웃을 위해 10:05쯤 식당을 떠납니다."
           ],
           "optional": false,
           "card_notes": {
-            "visit_tip": "새우 텐무스를 중심으로 나고야식 아침을 먹습니다. 키시멘은 모닝 시간 제공 여부를 확인하고 주문하세요.",
+            "visit_tip": "매장 메뉴에 나온 케시키 정식에서 새우 텐무스와 키시멘을 고르세요. 모닝에 원하는 면을 주문할 수 없으면 텐무스를 먼저 먹습니다.",
             "transport": "나고노 고토리 빌딩 1층. 국제센터역에서 골목 방향으로 도보.",
             "reservation_requirement": "확인된 예약 조건 없음"
           },
@@ -2494,7 +2534,8 @@
             "T1 스카이덱은 7:00~21:30, 기상 악화 시 통제 가능. 선택적으로 15~20분.",
             "센트레아에서 수하물 위탁 가능 여부를 먼저 확인하고, 시간 여유가 있으면 FLIGHT OF DREAMS의 항공기 전시를 보세요.",
             "식사와 체험보다 항공사 체크인 마감, 보안검색, 출국수속이 우선입니다.",
-            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요."
+            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요.",
+            "아침에 키시멘을 못 먹었다면 제1터미널 4층 미야 키시멘(공항 공식 09:00~21:00, 주문 마감 20:30)에서 점심을 먹고 전시는 여유에 따라 봅니다."
           ],
           "optional": false,
           "alternatives": [
@@ -2567,23 +2608,16 @@
     }
   ],
   "booking_links": {
-    "ogawaya_yuragi_ruri": "https://widgets.bokun.io/online-sales/ac880331-12ac-4f10-a1a8-d91bb48f857b/experience/772200?partialView=1",
-    "ogawaya_yuragi_kasumi": "https://widgets.bokun.io/online-sales/ac880331-12ac-4f10-a1a8-d91bb48f857b/experience/776353?partialView=1",
-    "ogawaya_maintenance": "https://www.gero-ogawaya.net/hotspring/private_bath/",
-    "ibushigin": "https://ibushigin-fushimi.com/",
     "kitaro": "https://tamasushi.co.jp/blogs/brand/kitaro-jonai",
     "nabana": "https://www.nagashima-onsen.co.jp/nabana/illumination/fee/index.html"
   },
   "verification_notes": [
     "2026-11-10 official sources reviewed; holidays/temporary closures and inventory may change",
-    "Reservations for eateries/onsen are NOT confirmed by this file",
-    "Music bars: J-POP regular playback has not been independently verified",
-    "Sunday option 1 and option 2 are mutually exclusive",
-    "Do not assume JR Hida seat has been booked",
     "Shop times used only where official site provided; STUSSY closes 19:00",
     "Lashinbang 2026 weekend hours source 10:00–20:00; some local directory conflicts",
     "Nabana bus timetable per 2026-10-01 Mie Kotsu notice; connect trains separately",
-    "금요일·토요일 브랜드/피규어 매장과 일부 2026년 12월 기간한정 팝업은 공식 매장·PARCO·브랜드 페이지로 확인. 예약 가능 여부는 고려하지 않음."
+    "금요일·토요일 브랜드/피규어 매장과 일부 2026년 12월 기간한정 팝업은 공식 매장·PARCO·브랜드 페이지로 확인. 예약 가능 여부는 고려하지 않음.",
+    "공개 통상 영업 기준. 치이카와야키 구매 조건, 오코게 마지막 주문과 12/13 원내 식당 운영은 방문일 확인."
   ],
   "shopping_preferences": {
     "traveler_1": [
@@ -2600,43 +2634,6 @@
     "store_visit_minutes_default": 20,
     "note": "대형 쇼룸(스루가야 등)은 25~30분 계획. 모든 점포를 의무 방문으로 해석하지 말 것"
   },
-  "bath_choice": {
-    "recommended": "瑠璃 (Ruri)",
-    "backup": "霞 (Kasumi)",
-    "recommended_date": "2026-12-13",
-    "checkin_target": "12:20",
-    "bath_start": "12:30",
-    "bath_end": "13:15",
-    "price_jpy_per_room": 4400,
-    "party_size": 2,
-    "status": "not applicable for plan B",
-    "rationale": "Ruri: barrel-style tub for distinctive experience; Kasumi: tatami atmosphere",
-    "booking_url_ruri": "https://widgets.bokun.io/online-sales/ac880331-12ac-4f10-a1a8-d91bb48f857b/experience/772200?partialView=1",
-    "booking_url_kasumi": "https://widgets.bokun.io/online-sales/ac880331-12ac-4f10-a1a8-d91bb48f857b/experience/776353?partialView=1"
-  },
-  "izakaya_alternatives": [
-    {
-      "name": "炉端焼き 燻銀 伏見店",
-      "name_ko": "로바타야키 이부시긴 후시미점",
-      "type": "primary dinner",
-      "music": "J-POP BGM not verified",
-      "url": "https://ibushigin-fushimi.com/"
-    },
-    {
-      "name": "炭火焼鳥 しげ 泉店",
-      "name_ko": "숯불 야키토리 시게 이즈미점",
-      "type": "quiet yakitori alternative",
-      "music": "J-POP BGM not verified",
-      "url": "https://www.yakitori-shige-izumi.com/"
-    },
-    {
-      "name": "Music&Bar〜Link〜",
-      "name_ko": "뮤직 앤 바 Link",
-      "type": "music-focused second stop, not a full izakaya",
-      "music": "music-oriented venue verified; J-POP slow playlist not verified",
-      "source": "https://nagoya-meshi.com/recommend/link"
-    }
-  ],
   "source_urls": {
     "beams": "https://www.beams.co.jp/shop/bna/",
     "stussy": "https://www.stussy.com/blogs/chapters/stussy-nagoya",
@@ -2647,9 +2644,12 @@
     "animate_parco": "https://www.animate.co.jp/shop/sakae/",
     "nabana": "https://www.nagashima-onsen.co.jp/nabana/illumination/fee/index.html",
     "nabana_bus": "https://www.sanco.co.jp/shuttle_20261001/",
-    "ogawaya": "https://www.gero-ogawaya.net/hotspring/private_bath/"
+    "chiikawa_yaki": "https://www.chiikawa-yaki.com/",
+    "shin_suzume": "https://osu.nagoya/ja/shop.php?s=lOJDBK",
+    "okoge_sakae": "https://tabelog.com/aichi/A2301/A230103/23091106/",
+    "unayasu_nishiki": "https://www.hotpepper.jp/strJ003341409/",
+    "nabana_beer": "https://www.nagashima-onsen.co.jp/nabana/restaurant/beer.html"
   },
-  "plan_id": "B_NABANA_FULL_20261110",
   "shopping_candidates": [
     {
       "place": "MEDICOM TOY PLUS NAGOYA",

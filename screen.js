@@ -1,8 +1,5 @@
 /* Screen composition. Travel data, stable event IDs and storage remain in trip-state.js. */
 let screenPage='home',selectedStopNumber=0,routeFollowAfter=0,inlinePlaceKey='';
-function planControls() {
- return `<div class="plan-switch" role="group" aria-label="12월 13일 일정 선택">${Object.entries(PLAN_LABELS).map(([key,label])=>`<button class="btn btn-secondary" data-plan="${key}" aria-pressed="${state.plan===key}">${label}</button>`).join('')}</div>`;
-}
 function eventSlot(e){return e.time+(e.end?'–'+e.end:'')}
 function stopDescription(p){return EVENTS_BY_ID.get(p.eventId).desc}
 function stopKey(p){return p.id+'|'+p.eventIds.join(',')}
@@ -21,12 +18,12 @@ function routeDayHTML(i){
    <button class="route-more" ${stopDetailAttributes(p)} aria-label="${esc(event.title)} 상세">${expanded?'접기':'상세'}</button>
    ${expanded?`<div class="inline-stop-detail">${placeDetailsHTML(p,i)}</div>`:''}</li>`;
  }).join('');
- const region=i===SUNDAY?`<button data-mapextent="${state.plan==='A'?'gero':'nabana'}" aria-pressed="false">${state.plan==='A'?'게로':'나바나'}</button>`:'';
+ const region=i===SUNDAY?`<button data-mapextent="nabana" aria-pressed="false">나바나</button>`:'';
  return `<div class="route-layout"><div class="mapstage"><div id="numberedmap" class="numberedmap" role="region" aria-label="${day.date} 번호 핀 지도"></div>
   <div class="mapmodes"><button data-mapextent="all" aria-pressed="true">전체</button><button data-mapextent="city" aria-pressed="false">시내</button>${region}</div>
   <p id="maploadstatus" role="status"></p><span id="selectedmapplace" class="sr-only" tabindex="-1">장소를 선택하세요</span><span id="mapcaption" class="sr-only"></span></div>
   <div class="route-sheet"><button type="button" class="sheet-handle" aria-label="일정 펼치기" aria-expanded="false"><span aria-hidden="true"></span></button><div id="route-tabs-slot"></div>
-  <div class="route-day-head"><h2>${day.date} ${day.dow} <span>${esc(day.short)}</span></h2><small>완료 ${done}/${day.events.length}</small></div>${i===SUNDAY?planControls():''}
+  <div class="route-day-head"><h2>${day.date} ${day.dow} <span>${esc(day.short)}</span></h2><small>완료 ${done}/${day.events.length}</small></div>
   <div id="route-filters-slot"></div><div class="route-scroll" tabindex="0" aria-label="방문 순서">
   ${i===SUNDAY?`<details class="route-options"><summary>${esc(day.summary)}</summary><p>${esc(day.note)}</p></details>`:''}
   <section id="map-choices" class="pin-choices" aria-label="같은 위치의 일정" hidden></section><ol class="route-list">${rows||'<li class="empty">이 조건에 맞는 일정이 없습니다.</li>'}</ol><details class="route-options"><summary>일정 변경·하루 안내</summary>
@@ -43,7 +40,7 @@ function renderHomeCompact(){
  document.body.classList.toggle('is-travelling',travelPhase()==='during'||state.options.fieldMode);
  const clock=japanClock(),today=dayIndexForDate(clock.date);if(state.selectionMode==='auto'&&today>=0)active=today;
  const e=nextEvent({...state,selectedEvent:''},active,clock).event,p=eventPlace(e),totals=reservationTotals();
- $('#todaypanel').innerHTML=`<div class="home-title"><h1>나고야 여행</h1><p>2026.12.10 목 – 12.14 월</p></div><div class="home-next"><span>${days[active].date} ${today===active?'오늘의 일정':'선택 일정'}</span><h2>${e?esc(p?.name||e.title):'일정을 모두 마쳤어요'}</h2>${e?`<p>${esc(confirmedTime(e)||e.time)} <span>${esc(e.kind)}</span></p><div class="action-group"><button class="btn btn-primary" data-screen="plan">일정 보기</button></div>`:'<button class="btn btn-primary" data-screen="plan">전체 일정</button>'}</div><div class="home-days">${daysForPlan(state.plan).map((d,i)=>`<button data-home-day="${i}" aria-label="${d.date} ${d.dow} ${esc(d.short)} 일정 열기"><b>${d.date}</b><small>${d.dow[0]}</small></button>`).join('')}</div>${planControls()}<div class="home-booking"><button data-screen="food"><strong>식당 찾기</strong><span>추천 메뉴·예약·후기</span><b aria-hidden="true">›</b></button><button data-screen="reservations"><strong>예약 현황</strong><span>확정 ${totals.confirmed} / 확인 필요 ${totals.attention}</span><b aria-hidden="true">›</b></button></div><details class="travel-facts"><summary>항공·호텔 정보</summary><p>입국 12.10 16:50 / 출국 12.14 17:50<br>출국일 공항 도착 계획 ${esc(baseEvents(4).find(e=>e.id==='d5-airport').end)}</p><p>니시테츠 호텔 크룸 나고야<br><span lang="ja">西鉄ホテル クルーム名古屋</span></p>${link(EVENTS_BY_ID.get('d1-checkin').place.mapUrl,'호텔 Google Maps')}</details>`;
+ $('#todaypanel').innerHTML=`<div class="home-title"><h1>나고야 여행</h1><p>2026.12.10 목 – 12.14 월</p></div><div class="home-next"><span>${days[active].date} ${today===active?'오늘의 일정':'선택 일정'}</span><h2>${e?esc(p?.name||e.title):'일정을 모두 마쳤어요'}</h2>${e?`<p>${esc(confirmedTime(e)||e.time)} <span>${esc(e.kind)}</span></p><div class="action-group"><button class="btn btn-primary" data-screen="plan">일정 보기</button></div>`:'<button class="btn btn-primary" data-screen="plan">전체 일정</button>'}</div><div class="home-days">${days.map((d,i)=>`<button data-home-day="${i}" aria-label="${d.date} ${d.dow} ${esc(d.short)} 일정 열기"><b>${d.date}</b><small>${d.dow[0]}</small></button>`).join('')}</div><div class="home-booking"><button data-screen="food"><strong>식당 찾기</strong><span>추천 메뉴·예약·후기</span><b aria-hidden="true">›</b></button><button data-screen="reservations"><strong>예약 현황</strong><span>확정 ${totals.confirmed} / 확인 필요 ${totals.attention}</span><b aria-hidden="true">›</b></button></div><details class="travel-facts"><summary>항공·호텔 정보</summary><p>입국 12.10 16:50 / 출국 12.14 17:50<br>출국일 공항 도착 계획 ${esc(baseEvents(4).find(e=>e.id==='d5-airport').end)}</p><p>니시테츠 호텔 크룸 나고야<br><span lang="ja">西鉄ホテル クルーム名古屋</span></p>${link(EVENTS_BY_ID.get('d1-checkin').place.mapUrl,'호텔 Google Maps')}</details>`;
 }
 function requestedScreen(){const u=new URL(location.href);return ['home','plan','reservations','prepare','food'].includes(u.searchParams.get('page'))?u.searchParams.get('page'):u.hash==='#reservations'?'reservations':u.hash==='#prepare'?'prepare':u.hash==='#food'?'food':u.searchParams.has('day')||u.searchParams.has('view')||u.hash==='#plan'?'plan':'home'}
 function syncScreen(){
@@ -74,10 +71,9 @@ function eventInfo(e,{open=false}={}){
   ...(point.address?[['위치',`<span lang="ja">${esc(point.address)}</span>`]]:[]),
   ...(location?.note?[['지도 핀',esc(location.note)]]:[])
  ];
- const alternatives=e.id==='s24'?ITINERARY_SOURCE.izakayaAlternatives.slice(1):[];
  return `<details class="inline-section" ${open?'open':''}><summary>${kind?'추천 메뉴·영업·예약':e.kind==='쇼핑'?'방문 포인트·영업 정보':'방문·이용 정보'}</summary>
   ${infoRows(info)}<div class="info-links">${bookingLinks([...urls,...sourceLinks.filter(([,url])=>!urls.some(([,other])=>other===url))])}</div>
-  ${alternatives.length?`<h4>선택 대안</h4><ul class="info-bullets">${alternatives.map((item,i)=>`<li>${link(item.url||item.source,item.name_ko)} · ${i===0?'야키토리 저녁 대안':'식사 후 음악 바'}</li>`).join('')}</ul><p>J-POP 재생 여부는 미확인입니다.</p>`:''}</details>
+ </details>
   <details class="inline-section" open><summary>교통·방문 메모</summary>
   ${walk?infoRows([['오는 길 · 계획',esc(walk[0])],['다음 장소 · 계획',esc(walk[1])]]):
   e.transport&&e.transport!=='전후 일정과 위치를 확인하고 이동'?`<p class="event-transport">${esc(e.transport)}</p>`:''}${detailList(e.steps)}${visit&&!isCovered(visit)?`<p>${esc(visit)}</p>`:''}</details>`;

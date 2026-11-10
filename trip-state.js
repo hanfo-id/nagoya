@@ -5,11 +5,13 @@ const RES_STATUS={unconfirmed:'미확정',requested:'예약 요청 중',confirme
 const EVENT_IDS=new Set(ALL_EVENTS.map(event=>event.id));
 const FRIDAY_MOVED_EVENTS=new Set(['s18','s20','s22']);
 // Keep old transfer records in v3 and JSON backups without adding them to the live itinerary.
-const RETIRED_ROUTE_EVENTS=['s17','s19','s21'];
+const RETIRED_ROUTE_EVENTS=['s17','s19','s21','s23','s24','b03',
+ 'd4-breakfast','d4-train','d4-town','d4-beef','d4-lunch','d4-bath','d4-pudding','d4-returnwalk','d4-return','d4-hotel','d4-monja'];
+const RETIRED_RESERVATIONS=['hida-outbound','ogawaya-ruri','hida-return','monja','ibushigin'];
 function migratedRouteDay(day,eventId){return day===2&&FRIDAY_MOVED_EVENTS.has(eventId)?1:day}
 const EVENTS_BY_ID=new Map(ALL_EVENTS.map(event=>[event.id,event]));
 const RESERVATIONS=ALL_EVENTS.filter(event=>event.booking).map(event=>({
- ...event.booking,day:event.day,plan:event.booking.time,planKey:event.plan,event:event.id,
+ ...event.booking,day:event.day,plan:event.booking.time,event:event.id,
  optional:event.optional||event.booking.id==='keshiki',required:!event.optional&&event.booking.id!=='keshiki'
 }));
 const PREP_GROUPS={
@@ -30,13 +32,13 @@ const cleanText=(value,max=2000)=>typeof value==='string'?value.slice(0,max):'';
 const validDate=value=>typeof value==='string'&&/^2026-12-(10|11|12|13|14)$/.test(value);
 const validTime=value=>typeof value==='string'&&/^([01]\d|2[0-3]):[0-5]\d$/.test(value);
 function freshState(){
- return {version:STATE_VERSION,plan:'A',selectedDay:0,selectedView:'schedule',selectionMode:'auto',selectedEvent:'',
+ return {version:STATE_VERSION,selectedDay:0,selectedView:'schedule',selectionMode:'auto',selectedEvent:'',
   filters:{foodOnly:false,optional:true,search:'',reserve:'all'},options:{fieldMode:false},
   events:{},reservations:{},expanded:{},checks:Object.fromEntries(Object.values(PREP_GROUPS).flatMap(Object.keys).map(id=>[id,false])),
   memo:'',updatedAt:'',legacy:null};
 }
 function migrateV2(raw) {
- return {...raw,version:STATE_VERSION,plan:'A',legacy:raw,
+ return {...raw,version:STATE_VERSION,legacy:raw,
   selectedEvent:Object.hasOwn(V2_EVENT_MAP,raw.selectedEvent)?V2_EVENT_MAP[raw.selectedEvent]:'',
   events:Object.fromEntries(Object.entries(V2_EVENT_MAP).filter(([id])=>Object.hasOwn(raw.events||{},id)).map(([from,to])=>[to,raw.events[from]])),
   expanded:Object.fromEntries(Object.entries(V2_EVENT_MAP).filter(([id])=>Object.hasOwn(raw.expanded||{},id)).map(([from,to])=>[to,raw.expanded[from]])),
@@ -59,10 +61,9 @@ function normalizeState(raw,strict=false){
  if(strict&&(!['events','reservations','filters','options','checks'].every(key=>plainObject(raw[key]))||typeof raw.memo!=='string'))throw new Error('백업 파일의 필수 데이터 구조가 올바르지 않습니다.');
  if(raw.version===2)raw=migrateV2(raw);
  const s=freshState();
- s.plan=raw.plan==='B'?'B':'A';
  if(Number.isInteger(raw.selectedDay)&&raw.selectedDay>=0&&raw.selectedDay<5)s.selectedDay=raw.selectedDay;
  s.selectedDay=migratedRouteDay(s.selectedDay,raw.selectedEvent);
- if(eventDayIndex(raw.selectedEvent,s.plan)===s.selectedDay)s.selectedEvent=raw.selectedEvent;
+ if(eventDayIndex(raw.selectedEvent)===s.selectedDay)s.selectedEvent=raw.selectedEvent;
  s.selectedView=raw.selectedView==='map'?'map':'schedule';
  s.selectionMode=raw.selectionMode==='manual'?'manual':'auto';
  s.filters={foodOnly:raw.filters?.foodOnly===true,optional:raw.filters?.optional!==false,search:cleanText(raw.filters?.search,200),
@@ -73,7 +74,7 @@ function normalizeState(raw,strict=false){
   if(plainObject(value)&&Object.hasOwn(EVENT_STATUS,value.status))s.events[id]={status:value.status,updatedAt:cleanText(value.updatedAt,40)};
   if(typeof raw.expanded?.[id]==='boolean')s.expanded[id]=raw.expanded[id];
  }
- for(const {id} of RESERVATIONS){
+ for(const id of [...RESERVATIONS.map(def=>def.id),...RETIRED_RESERVATIONS]){
   const value=raw.reservations?.[id];
   if(plainObject(value)&&Object.hasOwn(RES_STATUS,value.status))s.reservations[id]={
    status:value.status,date:validDate(value.date)?value.date:'',time:validTime(value.time)?value.time:'',
@@ -112,20 +113,17 @@ function persist(){
  catch{storageMessage='브라우저 저장에 실패했습니다. 새로고침 전에 JSON 백업을 내려받으세요.';return false}
 }
 function remember(){undoState=JSON.parse(JSON.stringify(state))}
-function eventDayIndex(id,plan=state.plan){
- const event=EVENTS_BY_ID.get(id);
- return event&&(!event.plan||event.plan===plan)?event.day:-1;
-}
-function dayFor(i,plan=state.plan){return i===SUNDAY?sundayDays[plan]:days[i]}
+function eventDayIndex(id){return EVENTS_BY_ID.get(id)?.day??-1}
+function dayFor(i){return days[i]}
 function isoDay(i){return days[i].iso}
 function dayIndexForDate(date){return days.findIndex(day=>day.iso===date)}
-function activeReservations(plan=state.plan){return RESERVATIONS.filter(def=>!def.planKey||def.planKey===plan)}
+function activeReservations(){return RESERVATIONS}
 function reservationFor(event){return RESERVATIONS.find(def=>def.event===event.id)}
 function reservationValue(def){return state.reservations[def.id]||{status:'unconfirmed',date:'',time:'',note:''}}
 function eventStatus(event){return state.events[event.id]?.status||'planned'}
-function baseEvents(i,s=state){return dayFor(i,s.plan).events}
+function baseEvents(i){return dayFor(i).events}
 function getVisibleEvents(s=state,i=s.selectedDay,{unfiltered=false}={}){
- return baseEvents(i,s).filter(e=>unfiltered||(!s.filters.foodOnly||Boolean(e.meal))&&(s.filters.optional||!e.optional));
+ return baseEvents(i).filter(e=>unfiltered||(!s.filters.foodOnly||Boolean(e.meal))&&(s.filters.optional||!e.optional));
 }
 function eventPlace(event){
  if(!event)return null;
