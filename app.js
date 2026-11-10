@@ -12,78 +12,82 @@ function reservationTiming(def,planDay=def?.day,planTime=def?.plan){
  return `<span class="reservation-plan">계획 ${days[planDay].date} ${planTime||'교체 선택'}</span>${r.status==='confirmed'?`<strong class="actualtime">확정 ${r.date?esc(r.date.slice(5).replace('-','.')):'날짜 미입력'} ${esc(r.time||'확정 시각 미입력')}</strong>`:''}${changed?'<span class="important">확정 기록이 원래 계획과 다릅니다. 주변 일정을 확인하세요. 시간표는 자동 변경하지 않았습니다.</span>':''}`;
 }
 function confirmedTime(e){const def=reservationFor(e);if(!def)return '';const r=reservationValue(def);return r.status==='confirmed'&&r.time?r.time:''}
-function timeBlock(e){const actual=confirmedTime(e);return actual?`<b class="actual-slot">${esc(actual)}<small>확정 시각</small></b><small>계획 ${esc(e.time)}${e.end?'–'+esc(e.end):''}</small>`:`${esc(e.time)}<small>${e.end?'– '+esc(e.end):''}</small>`}
-function importantFor(e){
- const def=reservationFor(e);
- if(def?.id==='ogawaya-bath')return '사전 예약 / 실제 대절탕 시작 시각 확인';
- if(def?.id==='hida-outbound'||def?.id==='hida-return')return '특급 히다 지정석 / 실제 운행 시각 확인';
- if(e.id==='d5-airport-transfer')return '12:30 터미널 도착 목표 / 늦어도 14:50';
- if(e.id==='d5-flight')return '17:50 출발 / 탑승 마감은 항공권 확인';
- if(e.id==='d1-night-oasis'||e.id==='d2-oasis')return '옥상 공사 폐쇄 / 지상 개방 구간만';
- if(e.id==='d2-lunch')return '11:00 개점 목표 / 현금 준비';
- if(e.id==='d2-wings')return '본점 주소·예약 확정 연락 확인';
- return e.optional?'체력·날씨에 따라 생략 가능':'';
+function printedEvent(e){
+ const point=eventPlace(e),def=reservationFor(e);
+ return `<article class="event panel" data-printed-event="${e.id}"><h3>${esc(eventSlot(e))} · ${esc(e.title)}</h3>
+  <p><b>${esc(point.name)}</b> · <span lang="ja">${esc(point.jp)}</span></p><p>${esc(e.desc)}</p>
+  <p>${esc(EVENT_STATUS[eventStatus(e)])}${e.optional?' · 선택 방문':''}</p>
+  ${def?reservationBadge(def)+reservationTiming(def):''}${eventInfo(e,{open:true})}</article>`;
 }
-function journeyContext(e,i,print=false){
- const list=print?baseEvents(i):getVisibleEvents(state,i),index=list.findIndex(x=>x.id===e.id);
- const prev=list.slice(0,index).reverse().find(x=>eventStatus(x)!=='skipped'&&eventPlace(x));
- const next=list.slice(index+1).find(x=>eventStatus(x)!=='skipped'&&eventPlace(x));
- return {prev,next,from:eventPlace(prev),to:eventPlace(e),nextPlace:eventPlace(next)};
+function printedDay(i){
+ const day=dayFor(i);
+ return `<section class="print-day"><h2>${day.date} ${day.dow} · ${esc(day.title)}</h2>
+  <p>${esc(day.summary)}</p>${day.events.map(printedEvent).join('')}${day.note?`<p>${esc(day.note)}</p>`:''}</section>`;
 }
-function journeyLinks(e,i){
- const {prev,next,from,to,nextPlace}=journeyContext(e,i);if(!to)return '';
- return `<details class="journeydetail"><summary>구간별 길찾기</summary>${from?`<p>이전 장소 ${esc(from.name)} → ${esc(to.name)}</p><div class="compactlinks">${link(routeBetween(from,to,'transit'),'대중교통')}${link(routeBetween(from,to,'walking'),'도보')}</div>`:'<p>첫 표시 장소입니다. 현재 위치에서 목적지를 검색합니다.</p>'}${nextPlace?`<p>여기 ${esc(to.name)} → 다음 ${esc(nextPlace.name)}</p><div class="compactlinks">${link(routeBetween(to,nextPlace,'transit'),'대중교통')}${link(routeBetween(to,nextPlace,'walking'),'도보')}</div>`:''}<p class="muted">실제 운행·환승·소요 시간은 Google Maps에서 확인하세요.</p></details>`;
-}
-function eventHTML(e,i,print=false){
- const p=eventPlace(e),r=restaurants.find(x=>x.id===e.food),def=reservationFor(e),status=eventStatus(e),clock=japanClock();
- const past=isoDay(i)<clock.date||isoDay(i)===clock.date&&(e.end||e.time)<clock.time;
- const {prev,from}=journeyContext(e,i,print),open=print||state.expanded[e.id];
- return `<article class="stop travelstop ${status==='done'?'is-done':status==='skipped'?'is-skipped':''} ${state.selectedEvent===e.id?'is-target':''}" id="${print?'print-':''}event-${e.id}" data-event-id="${e.id}"><div class="time">${timeBlock(e)}</div><div class="eventrow"><details class="event" data-event-key="${e.id}" ${open?'open':''}><summary><div><div class="eventtags"><span class="tag ${e.kind==='식사'?'food':''}">${esc(e.kind)}</span>${badge(EVENT_STATUS[status],status)}${past&&status==='planned'?badge('계획 시각 지남 / 미완료','elapsed'):''}${e.optional?badge('선택 방문','optional'):''}</div><h4>${esc(e.title)}</h4>${p?`<span class="placename">${esc(p.name)} / <span lang="ja">${esc(p.jp)}</span></span>`:''}<span class="movement">${esc(transitHint(e,prev))}</span>${importantFor(e)?`<span class="important">${esc(importantFor(e))}</span>`:''}${def?`<div class="reservation-inline">${reservationBadge(def)}${reservationTiming(def,def.walkin?i:def.day,def.walkin?e.time:def.plan)}</div>`:''}${r?`<span class="dishshort">추천 ${esc(r.dish.order)}</span>`:''}<span class="detailhint">${open?'상세 접기':'상세 보기'}</span></div></summary><div class="detail"><p>${esc(e.desc)}</p><p class="staytime">계획 체류·이동: ${esc(e.time)}${e.end?'–'+esc(e.end):''} / 실제 소요 시간은 현장 기준</p><ul>${e.steps.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>${experiencesForEvent(e)}${menuDetails(r)}${def?`<p><button class="textbutton" data-res-jump="${def.id}">예약 관리</button></p>`:''}${r?`<div class="tip"><strong>${esc(r.status)}</strong><br>${esc(r.booking)}<br>예산 ${esc(r.price)} / ${link('tel:+81'+r.phone.replace(/-/g,'').slice(1),r.phone)}</div>`:''}<div class="compactlinks">${p?link(appMap(p.query),'Google Maps'):''}${r?`<button class="textbutton" data-food-jump="${r.id}">식당 메뉴·후기</button>`:''}${r?.book?link(r.book,r.bookLabel):''}${def?.event===e.id&&def.url?link(def.url,'공식 예약 안내'):''}${e.id==='d2-tower'?link(S.tower,'공식 시간·요금'):''}${e.placeId==='zoo'?link(S.zoo,'동물원 공식 안내'):''}${e.placeId==='cafe'?link('https://ghibli-park.jp/food/tairiku-menu.html','카페 공식 메뉴'):''}</div>${reviewLinks(r)}${journeyLinks(e,i)}</div></details><div class="eventactions">${p?link(directions(p.query,'transit'),'길찾기'):''}${p?`<button class="textbutton" data-event-map="${e.id}">지도</button>`:''}<label class="event-status-label">진행 상태<select data-event-status="${e.id}" aria-label="${esc(e.title)} 진행 상태">${Object.entries(EVENT_STATUS).map(([key,label])=>`<option value="${key}" ${status===key?'selected':''}>${label}</option>`).join('')}</select></label></div></div></article>`;
-}
-function scheduleViews(){return `<div class="viewbar" role="group" aria-label="일정 보기 방식"><button type="button" data-view="schedule" aria-pressed="${view==='schedule'}">시간별 일정</button><button type="button" data-view="map" aria-pressed="${view==='map'}">동선 지도</button><span>같은 필터·같은 방문 순서</span></div>`}
-function detailedDayHTML(i,print=false){
- const d=days[i],events=print?baseEvents(i):getVisibleEvents(state,i),all=baseEvents(i),done=all.filter(e=>eventStatus(e)==='done').length,skipped=all.filter(e=>eventStatus(e)==='skipped').length;
- const briefs=['호텔 체크인 뒤 이즈미 라멘','평일 맛집과 사카에 산책','오스·호텔 휴식·시장 스시','특급 히다와 게로 온천','텐무스 모닝 뒤 가나야마 경유 공항 직행'];
- return `<article class="dayblock"><div class="dayhero"><p class="eyebrow">${i+1}일차 / ${d.date} ${d.dow}</p><h3>${esc(d.title)}</h3><p class="dayblurb">${briefs[i]}</p><div class="daystats"><div><span>예상 도보</span><b>${esc(d.walk.replace('도보 약 ',''))}</b></div><div><span>예상 지출 / 1인</span><b>${esc(d.cost.replace('약 ',''))}</b></div><div><span>완료${skipped?' / '+skipped+'개 건너뜀':''}</span><b>${done} / ${all.length}</b></div></div><details class="dayintro"><summary>하루 안내·예산 전제</summary><p>${esc(d.subtitle)}</p><p>예산은 쇼핑 제외 추정값입니다. 진행 기록은 선택 사항이며 시간이 지나도 자동 완료하지 않습니다.</p></details></div>${print?'':scheduleViews()}${!print&&view==='schedule'?'<div class="timeline-tools"><button class="btn btn-quiet" data-expand-all>상세 모두 펼치기</button></div>':''}${print||view==='schedule'?`<div class="timeline">${events.length?events.map(e=>eventHTML(e,i,print)).join(''):'<p class="empty">이 필터에 맞는 일정이 없습니다. 식사만 보기 또는 선택 방문 제외를 해제해 보세요.</p>'}</div>`:mapPanel(i,false)}<details class="daynote"><summary>일정 조정·대안 보기</summary><p>${esc(d.note)}</p><div class="adjustactions">${i===0?'<button data-adjust="delay">항공 지연 / 첫날 단축</button><p>첫날 라멘과 밤 산책을 건너뛰고 호텔로 이동합니다.</p>':''}<button data-adjust="essential">체력 부족 / 선택 방문 제외</button>${link(directions(PLACE.hotel.query,'transit'),'현재 위치에서 호텔 복귀')}<button data-restore-day="${i}">이 날짜의 원래 계획 복원</button></div></details></article>`;
-}
-function dayHTML(i,print=false){return print?detailedDayHTML(i,true):routeDayHTML(i)}
 function renderDay(){
  document.body.dataset.routeView=view;
- const tabs=$('#daytabs'),tools=$('.toolbar');$('#plan').prepend(tabs,tools);routeObserver?.disconnect();
+ const oldScroll=$('.route-scroll'),oldScrollKey=oldScroll?.dataset.scrollKey,oldScrollTop=oldScroll?.scrollTop;
+ const tabs=$('#daytabs'),tools=$('.toolbar');$('#plan').prepend(tabs,tools);
  if(typeof destroyDayMap==='function')destroyDayMap();
- $('#daycontent').innerHTML=dayHTML(active);$('#daycontent').setAttribute('aria-labelledby','tab'+active);
+ $('#daycontent').innerHTML=routeDayHTML(active);$('#daycontent').setAttribute('aria-labelledby','tab'+active);
  $('#route-tabs-slot').append(tabs);$('#route-filters-slot').append(tools);
  document.querySelectorAll('#daytabs button').forEach((b,i)=>{b.setAttribute('aria-selected',String(i===active));b.tabIndex=i===active?0:-1});
- $('#foodonly').checked=state.filters.foodOnly;$('#optional').checked=state.filters.optional;$('#zoo').checked=state.options.zoo;$('#zoo').closest('label').hidden=active!==CITY_DAY;
- $('#expand').hidden=true;refreshExpandControl();
+ $('#foodonly').checked=state.filters.foodOnly;$('#optional').checked=state.filters.optional;
+ const list=$('.route-scroll');list.dataset.scrollKey=active+'-'+(active===SUNDAY?state.plan:'common');
+ if(oldScrollKey===list.dataset.scrollKey)list.scrollTop=oldScrollTop;
+ if(!list.querySelector('[data-event-id]'))$('#selected-actions').hidden=true;
  styleActions($('#daycontent'));if(screenPage==='plan')try{initDayMap();initRouteObserver()}catch(error){console.error('Map initialization failed',error);const status=$('#maploadstatus');if(status)status.textContent='지도 초기화에 실패했습니다. 장소 목록과 Google Maps 링크를 이용하세요.'}
 }
 function renderHome(){renderHomeCompact()}
-function reservationTotals(){const defs=RESERVATIONS.filter(r=>r.required),confirmed=defs.filter(r=>reservationValue(r).status==='confirmed').length,requested=defs.filter(r=>reservationValue(r).status==='requested').length,attention=defs.filter(r=>['unconfirmed','cancelled'].includes(reservationValue(r).status)).length;return {total:defs.length,confirmed,requested,attention}}
+function reservationTotals(){const defs=activeReservations(),confirmed=defs.filter(r=>reservationValue(r).status==='confirmed').length,requested=defs.filter(r=>reservationValue(r).status==='requested').length,attention=defs.filter(r=>['unconfirmed','cancelled'].includes(reservationValue(r).status)).length;return {total:defs.length,confirmed,requested,attention}}
 function renderReservationSummary(){const t=reservationTotals();$('#reservation-summary').innerHTML=`<strong>예약 기록 ${t.confirmed} / ${t.total} 확정${t.requested?' / '+t.requested+'건 요청 중':''}</strong><p>직접 기록한 상태입니다. 실제 예약·티켓 확보와 외부 확정 연락을 확인하세요.</p><button class="textbutton" data-res-jump="mutsumi">예약·티켓 기록 관리</button>`}
 function renderReservations(){
+ $('#reservation-plan').innerHTML=planControls();
  const totals=reservationTotals();$('#reservationstats').innerHTML=[['확정',totals.confirmed],['확인 필요',totals.attention],['요청 중',totals.requested]].map(([label,n])=>`<div><span>${label}</span><b>${n}건</b></div>`).join('');
  const opened=new Set([...document.querySelectorAll('.reservationcard')].filter(c=>c.querySelector('.resedit')?.open).map(c=>c.id.replace('reservation-','')));
- $('#reservationlist').innerHTML=RESERVATIONS.map(def=>{const r=reservationValue(def);return `<article class="reservationcard" id="reservation-${def.id}"><div class="rescardhead"><h3>${esc(def.name)}</h3>${reservationBadge(def)}</div>${def.optional?'<p class="muted">기본 일정에 포함되지 않은 교체 선택입니다.</p>':''}${reservationTiming(def)}<details class="resedit" ${opened.has(def.id)?'open':''}><summary>예약 정보 수정</summary><label>내 예약 상태<select data-res-status="${def.id}" aria-label="${esc(def.name)} 예약 상태">${Object.entries(RES_STATUS).map(([key,label])=>`<option value="${key}" ${key===r.status?'selected':''}>${label}</option>`).join('')}</select></label><div class="reswhen"><label>실제 확정 날짜<input type="date" min="2026-12-10" max="2026-12-14" data-res-date="${def.id}" value="${esc(r.date)}"></label><label>실제 확정 시각<input type="time" data-res-time="${def.id}" value="${esc(r.time)}"></label></div><label>예약 메모<textarea rows="2" maxlength="2000" data-res-note="${def.id}" aria-label="${esc(def.name)} 예약 메모">${esc(r.note)}</textarea></label><div class="compactlinks">${def.url?link(def.url,def.url.startsWith('tel:')?'매장 전화':'공식·외부 예약 안내'):''}<button class="textbutton" data-reset-res="${def.id}">이 예약 기록 초기화</button></div></details></article>`}).join('');styleActions($('#reservationlist'));
+ $('#reservationlist').innerHTML=activeReservations().map(def=>{const r=reservationValue(def);return `<article class="reservationcard" id="reservation-${def.id}"><div class="rescardhead"><h3>${esc(def.name)}</h3>${reservationBadge(def)}</div><p class="muted">${esc(def.requirement)}</p>${reservationTiming(def)}<details class="resedit" ${opened.has(def.id)?'open':''}><summary>예약 정보 수정</summary><label>내 예약 상태<select data-res-status="${def.id}" aria-label="${esc(def.name)} 예약 상태">${Object.entries(RES_STATUS).map(([key,label])=>`<option value="${key}" ${key===r.status?'selected':''}>${label}</option>`).join('')}</select></label><div class="reswhen"><label>실제 확정 날짜<input type="date" min="2026-12-10" max="2026-12-14" data-res-date="${def.id}" value="${esc(r.date)}"></label><label>실제 확정 시각<input type="time" data-res-time="${def.id}" value="${esc(r.time)}"></label></div><label>예약 메모<textarea rows="2" maxlength="2000" data-res-note="${def.id}" aria-label="${esc(def.name)} 예약 메모">${esc(r.note)}</textarea></label><div class="compactlinks">${bookingLinks(def.links)}<button class="textbutton" data-reset-res="${def.id}">이 예약 기록 초기화</button></div></details></article>`}).join('')+archivedReservations();styleActions($('#reservationlist'));
+}
+function archivedReservations(){
+ const records=Object.entries(state.legacy?.reservations||{}).filter(([id,r])=>!V2_RES_IDS.includes(id)&&plainObject(r));
+ if(!records.length)return '';
+ const names={sushi:'키타로 · 이전 저녁 일정','ghibli-ticket':'지브리파크 · 이전 일정','ogawaya-bath':'오가와야 · 이전 욕탕 기록'};
+ return `<details class="panel reservation-archive"><summary>이전 일정에서 보관한 예약 기록</summary><ul class="info-bullets">
+  ${records.map(([id,r])=>`<li><b>${esc(names[id]||id)}</b><br>${esc([Object.hasOwn(RES_STATUS,r.status)?RES_STATUS[r.status]:'',cleanText(r.date,20),cleanText(r.time,20),cleanText(r.note)].filter(Boolean).join(' · '))}</li>`).join('')}
+ </ul></details>`;
 }
 function renderFood(){
  const q=state.filters.search.trim().toLowerCase(),filter=state.filters.reserve;
- const list=restaurants.filter(r=>(filter==='all'||r.mode.includes(filter))&&[r.name,r.jp,r.type,r.menu,r.dish?.kind,r.dish?.order,r.status,r.booking].join(' ').toLowerCase().includes(q));
+ const list=daysForPlan(state.plan).flatMap(day=>day.events).filter(e=>{
+  if(!e.meal)return false;
+  const modes=e.booking?.modes||['walk',...(VISIT_LINKS[e.id]?.some(([,url])=>url.startsWith('tel:'))?['phone']:[])];
+  return (filter==='all'||modes.includes(filter))&&[e.place.name,e.place.japaneseName,e.title,e.desc,...e.meal,e.requirement].join(' ').toLowerCase().includes(q);
+ });
  $('#restaurants').innerHTML=list.length?list.map(restaurantCard).join(''):'<p class="empty" role="status">검색 결과가 없습니다.</p>';
- $('#foodcount').textContent=list.length+'곳';styleActions($('#restaurants'));
+ $('#foodcount').textContent=list.length+'개 식사·카페 일정';styleActions($('#restaurants'));
 }
 function renderChecklist(){
- $('#checklist').innerHTML=`<div class="checkgroup"><h4>예약 확인</h4>${RESERVATIONS.filter(d=>d.required).map(def=>`<div class="reservationcheck"><span>${esc(def.name)}</span>${reservationBadge(def)}<button class="textbutton" data-res-jump="${def.id}">관리</button></div>`).join('')}</div>`+Object.entries(PREP_GROUPS).map(([group,items])=>`<div class="checkgroup"><h4>${group}</h4>${Object.entries(items).map(([id,text])=>`<label><input type="checkbox" data-check="${id}" ${state.checks[id]?'checked':''}><span>${esc(text)}</span></label>`).join('')}</div>`).join('');
+ $('#checklist').innerHTML=`<div class="checkgroup"><h4>예약 확인 · ${esc(PLAN_LABELS[state.plan])}</h4>${activeReservations().filter(d=>d.required).map(def=>`<div class="reservationcheck"><span>${esc(def.name)}</span>${reservationBadge(def)}<button class="textbutton" data-res-jump="${def.id}">관리</button></div>`).join('')}</div>`+Object.entries(PREP_GROUPS).map(([group,items])=>`<div class="checkgroup"><h4>${group}</h4>${Object.entries(items).map(([id,text])=>`<label><input type="checkbox" data-check="${id}" ${state.checks[id]?'checked':''}><span>${esc(text)}</span></label>`).join('')}</div>`).join('');
  const total=Object.values(PREP_GROUPS).flatMap(Object.keys);$('#progress').textContent=total.filter(id=>state.checks[id]).length+' / '+total.length;styleActions($('#checklist'));
 }
 function renderDependent({reservations=true}={}){renderDay();renderHome();renderReservationSummary();renderFood();renderChecklist();if(reservations)renderReservations();styleActions()}
 let announcementTimer;
 function announce(message){const el=$('#appstatus');el.textContent=message;el.hidden=false;clearTimeout(announcementTimer);announcementTimer=setTimeout(()=>{el.hidden=true},6000);$('#storagefeedback').textContent=storageMessage}
 function commit(message,{reservations=true}={}){const ok=persist();renderDependent({reservations});announce(ok?message:storageMessage)}
-function buildTabs(){ $('#daytabs').innerHTML=days.map((d,i)=>`<button role="tab" aria-label="${i+1}일차 ${d.date} ${d.dow} ${esc(d.short)}" id="tab${i}" aria-controls="daycontent" aria-selected="${i===active}" tabindex="${i===active?0:-1}" data-day="${i}"><small>${i+1}일차 ${d.dow[0]}</small><b>${d.date}</b><span>${esc(d.short)}</span></button>`).join('') }
-function renderAll(){buildTabs();$('#search').value=state.filters.search;$('#reservefilter').value=state.filters.reserve;$('#memo').value=state.memo;renderDependent();if(storageMessage)announce(storageMessage)}
-function renderSources(){ $('#sources').innerHTML='<ul>'+Object.entries({'오가와야 당일 입욕·대절탕':GERO_LINKS.bath,'특급 히다 지정석·예약':GERO_LINKS.rail,'JR 도카이 시간표':GERO_LINKS.timetable,'게로시 무료 족욕':GERO_LINKS.footbaths,'미라이타워 시간·요금':S.tower,'히가시야마 동물원':S.zoo,'공항 철도':S.airport,'니시테츠 호텔 크룸':S.hotel,'고메다 지점':S.komeda,'케시키 우선 안내 조건':S.keshikiBook,'무츠미 예약 창구':S.mutsumiBook,'키타로 장내 공식 예약·메뉴':S.sushi,'라무치 예약·영업':S.ramuchi,'시시마루 예약·영업':S.ramen,'이즈미 쇼라쿠 영업·메뉴':restaurants.find(r=>r.id==='shoraku').source,'오코게 예약·영업':S.monja,'하나오카 예약·영업':S.eel,'오아시스21 옥상 공사 안내':'https://db.nagoya-info.jp/spot/detail/23/','돈키호테 사카에 본점':'https://www.donki.com/store/shop_detail.php?shop_id=348','Google Maps 앱 연결 공식 문서':'https://developers.google.com/maps/documentation/urls/get-started'}).map(([n,u])=>'<li>'+link(u,n)+'</li>').join('')+'</ul>' }
-function beforePrint(){if(printing)return;printing=true;destroyDayMap();document.body.classList.add('printing');$('#printcontent').innerHTML=days.map((_,i)=>dayHTML(i,true)).join('')+'<section class="print-regions"><h2>지역 안에서 골라 들를 곳</h2>'+Object.keys(AREA_GUIDES).filter(id=>!['warehouse','valley','shike','endoji'].includes(id)).map(id=>areaChoicesHTML(id,{expanded:true})).join('')+'</section>';$('#printcontent').querySelectorAll('.area-option').forEach(d=>d.open=true);$('#printcontent').hidden=false}
+function buildTabs(){ $('#daytabs').innerHTML=daysForPlan(state.plan).map((d,i)=>`<button role="tab" aria-label="${i+1}일차 ${d.date} ${d.dow} ${esc(d.short)}" id="tab${i}" aria-controls="daycontent" aria-selected="${i===active}" tabindex="${i===active?0:-1}" data-day="${i}"><small>${i+1}일차 ${d.dow[0]}</small><b>${d.date}</b><span>${esc(d.short)}</span></button>`).join('') }
+function renderAll(){buildTabs();$('#search').value=state.filters.search;$('#reservefilter').value=state.filters.reserve;$('#memo').value=state.memo;renderDependent();renderSources();if(storageMessage)announce(storageMessage)}
+function renderSources(){
+ $('[data-plan-guide]').href='guide.html#sunday-'+state.plan.toLowerCase();
+ const sources=new Map(activeReservations().flatMap(def=>def.links).filter(([,url])=>url.startsWith('https:')).map(([label,url])=>[url,label]));
+ for(const [label,url] of state.plan==='A'?[['게로 족욕 지도','https://www.city.gero.lg.jp/site/kanko/1246.html']]:
+  [['긴테쓰 임시 정차 시간표','https://www.kintetsu.co.jp/railway/Dia/dia_nabana_20261017.html'],['직통버스','https://www.sanco.co.jp/shuttle_20261001/'],['12월 13일 점등·운영 안내','https://www.nagashima-onsen.co.jp/nabana/fee/calendar/20261213.html']])sources.set(url,label);
+ $('#sources').innerHTML='<ul>'+[...sources].map(([url,label])=>'<li>'+link(url,label)+'</li>').join('')+'</ul>';
+}
+function beforePrint(){
+ if(printing)return;
+ printing=true;destroyDayMap();document.body.classList.add('printing');
+ $('#printcontent').innerHTML=`<h1>나고야 여행 · ${esc(PLAN_LABELS[state.plan])}</h1>`+days.map((_,i)=>printedDay(i)).join('');
+ $('#printcontent').hidden=false;
+}
 function afterPrint(){if(!printing)return;printing=false;document.body.classList.remove('printing');$('#printcontent').innerHTML='';$('#printcontent').hidden=true;if(screenPage==='plan')initDayMap()}
-({active,view}=readRoute());state.selectedDay=active;state.selectedView=view;
-renderAll();renderSources();initUx();initScreens();
+applyRoute();
+renderAll();initUx();initScreens();writeRoute(false);

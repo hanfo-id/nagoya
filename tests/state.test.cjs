@@ -1,55 +1,85 @@
-const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
-function context(store={},blocked=false){const c=vm.createContext({URL,URLSearchParams,Intl,Date,Set,Map,location:{href:'https://hanfo-id.github.io/nagoya/'},localStorage:{getItem(k){if(blocked)throw Error('blocked');return store[k]??null},setItem(k,v){if(blocked)throw Error('blocked');store[k]=v}}});for(const name of ['trip-details.js','trip-data.js','map-locations.js','trip-state.js','ux.js'])vm.runInContext(fs.readFileSync(name,'utf8'),c);return c}
-const c=context(),run=s=>vm.runInContext(s,c),json=s=>JSON.parse(run('JSON.stringify('+s+')'));
-const original=vm.createContext({});vm.runInContext(fs.readFileSync('trip-details.js','utf8'),original);vm.runInContext(fs.readFileSync('trip-data.js','utf8'),original);
-const facts=JSON.parse(vm.runInContext('JSON.stringify({days,restaurants,zooEvents})',original));for(const d of facts.days)for(const e of d.events){delete e.id;delete e.placeId}
-assert.equal(json('days.flatMap(d=>d.events)').length,41);assert.equal(run('EVENT_IDS.size'),58);
-assert.equal(new Set(json('days.flatMap(d=>d.events.map(e=>e.id))')).size,41);
-// Date boundaries use Tokyo, independent of host timezone. Explicit URLs win over saved or automatic choices.
-assert.deepEqual(json("japanClock(new Date('2026-12-09T15:01:00Z'))"),{date:'2026-12-10',time:'00:01'});
-assert.equal(run("travelPhase(japanClock(new Date('2026-12-09T14:59:00Z')))"),'before');
-assert.equal(run("travelPhase(japanClock(new Date('2026-12-14T15:00:00Z')))"),'after');
-assert.equal(run("readRoute(freshState(),'https://x/nagoya/',{date:'2026-12-12',time:'08:00'}).active"),2);
-assert.equal(run("readRoute({...freshState(),selectedDay:1,selectionMode:'manual'},'https://x/nagoya/',{date:'2026-12-12',time:'08:00'}).active"),1);
-assert.equal(run("readRoute(freshState(),'https://x/nagoya/?day=12-14&view=map',{date:'2026-12-12',time:'08:00'}).active"),4);
-assert.equal(run("readRoute({...freshState(),selectedDay:1},'https://x/nagoya/?day=bad',{date:'2026-12-15',time:'08:00'}).active"),1);
-// The shared filter produces only mapped stops belonging to visible events, including zoo and optional choices.
-for(let day=0;day<5;day++)for(const foodOnly of [false,true])for(const optional of [false,true])for(const zoo of [false,true]){
- run(`state=freshState();state.selectedDay=${day};state.filters.foodOnly=${foodOnly};state.filters.optional=${optional};state.options.zoo=${zoo}`);
- const events=json('getVisibleEvents()'),stops=json('getMapStops()');
- for(const stop of stops){assert.ok(stop.eventIds.every(id=>events.some(e=>e.id===id)));assert.ok(stop.location,stop.id)}
- if(foodOnly)assert.ok(events.every(e=>e.kind==='식사'));if(!optional)assert.ok(events.every(e=>!e.optional));
-}
-run("state=freshState();state.options.zoo=true");assert.ok(json('baseEvents(CITY_DAY)').some(e=>e.id==='d4-zoo-visit'));assert.equal(run("baseEvents(CITY_DAY).find(e=>e.id==='d4-old-town').time"),'16:25');
-run("state=freshState();state.overrides.shishimaruThursday=true");
-assert.deepEqual(json('baseEvents(0).map(e=>e.id)'),['d1-arrival','d1-train-in','d1-shishimaru','d1-checkin','d1-night-park']);
-assert.equal(run("baseEvents(0).find(e=>e.id==='d1-checkin').time"),'20:20');
-run("state=normalizeState({...freshState(),overrides:{ramenMonday:true},events:{'d5-shopping':{status:'done'}}})");
-assert.equal(run("eventDayIndex('d5-ramen-alternative')"),-1);
-assert.equal(run("validateBackup(JSON.stringify(backupEnvelope())).events['d5-shopping'].status"),'done');
-assert.ok(!json('baseEvents(4)').some(e=>e.id==='d5-ramen-alternative'||e.id==='d5-shopping'));
-run('state=freshState();state.selectedDay=EXCURSION_DAY');
-assert.equal(run("nextEvent(state,EXCURSION_DAY,{date:'2026-12-13',time:'08:30'}).event.id"),'sun-gero-outbound');
-assert.deepEqual(json('state.events'),{}); // Passing time never writes completion.
-run("state.events['sun-gero-outbound']={status:'done'}");assert.notEqual(run("nextEvent(state,EXCURSION_DAY,{date:'2026-12-13',time:'08:30'}).event.id"),'sun-gero-outbound');
-run("state.events['sun-gero-town-am']={status:'progress'}");assert.equal(run("nextEvent(state,EXCURSION_DAY,{date:'2026-12-13',time:'08:30'}).event.id"),'sun-gero-town-am');
-const migrated=json("migrateLegacy({memo:'여행 메모',zoo:true,day:3,c0:true,c1:true,c6:true,c7:true})");assert.equal(migrated.reservations['ghibli-ticket'].status,'confirmed');assert.equal(migrated.reservations.mutsumi.time,'');assert.equal(migrated.memo,'여행 메모');assert.equal(migrated.checks.flight,true);
-run('state=freshState()');assert.deepEqual(json('validateBackup(JSON.stringify(backupEnvelope()))'),json('state'));
-assert.throws(()=>run("validateBackup('{bad')"));assert.throws(()=>run("validateBackup(JSON.stringify({app:'nagoya-trip',state:{version:99}}))"));assert.throws(()=>run("validateBackup(JSON.stringify({app:'nagoya-trip',state:{version:2}}))"));
-assert.equal(run("normalizeState({...freshState(),selectedDay:99,events:{'d1-arrival':{status:'invented'}}}).selectedDay"),0);
-assert.deepEqual(json("normalizeState({...freshState(),events:{'__proto__':{status:'done'},'unknown':{status:'done'}}}).events"),{});
-const brokenStore={'nagoya26-v2':'{bad'},broken=context(brokenStore);assert.equal(vm.runInContext('state.version',broken),2);assert.equal(brokenStore['nagoya26-v2-unreadable'],'{bad');
-const blocked=context({},true);assert.equal(vm.runInContext('persist()',blocked),false);assert.equal(vm.runInContext('baseEvents(0).length',blocked),5);
-// All travel facts survive state mutations. Only stable IDs / place IDs are added to the original events.
-const unchanged=json('({days,restaurants,zooEvents})');for(const d of unchanged.days)for(const e of d.events){delete e.id;delete e.placeId}for(const e of unchanged.zooEvents){delete e.id;delete e.placeId}assert.deepEqual(unchanged,facts);
-const url=run("routeBetween(PLACE.hotel,PLACE.mutsumi,'transit')"),params=new URL(url).searchParams;assert.equal(params.get('origin'),run('PLACE.hotel.query'));assert.equal(params.get('destination'),run('PLACE.mutsumi.query'));assert.equal(params.get('travelmode'),'transit');
-console.log('PASS: Tokyo boundaries; URL/manual/auto precedence; 80 shared-filter combinations; stable IDs; unchanged travel facts; alternatives; explicit progress; legacy migration; backup validation; corrupted/blocked storage; origin/destination links.');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const {loadItinerary}=require('../scripts/load-itinerary.cjs');
 
-// Route revision retains IDs and fixed meal bookings while grouping city visits.
-run('state=freshState()');
-assert.deepEqual(json('baseEvents(CITY_DAY).map(e=>e.id)'),['d4-morning','d4-osu-transfer','d4-osu','d4-osu-lunch','d4-market-transfer','d4-old-town','d4-sushi-transfer','d4-sushi','d4-return']);
-for(let i=0;i<5;i++)assert.ok(json(`baseEvents(${i}).map(e=>e.time)`).every((t,j,a)=>j===0||a[j-1]<=t),'chronological day '+i);
-assert.equal(run("baseEvents(CITY_DAY).find(e=>e.id==='d4-sushi').time"),'17:30');
-assert.equal(run("baseEvents(1).find(e=>e.id==='d2-rest').placeId"),'lachic');
-assert.equal(run("reservationFor(baseEvents(0).find(e=>e.id==='d1-checkin'))"),undefined);
-console.log('PASS revised city route order, chronological times, unchanged sushi time and hotel without reservation target.');
+const previous={
+ version:2,selectedDay:3,selectedView:'map',selectionMode:'manual',selectedEvent:'sun-gero-outbound',
+ events:{'d4-return':{status:'done'},'sun-gero-outbound':{status:'done'},'d2-wings':{status:'skipped'},'d5-keshiki':{status:'progress'}},
+ reservations:{sushi:{status:'confirmed',date:'2026-12-12',time:'18:00',note:'old dinner'},
+  'ogawaya-bath':{status:'confirmed',note:'old bath'},'ghibli-ticket':{status:'confirmed',note:'old ticket'},
+  'hida-outbound':{status:'confirmed',date:'2026-12-13',time:'08:43',note:'JR QR'},
+  mutsumi:{status:'confirmed',date:'2026-12-11',time:'17:30',note:'wing memo'}},
+ expanded:{'sun-gero-outbound':true},memo:'개인 메모',checks:{flight:true},filters:{optional:true},options:{fieldMode:true,zoo:true}
+};
+const storage=new Map([['nagoya26-v2',JSON.stringify(previous)]]);
+const localStorage={getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value)};
+const context=loadItinerary({localStorage});
+const run=code=>vm.runInContext(code,context);
+const snapshot=code=>JSON.parse(run('JSON.stringify('+code+')'));
+vm.runInContext(fs.readFileSync('ux.js','utf8'),context);
+assert.equal(run('STORAGE_KEY'),'nagoya26-v3');
+assert.equal(run('state.plan'),'A');
+assert.equal(run('state.selectedEvent'),'d4-train');
+assert.equal(run('state.memo'),'개인 메모');
+assert.equal(run('state.checks.flight'),true);
+assert.equal(run('state.options.fieldMode'),true);
+assert.equal(run('state.events["d4-train"].status'),'done');
+assert.equal(run('state.events["f22"].status'),'skipped');
+assert.equal(run('state.expanded["d4-train"]'),true);
+assert.equal(run('state.events["d4-return"]'),undefined);
+assert.equal(run('state.reservations["sushi-lunch"]'),undefined);
+assert.equal(run('state.reservations["ogawaya-ruri"]'),undefined);
+assert.deepEqual(snapshot('state.legacy'),previous);
+assert.equal(run('state.reservations["hida-outbound"].note'),'JR QR');
+assert.equal(run('persist()'),true);
+assert.equal(storage.get('nagoya26-v2'),JSON.stringify(previous));
+
+for(const plan of ['A','B']){
+ run('state.plan='+JSON.stringify(plan));
+ const sunday=snapshot('baseEvents(SUNDAY).map(e=>e.id)');
+ assert.equal(sunday.length,plan==='A'?11:17);
+ assert.equal(run('eventDayIndex("d4-train")'),plan==='A'?3:-1);
+ assert.equal(run('eventDayIndex("b07")'),plan==='B'?3:-1);
+ const bookings=snapshot('activeReservations().map(r=>r.id)');
+ assert.equal(bookings.includes('ogawaya-ruri'),plan==='A');
+ assert.equal(bookings.includes('nabana-ticket'),plan==='B');
+ assert.ok(bookings.includes('mutsumi')&&bookings.includes('ibushigin'));
+ for(let day=0;day<5;day++){
+  for(const food of [true,false])for(const optional of [true,false]){
+   run('state.filters.foodOnly='+food+';state.filters.optional='+optional);
+   const visible=snapshot('getVisibleEvents(state,'+day+').map(e=>e.id)');
+   const pins=snapshot('getMapStops(state,'+day+').map(p=>p.eventId)');
+   assert.deepEqual(pins,visible);
+  }
+ }
+}
+run('state.events.b07={status:"progress"};state.reservations["nabana-ticket"]={status:"requested",note:"B"};persist()');
+assert.equal(run('nextEvent(state,3,{date:"2026-12-13",time:"15:00"}).event.id'),'b07');
+const backup=snapshot('backupEnvelope()');
+const imported=snapshot('validateBackup('+JSON.stringify(JSON.stringify(backup))+')');
+assert.equal(imported.plan,'B');
+assert.equal(imported.events['d4-train'].status,'done');
+assert.equal(imported.events.b07.status,'progress');
+assert.equal(imported.reservations['nabana-ticket'].note,'B');
+assert.equal(imported.reservations['hida-outbound'].note,'JR QR');
+assert.equal(imported.legacy.reservations.sushi.note,'old dinner');
+const reloaded=loadItinerary({localStorage});
+assert.equal(vm.runInContext('state.plan',reloaded),'B');
+assert.equal(vm.runInContext('state.events["d4-train"].status',reloaded),'done');
+const oldImport=snapshot('validateBackup('+JSON.stringify(JSON.stringify({app:'nagoya-trip',state:previous}))+')');
+assert.equal(oldImport.plan,'A');
+assert.equal(oldImport.legacy.reservations['ghibli-ticket'].note,'old ticket');
+for(const bad of ['null','{}','invalid','{"app":"nagoya-trip","state":{"version":99}}'])assert.throws(()=>run('validateBackup('+JSON.stringify(bad)+')'));
+assert.equal(run('japanClock(new Date("2026-12-12T15:00:00Z")).date'),'2026-12-13');
+assert.equal(run('japanClock(new Date("2026-12-12T15:00:00Z")).time'),'00:00');
+assert.equal(run('travelPhase({date:"2026-12-13"})'),'during');
+const route=snapshot('readRoute(state,"https://example.com/nagoya/?page=plan&day=12-13&view=map&plan=A",{date:"2026-12-10"})');
+assert.deepEqual(route,{active:3,view:'map',plan:'A',explicit:true});
+const corrupt=new Map([['nagoya26-v3','{broken'],['nagoya26-v2',JSON.stringify(previous)]]);
+const recovered=loadItinerary({localStorage:{getItem:key=>corrupt.get(key)??null,setItem:(key,value)=>corrupt.set(key,value)}});
+assert.equal(vm.runInContext('state.memo',recovered),'개인 메모');
+assert.equal(corrupt.get('nagoya26-v3-unreadable'),'{broken');
+const blocked=loadItinerary({localStorage:{getItem(){throw Error()},setItem(){throw Error()}}});
+assert.equal(vm.runInContext('persist()',blocked),false);
+console.log('PASS: v2 non-destructive migration, ID collisions, A/B state, filtered map IDs, backups, damaged/blocked storage, date and URL.');

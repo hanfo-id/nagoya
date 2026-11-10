@@ -1,11 +1,14 @@
-// Export the resolved app itinerary, not the historical trip-data.js inputs alone.
-const fs=require('fs'),vm=require('vm'),path=require('path');
-const root=path.resolve(__dirname,'..'),c=vm.createContext({Intl,Date,localStorage:{getItem:()=>null}});
-for(const f of ['trip-details.js','trip-data.js','trip-state.js'])vm.runInContext(fs.readFileSync(path.join(root,f),'utf8'),c);
-const data=JSON.parse(vm.runInContext(`JSON.stringify({destination:'나고야',timezone:'Asia/Tokyo',days:days.map((d,i)=>({date:isoDay(i),weekday:d.dow,title:d.short,summary:d.subtitle,note:d.note,events:baseEvents(i).map(e=>{const p=eventPlace(e)||PLACE.airport;return {id:e.id,start:e.time,end:e.end||null,title:e.title,category:e.kind,place:{name:p.name,japaneseName:p.jp,mapUrl:appMap(p.query)},description:e.desc,details:e.steps,optional:e.optional}})}))})`,c));
-const output=JSON.stringify(data,null,2)+'\n';
-if(process.argv[2]){
- fs.writeFileSync(path.resolve(process.argv[2]),output,'utf8');
-}else{
- process.stdout.write(output);
+const fs = require('node:fs');
+const vm = require('node:vm');
+const {loadItinerary} = require('./load-itinerary.cjs');
+
+const args = process.argv.slice(2);
+const plan = args.find(arg=>arg.startsWith('--plan='))?.slice(7) ?? 'A';
+const paths = args.filter(arg=>!arg.startsWith('--plan='));
+if (!['A','B'].includes(plan)||paths.length>1||paths[0]?.startsWith('-')) {
+ console.error('Usage: node scripts/export-itinerary.cjs [--plan=A|B] [output.json]');
+ process.exit(1);
 }
+const output = vm.runInContext('JSON.stringify(exportItinerary('+JSON.stringify(plan)+'),null,2)',loadItinerary())+'\n';
+if (paths[0]) fs.writeFileSync(paths[0],output);
+else process.stdout.write(output);

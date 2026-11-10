@@ -1,0 +1,2632 @@
+{
+  "destination": "나고야",
+  "timezone": "Asia/Tokyo",
+  "dates": "2026-12-10 to 2026-12-14",
+  "revision": "2026-11-10 two alternative itineraries; verified shop hours and conditional bookings",
+  "planning_assumptions": [
+    "2 adults; all reservations unconfirmed unless user independently confirms",
+    "Hotel Nishitetsu Croom Nagoya fixed for four nights",
+    "Flight arrival 12/10 16:50 and departure 12/14 17:50 per original user itinerary",
+    "Travel duration estimates include tourist buffer; verify timetables on travel dates"
+  ],
+  "days": [
+    {
+      "date": "2026-12-10",
+      "weekday": "목요일",
+      "title": "입국 · 호텔 체크인 · 이즈미 라멘",
+      "summary": "첫날은 무리하지 않고 호텔에 짐을 둔 뒤 라멘과 짧은 공원 야경만.",
+      "note": "시시마루는 나고야역 19:00 전 도착 시에만 선택. 호텔 체크인 먼저가 기본. 늦은 입국 시 산책 생략. | 우선안은 호텔 체크인 후 쇼라쿠. 금/토 쇼핑에 체력 배분. | 밤 공원 산책은 라멘 식사 종료 후 10분 이동을 별도 포함하며 고정 예약이 아닙니다.",
+      "events": [
+        {
+          "id": "d1-arrival",
+          "start": "16:50",
+          "end": "18:05",
+          "title": "공항 입국·수하물",
+          "category": "이동",
+          "place": {
+            "name": "주부국제공항 센트레아",
+            "japaneseName": "中部国際空港 セントレア",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF%20%E3%82%BB%E3%83%B3%E3%83%88%E3%83%AC%E3%82%A2%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%B8%B8%E6%BB%91%E5%B8%82"
+          },
+          "description": "실제 입국 종료 시각에 따라 뒤 일정 유동화",
+          "details": [
+            "착륙 16:50은 입국 완료 시각이 아닙니다. 입국심사·수하물·세관을 마친 후 철도역으로 이동하세요.",
+            "항공편이 지연되면 저녁 및 공원 산책을 축소하고 숙소 체크인을 우선하세요.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "card_notes": {
+            "visit_tip": "착륙 16:50은 입국 완료 시각이 아닙니다. 입국심사·수하물·세관을 마친 후 철도역으로 이동하세요.",
+            "transport": "전후 일정과 위치를 확인하고 이동",
+            "reservation_requirement": "확인된 예약 조건 없음"
+          }
+        },
+        {
+          "id": "d1-train-in",
+          "start": "18:05",
+          "end": "18:55",
+          "title": "메이테츠 공항철도로 나고야",
+          "category": "이동",
+          "place": {
+            "name": "메이테츠 나고야역",
+            "japaneseName": "名鉄名古屋駅",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%90%8D%E9%89%84%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%20%E5%90%8D%E5%8F%A4%E5%B1%8B"
+          },
+          "description": "μSKY 지정석 또는 특급 일반차. 소요시간은 대기 포함 계획값.",
+          "details": [
+            "주부국제공항역에서 메이테츠 나고야역으로 이동합니다. μSKY는 특별차량권이 필요한 전석 지정석입니다.",
+            "발권·승강장 이동·열차 대기까지 포함하여 시간을 계산하고, 숙소로 갈 지하철 사쿠라도리선 환승 표지를 확인하세요.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "card_notes": {
+            "visit_tip": "주부국제공항역에서 메이테츠 나고야역으로 이동합니다. μSKY는 특별차량권이 필요한 전석 지정석입니다.",
+            "transport": "전후 일정과 위치를 확인하고 이동",
+            "reservation_requirement": "확인된 예약 조건 없음"
+          }
+        },
+        {
+          "id": "d1-checkin",
+          "start": "18:55",
+          "end": "19:40",
+          "title": "히사야오도리 이동·호텔 체크인",
+          "category": "휴식",
+          "place": {
+            "name": "니시테츠 호텔 크룸 나고야",
+            "japaneseName": "西鉄ホテル クルーム名古屋",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%A5%BF%E9%89%84%E3%83%9B%E3%83%86%E3%83%AB%20%E3%82%AF%E3%83%AB%E3%83%BC%E3%83%A0%E5%90%8D%E5%8F%A4%E5%B1%8B%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E9%8C%A63-4-3"
+          },
+          "description": "사쿠라도리선 도쿠시게 방면. 대형역 환승은 15분 이상 여유.",
+          "details": [
+            "메이테츠 나고야역에서 지하철 사쿠라도리선 도쿠시게 방면으로 환승해 히사야오도리역에서 내립니다.",
+            "대형역 내부 환승과 캐리어 이동시간을 고려하고, 호텔 체크인 후 짐을 객실에 두고 저녁을 먹으러 가세요.",
+            "체력 회복이 목적이므로 불필요한 추가 이동은 하지 않습니다."
+          ],
+          "optional": false,
+          "card_notes": {
+            "visit_tip": "메이테츠 나고야역에서 지하철 사쿠라도리선 도쿠시게 방면으로 환승해 히사야오도리역에서 내립니다.",
+            "transport": "전후 일정과 위치를 확인하고 이동",
+            "reservation_requirement": "확인된 예약 조건 없음"
+          }
+        },
+        {
+          "id": "d1-ramen",
+          "start": "19:55",
+          "end": "20:50",
+          "title": "쇼라쿠 · 마늘 라멘 저녁",
+          "category": "식사",
+          "place": {
+            "name": "간소 닌니쿠 라멘 쇼라쿠",
+            "japaneseName": "元祖にんにくらーめん笑楽",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%85%83%E7%A5%96%E3%81%AB%E3%82%93%E3%81%AB%E3%81%8F%E3%82%89%E3%83%BC%E3%82%81%E3%82%93%E7%AC%91%E6%A5%BD%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E6%9D%B1%E5%8C%BA%E6%B3%891-4-1"
+          },
+          "description": "이즈미 지역 호텔 근처 라멘. 목요일 실제 영업 여부 재확인 필요.",
+          "details": [
+            "쇼라쿠의 마늘 라멘을 먹는 첫날 저녁입니다. 마늘 향이 부담스러우면 주문할 때 마늘 양을 확인하세요.",
+            "호텔에서 이즈미 방면으로 걷는 동선입니다. 당일 영업·마지막 주문·현금 결제 여부는 방문 전 확인하세요.",
+            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요."
+          ],
+          "optional": false,
+          "card_notes": {
+            "visit_tip": "쇼라쿠의 마늘 라멘을 먹는 첫날 저녁입니다. 마늘 향이 부담스러우면 주문할 때 마늘 양을 확인하세요.",
+            "transport": "전후 일정과 위치를 확인하고 이동",
+            "reservation_requirement": "확인된 예약 조건 없음"
+          }
+        },
+        {
+          "id": "d1-night-park",
+          "start": "21:00",
+          "end": "21:25",
+          "title": "히사야오도리 야경 25분",
+          "category": "산책",
+          "place": {
+            "name": "히사야오도리 공원",
+            "japaneseName": "久屋大通公園 Hisaya-odori Park",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Hisaya-odori%20Park%20%E5%90%8D%E5%8F%A4%E5%B1%8B"
+          },
+          "description": "날씨/비행 피로가 있으면 생략",
+          "details": [
+            "히사야오도리 공원의 타워 외관과 조명을 짧게 감상하는 선택 산책입니다.",
+            "추위나 비행 피로가 있으면 생략하고 호텔로 바로 복귀하세요. 미라이타워 전망대 입장은 금요일입니다.",
+            "사진·휴식을 포함해 천천히 걷고 날씨가 나쁘면 실내 또는 이동 동선으로 단축하세요.",
+            "선택 방문입니다. 시간이 부족하거나 피곤하면 생략해도 핵심 일정에 지장이 없도록 조정합니다."
+          ],
+          "optional": true,
+          "card_notes": {
+            "visit_tip": "히사야오도리 공원의 타워 외관과 조명을 짧게 감상하는 선택 산책입니다.",
+            "transport": "전후 일정과 위치를 확인하고 이동",
+            "reservation_requirement": "확인된 예약 조건 없음"
+          }
+        },
+        {
+          "id": "d1-hotel-rest",
+          "start": "21:30",
+          "end": null,
+          "title": "호텔 복귀·휴식",
+          "category": "휴식",
+          "place": {
+            "name": "니시테츠 호텔 크룸 나고야",
+            "japaneseName": "西鉄ホテル クルーム名古屋",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%A5%BF%E9%89%84%E3%83%9B%E3%83%86%E3%83%AB%20%E3%82%AF%E3%83%AB%E3%83%BC%E3%83%A0%E5%90%8D%E5%8F%A4%E5%B1%8B%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E9%8C%A63-4-3"
+          },
+          "description": "금요일 오전에 무리 없이 시작.",
+          "details": [
+            "다음 날 사카에 쇼핑을 위해 발이 편한 신발과 간단한 겉옷을 준비하세요.",
+            "예약 내역과 지도를 확인하고 충분히 휴식하세요.",
+            "체력 회복이 목적이므로 불필요한 추가 이동은 하지 않습니다."
+          ],
+          "optional": false,
+          "card_notes": {
+            "visit_tip": "다음 날 사카에 쇼핑을 위해 발이 편한 신발과 간단한 겉옷을 준비하세요.",
+            "transport": "전후 일정과 위치를 확인하고 이동",
+            "reservation_requirement": "확인된 예약 조건 없음"
+          }
+        }
+      ]
+    },
+    {
+      "date": "2026-12-11",
+      "weekday": "금요일",
+      "title": "사카에 남하 스트리트웨어 8곳 · 미소카츠 · 테바사키 · 야경",
+      "summary": "BEAMS→UNITED ARROWS→Stüssy→BAPE→HOODS→BlackEyePatch→FREAK’S STORE→atmos. 오전 공원·점심, 저녁 무츠미·타워.",
+      "note": "쇼핑 공백 3시간 제거, 실제 이름을 가진 매장과 5~15분 이동 구간으로 시간표 완성. 쇼핑 시간이 늘면 HARBS 휴식을 줄이지 말고 관심 낮은 매장을 1곳 건너뛴다.",
+      "events": [
+        {
+          "id": "f01",
+          "start": "08:20",
+          "end": "09:05",
+          "title": "고메다 사쿠라도리오츠점 모닝",
+          "category": "식사",
+          "place": {
+            "name": "고메다 사쿠라도리오츠점",
+            "japaneseName": "コメダ珈琲店 桜通大津店",
+            "address": "3-19-30 Marunouchi Naka Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-19-30%20Marunouchi%20Naka%20Nagoya"
+          },
+          "description": "호텔에서 도보 3~5분인 기존 고메다 방문(일정상 장소명만 별도 관리)",
+          "details": [
+            "모닝 서비스는 음료와 토스트·토핑 조합으로 즐깁니다. 오구라앙(단팥)이 나고야식 모닝의 포인트입니다.",
+            "점심 미소카츠가 예정되어 있으므로 큰 디저트는 생략하고 공원 산책으로 연결하세요.",
+            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 3~5분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "모닝 서비스는 음료와 토스트·토핑 조합으로 즐깁니다. 오구라앙(단팥)이 나고야식 모닝의 포인트입니다.",
+            "transport": "도보 3~5분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f02",
+          "start": "09:05",
+          "end": "09:20",
+          "title": "히사야오도리 공원 방향 도보",
+          "category": "이동",
+          "place": {
+            "name": "니시테츠 호텔 크룸 나고야",
+            "japaneseName": "西鉄ホテル クルーム名古屋",
+            "address": "3-4-3 Nishiki, Naka Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-4-3%20Nishiki%2C%20Naka%20Nagoya"
+          },
+          "description": "고메다 출발 후 공원 북쪽으로",
+          "details": [
+            "니시테츠 호텔 크룸 나고야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보 10~15분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 10~15분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "니시테츠 호텔 크룸 나고야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보 10~15분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f03",
+          "start": "09:20",
+          "end": "09:55",
+          "title": "히사야오도리 공원·미라이타워 외관",
+          "category": "산책",
+          "place": {
+            "name": "히사야오도리 공원",
+            "japaneseName": "久屋大通公園",
+            "address": "Hisaya Odori Park Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Hisaya%20Odori%20Park%20Nagoya"
+          },
+          "description": "남쪽 방향 단방향 산책",
+          "details": [
+            "히사야오도리 공원 북쪽부터 남쪽으로 걸으며 미라이타워 외관과 거리 풍경을 촬영하세요.",
+            "오후에는 타워 전망대에 입장하므로 오전에는 건물 외관 위주로 짧게 머뭅니다.",
+            "사진·휴식을 포함해 천천히 걷고 날씨가 나쁘면 실내 또는 이동 동선으로 단축하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "히사야오도리 공원 북쪽부터 남쪽으로 걸으며 미라이타워 외관과 거리 풍경을 촬영하세요.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f04",
+          "start": "09:55",
+          "end": "10:20",
+          "title": "오아시스21 외관·사진",
+          "category": "관광",
+          "place": {
+            "name": "오아시스21",
+            "japaneseName": "オアシス21",
+            "address": "1-11-1 Higashisakura Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=1-11-1%20Higashisakura%20Nagoya"
+          },
+          "description": "옥상 폐쇄·공사 중 개방구간만 관람",
+          "details": [
+            "오아시스21 옥상은 예정된 공사 폐쇄 기간이므로 개방된 지상 구간에서 외관 위주로 구경하세요.",
+            "공사 가림막으로 동선이 달라질 수 있으니 열린 출입구만 이용하세요.",
+            "사진 촬영·동선 확인 시간을 포함합니다. 입장 및 통제 안내는 현장에서 확인하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "공원에서 도보 5분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "오아시스21 옥상은 예정된 공사 폐쇄 기간이므로 개방된 지상 구간에서 외관 위주로 구경하세요.",
+            "transport": "공원에서 도보 5분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f05",
+          "start": "10:20",
+          "end": "10:45",
+          "title": "사카에 남쪽 라무치 이동·대기",
+          "category": "이동",
+          "place": {
+            "name": "니시테츠 호텔 크룸 나고야",
+            "japaneseName": "西鉄ホテル クルーム名古屋",
+            "address": "3-4-3 Nishiki, Naka Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-4-3%20Nishiki%2C%20Naka%20Nagoya"
+          },
+          "description": "식사 시작 전 도보·대기시간 확보",
+          "details": [
+            "니시테츠 호텔 크룸 나고야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보 10~15분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 10~15분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "니시테츠 호텔 크룸 나고야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보 10~15분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f06",
+          "start": "10:45",
+          "end": "12:10",
+          "title": "쿠로부타야 라무치 미소카츠",
+          "category": "식사",
+          "place": {
+            "name": "쿠로부타야 라무치",
+            "japaneseName": "黒豚屋 らむちぃ",
+            "address": "3-15-6 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-15-6%20Sakae%20Nagoya"
+          },
+          "description": "개점 11시, 10:45 줄 서기. 현금 준비",
+          "details": [
+            "파가 듬뿍 올라간 미소카츠 정식을 추천합니다. 양이 많으면 작은 사이즈 가능 여부를 문의하세요.",
+            "11시 개점에 맞춰 10:45 전후 도착해 대기합니다. 현금 결제 가능하도록 현금을 준비하세요.",
+            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요.",
+            "예약 안내: 예약 가능 여부 확인 또는 현장 대기. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "예약 가능 여부 확인 또는 현장 대기",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "파가 듬뿍 올라간 미소카츠 정식을 추천합니다. 양이 많으면 작은 사이즈 가능 여부를 문의하세요.",
+            "transport": "도보",
+            "reservation_requirement": "예약 가능 여부 확인 또는 현장 대기"
+          }
+        },
+        {
+          "id": "f07",
+          "start": "12:10",
+          "end": "12:20",
+          "title": "라무치 → 라시크 2F 이동",
+          "category": "이동",
+          "place": {
+            "name": "BEAMS 나고야",
+            "japaneseName": "ビームス 名古屋",
+            "address": "LACHIC 2F, 3-6-1 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=LACHIC%202F%2C%203-6-1%20Sakae%20Nagoya"
+          },
+          "description": "도보 및 에스컬레이터",
+          "details": [
+            "BEAMS 나고야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보 5~10분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 5~10분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "BEAMS 나고야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보 5~10분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f08",
+          "start": "12:20",
+          "end": "12:50",
+          "title": "BEAMS 나고야 (라시크 2F)",
+          "category": "쇼핑",
+          "place": {
+            "name": "BEAMS 나고야",
+            "japaneseName": "ビームス 名古屋",
+            "address": "LACHIC 2F, 3-6-1 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=LACHIC%202F%2C%203-6-1%20Sakae%20Nagoya"
+          },
+          "description": "BEAMS·BEAMS PLUS·BEAMS T. 좋아하는 매장이라 30분 배정",
+          "details": [
+            "라시크 2층의 BEAMS에서 캐주얼 의류·티셔츠·아우터를 먼저 확인하세요. BEAMS PLUS와 BEAMS T 등 관심 제품군이 있는지 살펴보세요.",
+            "첫 번째 핵심 쇼핑 매장이므로 마음에 드는 제품이 있다면 피팅을 우선하고, 다음 UNITED ARROWS는 같은 건물 안에서 이동합니다.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "라시크 2F",
+          "source_url": "https://www.beams.co.jp/shop/bna/",
+          "card_notes": {
+            "visit_tip": "라시크 2층의 BEAMS에서 캐주얼 의류·티셔츠·아우터를 먼저 확인하세요. BEAMS PLUS와 BEAMS T 등 관심 제품군이 있는지 살펴보세요.",
+            "transport": "라시크 2F",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f09",
+          "start": "12:50",
+          "end": "13:15",
+          "title": "UNITED ARROWS 나고야점 (라시크 2F)",
+          "category": "쇼핑",
+          "place": {
+            "name": "UNITED ARROWS 나고야점",
+            "japaneseName": "ユナイテッドアローズ 名古屋店",
+            "address": "LACHIC 2F, 3-6-1 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=LACHIC%202F%2C%203-6-1%20Sakae%20Nagoya"
+          },
+          "description": "BEAUTY&YOUTH·monkey time 일부 취급. 같은 층, 25분",
+          "details": [
+            "BEAMS와 비교해 좀 더 정돈된 캐주얼·아우터와 신발을 살펴보세요. 취향에 맞는 라인 입점 여부는 현장에서 확인하세요.",
+            "라시크 안에서 함께 둘러본 후 Stüssy Nagoya로 도보 이동합니다.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "같은 2F",
+          "source_url": "https://store.united-arrows.co.jp/brand/ua/stores/ung.html",
+          "card_notes": {
+            "visit_tip": "BEAMS와 비교해 좀 더 정돈된 캐주얼·아우터와 신발을 살펴보세요. 취향에 맞는 라인 입점 여부는 현장에서 확인하세요.",
+            "transport": "같은 2F",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f10",
+          "start": "13:15",
+          "end": "13:30",
+          "title": "라시크 → Stüssy 이동",
+          "category": "이동",
+          "place": {
+            "name": "Stüssy Nagoya",
+            "japaneseName": "ステューシー ナゴヤ",
+            "address": "3-27-24 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-27-24%20Sakae%20Nagoya"
+          },
+          "description": "사카에 3초메 남서쪽으로",
+          "details": [
+            "Stüssy Nagoya 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보 10~15분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 10~15분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "Stüssy Nagoya 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보 10~15분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f11",
+          "start": "13:30",
+          "end": "14:00",
+          "title": "Stüssy Nagoya",
+          "category": "쇼핑",
+          "place": {
+            "name": "Stüssy Nagoya",
+            "japaneseName": "ステューシー ナゴヤ",
+            "address": "3-27-24 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-27-24%20Sakae%20Nagoya"
+          },
+          "description": "메인 우선순위; 30분",
+          "details": [
+            "Stüssy의 티셔츠·후드·캡·시즌 아우터를 우선 살펴보세요. 인기 사이즈는 재고가 없을 수 있습니다.",
+            "이번 쇼핑에서 중요도가 높은 곳이므로 30분 배정했습니다. 방문 후 가까운 BAPE로 이동합니다.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "https://kr.stussy.com/blogs/chapters/stussy-nagoya",
+          "card_notes": {
+            "visit_tip": "Stüssy의 티셔츠·후드·캡·시즌 아우터를 우선 살펴보세요. 인기 사이즈는 재고가 없을 수 있습니다.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f12",
+          "start": "14:00",
+          "end": "14:10",
+          "title": "Stüssy → BAPE 도보",
+          "category": "이동",
+          "place": {
+            "name": "BAPE STORE NAGOYA",
+            "japaneseName": "ベイプストア 名古屋",
+            "address": "3-24-13 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-24-13%20Sakae%20Nagoya"
+          },
+          "description": "인근 브랜드 이동",
+          "details": [
+            "BAPE STORE NAGOYA 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보 약 5~10분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 약 5~10분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "BAPE STORE NAGOYA 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보 약 5~10분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f13",
+          "start": "14:10",
+          "end": "14:35",
+          "title": "BAPE STORE NAGOYA",
+          "category": "쇼핑",
+          "place": {
+            "name": "BAPE STORE NAGOYA",
+            "japaneseName": "ベイプストア 名古屋",
+            "address": "3-24-13 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-24-13%20Sakae%20Nagoya"
+          },
+          "description": "A BATHING APE 스트리트웨어",
+          "details": [
+            "A BATHING APE의 그래픽 티셔츠·후드·액세서리 위주로 확인하세요.",
+            "인기 상품의 재고·구매 제한은 현장 규정이 우선입니다. 다음 HOODS 매장으로 이동합니다.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "https://jp.bape.com/pages/store-list",
+          "card_notes": {
+            "visit_tip": "A BATHING APE의 그래픽 티셔츠·후드·액세서리 위주로 확인하세요.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f14",
+          "start": "14:35",
+          "end": "14:45",
+          "title": "BAPE → HOODS 이동",
+          "category": "이동",
+          "place": {
+            "name": "HOODS NAGOYA",
+            "japaneseName": "フッズ ナゴヤ",
+            "address": "3-25-29 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-25-29%20Sakae%20Nagoya"
+          },
+          "description": "인근 거리",
+          "details": [
+            "HOODS NAGOYA 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보 약 5~10분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 약 5~10분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "HOODS NAGOYA 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보 약 5~10분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f15",
+          "start": "14:45",
+          "end": "15:05",
+          "title": "HOODS NAGOYA",
+          "category": "쇼핑",
+          "place": {
+            "name": "HOODS NAGOYA",
+            "japaneseName": "フッズ ナゴヤ",
+            "address": "3-25-29 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-25-29%20Sakae%20Nagoya"
+          },
+          "description": "NEIGHBORHOOD·WTAPS 관심자 추천. 점포 영업은 출발 전 재확인",
+          "details": [
+            "NEIGHBORHOOD·WTAPS 계열의 밀리터리·워크웨어 감성 제품을 살펴보세요.",
+            "원하는 제품군이 없다면 시간을 줄이고 PARCO로 이동하세요. 매장 당일 영업시간은 방문 전에 확인합니다.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "https://febricity.net/pref/aichi/",
+          "card_notes": {
+            "visit_tip": "NEIGHBORHOOD·WTAPS 계열의 밀리터리·워크웨어 감성 제품을 살펴보세요.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f16",
+          "start": "15:05",
+          "end": "15:15",
+          "title": "HOODS → PARCO 이동",
+          "category": "이동",
+          "place": {
+            "name": "BlackEyePatch 나고야 PARCO",
+            "japaneseName": "ブラックアイパッチ",
+            "address": "Nagoya PARCO West 1F, 3-29-1 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nagoya%20PARCO%20West%201F%2C%203-29-1%20Sakae%20Nagoya"
+          },
+          "description": "PARCO 서관",
+          "details": [
+            "BlackEyePatch 나고야 PARCO 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보 약 10분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 약 10분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "BlackEyePatch 나고야 PARCO 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보 약 10분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f17",
+          "start": "15:15",
+          "end": "15:35",
+          "title": "BlackEyePatch PARCO 서관 1F",
+          "category": "쇼핑",
+          "place": {
+            "name": "BlackEyePatch 나고야 PARCO",
+            "japaneseName": "ブラックアイパッチ",
+            "address": "Nagoya PARCO West 1F, 3-29-1 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nagoya%20PARCO%20West%201F%2C%203-29-1%20Sakae%20Nagoya"
+          },
+          "description": "국내에서도 인기 있는 일본 스트리트 브랜드",
+          "details": [
+            "BlackEyePatch 로고 티셔츠·후드·캡 등을 가볍게 둘러보는 20분 코스입니다.",
+            "나고야 PARCO 서관 1층 매장으로 계획했으며 실제 점포 위치는 매장 안내도를 우선하세요.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "PARCO 서관 1F",
+          "source_url": "https://nagoya.parco.jp/shop/detail/?cd=029194",
+          "card_notes": {
+            "visit_tip": "BlackEyePatch 로고 티셔츠·후드·캡 등을 가볍게 둘러보는 20분 코스입니다.",
+            "transport": "PARCO 서관 1F",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f18",
+          "start": "15:35",
+          "end": "15:55",
+          "title": "FREAK’S STORE PARCO 서관 2F",
+          "category": "쇼핑",
+          "place": {
+            "name": "FREAK’S STORE 나고야 PARCO",
+            "japaneseName": "フリークス ストア",
+            "address": "Nagoya PARCO West 2F, 3-29-1 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nagoya%20PARCO%20West%202F%2C%203-29-1%20Sakae%20Nagoya"
+          },
+          "description": "BEAMS 취향과 가까운 아메리칸 캐주얼",
+          "details": [
+            "FREAK’S STORE의 아메리칸 캐주얼·아우터·액세서리를 BEAMS와 비교해 보세요.",
+            "같은 PARCO 건물 내 쇼핑이므로 층간 이동시간을 계산하세요.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "PARCO 내부 이동 5분",
+          "source_url": "https://nagoya.parco.jp/shop/detail/?cd=009015",
+          "card_notes": {
+            "visit_tip": "FREAK’S STORE의 아메리칸 캐주얼·아우터·액세서리를 BEAMS와 비교해 보세요.",
+            "transport": "PARCO 내부 이동 5분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f19",
+          "start": "15:55",
+          "end": "16:10",
+          "title": "atmos PARCO 서관 1F",
+          "category": "쇼핑",
+          "place": {
+            "name": "atmos 나고야 PARCO",
+            "japaneseName": "アトモス",
+            "address": "Nagoya PARCO West 1F, 3-29-1 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nagoya%20PARCO%20West%201F%2C%203-29-1%20Sakae%20Nagoya"
+          },
+          "description": "스니커즈와 나이키 중심",
+          "details": [
+            "atmos에서 스니커즈·한정 컬러·캡을 살펴보세요.",
+            "짧게 방문하고 이어지는 HARBS에서 앉아서 쉬는 시간을 확보합니다.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "PARCO 내부 이동 5분",
+          "source_url": "https://nagoya.parco.jp/shop/detail/?cd=009187",
+          "card_notes": {
+            "visit_tip": "atmos에서 스니커즈·한정 컬러·캡을 살펴보세요.",
+            "transport": "PARCO 내부 이동 5분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f20",
+          "start": "16:10",
+          "end": "16:45",
+          "title": "HARBS PARCO 서관 1F 카페",
+          "category": "휴식",
+          "place": {
+            "name": "HARBS 나고야 PARCO점",
+            "japaneseName": "ハーブス 名古屋パルコ店",
+            "address": "Nagoya PARCO West 1F, 3-29-1 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nagoya%20PARCO%20West%201F%2C%203-29-1%20Sakae%20Nagoya"
+          },
+          "description": "디저트·따뜻한 음료 35분. 대기가 길면 PARCO 다른 카페로 전환",
+          "details": [
+            "HARBS에서 따뜻한 음료와 케이크를 나눠 먹으며 쇼핑 중 휴식하세요.",
+            "대기줄이 길면 인근 다른 카페로 전환하되 17:20 무츠미 도착 목표를 우선합니다.",
+            "체력 회복이 목적이므로 불필요한 추가 이동은 하지 않습니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "같은 1F",
+          "source_url": "https://nagoya.parco.jp/shop/detail/?cd=027522",
+          "card_notes": {
+            "visit_tip": "HARBS에서 따뜻한 음료와 케이크를 나눠 먹으며 쇼핑 중 휴식하세요.",
+            "transport": "같은 1F",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f21",
+          "start": "16:45",
+          "end": "17:20",
+          "title": "PARCO → 무츠미 본점 이동·예약 준비",
+          "category": "이동",
+          "place": {
+            "name": "니시테츠 호텔 크룸 나고야",
+            "japaneseName": "西鉄ホテル クルーム名古屋",
+            "address": "3-4-3 Nishiki, Naka Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-4-3%20Nishiki%2C%20Naka%20Nagoya"
+          },
+          "description": "도보 15~25분 + 여유 10분",
+          "details": [
+            "니시테츠 호텔 크룸 나고야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "니시테츠 호텔 크룸 나고야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f22",
+          "start": "17:20",
+          "end": "18:55",
+          "title": "테바사키 무츠미 본점",
+          "category": "식사",
+          "place": {
+            "name": "테바사키 무츠미 본점",
+            "japaneseName": "手羽先むつみ 本店",
+            "address": "3-8-125 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-8-125%20Sakae%20Nagoya"
+          },
+          "description": "17:30 예약 목표, 본점과 분점 구별",
+          "details": [
+            "테바사키 흑(간장 계열)·백(소금·후추 계열)을 나눠 주문하고 취향에 따라 추가하세요.",
+            "본점·분점을 혼동하지 않도록 주소를 확인하세요. 예약이 필요한 항목은 앱에서 예약 상태를 수동 기록합니다.",
+            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요.",
+            "예약 안내: 예약 권장. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "예약 권장",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "테바사키 흑(간장 계열)·백(소금·후추 계열)을 나눠 주문하고 취향에 따라 추가하세요.",
+            "transport": "도보",
+            "reservation_requirement": "예약 권장"
+          }
+        },
+        {
+          "id": "f23",
+          "start": "18:55",
+          "end": "19:25",
+          "title": "무츠미 → 미라이타워 이동",
+          "category": "이동",
+          "place": {
+            "name": "니시테츠 호텔 크룸 나고야",
+            "japaneseName": "西鉄ホテル クルーム名古屋",
+            "address": "3-4-3 Nishiki, Naka Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-4-3%20Nishiki%2C%20Naka%20Nagoya"
+          },
+          "description": "도보 약 20~25분 + 소폭 여유",
+          "details": [
+            "니시테츠 호텔 크룸 나고야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "니시테츠 호텔 크룸 나고야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "f24",
+          "start": "19:25",
+          "end": "20:20",
+          "title": "중부전력 미라이타워 야경",
+          "category": "관광",
+          "place": {
+            "name": "중부전력 미라이타워",
+            "japaneseName": "中部電力 MIRAI TOWER",
+            "address": "3-6-15 Nishiki Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-6-15%20Nishiki%20Nagoya"
+          },
+          "description": "야간 이벤트·운영시간 추후 공지 확인",
+          "details": [
+            "타워 전망대에서 나고야 야경을 감상하고 유리 반사가 적은 지점을 골라 사진을 찍어 보세요.",
+            "공식 야간 이벤트가 열리는 날에는 입장요금과 최종 입장시간이 달라질 수 있어 방문 전에 확인해야 합니다.",
+            "사진 촬영·동선 확인 시간을 포함합니다. 입장 및 통제 안내는 현장에서 확인하세요.",
+            "예약 안내: 일반 입장권 구매. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "일반 입장권 구매",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "타워 전망대에서 나고야 야경을 감상하고 유리 반사가 적은 지점을 골라 사진을 찍어 보세요.",
+            "transport": "도보",
+            "reservation_requirement": "일반 입장권 구매"
+          }
+        },
+        {
+          "id": "f25",
+          "start": "20:20",
+          "end": "21:10",
+          "title": "히사야오도리 공원 야경·호텔 복귀",
+          "category": "산책",
+          "place": {
+            "name": "니시테츠 호텔 크룸 나고야",
+            "japaneseName": "西鉄ホテル クルーム名古屋",
+            "address": "3-4-3 Nishiki, Naka Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-4-3%20Nishiki%2C%20Naka%20Nagoya"
+          },
+          "description": "겨울밤 야경을 즐기고 여유롭게 귀가",
+          "details": [
+            "니시테츠 호텔 크룸 나고야에서 겨울밤 야경을 즐기고 여유롭게 귀가.",
+            "사진·휴식을 포함해 천천히 걷고 날씨가 나쁘면 실내 또는 이동 동선으로 단축하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 5~15분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "니시테츠 호텔 크룸 나고야에서 겨울밤 야경을 즐기고 여유롭게 귀가.",
+            "transport": "도보 5~15분",
+            "reservation_requirement": "불필요"
+          }
+        }
+      ]
+    },
+    {
+      "date": "2026-12-12",
+      "weekday": "토요일",
+      "title": "야나기바시 스시 · 오스 피규어 집중 · 나히아 팝업 · 겨울 이자카야",
+      "summary": "스시 점심 이후 오스 서→동, PARCO 동관→서관→남관, 후시미 이자카야로 연결.",
+      "note": "피규어는 정확한 상호·층수 중심. PARCO 남관 10F 나히아 10주년 팝업은 12/5~20 기간확인. 전 일정 매장을 무조건 소화할 필요는 없고 각 20~30분 기준이며 우선순위에 따라 스킵 가능.",
+      "events": [
+        {
+          "id": "s01",
+          "start": "08:40",
+          "end": "09:25",
+          "title": "호텔 조식 및 출발 준비",
+          "category": "식사",
+          "place": {
+            "name": "니시테츠 호텔 크룸 나고야",
+            "japaneseName": "西鉄ホテル クルーム名古屋",
+            "address": "3-4-3 Nishiki, Naka Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-4-3%20Nishiki%2C%20Naka%20Nagoya"
+          },
+          "description": "일요일 A안은 아침 일찍 출발하므로 토요일 컨디션 조절",
+          "details": [
+            "니시테츠 호텔 크룸 나고야에서 식사하거나 휴식하는 일정입니다. 일요일 A안은 아침 일찍 출발하므로 토요일 컨디션 조절",
+            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "호텔",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "니시테츠 호텔 크룸 나고야에서 식사하거나 휴식하는 일정입니다. 일요일 A안은 아침 일찍 출발하므로 토요일 컨디션 조절",
+            "transport": "호텔",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s02",
+          "start": "09:25",
+          "end": "10:15",
+          "title": "호텔 → 나고야역·메이에키 지하상가 이동",
+          "category": "이동",
+          "place": {
+            "name": "메이에키 지하상가 선로드",
+            "japaneseName": "名駅地下街 サンロード",
+            "address": "Sun Road, Meieki Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Sun%20Road%2C%20Meieki%20Nagoya"
+          },
+          "description": "사쿠라도리선 히사야오도리→나고야. 지하상가 입구 찾아 이동",
+          "details": [
+            "메이에키 지하상가 선로드 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 지하철+도보 25~35분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "지하철+도보 25~35분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "메이에키 지하상가 선로드 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "지하철+도보 25~35분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s03",
+          "start": "10:15",
+          "end": "10:45",
+          "title": "메이에키 선로드 지하상가 가볍게 구경",
+          "category": "쇼핑",
+          "place": {
+            "name": "메이에키 지하상가 선로드",
+            "japaneseName": "名駅地下街 サンロード",
+            "address": "Sun Road, Meieki Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Sun%20Road%2C%20Meieki%20Nagoya"
+          },
+          "description": "시장 스시 전 나고야역 쇼핑·가벼운 커피. 장보기 의무 아님",
+          "details": [
+            "선로드 지하상가에서 기념품과 잡화를 가볍게 살펴보고, 스시 전에는 과식을 피하세요.",
+            "가게 하나에 오래 머무르기보다는 야나기바시 시장 쪽으로 이동하기 편한 출구를 확인하세요.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "지하상가",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "선로드 지하상가에서 기념품과 잡화를 가볍게 살펴보고, 스시 전에는 과식을 피하세요.",
+            "transport": "지하상가",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s04",
+          "start": "10:45",
+          "end": "11:30",
+          "title": "선로드 → 야나기바시 장내점 이동·입장 대기",
+          "category": "이동",
+          "place": {
+            "name": "야나기바시 키타로 장내점",
+            "japaneseName": "柳橋きたろう場内",
+            "address": "4-15-2 Meieki Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=4-15-2%20Meieki%20Nagoya"
+          },
+          "description": "나고야역 동쪽에서 시장 방향으로 이동. 개점시각 상충 표기가 있어 11:30 목표",
+          "details": [
+            "야나기바시 키타로 장내점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보 10~20분 + 대기.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요.",
+            "예약 안내: 장내점 예약 규칙 직접 확인. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "장내점 예약 규칙 직접 확인",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 10~20분 + 대기",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "야나기바시 키타로 장내점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보 10~20분 + 대기",
+            "reservation_requirement": "장내점 예약 규칙 직접 확인"
+          }
+        },
+        {
+          "id": "s05",
+          "start": "11:30",
+          "end": "12:35",
+          "title": "야나기바시 키타로 장내점 카운터 스시",
+          "category": "식사",
+          "place": {
+            "name": "야나기바시 키타로 장내점",
+            "japaneseName": "柳橋きたろう場内",
+            "address": "4-15-2 Meieki Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=4-15-2%20Meieki%20Nagoya"
+          },
+          "description": "토요일 점심으로 이동. 저녁은 이자카야 경험으로 활용",
+          "details": [
+            "야나기바시 키타로 장내점에서 니기리 스시 세트를 즐깁니다. 점심 영업시간과 예약 방식은 매장에 확인하세요.",
+            "이름이 비슷한 장외점·시장점과 혼동하지 말고 ‘名駅4-15-2 マルナカ食品センター1F’를 확인하세요.",
+            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요.",
+            "예약 안내: 사전 전화 확인 권장. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "사전 전화 확인 권장",
+            "status": "미확정"
+          },
+          "transport_from_previous": "현장",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "야나기바시 키타로 장내점에서 니기리 스시 세트를 즐깁니다. 점심 영업시간과 예약 방식은 매장에 확인하세요.",
+            "transport": "현장",
+            "reservation_requirement": "사전 전화 확인 권장"
+          }
+        },
+        {
+          "id": "s06",
+          "start": "12:35",
+          "end": "13:20",
+          "title": "야나기바시 → 오스칸논 이동",
+          "category": "이동",
+          "place": {
+            "name": "오모차노오쿠니 다루마야",
+            "japaneseName": "おもちゃのおくに だるまや",
+            "address": "2-18-41 Osu Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=2-18-41%20Osu%20Nagoya"
+          },
+          "description": "국제센터역→마루노우치 환승→오스칸논역; 도보 포함",
+          "details": [
+            "오모차노오쿠니 다루마야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 지하철 1회 환승 + 도보 35~45분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "지하철 1회 환승 + 도보 35~45분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "오모차노오쿠니 다루마야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "지하철 1회 환승 + 도보 35~45분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s07",
+          "start": "13:20",
+          "end": "13:40",
+          "title": "오스칸논 사찰 참배·사진",
+          "category": "관광",
+          "place": {
+            "name": "오스칸논",
+            "japaneseName": "大須観音",
+            "address": "2-21-47 Osu Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=2-21-47%20Osu%20Nagoya"
+          },
+          "description": "관광 20분 후 동쪽 오스 상점가로 이동",
+          "details": [
+            "오스칸논에서 참배하고 본당과 거리 사진을 남깁니다.",
+            "사찰 관광을 마친 뒤 동쪽 오스상점가와 피규어 매장을 순서대로 둘러봅니다.",
+            "사진 촬영·동선 확인 시간을 포함합니다. 입장 및 통제 안내는 현장에서 확인하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "오스칸논에서 참배하고 본당과 거리 사진을 남깁니다.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s08",
+          "start": "13:40",
+          "end": "13:55",
+          "title": "오모차노오쿠니 다루마야",
+          "category": "쇼핑",
+          "place": {
+            "name": "오모차노오쿠니 다루마야",
+            "japaneseName": "おもちゃのおくに だるまや",
+            "address": "2-18-41 Osu Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=2-18-41%20Osu%20Nagoya"
+          },
+          "description": "오스 니오몬도리 장난감·피규어 매장",
+          "details": [
+            "오스 니오몬도리의 장난감·캐릭터 상품을 빠르게 살펴보세요.",
+            "원하는 피규어가 있으면 사진·가격을 비교하고, 없다면 만다라케로 이어갑니다.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "https://osu.nagoya/ja/shop.php?s=8PeQ2P",
+          "card_notes": {
+            "visit_tip": "오스 니오몬도리의 장난감·캐릭터 상품을 빠르게 살펴보세요.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s09",
+          "start": "13:55",
+          "end": "14:05",
+          "title": "다루마야 → 만다라케 이동",
+          "category": "이동",
+          "place": {
+            "name": "만다라케 나고야점",
+            "japaneseName": "まんだらけ 名古屋店",
+            "address": "3-18-21 Osu Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-18-21%20Osu%20Nagoya"
+          },
+          "description": "상점가 내부",
+          "details": [
+            "만다라케 나고야점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보 5~10분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 5~10분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "만다라케 나고야점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보 5~10분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s10",
+          "start": "14:05",
+          "end": "14:35",
+          "title": "만다라케 나고야점 2F·4F",
+          "category": "쇼핑",
+          "place": {
+            "name": "만다라케 나고야점",
+            "japaneseName": "まんだらけ 名古屋店",
+            "address": "3-18-21 Osu Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-18-21%20Osu%20Nagoya"
+          },
+          "description": "2F 장난감·피규어, 4F 로봇·마법소녀 관련. 12시 개점",
+          "details": [
+            "만다라케 나고야점에서 중고 피규어·로봇·캐릭터 상품을 확인하세요.",
+            "관심 층을 먼저 방문하고 상품 상태·박스 유무·가격표를 확인하세요. 매장 내 사진촬영 규정은 직원 안내를 따릅니다.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "https://www.mandarake.co.jp/dir/ngy/",
+          "card_notes": {
+            "visit_tip": "만다라케 나고야점에서 중고 피규어·로봇·캐릭터 상품을 확인하세요.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s11",
+          "start": "14:35",
+          "end": "14:45",
+          "title": "만다라케 → 라신반 이동",
+          "category": "이동",
+          "place": {
+            "name": "라신반 나고야 오스점",
+            "japaneseName": "らしんばん 名古屋大須店",
+            "address": "3-10-35 Osu Nagoya MultinaBox 2F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-10-35%20Osu%20Nagoya%20MultinaBox%202F"
+          },
+          "description": "오스 상점가 이동",
+          "details": [
+            "라신반 나고야 오스점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보 5~10분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 5~10분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "라신반 나고야 오스점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보 5~10분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s12",
+          "start": "14:45",
+          "end": "15:10",
+          "title": "라신반 나고야 오스점 MultinaBox 2F",
+          "category": "쇼핑",
+          "place": {
+            "name": "라신반 나고야 오스점",
+            "japaneseName": "らしんばん 名古屋大須店",
+            "address": "3-10-35 Osu Nagoya MultinaBox 2F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-10-35%20Osu%20Nagoya%20MultinaBox%202F"
+          },
+          "description": "중고 피규어·애니 굿즈",
+          "details": [
+            "라신반 나고야 오스점에서 중고 애니메이션 굿즈·피규어를 살펴보세요.",
+            "만다라케에서 본 동일 작품 상품과 가격·상태를 비교하며, 다음 스루가야로 이동합니다.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "https://www.lashinbang.com/store/38/",
+          "card_notes": {
+            "visit_tip": "라신반 나고야 오스점에서 중고 애니메이션 굿즈·피규어를 살펴보세요.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s13",
+          "start": "15:10",
+          "end": "15:20",
+          "title": "라신반 → 스루가야 이동",
+          "category": "이동",
+          "place": {
+            "name": "스루가야 나고야 오스 본관",
+            "japaneseName": "駿河屋 名古屋大須本館",
+            "address": "3-32-23 Osu Nagoya 3F-5F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-32-23%20Osu%20Nagoya%203F-5F"
+          },
+          "description": "동쪽 방향",
+          "details": [
+            "스루가야 나고야 오스 본관 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보 5~10분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 5~10분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "스루가야 나고야 오스 본관 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보 5~10분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s14",
+          "start": "15:20",
+          "end": "15:50",
+          "title": "스루가야 나고야 오스 본관 3F·5F",
+          "category": "쇼핑",
+          "place": {
+            "name": "스루가야 나고야 오스 본관",
+            "japaneseName": "駿河屋 名古屋大須本館",
+            "address": "3-32-23 Osu Nagoya 3F-5F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-32-23%20Osu%20Nagoya%203F-5F"
+          },
+          "description": "3F 애니 굿즈, 5F 피규어·프라모델",
+          "details": [
+            "스루가야 나고야 오스 본관에서 애니 굿즈와 피규어·프라모델 구역을 우선 방문하세요.",
+            "층별 상품 분류는 변동될 수 있으므로 안내도를 확인하고, 무거운 상품은 이후 이동을 고려해 구매하세요.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "https://www.suruga-ya.jp/feature/realstore/osu_main/index.html",
+          "card_notes": {
+            "visit_tip": "스루가야 나고야 오스 본관에서 애니 굿즈와 피규어·프라모델 구역을 우선 방문하세요.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s15",
+          "start": "15:50",
+          "end": "16:05",
+          "title": "스루가야 → 보크스 이동",
+          "category": "이동",
+          "place": {
+            "name": "보크스 나고야 쇼룸",
+            "japaneseName": "ボークス 名古屋ショールーム",
+            "address": "4-1-71 Osu Nagoya 2F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=4-1-71%20Osu%20Nagoya%202F"
+          },
+          "description": "야바초 방면 북쪽으로",
+          "details": [
+            "보크스 나고야 쇼룸 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보 10~15분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 10~15분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "보크스 나고야 쇼룸 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보 10~15분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s16",
+          "start": "16:05",
+          "end": "16:30",
+          "title": "보크스 나고야 쇼룸 2F",
+          "category": "쇼핑",
+          "place": {
+            "name": "보크스 나고야 쇼룸",
+            "japaneseName": "ボークス 名古屋ショールーム",
+            "address": "4-1-71 Osu Nagoya 2F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=4-1-71%20Osu%20Nagoya%202F"
+          },
+          "description": "PVC 피규어·프라모델 전문",
+          "details": [
+            "보크스 나고야 쇼룸에서 완성품 피규어와 프라모델을 살펴보세요.",
+            "관심 상품에 따라 전시품과 판매상품을 구분하고, 다음 PARCO 동관으로 이동하세요.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "https://hobby.volks.co.jp/shop/sr_nagoya.html",
+          "card_notes": {
+            "visit_tip": "보크스 나고야 쇼룸에서 완성품 피규어와 프라모델을 살펴보세요.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s17",
+          "start": "16:30",
+          "end": "16:40",
+          "title": "보크스 → PARCO 동관 이동",
+          "category": "이동",
+          "place": {
+            "name": "애니메이트 나고야 PARCO점",
+            "japaneseName": "アニメイト 名古屋パルコ",
+            "address": "Nagoya PARCO East 4F, 3-29-1 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nagoya%20PARCO%20East%204F%2C%203-29-1%20Sakae%20Nagoya"
+          },
+          "description": "동관 엘리베이터로 4F",
+          "details": [
+            "애니메이트 나고야 PARCO점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보·건물 이동.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보·건물 이동",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "애니메이트 나고야 PARCO점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보·건물 이동",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s18",
+          "start": "16:40",
+          "end": "17:05",
+          "title": "애니메이트 나고야 PARCO점 동관 4F",
+          "category": "쇼핑",
+          "place": {
+            "name": "애니메이트 나고야 PARCO점",
+            "japaneseName": "アニメイト 名古屋パルコ",
+            "address": "Nagoya PARCO East 4F, 3-29-1 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nagoya%20PARCO%20East%204F%2C%203-29-1%20Sakae%20Nagoya"
+          },
+          "description": "애니메이션 굿즈·피규어, 2026-11-13 확장 재개장",
+          "details": [
+            "애니메이트 나고야 PARCO점에서 최신 애니메이션 공식 굿즈·캐릭터 상품을 확인하세요.",
+            "중고 매장과 달리 신상품 중심이므로 출시된 작품별 코너를 살펴보세요.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "PARCO 동관",
+          "source_url": "https://nagoya.parco.jp/shop/detail/?cd=009990",
+          "card_notes": {
+            "visit_tip": "애니메이트 나고야 PARCO점에서 최신 애니메이션 공식 굿즈·캐릭터 상품을 확인하세요.",
+            "transport": "PARCO 동관",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s19",
+          "start": "17:05",
+          "end": "17:15",
+          "title": "PARCO 서관 8F 이동",
+          "category": "이동",
+          "place": {
+            "name": "ONE PIECE 무기와라 스토어 나고야점",
+            "japaneseName": "ONE PIECE 麦わらストア 名古屋店",
+            "address": "Nagoya PARCO West 8F, 3-29-1 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nagoya%20PARCO%20West%208F%2C%203-29-1%20Sakae%20Nagoya"
+          },
+          "description": "동관→서관 건물 이동·엘리베이터",
+          "details": [
+            "ONE PIECE 무기와라 스토어 나고야점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보 5~10분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 5~10분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "ONE PIECE 무기와라 스토어 나고야점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보 5~10분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s20",
+          "start": "17:15",
+          "end": "17:35",
+          "title": "ONE PIECE 무기와라 스토어 나고야점",
+          "category": "쇼핑",
+          "place": {
+            "name": "ONE PIECE 무기와라 스토어 나고야점",
+            "japaneseName": "ONE PIECE 麦わらストア 名古屋店",
+            "address": "Nagoya PARCO West 8F, 3-29-1 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nagoya%20PARCO%20West%208F%2C%203-29-1%20Sakae%20Nagoya"
+          },
+          "description": "원피스 공식 굿즈 전문점, 서관 8F",
+          "details": [
+            "ONE PIECE 무기와라 스토어에서 원피스 공식 캐릭터 굿즈를 구경하세요.",
+            "피규어뿐 아니라 키링·문구·기념상품도 비교하고, 다음 팝업 일정까지 시간을 확인하세요.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "같은 층",
+          "source_url": "https://nagoya.parco.jp/shop/detail/?cd=031218",
+          "card_notes": {
+            "visit_tip": "ONE PIECE 무기와라 스토어에서 원피스 공식 캐릭터 굿즈를 구경하세요.",
+            "transport": "같은 층",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s21",
+          "start": "17:35",
+          "end": "17:45",
+          "title": "서관 → 남관 10F 이동",
+          "category": "이동",
+          "place": {
+            "name": "나의 히어로 아카데미아 10주년 × bones store POP UP",
+            "japaneseName": "僕のヒーローアカデミア10周年 × bones store POP UP",
+            "address": "Nagoya PARCO South 10F, 3-29-1 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nagoya%20PARCO%20South%2010F%2C%203-29-1%20Sakae%20Nagoya"
+          },
+          "description": "PARCO 건물 간 이동·엘리베이터",
+          "details": [
+            "나의 히어로 아카데미아 10주년 × bones store POP UP 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보 5~10분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보 5~10분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "나의 히어로 아카데미아 10주년 × bones store POP UP 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보 5~10분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s22",
+          "start": "17:45",
+          "end": "18:05",
+          "title": "나히아 10주년 × bones store POP UP",
+          "category": "관광",
+          "place": {
+            "name": "나의 히어로 아카데미아 10주년 × bones store POP UP",
+            "japaneseName": "僕のヒーローアカデミア10周年 × bones store POP UP",
+            "address": "Nagoya PARCO South 10F, 3-29-1 Sakae Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Nagoya%20PARCO%20South%2010F%2C%203-29-1%20Sakae%20Nagoya"
+          },
+          "description": "2026-12-05~20 개최. 무료, 혼잡 시 입장 제한·정리권 가능",
+          "details": [
+            "나의 히어로 아카데미아 10주년 × bones store 팝업을 방문하는 기간 한정 일정입니다.",
+            "2026년 12월 5~20일 개최 안내 기준이며, 혼잡 시 정리권·입장 제한이 있을 수 있습니다. 당일 운영 공지를 확인하세요.",
+            "사진 촬영·동선 확인 시간을 포함합니다. 입장 및 통제 안내는 현장에서 확인하세요.",
+            "예약 안내: 혼잡 시 현장 정리권. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "혼잡 시 현장 정리권",
+            "status": "미확정"
+          },
+          "transport_from_previous": "남관 10F",
+          "source_url": "https://nagoya.parco.jp/event/detail/?id=38619",
+          "card_notes": {
+            "visit_tip": "나의 히어로 아카데미아 10주년 × bones store 팝업을 방문하는 기간 한정 일정입니다.",
+            "transport": "남관 10F",
+            "reservation_requirement": "혼잡 시 현장 정리권"
+          }
+        },
+        {
+          "id": "s23",
+          "start": "18:05",
+          "end": "18:40",
+          "title": "PARCO → 이부시긴 후시미점 이동",
+          "category": "이동",
+          "place": {
+            "name": "로바타야키 이부시긴 후시미점",
+            "japaneseName": "炉端焼き 燻銀 伏見店",
+            "address": "Fushimi Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Fushimi%20Nagoya"
+          },
+          "description": "후시미 방향으로 도보·필요 시 지하철; 18:40 도착 목표",
+          "details": [
+            "로바타야키 이부시긴 후시미점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 도보/지하철 약 25~35분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보/지하철 약 25~35분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "로바타야키 이부시긴 후시미점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "도보/지하철 약 25~35분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "s24",
+          "start": "18:40",
+          "end": "20:55",
+          "title": "이부시긴 후시미점 로바타야키·사케",
+          "category": "식사",
+          "place": {
+            "name": "로바타야키 이부시긴 후시미점",
+            "japaneseName": "炉端焼き 燻銀 伏見店",
+            "address": "Fushimi Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Fushimi%20Nagoya"
+          },
+          "description": "토요일 겨울 이자카야 메인. J-POP 재생은 확인 불가",
+          "details": [
+            "숯불구이 로바타야키와 따뜻한 사케를 즐기는 토요일 밤의 메인 경험입니다.",
+            "카운터석을 선호하면 예약 시 요청하세요. 잔잔한 J-POP 재생은 확인된 사실이 아니므로 보장하지 않습니다.",
+            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요.",
+            "예약 안내: 예약 권장. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "예약 권장",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "https://ibushigin-fushimi.com/",
+          "card_notes": {
+            "visit_tip": "숯불구이 로바타야키와 따뜻한 사케를 즐기는 토요일 밤의 메인 경험입니다.",
+            "transport": "도보",
+            "reservation_requirement": "예약 권장"
+          }
+        },
+        {
+          "id": "s25",
+          "start": "20:55",
+          "end": "21:35",
+          "title": "후시미 밤거리·호텔 복귀",
+          "category": "산책",
+          "place": {
+            "name": "니시테츠 호텔 크룸 나고야",
+            "japaneseName": "西鉄ホテル クルーム名古屋",
+            "address": "3-4-3 Nishiki Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-4-3%20Nishiki%20Nagoya"
+          },
+          "description": "일요일 이른 출발을 위해 21:35 귀가 목표. 2차는 의무 일정이 아님",
+          "details": [
+            "니시테츠 호텔 크룸 나고야에서 일요일 이른 출발을 위해 21:35 귀가 목표. 2차는 의무 일정이 아님.",
+            "사진·휴식을 포함해 천천히 걷고 날씨가 나쁘면 실내 또는 이동 동선으로 단축하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보/지하철",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "니시테츠 호텔 크룸 나고야에서 일요일 이른 출발을 위해 21:35 귀가 목표. 2차는 의무 일정이 아님.",
+            "transport": "도보/지하철",
+            "reservation_requirement": "불필요"
+          }
+        }
+      ]
+    },
+    {
+      "date": "2026-12-13",
+      "weekday": "일요일",
+      "title": "2안 · 나바나노사토 일루미네이션 · 히츠마부시",
+      "summary": "JR 나고야역 11시 히츠마부시, 15:01 긴테쓰 급행→15:35 버스→겨울 일루미네이션→20:10 버스 복귀",
+      "note": "공식 2026-12-13 운영 10~22시, 15:01→15:18 긴테쓰 임시정차 급행, 15:35 버스·20:10 복귀버스 기반. 나고야역 점심 대기는 12:15까지 종료 목표.",
+      "events": [
+        {
+          "id": "b01",
+          "start": "09:00",
+          "end": "10:15",
+          "title": "호텔 조식·늦은 시작",
+          "category": "식사",
+          "place": {
+            "name": "니시테츠 호텔 크룸 나고야",
+            "japaneseName": "西鉄ホテル クルーム名古屋",
+            "address": "3-4-3 Nishiki, Naka Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-4-3%20Nishiki%2C%20Naka%20Nagoya"
+          },
+          "description": "전날 쇼핑·이자카야 후 휴식",
+          "details": [
+            "니시테츠 호텔 크룸 나고야에서 식사하거나 휴식하는 일정입니다. 전날 쇼핑·이자카야 후 휴식",
+            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "호텔",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "니시테츠 호텔 크룸 나고야에서 식사하거나 휴식하는 일정입니다. 전날 쇼핑·이자카야 후 휴식",
+            "transport": "호텔",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "b02",
+          "start": "10:15",
+          "end": "11:00",
+          "title": "호텔 → JR 나고야역 이동",
+          "category": "이동",
+          "place": {
+            "name": "긴테쓰 나고야역",
+            "japaneseName": "近鉄名古屋駅",
+            "address": "Kintetsu Nagoya Station Japan",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Kintetsu%20Nagoya%20Station%20Japan"
+          },
+          "description": "사쿠라도리선 나고야역 이동 및 식당 방향 보행",
+          "details": [
+            "긴테쓰 나고야역 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 지하철+도보 25~40분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "지하철+도보 25~40분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "긴테쓰 나고야역 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "지하철+도보 25~40분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "b03",
+          "start": "11:00",
+          "end": "12:15",
+          "title": "마루야 본점 JR 나고야역점 히츠마부시 점심",
+          "category": "식사",
+          "place": {
+            "name": "마루야 본점 JR 나고야역점",
+            "japaneseName": "まるや本店 JR名古屋駅店",
+            "address": "1-1-4 Meieki Nakamura Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=1-1-4%20Meieki%20Nakamura%20Nagoya"
+          },
+          "description": "나고야 대표 장어덮밥. 일요일 대기를 위해 75분 반영",
+          "details": [
+            "마루야 본점 JR 나고야역점에서 식사하거나 휴식하는 일정입니다. 나고야 대표 장어덮밥. 일요일 대기를 위해 75분 반영",
+            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요.",
+            "예약 안내: 현장 대기/예약 정책 확인. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "현장 대기/예약 정책 확인",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "https://www.maruya-honten.com/shop/",
+          "card_notes": {
+            "visit_tip": "마루야 본점 JR 나고야역점에서 식사하거나 휴식하는 일정입니다. 나고야 대표 장어덮밥. 일요일 대기를 위해 75분 반영",
+            "transport": "도보",
+            "reservation_requirement": "현장 대기/예약 정책 확인"
+          }
+        },
+        {
+          "id": "b04",
+          "start": "12:15",
+          "end": "12:45",
+          "title": "나고야역 식품관·기념품 구경",
+          "category": "쇼핑",
+          "place": {
+            "name": "긴테쓰 나고야역",
+            "japaneseName": "近鉄名古屋駅",
+            "address": "Kintetsu Nagoya Station Japan",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Kintetsu%20Nagoya%20Station%20Japan"
+          },
+          "description": "귀국일에는 쇼핑하지 않으므로 기념품을 미리 구매",
+          "details": [
+            "긴테쓰 나고야역에서 귀국일에는 쇼핑하지 않으므로 기념품을 미리 구매.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "긴테쓰 나고야역에서 귀국일에는 쇼핑하지 않으므로 기념품을 미리 구매.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "b05",
+          "start": "12:45",
+          "end": "13:30",
+          "title": "JR 게이트타워/역내 커피·따뜻한 휴식",
+          "category": "휴식",
+          "place": {
+            "name": "긴테쓰 나고야역",
+            "japaneseName": "近鉄名古屋駅",
+            "address": "Kintetsu Nagoya Station Japan",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Kintetsu%20Nagoya%20Station%20Japan"
+          },
+          "description": "열차 이동 전 30~45분 휴식, 점심 지연 시 흡수",
+          "details": [
+            "긴테쓰 나고야역에서 쉬거나 짐과 준비물을 정리하는 시간입니다. 열차 이동 전 30~45분 휴식, 점심 지연 시 흡수",
+            "체력 회복이 목적이므로 불필요한 추가 이동은 하지 않습니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "긴테쓰 나고야역에서 쉬거나 짐과 준비물을 정리하는 시간입니다. 열차 이동 전 30~45분 휴식, 점심 지연 시 흡수",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "b05b",
+          "start": "13:30",
+          "end": "14:20",
+          "title": "하ンズ 나고야점 (JR 나고야 다카시마야 5~10F)",
+          "category": "쇼핑",
+          "place": {
+            "name": "하ンズ 나고야점",
+            "japaneseName": "ハンズ 名古屋店",
+            "address": "1-1-4 Meieki Nakamura Nagoya JR Takashimaya 5F-10F",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=ハンズ名古屋店"
+          },
+          "description": "일본 문구·생활 잡화 50분. 2027-01-11 폐점 예정, 2026-12-13 방문은 영업 기간에 해당.",
+          "details": [
+            "하ンズ 나고야점에서 일본 문구·생활 잡화 50분. 2027-01-11 폐점 예정, 2026-12-13 방문은 영업 기간에 해당.",
+            "매장별 방문시간은 약 15~30분을 기준으로 하며, 관심 상품이 있으면 피팅·가격 비교 시간을 활용하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "JR역 내부 도보 및 엘리베이터 이동",
+          "source_url": "https://nagoya.hands.net/access/index.html",
+          "card_notes": {
+            "visit_tip": "하ンズ 나고야점에서 일본 문구·생활 잡화 50분. 2027-01-11 폐점 예정, 2026-12-13 방문은 영업 기간에 해당.",
+            "transport": "JR역 내부 도보 및 엘리베이터 이동",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "b06",
+          "start": "14:20",
+          "end": "15:01",
+          "title": "하ンズ → 긴테쓰 나고야역·승강장 이동",
+          "category": "이동",
+          "place": {
+            "name": "긴테쓰 나고야역",
+            "japaneseName": "近鉄名古屋駅",
+            "address": "Kintetsu Nagoya Station Japan",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Kintetsu%20Nagoya%20Station%20Japan"
+          },
+          "description": "14:20 쇼핑 종료, 15:01 급행 탑승 전에 승강장까지 이동. 최소 20분 이동·발권 여유 확보",
+          "details": [
+            "시간 여유는 지연 버퍼이며 불필요한 장시간 대기 강제 아님. 14:20까지 근처 지하상가 구경 가능.",
+            "이동 안내: 다카시마야 내부 → 긴테쓰 나고야역 도보 15~25분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "다카시마야 내부 → 긴테쓰 나고야역 도보 15~25분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "시간 여유는 지연 버퍼이며 불필요한 장시간 대기 강제 아님. 14:20까지 근처 지하상가 구경 가능.",
+            "transport": "다카시마야 내부 → 긴테쓰 나고야역 도보 15~25분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "b07",
+          "start": "15:01",
+          "end": "15:18",
+          "title": "긴테쓰 나고야 → 긴테쓰 나가시마",
+          "category": "이동",
+          "place": {
+            "name": "긴테쓰 나가시마역",
+            "japaneseName": "近鉄長島駅",
+            "address": "Kintetsu Nagashima Station, Kuwana Mie Japan",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Kintetsu%20Nagashima%20Station%2C%20Kuwana%20Mie%20Japan"
+          },
+          "description": "12/13 일요일 임시 정차 급행 15:01→15:18 공식 시간표 확인",
+          "details": [
+            "긴테쓰 나가시마역 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 긴테쓰 급행.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "긴테쓰 급행",
+          "source_url": "https://www.kintetsu.co.jp/railway/Dia/dia_nabana_20261017.html",
+          "card_notes": {
+            "visit_tip": "긴테쓰 나가시마역 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "긴테쓰 급행",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "b08",
+          "start": "15:18",
+          "end": "15:50",
+          "title": "긴테쓰 나가시마역 → 나바나노사토",
+          "category": "이동",
+          "place": {
+            "name": "나바나노사토",
+            "japaneseName": "なばなの里",
+            "address": "270 Komae Urushibata Nagashimacho Kuwana Mie Japan",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=270%20Komae%20Urushibata%20Nagashimacho%20Kuwana%20Mie%20Japan"
+          },
+          "description": "버스 15:35, 약 10분. 매표·입장까지 여유",
+          "details": [
+            "나바나노사토 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 역 앞 직통버스 15:35.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "역 앞 직통버스 15:35",
+          "source_url": "https://www.sanco.co.jp/shuttle_20261001/",
+          "card_notes": {
+            "visit_tip": "나바나노사토 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "역 앞 직통버스 15:35",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "b09",
+          "start": "15:50",
+          "end": "16:35",
+          "title": "나바나노사토 정원·점등 전 사진",
+          "category": "관광",
+          "place": {
+            "name": "나바나노사토",
+            "japaneseName": "なばなの里",
+            "address": "270 Komae Urushibata Nagashimacho Kuwana Mie Japan",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=270%20Komae%20Urushibata%20Nagashimacho%20Kuwana%20Mie%20Japan"
+          },
+          "description": "일몰 전 정원·꽃밭 및 빛의 터널 동선 준비",
+          "details": [
+            "나바나노사토에서 일몰 전 정원·꽃밭 및 빛의 터널 동선 준비.",
+            "사진 촬영·동선 확인 시간을 포함합니다. 입장 및 통제 안내는 현장에서 확인하세요.",
+            "예약 안내: 입장권 사전 구매 권장. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "입장권 사전 구매 권장",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "나바나노사토에서 일몰 전 정원·꽃밭 및 빛의 터널 동선 준비.",
+            "transport": "도보",
+            "reservation_requirement": "입장권 사전 구매 권장"
+          }
+        },
+        {
+          "id": "b10",
+          "start": "16:35",
+          "end": "17:25",
+          "title": "나바나노사토 일루미네이션 · 수상 조명",
+          "category": "관광",
+          "place": {
+            "name": "나바나노사토",
+            "japaneseName": "なばなの里",
+            "address": "270 Komae Urushibata Nagashimacho Kuwana Mie Japan",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=270%20Komae%20Urushibata%20Nagashimacho%20Kuwana%20Mie%20Japan"
+          },
+          "description": "일몰 전후 점등 시간대, 해당 날짜 점등시각 공식 확인 필요",
+          "details": [
+            "나바나노사토에서 일몰 전후 점등 시간대, 해당 날짜 점등시각 공식 확인 필요.",
+            "사진 촬영·동선 확인 시간을 포함합니다. 입장 및 통제 안내는 현장에서 확인하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "나바나노사토에서 일몰 전후 점등 시간대, 해당 날짜 점등시각 공식 확인 필요.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "b11",
+          "start": "17:25",
+          "end": "18:40",
+          "title": "빛의 터널·메인 일루미네이션",
+          "category": "관광",
+          "place": {
+            "name": "나바나노사토",
+            "japaneseName": "なばなの里",
+            "address": "270 Komae Urushibata Nagashimacho Kuwana Mie Japan",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=270%20Komae%20Urushibata%20Nagashimacho%20Kuwana%20Mie%20Japan"
+          },
+          "description": "사진 1시간 이상 확보, 혼잡 시 우회",
+          "details": [
+            "나바나노사토에서 사진 1시간 이상 확보, 혼잡 시 우회.",
+            "사진 촬영·동선 확인 시간을 포함합니다. 입장 및 통제 안내는 현장에서 확인하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "나바나노사토에서 사진 1시간 이상 확보, 혼잡 시 우회.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "b12",
+          "start": "18:40",
+          "end": "19:30",
+          "title": "나가시마 비어가든 저녁",
+          "category": "식사",
+          "place": {
+            "name": "나바나노사토",
+            "japaneseName": "なばなの里",
+            "address": "270 Komae Urushibata Nagashimacho Kuwana Mie Japan",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=270%20Komae%20Urushibata%20Nagashimacho%20Kuwana%20Mie%20Japan"
+          },
+          "description": "원내 특정 식당. 해당 날짜 영업은 출발 전 확인",
+          "details": [
+            "나바나노사토에서 식사하거나 휴식하는 일정입니다. 원내 특정 식당. 해당 날짜 영업은 출발 전 확인",
+            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요.",
+            "예약 안내: 인원·식당별 예약 조건 확인. 실제 예약 완료 여부는 이 일정에 포함되어 있지 않으며 사용자가 앱에서 기록합니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "인원·식당별 예약 조건 확인",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "나바나노사토에서 식사하거나 휴식하는 일정입니다. 원내 특정 식당. 해당 날짜 영업은 출발 전 확인",
+            "transport": "도보",
+            "reservation_requirement": "인원·식당별 예약 조건 확인"
+          }
+        },
+        {
+          "id": "b13",
+          "start": "19:30",
+          "end": "20:10",
+          "title": "겨울 빛의 정원 마지막 산책·출구",
+          "category": "산책",
+          "place": {
+            "name": "나바나노사토",
+            "japaneseName": "なばなの里",
+            "address": "270 Komae Urushibata Nagashimacho Kuwana Mie Japan",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=270%20Komae%20Urushibata%20Nagashimacho%20Kuwana%20Mie%20Japan"
+          },
+          "description": "돌아갈 버스 승강장으로 20시경 이동",
+          "details": [
+            "나바나노사토에서 돌아갈 버스 승강장으로 20시경 이동.",
+            "사진·휴식을 포함해 천천히 걷고 날씨가 나쁘면 실내 또는 이동 동선으로 단축하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "도보",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "나바나노사토에서 돌아갈 버스 승강장으로 20시경 이동.",
+            "transport": "도보",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "b14",
+          "start": "20:10",
+          "end": "20:35",
+          "title": "나바나노사토 → 긴테쓰 나가시마역",
+          "category": "이동",
+          "place": {
+            "name": "긴테쓰 나가시마역",
+            "japaneseName": "近鉄長島駅",
+            "address": "Kintetsu Nagashima Station, Kuwana Mie Japan",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=Kintetsu%20Nagashima%20Station%2C%20Kuwana%20Mie%20Japan"
+          },
+          "description": "20:10 주말 출발 직통버스 목표",
+          "details": [
+            "긴테쓰 나가시마역 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 직통버스 약 10분+역 이동.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "직통버스 약 10분+역 이동",
+          "source_url": "https://www.sanco.co.jp/shuttle_20261001/",
+          "card_notes": {
+            "visit_tip": "긴테쓰 나가시마역 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "직통버스 약 10분+역 이동",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "b15",
+          "start": "20:35",
+          "end": "21:25",
+          "title": "긴테쓰 나가시마역 → 나고야역 → 호텔",
+          "category": "이동",
+          "place": {
+            "name": "니시테츠 호텔 크룸 나고야",
+            "japaneseName": "西鉄ホテル クルーム名古屋",
+            "address": "3-4-3 Nishiki, Naka Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-4-3%20Nishiki%2C%20Naka%20Nagoya"
+          },
+          "description": "연결 열차 승차 후 사쿠라도리선/메이조선으로 숙소, 정확한 연결편은 당일 확인",
+          "details": [
+            "니시테츠 호텔 크룸 나고야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "이동 안내: 긴테쓰+지하철+도보 45~60분.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "긴테쓰+지하철+도보 45~60분",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "니시테츠 호텔 크룸 나고야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "긴테쓰+지하철+도보 45~60분",
+            "reservation_requirement": "불필요"
+          }
+        },
+        {
+          "id": "b16",
+          "start": "21:25",
+          "end": "22:00",
+          "title": "호텔에서 마무리·짐 정리",
+          "category": "휴식",
+          "place": {
+            "name": "니시테츠 호텔 크룸 나고야",
+            "japaneseName": "西鉄ホテル クルーム名古屋",
+            "address": "3-4-3 Nishiki, Naka Nagoya",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=3-4-3%20Nishiki%2C%20Naka%20Nagoya"
+          },
+          "description": "다음 날 귀국 준비",
+          "details": [
+            "니시테츠 호텔 크룸 나고야에서 쉬거나 짐과 준비물을 정리하는 시간입니다. 다음 날 귀국 준비",
+            "체력 회복이 목적이므로 불필요한 추가 이동은 하지 않습니다."
+          ],
+          "optional": false,
+          "reservation": {
+            "requirement": "불필요",
+            "status": "미확정"
+          },
+          "transport_from_previous": "호텔",
+          "source_url": "",
+          "card_notes": {
+            "visit_tip": "니시테츠 호텔 크룸 나고야에서 쉬거나 짐과 준비물을 정리하는 시간입니다. 다음 날 귀국 준비",
+            "transport": "호텔",
+            "reservation_requirement": "불필요"
+          }
+        }
+      ],
+      "alternatives": [
+        {
+          "id": "sunday-illumination",
+          "title": "게로 예약 불가 시: 나바나노사토 일루미네이션",
+          "conditions": "게로 대절탕 미예약 또는 특급 운행 불안정 시",
+          "events": [
+            {
+              "start": "10:30",
+              "end": "12:00",
+              "title": "느긋한 호텔 아침·휴식"
+            },
+            {
+              "start": "12:00",
+              "end": "14:30",
+              "title": "나고야 시내 자유시간 및 점심"
+            },
+            {
+              "start": "14:30",
+              "end": "16:00",
+              "title": "긴테쓰 나고야역 → 긴테쓰 나가시마역 → 미에 교통 버스 / 나바나노사토"
+            },
+            {
+              "start": "16:00",
+              "end": "19:15",
+              "title": "나바나노사토 꽃 정원·겨울 일루미네이션"
+            },
+            {
+              "start": "19:15",
+              "end": "20:45",
+              "title": "버스·긴테쓰로 나고야 귀환"
+            },
+            {
+              "start": "21:00",
+              "end": "22:00",
+              "title": "숙소 인근 가벼운 식사(선택)"
+            }
+          ],
+          "fare": "11/21~12/22 입장권 사전편의점 1인 3,000엔 (1,000엔 쿠폰 포함); 긴테쓰 명古屋 출발 열차·버스 세트권 특定日 종류 별도 확인",
+          "booking": "https://www.nagashima-onsen.co.jp/nabana/illumination/fee/index.html"
+        }
+      ]
+    },
+    {
+      "date": "2026-12-14",
+      "weekday": "월요일",
+      "title": "케시키 텐무스 · 체크아웃 · 공항",
+      "summary": "아침 텐무스 후 호텔 복귀, 체크아웃하고 가나야마에서 공항철도 환승.",
+      "note": "17:50 출국 기준 공항 터미널 14:50 이전 도착. 기본 11시 체크아웃 후 공항 일찍 도착은 안전하지만 여유 과다일 수 있으므로 12시 체크아웃 연장 혜택 확인.",
+      "events": [
+        {
+          "id": "d5-morningtransfer",
+          "start": "09:00",
+          "end": "09:25",
+          "title": "호텔 → 케시키",
+          "category": "이동",
+          "place": {
+            "name": "텐무스도코로 케시키 나고야 본점",
+            "japaneseName": "天むす処けしき. 名古屋本店",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A9%E3%82%80%E3%81%99%E5%87%A6%E3%81%91%E3%81%97%E3%81%8D.%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E6%9C%AC%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E6%9D%91%E5%8C%BA%E9%82%A3%E5%8F%A4%E9%87%8E1-46-12%20%E5%B0%8F%E9%B3%A5%E3%83%93%E3%83%AB1F"
+          },
+          "description": "가볍게 도보 또는 국제센터역 활용",
+          "details": [
+            "텐무스도코로 케시키 나고야 본점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "card_notes": {
+            "visit_tip": "텐무스도코로 케시키 나고야 본점 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "전후 일정과 위치를 확인하고 이동",
+            "reservation_requirement": "확인된 예약 조건 없음"
+          }
+        },
+        {
+          "id": "d5-keshiki",
+          "start": "09:25",
+          "end": "10:05",
+          "title": "케시키 텐무스 모닝",
+          "category": "식사",
+          "place": {
+            "name": "텐무스도코로 케시키 나고야 본점",
+            "japaneseName": "天むす処けしき. 名古屋本店",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A9%E3%82%80%E3%81%99%E5%87%A6%E3%81%91%E3%81%97%E3%81%8D.%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E6%9C%AC%E5%BA%97%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E6%9D%91%E5%8C%BA%E9%82%A3%E5%8F%A4%E9%87%8E1-46-12%20%E5%B0%8F%E9%B3%A5%E3%83%93%E3%83%AB1F"
+          },
+          "description": "키시멘은 모닝 메뉴 제공 확인 후에만.",
+          "details": [
+            "새우 텐무스를 중심으로 나고야식 아침을 먹습니다. 키시멘은 모닝 시간 제공 여부를 확인하고 주문하세요.",
+            "케시키의 우선안내와 좌석 예약은 다릅니다. 11시 체크아웃을 위해 10:05 전후 식당을 떠나세요.",
+            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요."
+          ],
+          "optional": false,
+          "card_notes": {
+            "visit_tip": "새우 텐무스를 중심으로 나고야식 아침을 먹습니다. 키시멘은 모닝 시간 제공 여부를 확인하고 주문하세요.",
+            "transport": "전후 일정과 위치를 확인하고 이동",
+            "reservation_requirement": "확인된 예약 조건 없음"
+          }
+        },
+        {
+          "id": "d5-return",
+          "start": "10:05",
+          "end": "10:30",
+          "title": "호텔로 복귀",
+          "category": "이동",
+          "place": {
+            "name": "니시테츠 호텔 크룸 나고야",
+            "japaneseName": "西鉄ホテル クルーム名古屋",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%A5%BF%E9%89%84%E3%83%9B%E3%83%86%E3%83%AB%20%E3%82%AF%E3%83%AB%E3%83%BC%E3%83%A0%E5%90%8D%E5%8F%A4%E5%B1%8B%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E9%8C%A63-4-3"
+          },
+          "description": "캐리어는 객실에 둔 상태",
+          "details": [
+            "니시테츠 호텔 크룸 나고야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "card_notes": {
+            "visit_tip": "니시테츠 호텔 크룸 나고야 방향으로 이동하는 구간입니다. 출발지·도착지와 환승 출입구를 확인하세요.",
+            "transport": "전후 일정과 위치를 확인하고 이동",
+            "reservation_requirement": "확인된 예약 조건 없음"
+          }
+        },
+        {
+          "id": "d5-checkout",
+          "start": "10:30",
+          "end": "11:00",
+          "title": "짐 정리·체크아웃",
+          "category": "휴식",
+          "place": {
+            "name": "니시테츠 호텔 크룸 나고야",
+            "japaneseName": "西鉄ホテル クルーム名古屋",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E8%A5%BF%E9%89%84%E3%83%9B%E3%83%86%E3%83%AB%20%E3%82%AF%E3%83%AB%E3%83%BC%E3%83%A0%E5%90%8D%E5%8F%A4%E5%B1%8B%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E5%B8%82%E4%B8%AD%E5%8C%BA%E9%8C%A63-4-3"
+          },
+          "description": "11시 퇴실 기준. 12시 연장 가능 시 호텔 휴식 1시간 더 권장.",
+          "details": [
+            "니시테츠 호텔 크룸 나고야에서 쉬거나 짐과 준비물을 정리하는 시간입니다. 11시 퇴실 기준. 12시 연장 가능 시 호텔 휴식 1시간 더 권장.",
+            "체력 회복이 목적이므로 불필요한 추가 이동은 하지 않습니다."
+          ],
+          "optional": false,
+          "card_notes": {
+            "visit_tip": "니시테츠 호텔 크룸 나고야에서 쉬거나 짐과 준비물을 정리하는 시간입니다. 11시 퇴실 기준. 12시 연장 가능 시 호텔 휴식 1시간 더 권장.",
+            "transport": "전후 일정과 위치를 확인하고 이동",
+            "reservation_requirement": "확인된 예약 조건 없음"
+          }
+        },
+        {
+          "id": "d5-airport",
+          "start": "11:00",
+          "end": "12:30",
+          "title": "히사야오도리 → 가나야마 → 센트레아",
+          "category": "이동",
+          "place": {
+            "name": "주부국제공항 센트레아",
+            "japaneseName": "中部国際空港 セントレア",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF%20%E3%82%BB%E3%83%B3%E3%83%88%E3%83%AC%E3%82%A2%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%B8%B8%E6%BB%91%E5%B8%82"
+          },
+          "description": "메이조선 가나야마→메이테츠 공항행. T2면 역에서 추가 도보.",
+          "details": [
+            "12시 체크아웃 연장 가능할 때 출발/도착 1시간 뒤로 조정.",
+            "히사야오도리역에서 메이조선을 타고 가나야마역으로 이동한 뒤 메이테츠 중부국제공항행 열차로 갈아탑니다.",
+            "캐리어를 들고 이동하므로 환승·역 출구·터미널 T1/T2 추가 보행시간을 확보하세요.",
+            "예상 시간에는 도보·대기·횡단보도 시간을 포함하며, 현장 상황에 따라 조정하세요."
+          ],
+          "optional": false,
+          "card_notes": {
+            "visit_tip": "12시 체크아웃 연장 가능할 때 출발/도착 1시간 뒤로 조정.",
+            "transport": "전후 일정과 위치를 확인하고 이동",
+            "reservation_requirement": "확인된 예약 조건 없음"
+          }
+        },
+        {
+          "id": "d5-lunch",
+          "start": "12:30",
+          "end": "14:50",
+          "title": "센트레아 도착·플라이트 오브 드림즈 견학 / 점심",
+          "category": "식사",
+          "place": {
+            "name": "주부국제공항 센트레아",
+            "japaneseName": "中部国際空港 セントレア",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF%20%E3%82%BB%E3%83%B3%E3%83%88%E3%83%AC%E3%82%A2%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%B8%B8%E6%BB%91%E5%B8%82"
+          },
+          "description": "12:30 도착 후 터미널·위탁수하물 처리 가능 여부 확인, 플라이트 오브 드림즈 무료 B787 전시 30~40분과 점심 식사. T2 연계가 편리하지만 T1 출발이면 왕복 보행 고려.",
+          "details": [
+            "플라이트 오브 드림즈 플라이트 파크 10:00~17:00 무료 입장(일부 유료). 공항역에서 도보 약 5분.",
+            "수하물 처리·공항 터미널 확인을 우선. 14:30 전후 수속 동선 복귀.",
+            "T1 스카이덱은 7:00~21:30, 기상 악화 시 통제 가능. 선택적으로 15~20분.",
+            "센트레아에서 수하물 위탁 가능 여부를 먼저 확인하고, 시간 여유가 있으면 FLIGHT OF DREAMS의 항공기 전시를 보세요.",
+            "식사와 체험보다 항공사 체크인 마감, 보안검색, 출국수속이 우선입니다.",
+            "메뉴·결제수단·마지막 주문 시각은 당일 매장 안내가 우선입니다. 대기가 길면 다음 고정 일정과 비교해 조정하세요."
+          ],
+          "optional": false,
+          "alternatives": [
+            {
+              "name": "센트레아 스카이덱",
+              "url": "https://www.centrair.jp/en/service/sky-deck.html",
+              "optional": true
+            }
+          ],
+          "card_notes": {
+            "visit_tip": "플라이트 오브 드림즈 플라이트 파크 10:00~17:00 무료 입장(일부 유료). 공항역에서 도보 약 5분.",
+            "transport": "전후 일정과 위치를 확인하고 이동",
+            "reservation_requirement": "확인된 예약 조건 없음"
+          }
+        },
+        {
+          "id": "d5-security",
+          "start": "14:50",
+          "end": "16:40",
+          "title": "체크인 및 출국수속",
+          "category": "출국",
+          "place": {
+            "name": "주부국제공항 센트레아",
+            "japaneseName": "中部国際空港 セントレア",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF%20%E3%82%BB%E3%83%B3%E3%83%88%E3%83%AC%E3%82%A2%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%B8%B8%E6%BB%91%E5%B8%82"
+          },
+          "description": "비행기 출발 17:50. 실제 체크인 마감 우선.",
+          "details": [
+            "주부국제공항 센트레아: 비행기 출발 17:50. 실제 체크인 마감 우선.",
+            "시간과 현장 운영 조건을 확인하고 다음 일정으로 이어갑니다."
+          ],
+          "optional": false,
+          "card_notes": {
+            "visit_tip": "주부국제공항 센트레아: 비행기 출발 17:50. 실제 체크인 마감 우선.",
+            "transport": "전후 일정과 위치를 확인하고 이동",
+            "reservation_requirement": "확인된 예약 조건 없음"
+          }
+        },
+        {
+          "id": "d5-flight",
+          "start": "17:50",
+          "end": null,
+          "title": "나고야 출발",
+          "category": "비행",
+          "place": {
+            "name": "주부국제공항 센트레아",
+            "japaneseName": "中部国際空港 セントレア",
+            "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E4%B8%AD%E9%83%A8%E5%9B%BD%E9%9A%9B%E7%A9%BA%E6%B8%AF%20%E3%82%BB%E3%83%B3%E3%83%88%E3%83%AC%E3%82%A2%20%E6%84%9B%E7%9F%A5%E7%9C%8C%E5%B8%B8%E6%BB%91%E5%B8%82"
+          },
+          "description": "주부국제공항 센트레아 방문 및 다음 일정으로 연결",
+          "details": [
+            "17:50은 항공편 출발 예정 시각입니다. 탑승구 마감 시각과 항공사 공지를 우선하세요.",
+            "시간과 현장 운영 조건을 확인하고 다음 일정으로 이어갑니다."
+          ],
+          "optional": false,
+          "card_notes": {
+            "visit_tip": "17:50은 항공편 출발 예정 시각입니다. 탑승구 마감 시각과 항공사 공지를 우선하세요.",
+            "transport": "전후 일정과 위치를 확인하고 이동",
+            "reservation_requirement": "확인된 예약 조건 없음"
+          }
+        }
+      ]
+    }
+  ],
+  "booking_links": {
+    "ogawaya_yuragi_ruri": "https://widgets.bokun.io/online-sales/ac880331-12ac-4f10-a1a8-d91bb48f857b/experience/772200?partialView=1",
+    "ogawaya_yuragi_kasumi": "https://widgets.bokun.io/online-sales/ac880331-12ac-4f10-a1a8-d91bb48f857b/experience/776353?partialView=1",
+    "ogawaya_maintenance": "https://www.gero-ogawaya.net/hotspring/private_bath/",
+    "ibushigin": "https://ibushigin-fushimi.com/",
+    "kitaro": "https://tamasushi.co.jp/blogs/brand/kitaro-jonai",
+    "nabana": "https://www.nagashima-onsen.co.jp/nabana/illumination/fee/index.html"
+  },
+  "verification_notes": [
+    "2026-11-10 official sources reviewed; holidays/temporary closures and inventory may change",
+    "Reservations for eateries/onsen are NOT confirmed by this file",
+    "Music bars: J-POP regular playback has not been independently verified",
+    "Sunday option 1 and option 2 are mutually exclusive",
+    "Do not assume JR Hida seat has been booked",
+    "Shop times used only where official site provided; STUSSY closes 19:00",
+    "Lashinbang 2026 weekend hours source 10:00–20:00; some local directory conflicts",
+    "Nabana bus timetable per 2026-10-01 Mie Kotsu notice; connect trains separately",
+    "금요일·토요일 브랜드/피규어 매장과 일부 2026년 12월 기간한정 팝업은 공식 매장·PARCO·브랜드 페이지로 확인. 예약 가능 여부는 고려하지 않음."
+  ],
+  "shopping_preferences": {
+    "traveler_1": [
+      "BEAMS",
+      "Stüssy",
+      "UNITED ARROWS",
+      "HUF"
+    ],
+    "traveler_2": [
+      "anime figures",
+      "secondhand figures",
+      "anime goods"
+    ],
+    "store_visit_minutes_default": 20,
+    "note": "대형 쇼룸(스루가야 등)은 25~30분 계획. 모든 점포를 의무 방문으로 해석하지 말 것"
+  },
+  "bath_choice": {
+    "recommended": "瑠璃 (Ruri)",
+    "backup": "霞 (Kasumi)",
+    "recommended_date": "2026-12-13",
+    "checkin_target": "12:20",
+    "bath_start": "12:30",
+    "bath_end": "13:15",
+    "price_jpy_per_room": 4400,
+    "party_size": 2,
+    "status": "not applicable for plan B",
+    "rationale": "Ruri: barrel-style tub for distinctive experience; Kasumi: tatami atmosphere",
+    "booking_url_ruri": "https://widgets.bokun.io/online-sales/ac880331-12ac-4f10-a1a8-d91bb48f857b/experience/772200?partialView=1",
+    "booking_url_kasumi": "https://widgets.bokun.io/online-sales/ac880331-12ac-4f10-a1a8-d91bb48f857b/experience/776353?partialView=1"
+  },
+  "izakaya_alternatives": [
+    {
+      "name": "炉端焼き 燻銀 伏見店",
+      "name_ko": "로바타야키 이부시긴 후시미점",
+      "type": "primary dinner",
+      "music": "J-POP BGM not verified",
+      "url": "https://ibushigin-fushimi.com/"
+    },
+    {
+      "name": "炭火焼鳥 しげ 泉店",
+      "name_ko": "숯불 야키토리 시게 이즈미점",
+      "type": "quiet yakitori alternative",
+      "music": "J-POP BGM not verified",
+      "url": "https://www.yakitori-shige-izumi.com/"
+    },
+    {
+      "name": "Music&Bar〜Link〜",
+      "name_ko": "뮤직 앤 바 Link",
+      "type": "music-focused second stop, not a full izakaya",
+      "music": "music-oriented venue verified; J-POP slow playlist not verified",
+      "source": "https://nagoya-meshi.com/recommend/link"
+    }
+  ],
+  "source_urls": {
+    "beams": "https://www.beams.co.jp/shop/bna/",
+    "stussy": "https://www.stussy.com/blogs/chapters/stussy-nagoya",
+    "united_arrows": "https://store.united-arrows.co.jp/brand/ua/stores/ung.html",
+    "mandarake": "https://www.mandarake.co.jp/dir/ngy/",
+    "surugaya": "https://www.suruga-ya.jp/feature/realstore/osu_main/index.html",
+    "volks": "https://hobby.volks.co.jp/shop/sr_nagoya.html",
+    "animate_parco": "https://www.animate.co.jp/shop/sakae/",
+    "nabana": "https://www.nagashima-onsen.co.jp/nabana/illumination/fee/index.html",
+    "nabana_bus": "https://www.sanco.co.jp/shuttle_20261001/",
+    "ogawaya": "https://www.gero-ogawaya.net/hotspring/private_bath/"
+  },
+  "plan_id": "B_NABANA_FULL_20261110",
+  "shopping_candidates": [
+    {
+      "place": "MEDICOM TOY PLUS NAGOYA",
+      "floor": "PARCO 서관 1F",
+      "duration_minutes": 15,
+      "replacement_for": "스루가야 또는 만다라케에서 조기 종료 시",
+      "source": "https://nagoya.parco.jp/shop/detail/?cd=027523"
+    },
+    {
+      "place": "HUF 나고야 PARCO",
+      "floor": "PARCO 서관 6F",
+      "duration_minutes": 15,
+      "replacement_for": "애니메이트·무기와라 중 한 곳 일찍 끝날 때",
+      "source": "https://nagoya.parco.jp/shop/detail/?cd=010571"
+    },
+    {
+      "place": "포켓몬센터 나고야",
+      "floor": "PARCO 동관 2F",
+      "duration_minutes": 15,
+      "replacement_for": "포켓몬 굿즈에 관심 있으면 우선 순위 변경",
+      "source": "https://shop.pokemon.co.jp/ja/shop/pokemoncenter-nagoya/"
+    },
+    {
+      "place": "atmos/BlackEyePatch/FREAK’S STORE",
+      "floor": "금요일 PARCO 서관",
+      "duration_minutes": 15,
+      "replacement_for": "금요일 쇼핑 시간 조정"
+    }
+  ],
+  "reservation_policy": "공실·예약 성공 여부는 일정 확정 판단에서 제외. 예약 필요 또는 권장 여부만 표기. 실제 예약 실행은 여행자가 진행.",
+  "validation_date": "2026-11-10",
+  "notes_on_timing": "시간 블록은 계획용: 도보·지하철 승강장 이동 포함. 실제 지도 경로 및 영업 변동 출발 직전 확인. 상점 20~30분 평균, 방문 순서에 따라 전후 10분 조정."
+}

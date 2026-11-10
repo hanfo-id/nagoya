@@ -5,7 +5,7 @@ const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
  const c=vm.createContext({URL,Response,self:{registration:{scope},location:new URL(scope),addEventListener:(k,fn)=>listeners[k]=fn,clients:{claim:async()=>{}},skipWaiting:()=>{}},caches:{open:async()=>cache,keys:async()=>['nagoya-trip-old','other-app'],delete:async k=>deleted.push(k)},fetch:async request=>{requests.push(request.url);throw Error('offline')}});
  vm.runInContext(fs.readFileSync('sw.js','utf8'),c);
  let pending;listeners.install({waitUntil(p){pending=p}});await pending;
- assert.ok(entries.has(scope+'index.html'));assert.ok(entries.has(scope+'trip-data.js'));assert.ok(![...entries.keys()].some(u=>u.includes('openstreetmap')));
+ assert.ok(entries.has(scope+'index.html'));assert.ok(entries.has(scope+'trip-data.js'));assert.ok(entries.has(scope+'data/itinerary.js'));assert.ok(entries.has(scope+'guide.html'));assert.ok(![...entries.keys()].some(u=>u.includes('openstreetmap')));
  listeners.activate({waitUntil(p){pending=p}});await pending;assert.deepEqual(deleted,['nagoya-trip-old']);
  listeners.fetch({request:{url:scope+'?day=12-12&view=map',method:'GET',mode:'navigate'},respondWith(p){pending=p}});let result=await pending;assert.equal(result.cached,scope);
  listeners.fetch({request:{url:scope+'app.js?v=current',method:'GET',mode:'cors'},respondWith(p){pending=p}});result=await pending;assert.equal(result.cached,scope+'app.js');

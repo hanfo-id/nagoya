@@ -1,21 +1,38 @@
 /* Screen composition. Travel data, stable event IDs and storage remain in trip-state.js. */
-let screenPage='home',routeObserver=null,selectedStopNumber=0,routeFollowAfter=0,inlinePlaceKey='';
-const DAY_NAMES=['도착','사카에','오스와 호텔 휴식','게로 온천','귀국'];
-function areaChoiceItem(id){
- const place=SHOP_GUIDE[id];return `<li data-choice-kind="${choiceCategory(place)}"><details class="area-option" data-area-place="${id}"><summary><span class="choice-category">${esc(place.category)}</span><span class="choice-name"><strong>${esc(place.name)}</strong><small>${esc(place.tag)}</small></span><span class="choice-chevron" aria-hidden="true">›</span></summary><div class="choice-detail"><p lang="ja" class="place-jp">${esc(place.jp)}</p>${infoRows([['영업',esc(place.hours)],['위치',`<span lang="ja">${esc(place.address)}</span>`],['추천 체류',esc(place.minutes)]])}<h4>들르면 할 것</h4><ul class="info-bullets">${place.picks.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><p class="choice-tip">${esc(place.note)}</p><div class="choice-actions">${actionLink(directions(place.query,'walking'),'길찾기','secondary')}${link(place.url,'공식 안내')}${place.extraUrl?link(place.extraUrl,'영업시간'):''}</div><small class="choice-checked">2026.11.06 확인 / 시간·휴무는 방문 전 확인</small></div></details></li>`;
+let screenPage='home',selectedStopNumber=0,routeFollowAfter=0,inlinePlaceKey='';
+function planControls() {
+ return `<div class="plan-switch" role="group" aria-label="12월 13일 일정 선택">${Object.entries(PLAN_LABELS).map(([key,label])=>`<button class="btn btn-secondary" data-plan="${key}" aria-pressed="${state.plan===key}">${label}</button>`).join('')}</div>`;
 }
-function areaChoicesHTML(id,{expanded=false}={}){
- const guide=AREA_GUIDES[id];if(!guide)return '';const preview=guide.places.slice(0,2).map(id=>SHOP_GUIDE[id].short).join(', ')+(guide.places.length>2?' 외 '+(guide.places.length-2)+'곳':'');
- return `<details class="area-choices" data-area-guide="${id}" ${expanded?'open':''}><summary><span><b>${esc(guide.name)}에서 골라보기 <small>${guide.places.length}곳</small></b><span class="area-preview">${esc(preview)}</span></span><span class="choice-chevron" aria-hidden="true">›</span></summary><div class="area-content"><p class="area-intro">${esc(guide.intro)}</p>${areaFiltersHTML(guide)}<ul class="area-option-list">${guide.places.map(areaChoiceItem).join('')}</ul></div></details>`;
-}
-function stopDescription(p){return placeIntro(p)}
+function eventSlot(e){return e.time+(e.end?'–'+e.end:'')}
+function stopDescription(p){return EVENTS_BY_ID.get(p.eventId).desc}
 function stopKey(p){return p.id+'|'+p.eventIds.join(',')}
 function stopDetailAttributes(p){return `data-place-detail="${p.eventId}" data-detail-number="${p.number}" aria-expanded="${inlinePlaceKey===stopKey(p)}"`}
-function pointTime(p,i=active){const actual=baseEvents(i).filter(e=>p.eventIds.includes(e.id)).map(confirmedTime).find(Boolean);return actual?actual+' 확정':p.time+(p.eventIds.length>1?'부터':'')}
+function pointTime(p){return eventSlot(p)}
 function routeDayHTML(i){
- const points=numberedPlaces(i),events=getVisibleEvents(state,i),done=baseEvents(i).filter(e=>eventStatus(e)==='done').length;
- const rows=points.map(p=>{const e=events.find(e=>e.id===p.eventId),r=restaurants.find(r=>r.id===e?.food);return `<li id="mapstop-${p.number}" class="route-item ${p.status==='skipped'?'is-skipped':''}"><button class="route-place" data-pin="${p.number}" aria-pressed="false"><span class="route-number">${p.number}</span><span class="route-copy"><span class="route-time">${esc(pointTime(p,i))}${p.optional?' / 선택':''}${p.status!=='planned'?' / '+EVENT_STATUS[p.status]:''}</span><strong>${esc(p.name)}</strong><small>${esc(stopDescription(p))}</small></span></button><button class="route-more" ${stopDetailAttributes(p)} aria-label="${esc(p.name)} 상세 보기">${inlinePlaceKey===stopKey(p)?'접기':'상세'}</button>${inlinePlaceKey===stopKey(p)?`<div class="inline-stop-detail">${placeDetailsHTML(p,i)}</div>`:''}${areaGuideForStop(p)&&state.filters.optional?areaChoicesHTML(p.id):''}</li>`}).join('');
- return `<div class="route-layout"><div class="mapstage"><div id="numberedmap" class="numberedmap" role="region" aria-label="${days[i].date} 번호 핀 지도"></div><div class="mapmodes"><button data-mapextent="all" aria-pressed="true">전체</button><button data-mapextent="city" aria-pressed="false">시내</button>${i===EXCURSION_DAY?'<button data-mapextent="gero" aria-pressed="false">게로</button>':''}</div><p id="maploadstatus" role="status"></p><span id="selectedmapplace" class="sr-only" tabindex="-1">장소를 선택하세요</span><span id="mapcaption" class="sr-only"></span><span class="mapfallbackroutes" hidden></span></div><div class="route-sheet"><button type="button" class="sheet-handle" aria-label="일정 펼치기" aria-expanded="false"><span aria-hidden="true"></span></button><div id="route-tabs-slot"></div><div class="route-day-head"><h2>${days[i].date} ${days[i].dow} <span>${DAY_NAMES[i]}</span></h2><small>완료 ${done}/${baseEvents(i).length}</small></div><div id="route-filters-slot"></div><div class="route-scroll" tabindex="0" aria-label="방문 순서">${i===EXCURSION_DAY?`<details class="route-options"><summary>게로 온천 · 히다 왕복과 12:30 대절탕</summary><p>가는 편 나고야 08:43 → 게로 10:14 / 돌아오는 편 게로 15:32 → 나고야 17:05. 12/13 운행과 지정석 확인.</p><p>오가와야 별관 유라기 45분, 2인 기준 기본 ¥4,400/실, 고하쿠 ¥4,950. 12:30은 예약 목표 시각입니다.</p><div class="compactlinks">${link(GERO_LINKS.rail,'히다 지정석 안내')}${link(GERO_LINKS.bath,'오가와야 대절탕 예약')}${link(GERO_LINKS.footbaths,'게로 족욕 지도')}</div></details>`:''}<ol class="route-list">${rows||'<li class="empty">이 조건에 맞는 일정이 없습니다.</li>'}</ol><details class="route-options"><summary>일정 변경·하루 안내</summary><p>${esc(days[i].note)}</p><p>예상 도보 ${esc(days[i].walk.replace('도보 약 ',''))} / ${esc(days[i].cost)} (쇼핑 제외)</p>${i===0?'<button class="btn btn-secondary" data-adjust="delay">항공 지연 시 밤 일정 생략</button>':''}${i===0?`<label><input id="arrival-ramen-alternative" type="checkbox" ${state.overrides.shishimaruThursday?'checked':''}> 나고야역 시시마루로 첫날 저녁 교체</label>`:''}<button class="btn btn-secondary" data-adjust="essential">선택 방문 제외</button><button class="btn btn-quiet" data-restore-day="${i}">이 날짜 진행 기록 복원</button></details></div><div id="selected-actions" class="selected-actions" aria-live="polite"><span>목록에서 장소를 선택하세요</span></div></div></div>`;
+ const day=dayFor(i),points=numberedPlaces(i),done=day.events.filter(e=>eventStatus(e)==='done').length;
+ const open=points.find(p=>p.eventId===state.selectedEvent&&state.expanded[p.eventId]);
+ inlinePlaceKey=open?stopKey(open):'';
+ const rows=points.map(p=>{
+  const expanded=inlinePlaceKey===stopKey(p),event=EVENTS_BY_ID.get(p.eventId);
+  return `<li id="mapstop-${p.number}" data-event-id="${p.eventId}" class="route-item ${p.status==='skipped'?'is-skipped':''}">
+   <button class="route-place" data-pin="${p.number}" aria-pressed="false"><span class="route-number">${p.number}</span><span class="route-copy">
+    <span class="route-time">${esc(pointTime(p))} / ${esc(p.kind)}${p.optional?' / 선택':''}${p.status!=='planned'?' / '+EVENT_STATUS[p.status]:''}${event.booking?' / '+esc(event.booking.requirement):''}</span>
+    <strong>${esc(p.name)}</strong><small>${esc(stopDescription(p))}</small></span></button>
+   <button class="route-more" ${stopDetailAttributes(p)} aria-label="${esc(event.title)} 상세">${expanded?'접기':'상세'}</button>
+   ${expanded?`<div class="inline-stop-detail">${placeDetailsHTML(p,i)}</div>`:''}</li>`;
+ }).join('');
+ const region=i===SUNDAY?`<button data-mapextent="${state.plan==='A'?'gero':'nabana'}" aria-pressed="false">${state.plan==='A'?'게로':'나바나'}</button>`:'';
+ return `<div class="route-layout"><div class="mapstage"><div id="numberedmap" class="numberedmap" role="region" aria-label="${day.date} 번호 핀 지도"></div>
+  <div class="mapmodes"><button data-mapextent="all" aria-pressed="true">전체</button><button data-mapextent="city" aria-pressed="false">시내</button>${region}</div>
+  <p id="maploadstatus" role="status"></p><span id="selectedmapplace" class="sr-only" tabindex="-1">장소를 선택하세요</span><span id="mapcaption" class="sr-only"></span></div>
+  <div class="route-sheet"><button type="button" class="sheet-handle" aria-label="일정 펼치기" aria-expanded="false"><span aria-hidden="true"></span></button><div id="route-tabs-slot"></div>
+  <div class="route-day-head"><h2>${day.date} ${day.dow} <span>${esc(day.short)}</span></h2><small>완료 ${done}/${day.events.length}</small></div>${planControls()}
+  <div id="route-filters-slot"></div><div class="route-scroll" tabindex="0" aria-label="방문 순서">
+  ${i===SUNDAY?`<details class="route-options"><summary>${esc(day.summary)}</summary><p>${esc(day.note)}</p></details>`:''}
+  <ol class="route-list">${rows||'<li class="empty">이 조건에 맞는 일정이 없습니다.</li>'}</ol><details class="route-options"><summary>일정 변경·하루 안내</summary>
+  ${i!==SUNDAY?`<p>${esc(day.note||day.summary)}</p>`:''}${i===0?'<button class="btn btn-secondary" data-adjust="delay">항공 지연 시 밤 일정 생략</button>':''}
+  <button class="btn btn-secondary" data-adjust="essential">선택 방문 제외</button><button class="btn btn-quiet" data-restore-day="${i}">이 날짜 진행 기록 복원</button></details></div>
+  <div id="selected-actions" class="selected-actions" aria-live="polite"><span>목록에서 장소를 선택하세요</span></div></div></div>`;
 }
 function selectedActions(p){
  const box=document.querySelector('#selected-actions');if(!box)return;
@@ -25,8 +42,8 @@ function selectedActions(p){
 function renderHomeCompact(){
  document.body.classList.toggle('is-travelling',travelPhase()==='during'||state.options.fieldMode);
  const clock=japanClock(),today=dayIndexForDate(clock.date);if(state.selectionMode==='auto'&&today>=0)active=today;
- const e=nextEvent({...state,selectedEvent:''},active,clock).event,p=eventPlace(e),def=e&&reservationFor(e),totals=reservationTotals();
- $('#todaypanel').innerHTML=`<div class="home-title"><h1>나고야 여행</h1><p>2026.12.10 목 – 12.14 월</p></div><div class="home-next"><span>${days[active].date} ${today===active?'오늘의 일정':'선택 일정'}</span><h2>${e?esc(p?.name||e.title):'일정을 모두 마쳤어요'}</h2>${e?`<p>${esc(confirmedTime(e)||e.time)} <span>${esc(e.kind)}</span></p><div class="action-group"><button class="btn btn-primary" data-screen="plan">일정 보기</button></div>`:'<button class="btn btn-primary" data-screen="plan">전체 일정</button>'}</div><div class="home-days">${days.map((d,i)=>`<button data-home-day="${i}" aria-label="${d.date} ${d.dow} ${DAY_NAMES[i]} 일정 열기"><b>${d.date}</b><small>${d.dow[0]}</small></button>`).join('')}</div><div class="home-booking"><button data-screen="food"><strong>식당 찾기</strong><span>추천 메뉴·예약·후기</span><b aria-hidden="true">›</b></button><button data-screen="reservations"><strong>예약 현황</strong><span>확정 ${totals.confirmed} / 확인 필요 ${totals.attention}</span><b aria-hidden="true">›</b></button></div><details class="travel-facts"><summary>항공·호텔 정보</summary><p>입국 12.10 16:50 / 출국 12.14 17:50<br>출국일 공항 도착 목표 12:30 · 늦어도 14:50</p><p>니시테츠 호텔 크룸 나고야<br><span lang="ja">西鉄ホテル クルーム名古屋</span></p>${link(appMap(PLACE.hotel.query),'호텔 Google Maps')}</details>`;
+ const e=nextEvent({...state,selectedEvent:''},active,clock).event,p=eventPlace(e),totals=reservationTotals();
+ $('#todaypanel').innerHTML=`<div class="home-title"><h1>나고야 여행</h1><p>2026.12.10 목 – 12.14 월</p></div><div class="home-next"><span>${days[active].date} ${today===active?'오늘의 일정':'선택 일정'}</span><h2>${e?esc(p?.name||e.title):'일정을 모두 마쳤어요'}</h2>${e?`<p>${esc(confirmedTime(e)||e.time)} <span>${esc(e.kind)}</span></p><div class="action-group"><button class="btn btn-primary" data-screen="plan">일정 보기</button></div>`:'<button class="btn btn-primary" data-screen="plan">전체 일정</button>'}</div><div class="home-days">${daysForPlan(state.plan).map((d,i)=>`<button data-home-day="${i}" aria-label="${d.date} ${d.dow} ${esc(d.short)} 일정 열기"><b>${d.date}</b><small>${d.dow[0]}</small></button>`).join('')}</div>${planControls()}<div class="home-booking"><button data-screen="food"><strong>식당 찾기</strong><span>추천 메뉴·예약·후기</span><b aria-hidden="true">›</b></button><button data-screen="reservations"><strong>예약 현황</strong><span>확정 ${totals.confirmed} / 확인 필요 ${totals.attention}</span><b aria-hidden="true">›</b></button></div><details class="travel-facts"><summary>항공·호텔 정보</summary><p>입국 12.10 16:50 / 출국 12.14 17:50<br>출국일 공항 도착 계획 ${esc(baseEvents(4).find(e=>e.id==='d5-airport').end)}</p><p>니시테츠 호텔 크룸 나고야<br><span lang="ja">西鉄ホテル クルーム名古屋</span></p>${link(appMap(PLACE.hotel.query),'호텔 Google Maps')}</details>`;
 }
 function requestedScreen(){const u=new URL(location.href);return ['home','plan','reservations','prepare','food'].includes(u.searchParams.get('page'))?u.searchParams.get('page'):u.hash==='#reservations'?'reservations':u.hash==='#prepare'?'prepare':u.hash==='#food'?'food':u.searchParams.has('day')||u.searchParams.has('view')||u.hash==='#plan'?'plan':'home'}
 function syncScreen(){
@@ -39,47 +56,88 @@ function syncScreen(){
 }
 function openScreen(page,{push=true}={}){screenPage=page;if(page==='home')renderHome();syncScreen();writeRoute(push);if(page==='plan'){renderDay();requestAnimationFrame(()=>dayMap?.invalidateSize())}window.scrollTo({top:0,behavior:'instant'});document.querySelector('#screen-title').focus({preventScroll:true})}
 function activityHTML(e){return `<li><div><b>${esc(e.time)}${e.end?'–'+esc(e.end):''}</b><span>${esc(e.title)}</span></div><label>진행 상태<select data-event-status="${e.id}" aria-label="${esc(e.title)} 진행 상태">${Object.entries(EVENT_STATUS).map(([key,label])=>`<option value="${key}" ${eventStatus(e)===key?'selected':''}>${label}</option>`).join('')}</select></label></li>`}
-function placeDetailsHTML(point,i){
- const activities=baseEvents(i).filter(e=>point.eventIds.includes(e.id)),e=activities.find(e=>e.id===point.eventId)||activities[0],r=restaurants.find(r=>r.id===e.food),experience=EXPERIENCES[point.id],defs=[...new Set(activities.map(reservationFor).filter(Boolean))].filter(d=>!d.walkin);
- const points=getMapStops(state,i),index=points.findIndex(p=>p.number===point.number&&p.id===point.id),previous=points.slice(0,index).reverse().find(p=>p.status!=='skipped'),next=points.slice(index+1).find(p=>p.status!=='skipped');
- return `<p class="inline-jp" lang="ja">${esc(point.jp)}</p><ul class="activity-list">${activities.map(activityHTML).join('')}</ul>${defs.map(def=>`<div class="inline-reservation">${reservationBadge(def)}${reservationTiming(def)}<button class="btn btn-secondary" data-res-jump="${def.id}">예약 관리</button></div>`).join('')}${experience?`<section class="inline-experience"><h4>이곳에서 할 것</h4><ul class="info-bullets">${experience.do.slice(0,3).map(t=>'<li>'+esc(t)+'</li>').join('')}</ul><details class="inline-section"><summary>사진·관람 팁</summary>${infoRows([...(experience.works?[['관련 작품',esc(experience.works)]]:[]),['사진',esc(experience.photo)],['추천 시간',esc(experience.time)],['짧게 본다면',esc(experience.priority)],['알아두기',esc(experience.note)]])}<p>${link(experience.url,'공식 안내')}</p></details></section>`:''}${r?`<details class="inline-section"><summary>추천 메뉴·영업·예약</summary>${restaurantInformation(r)}${reviewLinks(r)}</details>`:''}<details class="inline-section"><summary>교통·방문 메모</summary>${activities.map(item=>`<section><h4>${esc(item.title)}</h4><p>${esc(item.desc)}</p><ul class="info-bullets">${item.steps.map(t=>'<li>'+esc(t)+'</li>').join('')}</ul></section>`).join('')}</details><details class="inline-section segment-options" data-segment-current="${esc(point.query)}" data-segment-previous="${esc(previous?.query||'')}" data-segment-next="${esc(next?.query||'')}"><summary>이전·다음 장소로 이동</summary><label>출발·도착<select data-route-choice="origin"><option value="current">현재 위치 → ${esc(point.name)}</option>${previous?`<option value="previous">${esc(previous.name)} → ${esc(point.name)}</option>`:''}${next?`<option value="next">${esc(point.name)} → ${esc(next.name)}</option>`:''}</select></label><label>이동 수단<select data-route-choice="mode"><option value="transit">대중교통</option><option value="walking">도보</option></select></label>${actionLink(directions(point.query,'transit'),'경로 열기','secondary').replace('<a ','<a data-segment-link ' )}</details>`;
+function bookingLinks(links){return links.map(([label,url])=>link(url,label)).join('')}
+function detailList(items){return `<ul class="info-bullets">${items.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`}
+function eventInfo(e,{open=false}={}){
+ const point=eventPlace(e),[kind,order,hours,menuSource]=e.meal||[],location=MAP_LOCATIONS[e.placeId];
+ const urls=[...e.booking?.links||[],...VISIT_LINKS[e.id]||[]];
+ const sourceLinks=[...new Set([menuSource,e.source_url].flat().filter(url=>typeof url==='string'&&/^https:\/\//.test(url)))].map(url=>['공식·매장 정보',url]);
+ const visit=e.card_notes?.visit_tip;
+ const isCovered=text=>e.steps.some(step=>step.includes(text)||text.includes(step));
+ const info=[
+  ...(order?[['추천 메뉴',esc(order)]]:[]),
+  ['영업·이용',esc(hours||(e.kind==='이동'?'계획 시각과 운행 안내를 참고하세요.':'방문일 영업시간은 매장·시설 안내에서 확인하세요.'))],
+  ['예약·방문',esc(e.requirement)],
+  ...(point.address?[['위치',`<span lang="ja">${esc(point.address)}</span>`]]:[]),
+  ...(location?.note?[['지도 핀',esc(location.note)]]:[])
+ ];
+ const alternatives=e.id==='s24'?ITINERARY_SOURCE.izakayaAlternatives.slice(1):[];
+ return `<details class="inline-section" ${open?'open':''}><summary>${kind?'추천 메뉴·영업·예약':e.kind==='쇼핑'?'방문 포인트·영업 정보':'방문·이용 정보'}</summary>
+  ${infoRows(info)}<div class="info-links">${bookingLinks([...urls,...sourceLinks.filter(([,url])=>!urls.some(([,other])=>other===url))])}</div>
+  ${alternatives.length?`<h4>선택 대안</h4><ul class="info-bullets">${alternatives.map((item,i)=>`<li>${link(item.url||item.source,item.name_ko)} · ${i===0?'야키토리 저녁 대안':'식사 후 음악 바'}</li>`).join('')}</ul><p>J-POP 재생 여부는 미확인입니다.</p>`:''}</details>
+  <details class="inline-section" open><summary>교통·방문 메모</summary><p class="event-transport">${esc(e.transport)}</p>${detailList(e.steps)}${visit&&!isCovered(visit)?`<p>${esc(visit)}</p>`:''}</details>`;
 }
-function openPlace(id,number){
- const i=eventDayIndex(id);if(i<0)return;const e=baseEvents(i).find(e=>e.id===id);if(!e)return;const points=getMapStops(state,i),point=points.find(p=>p.number===number&&p.eventIds.includes(id))||points.find(p=>p.id===e.placeId&&p.eventIds.includes(id))||points.find(p=>p.eventIds.includes(id));if(!point)return;
- const row=i===active&&screenPage==='plan'?document.querySelector('#mapstop-'+point.number):null;
- if(row){const close=inlinePlaceKey===stopKey(point);document.querySelectorAll('.inline-stop-detail').forEach(n=>n.remove());inlinePlaceKey=close?'':stopKey(point);document.querySelectorAll('.route-more').forEach(b=>{b.textContent='상세';b.setAttribute('aria-expanded','false')});if(!close){const content=document.createElement('div');content.className='inline-stop-detail';content.innerHTML=placeDetailsHTML(point,i);row.querySelector('.route-more').insertAdjacentElement('afterend',content);row.querySelector('.route-more').textContent='접기';row.querySelector('.route-more').setAttribute('aria-expanded','true')}routeFollowAfter=Date.now()+1000;selectedActions(point);styleActions(row);return}
- const restaurant=restaurants.find(r=>r.id===e.food),foodDetails=restaurant&&screenPage==='food'?document.querySelector('#restaurant-'+restaurant.id+' .restaurantdetail'):null;if(foodDetails){foodDetails.open=!foodDetails.open;foodDetails.querySelector('summary').focus({preventScroll:true});return}
- const dialog=$('#place-dialog');dialog.querySelector('.place-body').innerHTML=`<h2 id="place-dialog-title">${esc(point.name)}</h2><p class="place-description">${esc(placeIntro(point))}</p>${placeDetailsHTML(point,i)}`;dialog.querySelector('.place-footer').innerHTML=actionLink(directions(point.query,'transit'),'길찾기','primary');styleActions(dialog);if(!dialog.open)dialog.showModal();dialog.querySelector('.place-body').scrollTop=0;
+function placeDetailsHTML(point,i){
+ const e=EVENTS_BY_ID.get(point.eventId),def=reservationFor(e);
+ const points=getMapStops(state,i),index=points.findIndex(p=>p.eventId===point.eventId);
+ const previous=points.slice(0,index).reverse().find(p=>p.status!=='skipped'),next=points.slice(index+1).find(p=>p.status!=='skipped');
+ return `<p class="inline-jp" lang="ja">${esc(point.jp)}</p><ul class="activity-list">${activityHTML(e)}</ul>
+  ${def?`<div class="inline-reservation">${reservationBadge(def)}${reservationTiming(def)}<button class="btn btn-secondary" data-res-jump="${def.id}">예약 관리</button></div>`:''}
+  ${eventInfo(e)}<details class="inline-section segment-options" data-segment-current="${esc(point.query)}" data-segment-previous="${esc(previous?.query||'')}" data-segment-next="${esc(next?.query||'')}">
+  <summary>이전·다음 장소로 이동</summary><label>출발·도착<select data-route-choice="origin"><option value="current">현재 위치 → ${esc(point.name)}</option>
+  ${previous?`<option value="previous">${esc(previous.name)} → ${esc(point.name)}</option>`:''}${next?`<option value="next">${esc(point.name)} → ${esc(next.name)}</option>`:''}</select></label>
+  <label>이동 수단<select data-route-choice="mode"><option value="transit">대중교통</option><option value="walking">도보</option></select></label>
+  ${actionLink(directions(point.query,'transit'),'경로 열기','secondary').replace('<a ','<a data-segment-link ')}</details>`;
+}
+function openPlace(id,number,{expand=false}={}){
+ const i=eventDayIndex(id);
+ if(i!==active||screenPage!=='plan')return;
+ const point=getMapStops(state,i).find(p=>p.eventId===id&&(!number||p.number===number));
+ if(!point)return;
+ const row=document.querySelector('#mapstop-'+point.number),close=!expand&&inlinePlaceKey===stopKey(point);
+ const old=document.querySelector('.inline-stop-detail')?.closest('[data-event-id]');
+ if(old){state.expanded[old.dataset.eventId]=false;old.querySelector('.inline-stop-detail').remove()}
+ inlinePlaceKey=close?'':stopKey(point);
+ state.expanded[id]=!close;
+ document.querySelectorAll('.route-more').forEach(b=>{b.textContent='상세';b.setAttribute('aria-expanded','false')});
+ if(!close){
+  const content=document.createElement('div'),button=row.querySelector('.route-more');
+  content.className='inline-stop-detail';content.innerHTML=placeDetailsHTML(point,i);
+  button.insertAdjacentElement('afterend',content);button.textContent='접기';button.setAttribute('aria-expanded','true');
+ }
+ routeFollowAfter=Date.now()+1200;selectedActions(point);styleActions(row);persist();
 }
 function initScreens(){
- screenPage=requestedScreen();syncScreen();if(screenPage==='plan')renderDay();
+ screenPage=requestedScreen();syncScreen();
+ if(screenPage==='plan'){
+  const id=state.selectedEvent;
+  renderDay();
+  if(id)showMapSelection({eventId:id});
+ }
  document.addEventListener('click',event=>{
   const t=event.target,page=t.closest('button[data-screen],[data-nav],.brand'),homeDay=t.closest('[data-home-day]'),detail=t.closest('[data-place-detail]');
   if(page){event.preventDefault();event.stopImmediatePropagation();if(page.hasAttribute('data-nav')){const nav=page.dataset.nav;if(nav==='map'||nav==='plan')view='schedule';openScreen(nav==='today'?'home':nav==='map'?'plan':nav)}else openScreen(page.dataset.screen||'home')}
   if(homeDay){event.preventDefault();event.stopImmediatePropagation();active=Number(homeDay.dataset.homeDay);state.selectionMode='manual';state.selectedEvent='';view='schedule';openScreen('plan')}
   if(detail){event.preventDefault();event.stopImmediatePropagation();if(screenPage==='plan')showMapSelection(detail.dataset.detailNumber?{number:Number(detail.dataset.detailNumber)}:{eventId:detail.dataset.placeDetail});openPlace(detail.dataset.placeDetail,Number(detail.dataset.detailNumber)||undefined)}
-  const filter=t.closest('[data-area-filter]');if(filter){const container=filter.closest('.area-content'),kind=filter.dataset.areaFilter;container.querySelectorAll('[data-choice-kind]').forEach(n=>n.hidden=kind!=='all'&&n.dataset.choiceKind!==kind);container.querySelectorAll('[data-area-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===filter)))}
-  const areaSummary=t.closest('.area-choices > summary,.area-option > summary');if(areaSummary&&screenPage==='plan'){const number=Number(areaSummary.closest('.route-item')?.querySelector('[data-pin]')?.dataset.pin);if(number){routeFollowAfter=Date.now()+800;showMapSelection({number,fromScroll:true})}}
-  const restaurant=t.closest('[data-restaurant-detail]');if(restaurant){event.preventDefault();event.stopImmediatePropagation();const e=days.flatMap((_,i)=>baseEvents(i)).find(e=>e.food===restaurant.dataset.restaurantDetail);if(e)openPlace(e.id)}
-  if(t.closest('[data-close-place]'))$('#place-dialog').close();
  },true);
- window.addEventListener('popstate',()=>{$('#place-dialog')?.close();screenPage=requestedScreen();syncScreen();if(screenPage==='plan')renderDay()});
- window.addEventListener('hashchange',()=>{screenPage=requestedScreen();syncScreen()});
  document.addEventListener('change',event=>{if(!event.target.matches('[data-route-choice]'))return;const root=event.target.closest('.segment-options'),origin=root.querySelector('[data-route-choice=origin]').value,mode=root.querySelector('[data-route-choice=mode]').value;root.querySelector('[data-segment-link]').href=origin==='next'?directions(root.dataset.segmentNext,mode,root.dataset.segmentCurrent):directions(root.dataset.segmentCurrent,mode,origin==='previous'?root.dataset.segmentPrevious:undefined)});
- document.querySelector('#place-dialog').addEventListener('click',e=>{if(e.target===e.currentTarget)e.currentTarget.close()});
 }
 function initRouteObserver(){
  const list=document.querySelector('.route-scroll');if(!list)return;
- const points=numberedPlaces(active),saved=points.find(p=>p.eventIds.includes(state.selectedEvent))||points[0];if(saved){selectPin(saved);spreadMapPins()}initSheetDrag();
+ const points=numberedPlaces(active),saved=points.find(p=>p.eventIds.includes(state.selectedEvent))||points[0];if(saved)selectPin(saved);initSheetDrag();
  let pending=false,last=selectedStopNumber;
  list.addEventListener('scroll',()=>{if(pending||Date.now()<routeFollowAfter)return;pending=true;requestAnimationFrame(()=>{pending=false;const top=list.getBoundingClientRect().top+12;const items=[...list.querySelectorAll('.route-item')];const candidate=items.find(n=>n.getBoundingClientRect().bottom>top+36);const number=Number(candidate?.querySelector('[data-pin]')?.dataset.pin);if(number&&number!==last){last=number;showMapSelection({number,fromScroll:true})}})},{passive:true});
 }
 
-function linesHTML(text){return '<ul class="info-bullets">'+String(text).split(/(?<=[.!?])\s+|\n+/).filter(Boolean).map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>'}
 function infoRows(rows){return '<dl class="info-rows">'+rows.map(([key,value])=>`<div><dt>${esc(key)}</dt><dd>${value}</dd></div>`).join('')+'</dl>'}
-function restaurantInformation(r){return `<section class="info-section"><h3>추천 메뉴</h3>${infoRows([['주문',esc(r.dish.order)],['일본어',`<span lang="ja">${esc(r.dish.jp)}</span>`],['맛·주문 팁',linesHTML(r.dish.explain)]])}</section><section class="info-section"><h3>영업·예산</h3>${infoRows([['영업',linesHTML(r.hours)],['1인 예산',esc(r.price)]])}</section><section class="info-section"><h3>예약·방문</h3>${infoRows([['방식',esc(r.status)],['이용 안내',linesHTML(r.booking)]])}<div class="info-links">${r.book?link(r.book,r.bookLabel):''}${link('tel:+81'+r.phone.replace(/-/g,'').slice(1),r.phone)}</div></section><section class="info-section"><h3>위치·출처</h3>${infoRows([['주소',`<span lang="ja">${esc(r.address)}</span>`]])}<div class="info-links">${link(appMap(PLACE[r.id].query),'Google Maps')}${link(r.source,'타베로그')}${r.official?link(r.official,'공식 안내'):''}</div></section>`}
-function restaurantCard(r){const def=RESERVATIONS.find(d=>d.id===r.id);return `<article class="restaurant food-card" id="restaurant-${r.id}"><header><span>${esc(r.dish.kind)}</span><small>${esc(r.day)}</small></header><h3>${esc(r.name)}</h3><p class="jp" lang="ja">${esc(r.jp)}</p>${infoRows([['추천',esc(r.dish.order)],['예산',esc(r.price)],['방문 방식',esc(r.status)]])}${def&&!def.walkin?`<div class="food-booking">${reservationBadge(def)}${reservationTiming(def)}</div>`:''}<div class="card-actions">${actionLink(directions(PLACE[r.id].query,'transit'),'길찾기','primary')}${def&&!def.walkin?`<button class="btn btn-secondary" data-res-jump="${def.id}">예약 관리</button>`:`<button class="btn btn-secondary" data-restaurant-detail="${r.id}">식당 상세</button>`}</div><details class="restaurantdetail"><summary>메뉴·영업·예약·후기</summary>${restaurantInformation(r)}${reviewLinks(r)}</details></article>`}
-function lachicActivities(){return `<section class="info-section"><h3>쇼핑·휴식</h3><ul class="activity-list">${['d2-shopping','d2-rest'].map(id=>{const e=baseEvents(1).find(e=>e.id===id);return `<li><div><b>${esc(e.time)}–${esc(e.end)}</b><span>${id==='d2-rest'?'사카에 카페에서 휴식':'라시크 쇼핑'}</span></div><label>진행 상태<select data-event-status="${id}">${Object.entries(EVENT_STATUS).map(([key,label])=>`<option value="${key}" ${eventStatus(e)===key?'selected':''}>${label}</option>`).join('')}</select></label></li>`}).join('')}</ul></section>`}
+function restaurantCard(e){
+ const point=eventPlace(e),def=reservationFor(e),[kind,order]=e.meal;
+ return `<article class="restaurant food-card" id="restaurant-${e.id}"><header><span>${esc(kind)}</span><small>${days[e.day].date} ${esc(e.time)}</small></header>
+  <h3>${esc(point.name)}</h3><p class="jp" lang="ja">${esc(point.jp)}</p><p>${esc(e.desc)}</p>
+  ${infoRows([['추천',esc(order)],['방문 방식',esc(e.requirement)]])}${def?`<div class="food-booking">${reservationBadge(def)}${reservationTiming(def)}</div>`:''}
+  <div class="card-actions">${actionLink(directions(point.query,'transit'),'길찾기','primary')}${def?`<button class="btn btn-secondary" data-res-jump="${def.id}">예약 관리</button>`:''}</div>
+  <details class="restaurantdetail"><summary>메뉴·영업·방문 메모</summary>${eventInfo(e,{open:true})}${reviewLinks({name:point.name,blogs:BLOGS[e.placeId]})}</details></article>`;
+}
 let sheetLevel='balanced';
 function sheetStops(height){return {expanded:Math.min(64,height*.1),balanced:height*.32,map:height*.5}}
 function nearestSheetLevel(height,pixels){return Object.entries(sheetStops(height)).reduce((best,pair)=>Math.abs(pair[1]-pixels)<Math.abs(best[1]-pixels)?pair:best)[0]}
@@ -97,5 +155,3 @@ function initSheetDrag(){
  handle.addEventListener('click',()=>{if(Date.now()>=ignoreClickUntil)apply(sheetLevel==='expanded'?'balanced':'expanded')});
  handle.addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','Home','End'].includes(e.key)){e.preventDefault();apply(e.key==='ArrowUp'||e.key==='Home'?'expanded':'map')}});
 }
-
-function areaFiltersHTML(guide){const kinds=[...new Set(guide.places.map(id=>choiceCategory(SHOP_GUIDE[id])))];if(!kinds.includes('clothes'))return '';return `<div class="area-filters" aria-label="선택 매장 분류">${[['all','전체'],['clothes','옷·빈티지'],['goods','굿즈·소품'],['food','먹거리']].filter(([key])=>key==='all'||kinds.includes(key)).map(([key,label])=>`<button type="button" data-area-filter="${key}" aria-pressed="${key==='all'}">${label}</button>`).join('')}</div>`}

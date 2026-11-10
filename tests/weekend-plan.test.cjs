@@ -1,34 +1,61 @@
-const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
-const c=vm.createContext({Intl,Date,URL,URLSearchParams,localStorage:{getItem:()=>null,setItem(){}},location:{href:'https://hanfo-id.github.io/nagoya/'}});
-for(const file of ['trip-details.js','trip-data.js','map-locations.js','trip-state.js','ux.js'])vm.runInContext(fs.readFileSync(file,'utf8'),c);
-const run=s=>vm.runInContext(s,c),json=s=>JSON.parse(run('JSON.stringify('+s+')'));
-assert.equal(run('CITY_DAY'),2);assert.equal(run('EXCURSION_DAY'),3);
-for(const [id,index] of [['sun-gero-private-bath',3],['d3-monja',3],['d4-sushi',2],['d4-zoo-visit',2]])assert.equal(run(`eventDayIndex('${id}')`),index);
-assert.equal(run("eventDayIndex('d3-warehouse')"),-1);
-assert.ok(!json('RESERVATIONS').some(r=>r.id==='ghibli-ticket'));
-for(const [id,date] of [['monja','2026-12-13'],['sushi','2026-12-12']])assert.equal(run(`isoDay(RESERVATIONS.find(r=>r.id==='${id}').day)`),date);
-for(const zoo of [false,true]){
- run(`state=freshState();state.options.zoo=${zoo}`);
- const ids=json('getMapStops(state,EXCURSION_DAY).map(p=>p.id)');
- for(const id of ['jrNagoya','geroStation','geroTown','geroLunch','ogawaya','geroRiver','hotel','monja'])assert.ok(ids.includes(id));
- for(const id of ['warehouse','cafe','valley','mononoke','forest','hill','parkstation','zoo'])assert.ok(!ids.includes(id));
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const {execFileSync} = require('node:child_process');
+const {root,loadItinerary} = require('../scripts/load-itinerary.cjs');
+
+function run(file,...args){return execFileSync(process.execPath,[file,...args],{cwd:root,encoding:'utf8'})}
+const assets=['data/itinerary.js','guide.html'];
+const snapshots=assets.map(file=>fs.readFileSync(file,'utf8'));
+run('scripts/build-itinerary.cjs');
+run('scripts/build-guide.cjs');
+assets.forEach((file,i)=>assert.equal(fs.readFileSync(file,'utf8'),snapshots[i],file+' needs to be regenerated'));
+const guide=snapshots[1];
+const context=loadItinerary();
+const evaluate=code=>JSON.parse(vm.runInContext('JSON.stringify('+code+')',context));
+const escape=s=>s.replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const placeCorrections=new Set(['f02','f05','f07','f21','f23','s02','s03','s06','s23','s24','d4-bath','d4-return','b02','b03','b04','b05','b12']);
+const detailCorrections=new Set(['f02','f05','f21','f23','s06','d4-bath','d4-return','d4-monja','b02','b04','b05','b12']);
+const allGuideIds=new Set();
+for(const [plan,count] of [['A',75],['B',81]]){
+ const raw=JSON.parse(fs.readFileSync('data/nagoya_'+plan+'_detailed_enriched_2026-12-10_14.json','utf8').replace(/^\uFEFF/,''));
+ const exported=JSON.parse(run('scripts/export-itinerary.cjs','--plan='+plan));
+ assert.deepEqual(exported,evaluate('exportItinerary("'+plan+'")'));
+ assert.equal(exported.plan,plan);
+ assert.equal(exported.days.flatMap(d=>d.events).length,count);
+ raw.days.forEach((day,i)=>{
+  const actual=exported.days[i];
+  assert.equal(actual.date,day.date);
+  assert.equal(actual.weekday,day.weekday);
+  assert.equal(actual.title,day.title);
+  assert.equal(actual.summary,day.summary);
+  assert.equal(actual.events.length,day.events.length);
+  day.events.forEach((source,j)=>{
+   const e=actual.events[j];
+   for(const key of ['id','start','title','category','description','optional','source_url','transport_from_previous']){
+    assert.equal(e[key],source[key],plan+' '+source.id+' '+key);
+   }
+   assert.equal(e.end,source.end??null);
+   assert.ok(e.description.trim()&&e.details.length>=2&&e.details.every(line=>line.trim()));
+   if(!placeCorrections.has(e.id)){
+    assert.equal(e.place.name,source.place.name,e.id);
+    assert.equal(e.place.japaneseName,source.place.japaneseName,e.id);
+    if(source.place.address)assert.equal(e.place.address,source.place.address,e.id);
+   }
+   assert.ok(e.place.address,e.id);
+   assert.ok(new URL(e.place.mapUrl).searchParams.get('query').replace(/\s/g,'').includes(e.place.japaneseName.replace(/\s/g,'')),e.id);
+   if(!detailCorrections.has(e.id))assert.deepEqual(e.details,source.details,e.id);
+   else assert.equal(e.details.length,source.details.length,e.id);
+   const entry=guide.split('data-guide-event="'+e.id+'">')[1]?.split('</article>')[0];
+   assert.ok(entry,e.id);
+   for(const text of [e.description,e.title,e.place.name,e.place.japaneseName,...e.details])assert.ok(entry.includes(escape(text)),e.id+' '+text);
+   allGuideIds.add(e.id);
+  });
+ });
 }
-run("state=normalizeState({...freshState(),selectedEvent:'d3-warehouse',events:{'d3-warehouse':{status:'done'},'d4-sushi':{status:'progress'}},reservations:{'ghibli-ticket':{status:'confirmed',date:'2026-12-12',time:'11:00',note:'previous'},monja:{status:'confirmed',date:'2026-12-13',time:'19:15',note:'keep'}}})");
-const backup=json('validateBackup(JSON.stringify(backupEnvelope()))');
-assert.equal(backup.reservations['ghibli-ticket'].note,'previous');assert.equal(backup.events['d3-warehouse'].status,'done');
-assert.equal(backup.reservations.monja.time,'19:15');assert.equal(backup.selectedEvent,'');
-assert.equal(run("eventStatus(baseEvents(EXCURSION_DAY).find(e=>e.id==='sun-gero-private-bath'))"),'planned');
-run("let active=0;function openScreen(){};function showMapSelection(){};function openPlace(){};focusEvent('sun-gero-private-bath')");assert.equal(run('active'),3);
-run("focusEvent('d4-sushi')");assert.equal(run('active'),2);
-assert.deepEqual(json("baseEvents(EXCURSION_DAY).map(e=>e.time)"),['07:00','07:45','10:14','11:20','12:30','13:25','14:55','17:05','17:40','19:15']);
-for(const [event,time] of [['sun-gero-outbound','08:43'],['sun-gero-private-bath','12:30'],['sun-gero-return','15:32']]){
- const def=json(`reservationFor(baseEvents(EXCURSION_DAY).find(e=>e.id==='${event}'))`);
- assert.equal(def.day,3);assert.equal(def.plan,time);assert.ok(def.url.startsWith('https://'));
-}
-assert.equal(run("baseEvents(CITY_DAY).find(e=>e.id==='d4-old-town').placeId"),'hotel');
-assert.deepEqual(json("baseEvents(0).map(e=>[e.placeId,e.time])"),[['airport','16:50'],['station','18:05'],['hotel','18:55'],['shoraku','19:55'],['hisaya','20:45']]);
-const monday=json('getMapStops(freshState(),4)');
-assert.ok(monday.some(p=>p.id==='kanayama'&&p.time==='11:00'));
-assert.ok(monday.find(p=>p.id==='airport').eventIds.includes('d5-airport-break'));
-assert.equal(run("baseEvents(4).find(e=>e.id==='d5-airport-transfer').end"),'12:30');
-console.log('PASS final arrival and departure, Gero itinerary, Hida and bath reservation targets, Saturday hotel rest, and legacy backups.');
+assert.equal(allGuideIds.size,92);
+assert.equal([...guide.matchAll(/data-guide-event="/g)].length,92);
+assert.match(guide,/id="sunday-a"/);
+assert.match(guide,/id="sunday-b"/);
+assert.doesNotMatch(guide,/이누야마|지브리파크|동물원/);
+console.log('PASS: A75/B81 source order, IDs, times, details, four shared dates, CLI export and both static guide branches.');

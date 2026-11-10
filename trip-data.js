@@ -1,237 +1,157 @@
 'use strict';
-const S={ghibli:'https://ghibli-park.jp/en/ticket/',calendar:'https://ghibli-park.jp/en/calendar/',access:'https://ghibli-park.jp/en/access/',tower:'https://www.nagoya-tv-tower.co.jp/fee/',zoo:'https://www.higashiyama.city.nagoya.jp/english/index.html',airport:'https://www.centrair.jp/access/train.html',hotel:'https://nnr-h.com/croom/nagoya/',mutsumi:'https://tabelog.com/aichi/A2301/A230103/23079119/',mutsumiBook:'https://www.hotpepper.jp/strJ001282169/yoyaku/',keshiki:'https://tabelog.com/aichi/A2301/A230101/23087668/',keshikiBook:'https://www.tablecheck.com/ja/shops/tenmusudokorokeshiki/reserve',ramuchi:'https://tabelog.com/aichi/A2301/A230103/23001001/',ramen:'https://tabelog.com/aichi/A2301/A230101/23060674/',komeda:'https://www.komeda.co.jp/shop/detail.html?id=350',komedaT:'https://tabelog.com/aichi/A2301/A230103/23015028/',sushi:'https://tamasushi.co.jp/blogs/brand/kitaro-jonai',sushiT:'https://tabelog.com/aichi/A2301/A230101/23058557/',monja:'https://tabelog.com/aichi/A2301/A230103/23091106/',eel:'https://tabelog.com/aichi/A2301/A230103/23061371/'};
-const restaurants=[
-{id:'shoraku',name:'간소 닌니쿠 라멘 쇼라쿠',jp:'元祖にんにくらーめん笑楽',type:'라멘 / 첫날 저녁',day:'목 19:55',price:'¥1,000–1,999',address:'名古屋市東区泉1-4-1',hours:'목요일 18:00–23:00 (LO 22:45). 면·수프 소진 시 조기 마감.',menu:'닌니쿠 라멘. 마늘 양을 골라 주문.',why:'호텔에 캐리어를 두고 이즈미로 걸어가는 첫날 저녁.',mode:['walk'],status:'예약 불가 / 현장 방문',booking:'예약 없이 방문합니다. 줄이 길면 호텔 주변 간단식으로 바꿉니다. 현금 결제.',phone:'052-886-0612',source:'https://tabelog.com/aichi/A2301/A230103/23000137/'},
-{id:'ramen',name:'멘야 시시마루',jp:'麺家 獅子丸',type:'라멘 / 꼭 먹자',day:'목 19:00',price:'¥1,200–2,000',rating:'타베로그 라멘 AICHI 백명점 2025',address:'名古屋市中村区亀島2-1-1',hours:'11:00–15:00 (LO 14:30), 17:00–21:30 (LO 21:00). 매일 영업 안내.',menu:'시시마루 파이탄 라멘. 부드럽고 크리미한 백탕이 대표 메뉴. 첫날은 사이드보다 라멘 한 그릇으로 가볍게.',why:'지역 라멘 백명점 선정 이력과 현지 리뷰를 확인한 선택. 목요일 저녁을 활용하되 평일에도 줄은 생길 수 있습니다.',mode:['walk'],status:'예약 불가 / 현장 대기',booking:'항공 지연이 없다면 목요일 저녁. 웨이팅은 계획상 20–45분 확보하며 실제 대기시간을 보장하지 않습니다. 20:15까지 도착하지 못하면 월요일 11시로 이동.',phone:'052-453-0440',source:S.ramen,official:'https://www.menya-hanzo.com/shishimaru.html'},
-{id:'komeda',name:'고메다 사쿠라도리오츠점',jp:'コメダ珈琲店 桜通大津店',type:'모닝 / 꼭 먹자',day:'금 07:30',price:'¥550–850 예상',rating:'호텔 근처 / 나고야 모닝 문화',address:'名古屋市中区丸の内3-19-30',hours:'07:00 개점. 공식 임시 안내: 월–토 21:00, 일·공휴일 19:00 종료. 모닝은 11시까지.',menu:'따뜻한 커피 + 토스트 + 오구라앙(팥). 점심을 위해 시로노와르는 이번 아침엔 생략.',why:'나고야에서 시작된 체인. 희소한 개인 카페 대신 사용자가 원한 고메다와 숙소 접근성을 우선했습니다.',mode:['walk'],status:'예약 불가 / 방문 순서',booking:'타베로그 예약 불가 표기. 금요일 이른 아침 07:30 방문. 호텔에서 도보 약 3–5분.',phone:'052-971-3456',source:S.komedaT,official:S.komeda},
-{id:'ramuchi',name:'쿠로부타야 라무치',jp:'黒豚屋 らむちぃ',type:'미소카츠 / 꼭 먹자',day:'금 11:00',price:'¥1,500–2,500 예상',rating:'타베로그 3.49 / 확인일 기준',address:'名古屋市中区栄3-15-6 栄STビル B1F',hours:'11:00–15:30 (LO 15:00), 17:30–22:30 (LO 22:00). 정기휴무 없음, 1/1 휴무 안내.',menu:'파가 듬뿍 올라가는 미소카츠 정식. 식사량이 적으면 작은 사이즈 가능 여부를 묻고, 파를 따로 요청할 수 있는지 확인.',why:'현지 상권 매체와 일본어 리뷰에서 확인한 나고야 미소카츠집. 금요일 개점 시간으로 주말 식사 피크를 피합니다.',mode:['phone'],status:'예약 가능 / 전화로 점심 조건 확인',booking:'타베로그에 예약 가능으로 표기되어 있습니다. 금요일 11시 좌석만 예약 가능한지 전화 문의. 점심 예약을 받지 않는다면 10:45–10:50 도착 후 현장 대기.',phone:'052-241-1664',source:S.ramuchi},
-{id:'mutsumi',name:'테바사키 무츠미 본점',jp:'手羽先むつみ 本店',type:'테바사키 / 꼭 먹자',day:'금 17:30',price:'¥3,000–4,500 예상',rating:'필수 사전 예약 후보',address:'名古屋市中区栄3-8-125',hours:'15:00 개점 안내. 마감은 공식·타베로그 표기에 차이가 있으므로 늦은 시간은 재확인. 제안 시각 17:30은 공통 영업 구간.',menu:'흑(달콤한 간장)과 백(소금·후추)을 나눠 주문한 뒤 취향에 따라 추가. 뼈를 먹기 쉽게 손질한 본본도 후보.',why:'사용자가 지정한 필수 맛집. 금요일에도 저녁 수요가 높아 피크 전 17:30 예약을 우선합니다.',mode:['web','phone'],status:'온라인·전화 예약 가능',booking:'Hot Pepper에서 날짜·인원을 선택. 리퀘스트 예약은 매장의 확정 연락까지 받아야 성립합니다. 타베로그 안내상 연락 없이 15분 늦으면 취소 처리될 수 있습니다. 17:20 도착 목표.',phone:'052-684-5577',source:S.mutsumi,official:'https://tebasaki623.co.jp/ja/shops',book:S.mutsumiBook,bookLabel:'Hot Pepper 예약'},
-{id:'monja',name:'츠키시마 몬자 오코게 사카에',jp:'月島もんじゃ おこげ 栄',type:'몬자야키 / 꼭 먹자',day:'토 19:15',price:'¥2,500–4,000 예상',rating:'지역 식도락 매체·타베로그 확인',address:'名古屋市中区栄3-9-29',hours:'평일 16:00–다음 날 04:00, 토·일·공휴일 11:00–다음 날 04:00 (타베로그).',menu:'명란·떡 몬자에 치즈 추가. 2인이라면 몬자 1판부터 시작해 배고픔에 따라 추가. 직원에게 조리 도움 요청.',why:'나고야 향토음식은 아니지만 요청한 몬자를 채우는 선택. 지브리에서 돌아와 숙소 근처에서 쉬어가기 좋습니다.',mode:['phone'],status:'예약 가능 / 전화 예약 문의',booking:'최신 타베로그는 예약 가능, 전화 예약 후기도 확인했습니다. 2025년 개점 기사에는 불가라고 적혀 있어 최신 안내를 우선했습니다. 토요일 19:15를 전화로 문의하세요. Google 예약 경로는 미확인.',phone:'052-228-6998',source:S.monja},
-{id:'sushi',name:'야나기바시 키타로 장내점',jp:'柳橋きたろう場内',type:'스시 / 꼭 먹자',day:'일 17:30',price:'¥4,620–6,050 + 음료',rating:'공식 메뉴·현지 시장 안내 확인',address:'名古屋市中村区名駅4-15-2 マルナカ食品センター1F',hours:'11:00–15:00, 17:00–22:00. 점심 LO 14:30 / 저녁 LO 21:00. 수요일 휴무.',menu:'니기리 9관 ¥4,620 또는 11관 ¥6,050 (공식 세금 포함 가격). 평일 한정 저렴한 런치는 일요일에 적용되지 않습니다.',why:'시장 내 작은 카운터에서 먹는 에도마에 스시. 주말이라 사전 전화 확인을 하고, 일요일 저녁 17:30으로 피크보다 이르게.',mode:['phone'],status:'공식 사이트 전화 예약 안내 / 조건 문의',booking:'최신 매장 공식 페이지는 전화 예약을 안내합니다. 시장 소개 페이지의 예약 불가 표기와 다르므로, 일요일 17:30 인원·좌석을 매장에 확인해 확정하세요. 인근 장외점과 혼동하지 마세요.',phone:'052-433-2004',source:S.sushiT,official:S.sushi},
-{id:'keshiki',name:'텐무스도코로 케시키 나고야 본점',jp:'天むす処けしき. 名古屋本店',type:'키시멘·텐무스 / 필수 후보',day:'월 09:30',price:'¥1,500–2,500 + 우선안내 ¥500',rating:'타베로그 3.54 / 확인일 기준',address:'名古屋市中村区那古野1-46-12 小鳥ビル1F',hours:'08:00–15:00 (LO 14:30), 18:00–21:00 (LO 20:30). 수요일 저녁 휴무. 모닝 08:00–11:00.',menu:'새우 텐무스와 키시멘 조합. 모닝 시간에 원하는 키시멘 메뉴가 가능한지는 예약 전 문의하세요. 안 되면 월요일 11:00 방문으로 바꾸고 오전 산책을 먼저 합니다.',why:'요청한 ‘키시멘 텐무스 도코로 나고야’와 일치할 가능성이 높은 후보입니다. 원래 가게를 확정한 것은 아닙니다.',mode:['web','phone','walk'],status:'TableCheck 우선 안내 / 좌석 확약 아님',booking:'14일 후까지, 방문 30분 전까지 접수. 1인 ¥500 환불 불가 수수료. 혼잡 시 기다릴 수 있고 체류 약 50분, 5분 전 도착. 인원·시간 변경 불가(취소 후 재접수). 12/14 방문은 11/30부터 달력 확인.',phone:'052-990-4704',source:S.keshiki,book:S.keshikiBook,bookLabel:'TableCheck 우선 안내'},
-{id:'eel',name:'히츠마부시 하나오카',jp:'ひつまぶし 花岡',type:'히츠마부시 / 선택',day:'금 13:30 선택',price:'¥4,500–6,000 예상',rating:'추가 식사 대신 교체 권장',address:'名古屋市中区栄3-8-115 サンリツノースビル2F',hours:'11:00–16:00 (LO 15:00), 18:00–22:00 (LO 21:00). 타베로그 정기휴무 없음 안내.',menu:'그대로 → 약미 → 육수로 맛을 바꿔 먹는 히츠마부시. 현금 준비.',why:'필수는 아니므로 기본 일정에 끼워 넣지 않았습니다. 원한다면 금요일 점심을 하나오카로, 라무치를 목요일 저녁으로, 라멘을 월요일 11시로 바꾸는 대안.',mode:['web'],status:'온라인 예약 가능 / 전화 예약 불가',booking:'타베로그에 온라인 예약 가능·전화 예약 불가 명시. 원하는 날짜가 없으면 예약 슬롯 소진일 수 있습니다. 전화는 영업·메뉴 문의용. Google 예약 버튼 여부는 미확인.',phone:'052-252-2733',source:S.eel,book:S.eel,bookLabel:'타베로그 예약 확인'}
-];
-const E=(time,end,title,kind,desc,steps,place='',food='',tip='')=>({time,end,title,kind,desc,steps,place,food,tip});
-// Default schedule from the final November 8 itinerary. IDs are persisted in backups.
-function itineraryEvent(id,placeId,time,end,title,kind,desc,steps,options={}){
- return {...E(time,end,title,kind,desc,steps),id,placeId,optional:false,...options};
+
+// Stable map keys for each venue. Repeated visits share a location, not an activity ID.
+const VENUES = {
+ 'd1-arrival':'airport', 'd1-train-in':'station', 'd1-checkin':'hotel', 'd1-ramen':'shoraku',
+ 'd1-night-park':'hisaya', f01:'komeda', f04:'oasis', f06:'ramuchi', f07:'beams', f09:'unitedArrows',
+ f10:'stussy', f12:'bape', f14:'hoods', f16:'blackeye', f18:'freaks', f19:'atmos', f20:'harbs',
+ f22:'mutsumi', f24:'tower', s02:'sunroad', s04:'sushi', s06:'darumaya', s07:'kannon',
+ s09:'mandarake', s11:'lashinbang', s13:'surugaya', s15:'volks', s17:'animateParco',
+ s19:'mugiwara', s21:'heroPopup', s23:'ibushigin', 'd4-train':'geroStation',
+ 'd4-town':'geroTown', 'd4-beef':'yushimaan', 'd4-lunch':'senda', 'd4-bath':'ogawaya',
+ 'd4-pudding':'geropudding', 'd4-monja':'monja', 'd5-morningtransfer':'keshiki',
+ b02:'kintetsuNagoya', b03:'maruya', b05b:'hands', b07:'nagashima', b08:'nabana'
+};
+const PLAN_LABELS = {A:'A 게로 온천', B:'B 나바나노사토'};
+const SUNDAY = 3;
+const BOOKING = ITINERARY_SOURCE.bookingLinks;
+const RAIL = 'https://railway.jr-central.co.jp/ticketless/index.html';
+const sourceDays = [...ITINERARY_SOURCE.shared, ...Object.values(ITINERARY_SOURCE.sunday)];
+const sourceEvents = sourceDays.flatMap(day => day.events);
+const keyByName = new Map();
+for (const [id, key] of Object.entries(VENUES)) {
+ const {place} = sourceEvents.find(event => event.id === id);
+ keyByName.set(place.name, key);
+ PLACE[key] = {
+  name: place.name, jp: place.japaneseName, address: place.address || '',
+  query: new URL(place.mapUrl).searchParams.get('query'), mapUrl: place.mapUrl
+ };
 }
-const days=[
- {
-  date:"12.10", dow:"목요일", short:"도착 · 호텔 먼저 · 이즈미 라멘", title:"도착 · 호텔 먼저 · 이즈미 라멘",
-  subtitle:"센트레아에서 호텔로 이동해 짐을 풀고 히사야오도리·이즈미에서 저녁을 먹습니다.",
-  note:"기본안은 체크인 먼저입니다. 시시마루가 꼭 먹고 싶은 경우에만, 메이테츠 나고야에 19:00까지 도착하고 짐을 바로 맡길 수 있으면 역에서 시시마루를 들르는 경로로 교체합니다. 다이코도리구치 방향으로 20–35분을 잡고, 공식 주문 마감 21:00. 대기가 길거나 20:15까지 매장 도착이 어렵다면 기본안으로 복귀합니다. 시시마루를 먹으면 식사 후 체크인하고 이즈미 라멘은 생략합니다.",
-  walk:"도보 약 2–4km", cost:"약 ¥3,500–5,500",
-  events:[
-   itineraryEvent("d1-arrival", "airport", "16:50", "18:05", "나고야 도착 / 입국 수속", "이동", "비행기 착륙 시각과 공항을 나오는 시각은 다릅니다. 60–90분을 확보합니다.", [
-    "입국 심사 → 수하물 찾기 → 세관 → 화장실·통신 연결 순서.",
-    "항공권의 공항 코드 NGO와 터미널 확인. 공항 밖에서 쓸 교통카드·소액 현금을 준비.",
-    "짐이 늦게 나오면 이후 일정은 그대로 뒤로 미루고 첫 식사 대안을 적용."
-   ]),
-   itineraryEvent("d1-train-in", "station", "18:05", "18:55", "메이테츠로 나고야역", "이동", "공항역까지 이동·발권·열차 대기를 포함해 약 50분. 열차 시각은 현장 전광판 기준입니다.", [
-    "메이테츠 공항선 직통. μSKY는 전 좌석 지정석이며, 일반차가 있는 공항 특급도 이용할 수 있습니다.",
-    "열차 출발 시각은 현장 전광판 기준. 나고야역에 도착하면 사쿠라도리선 표지를 따라 호텔로 연결합니다."
-   ]),
-   itineraryEvent("d1-checkin", "hotel", "18:55", "19:40", "히사야오도리 이동 / 체크인", "휴식", "메이테츠 나고야 개찰에서 지하철 사쿠라도리선으로 환승합니다. 도쿠시게 방면 히사야오도리역에서 내려 호텔로 갑니다.", [
-    "메이테츠 개찰부터 호텔까지 보행·대기 포함 약 25–40분을 잡습니다. 호텔은 4번 출구 가까이 있으며, 캐리어가 있으면 엘리베이터 표지를 따릅니다.",
-    "체크인 후 객실에 캐리어를 두고 저녁에 나섭니다. 지연 시 이후 시간은 실제 체크인에 맞춥니다."
-   ]),
-   itineraryEvent("d1-ramen", "shoraku", "19:55", "20:45", "이즈미에서 가까운 라멘 저녁", "식사", "호텔에서 이즈미 1초메까지 걸어가 라멘 한 그릇으로 가볍게 식사합니다.", [
-    "호텔에서 도보 약 10–15분을 잡습니다. 매장 공개 안내상 목요일 저녁 18:00–23:00, 주문 마감 22:45이며 재료 소진 시 일찍 닫을 수 있습니다.",
-    "줄이 길거나 체크인이 늦어지면 숙소에서 가까운 식당이나 간단식으로 바꿉니다."
-   ], {"food": "shoraku"}),
-   itineraryEvent("d1-night-park", "hisaya", "20:45", "21:10", "호텔 귀갓길 공원 외관 산책", "산책", "저녁 후 히사야오도리 공원 북쪽을 잠깐 지나 호텔로 돌아옵니다.", [
-    "추우면 호텔로 바로 귀가. 타워 전망대와 오아시스21은 금요일에 봅니다."
-   ], {"optional": true})
-  ]
- },
- {
-  date:"12.11", dow:"금요일", short:"평일 맛집", title:"줄은 짧게, 식사는 제대로",
-  subtitle:"고메다 → 히사야오도리·오아시스21 → 라무치 → 라시크·카페 → 무츠미 → 미라이타워 → 호텔.",
-  note:"전 구간 도보. 오전에는 호텔에서 사카에 남쪽으로 내려가고 저녁에는 무츠미에서 타워를 거쳐 호텔 쪽으로 돌아옵니다. 무츠미 본점 17:30은 확정 연락을 확인합니다.",
-  walk:"도보 약 5–8km", cost:"약 ¥7,000–11,000",
-  events:[
-   itineraryEvent("d2-morning", "komeda", "08:25", "09:10", "고메다에서 나고야 모닝", "식사", "호텔 가까운 사쿠라도리오츠점. 이른 시간에 느긋하게 시작합니다.", [
-    "도보 약 3–5분. 커피와 토스트, 오구라앙 조합 추천.",
-    "11시까지의 모닝 서비스이지만 개점 직후 방문으로 대기를 줄입니다.",
-    "예약 불가. 오늘 점심을 위해 큰 샌드위치·디저트는 생략."
-   ], {"food": "komeda"}),
-   itineraryEvent("d2-park", "hisaya", "09:20", "09:55", "히사야오도리 공원", "산책", "호텔에서 남쪽으로 공원을 걸어 라무치 방향으로 이동합니다.", [
-    "공원 북쪽에서 시작해 타워 외관과 수면을 지나 남쪽으로 걷습니다.",
-    "오전 보행은 공원 35분과 오아시스21 외관으로 충분합니다. 비가 오면 센트럴파크 지하 통로를 이용합니다."
-   ]),
-   itineraryEvent("d2-oasis", "oasis", "10:00", "10:20", "오아시스21 외관 / 열린 구간만", "관광", "지상·지하 일부 공사와 옥상 폐쇄를 감안해 사진만 짧게 찍고 라무치 방향으로 이어갑니다.", [
-    "옥상은 2027.04.30까지 폐쇄 예정. 열린 지상 구간만 이용하고 지하 광장은 통행이 편할 때만 들릅니다.",
-    "10:20 이후 실내에서 잠깐 쉬고 10:45까지 라무치로 이동합니다."
-   ]),
-   itineraryEvent("d2-lunch", "ramuchi", "10:45", "12:10", "라무치 / 개점 시간 미소카츠", "식사", "금요일 11시 첫 식사 시간대를 노립니다.", [
-    "전화 예약이 성립했다면 안내받은 시간에 맞춰 도착. 예약을 받지 않는다면 10:45–10:50 대기.",
-    "11시 개점 후 파 듬뿍 미소카츠 정식. 식사 40–50분 계획.",
-    "카드·전자결제 불가 표기가 있어 현금을 준비. 점심 대기는 실제 상황에 따라 늘어날 수 있음."
-   ], {"food": "ramuchi"}),
-   itineraryEvent("d2-shopping", "lachic", "12:20", "14:20", "라시크·인접 백화점 가볍게", "쇼핑", "식후에는 식당을 더 넣기보다 주변 상점과 지하상가를 구경합니다.", [
-    "라무치에서 도보 약 3–8분. 라시크를 중심으로 보고 관심 매장이 있을 때만 가까운 백화점 한 곳을 더 고릅니다.",
-    "쇼핑이 일찍 끝나면 일찍 카페로 가거나 실내에서 쉬어도 됩니다."
-   ]),
-   itineraryEvent("d2-rest", "lachic", "14:30", "16:50", "사카에 카페 / 예약 전 자유시간", "휴식", "라시크·사카에 남쪽에서 쉬고 가까운 무츠미로 이동합니다.", [
-    "카페에 45–75분 정도 앉아 쉬고 나머지는 자유시간으로 둡니다. 무츠미와 가까운 곳을 고르면 호텔 왕복 없이 이어집니다.",
-    "17:05 전후 무츠미 본점 방향으로 출발해 17:20까지 도착합니다."
-   ]),
-   itineraryEvent("d2-wings", "mutsumi", "17:20", "18:50", "무츠미 본점 / 17:30 예약 목표", "식사", "금요일 저녁 피크 전, 가장 기대한 테바사키.", [
-    "예약 10분 전 도착. 본점과 스미요시점은 다른 매장이므로 주소 확인.",
-    "흑·백 맛을 비교한 뒤 원하는 맛 추가. 본본도 나눠 먹기.",
-    "술·음료·오토시 등 추가 비용은 메뉴에서 확인. 무리한 2차보다 다음 날 준비."
-   ], {"food": "mutsumi"}),
-   itineraryEvent("d2-tower", "tower", "19:10", "20:00", "미라이타워 전망대 / 밤의 도시", "관광", "도보 약 15–20분. 날씨가 맑으면 이 날 전망대를 마무리합니다.", [
-    "일반 성인 입장료 ¥1,300. 야간 이벤트는 별도 가격·입장 구간 적용 가능.",
-    "공식 일반 안내 평일 21시 종료 / 최종 입장 20:40. 19시대 입장으로 여유 확보.",
-    "유리 반사 적은 위치에서 야경 감상 후 공원을 거쳐 호텔 복귀."
-   ]),
-   itineraryEvent("d2-pack", "hotel", "20:10", "21:00", "호텔 복귀 / 휴식", "휴식", "토요일은 시내 산책. 다음 날 동선을 확인하고 쉽니다.", [
-    "쇼핑 짐과 예약 내역 정리.",
-    "토요일 스시 예약과 선택 동물원 방문 여부 확인.",
-    "일요일 게로는 07:45 호텔 출발. 토요일 밤에 히다 왕복과 대절탕 예약을 확인합니다."
-   ])
-  ]
- },
- {
-  date:"12.12", dow:"토요일", short:"오스 & 도시", title:"주말의 골목을 걷는 날",
-  subtitle:"오스칸논에서 가미마에즈까지 서쪽에서 동쪽으로 걷고, 호텔에서 쉰 뒤 야나기바시 스시.",
-  note:"오스에서 점심을 먹은 뒤 호텔에서 쉬고 17:30 야나기바시 키타로 장내점으로 이동합니다. 동물원을 선택하면 오전 오스를 교체하고 상점가는 14시부터 짧게 봅니다. 저녁에는 일요일 히다 왕복과 오가와야 대절탕을 확인합니다.",
-  walk:"도보 약 4–6km / 동물원 선택 시 추가", cost:"약 ¥7,500–11,000",
-  events:[
-   itineraryEvent("d4-morning", "hotel", "08:40", "09:30", "늦지 않게, 느긋한 아침", "식사", "호텔 조식 또는 근처 카페.", [
-    "조식 포함 여부 확인. 고메다를 다시 가도 좋지만 줄이 길면 호텔 주변 다른 간단식으로.",
-    "오스에서 조금씩 먹을 예정이므로 과식하지 않기.",
-    "동물원 선택 시 07:30 식사, 08:20 호텔 출발로 앞당깁니다."
-   ]),
-   itineraryEvent("d4-osu-transfer", "kannon", "09:45", "10:20", "오스칸논으로 이동", "이동", "히사야오도리 → 사쿠라도리선 마루노우치 → 쓰루마이선 오스칸논 2번 출구.", [
-    "마루노우치 환승이 한 번 있습니다. 날씨가 좋으면 호텔에서 마루노우치까지 걸어 사쿠라도리선 한 정거장을 생략할 수 있습니다.",
-    "오스칸논 2번 출구에서 본당까지 약 3분. 보행·대기를 합쳐 25–35분을 잡습니다."
-   ]),
-   itineraryEvent("d4-osu", "osu", "10:20", "12:00", "오스칸논·오스상점가", "관광", "주말의 사람 구경과 빈티지·소품·전자상가를 넉넉하게.", [
-    "오스칸논 본당 20–25분 → 니오몬도리·반쇼지도리 → 가미마에즈 방향. 본당 쪽으로 되돌아가지 않습니다.",
-    "12시 개점하는 만다라케가 우선이면 점심 뒤 동쪽 구역에서 잠깐 들릅니다."
-   ]),
-   itineraryEvent("d4-osu-lunch", "osu", "12:00", "12:55", "오스에서 가벼운 점심·먹거리", "식사", "정식 한 상 대신 2–3가지 소량으로 주말 시장 분위기를 즐깁니다.", [
-    "상점가 현장 영업 중인 곳에서 오니기리·고로케·단팥 간식 등을 취향대로.",
-    "특정 가게를 예약한 식사는 아니며, 줄 15분 이내·가격 표시가 명확한 곳 위주로 선택.",
-    "저녁 스시를 위해 튀김·디저트는 나눠 먹고 물을 충분히."
-   ]),
-   itineraryEvent("d4-market-transfer", "hotel", "13:05", "13:40", "오스에서 호텔로 복귀", "이동", "가미마에즈역에서 메이조선 사카에·오조네 방면을 타고 히사야오도리역까지 직통으로 돌아갑니다.", [
-    "보행·대기 포함 20–35분. 역 입구까지 가까운 동쪽 구역에서 오스를 마무리합니다."
-   ]),
-   itineraryEvent("d4-old-town", "hotel", "13:40", "16:50", "호텔 휴식 / 저녁 스시 전 여유", "휴식", "객실에서 쉬거나 주변 카페에서 앉아 다음 날 장거리 이동에 대비합니다.", [
-    "오후는 객실 휴식. 스시 17:30 확정 시 16:50에 출발합니다.",
-    "장내점이 미확정이고 17:00 개점 방문을 택하면 휴식과 아래 이동·식사 블록을 30분 앞당깁니다."
-   ], {"optional": true}),
-   itineraryEvent("d4-sushi-transfer", "sushi", "16:50", "17:20", "호텔 → 키타로 장내점", "이동", "히사야오도리 → 사쿠라도리선 국제센터 → 야나기바시 시장.", [
-    "국제센터역에서 시장 방향으로 도보 약 5–10분. 17:20 도착을 목표로 합니다."
-   ]),
-   itineraryEvent("d4-sushi", "sushi", "17:30", "18:45", "시장 안 카운터에서 스시", "식사", "전화로 예약 여부를 확인한 후 방문합니다.", [
-    "12/12 토요일 17:30, 장내점(名駅4-15-2, 052-433-2004) 2인 예약 여부를 전화로 확인합니다.",
-    "예약이 어렵다면 17:00 개점 때 방문하고 대기는 20–30분을 한도로 판단합니다.",
-    "시장 구경 시간을 따로 잡지 않고 스시를 먹은 뒤 호텔로 돌아옵니다."
-   ], {"food": "sushi"}),
-   itineraryEvent("d4-return", "hotel", "18:45", "19:20", "호텔 복귀 / 내일 게로 준비", "휴식", "저녁 식사 뒤 호텔에서 쉬고 다음 날 나들이를 준비합니다.", [
-    "일요일 07:45 호텔 출발. 히다 지정석·승차 방법과 유라기 예약을 확인합니다.",
-    "따뜻한 겉옷, 작은 가방, 수건과 갈아입을 옷을 준비합니다.",
-    "눈·강풍이나 철도 장애가 예상되면 취소 조건을 확인하고 도요타 산업기술기념관을 대안으로 검토합니다."
-   ], {"optional": true})
-  ]
- },
- {
-  date:"12.13", dow:"일요일", short:"게로 온천 당일치기", title:"게로 온천 당일치기",
-  subtitle:"07:45 호텔 출발 → 히다 왕복 → 유라기 대절탕 → 카페 → 호텔 휴식 → 몬자.",
-  note:"지브리 예약 불가에 따른 최종 대체 일정. 12/13(일) 오가와야 별관 유라기 대절탕 12:30 시작, 45분 기본 ¥4,400/실(고하쿠 ¥4,950, 정원 2명)을 예약하는 구성을 추천합니다. 사전예약이 필수이며 이 파일은 예약 완료를 의미하지 않습니다. 본관 대절탕 ¥3,300/45분은 일요일 이용 시작이 15:30이라 추천 복귀 열차와 겹칩니다. JR 특급 히다 3호 08:43 나고야→10:14 게로, 히다 14호 15:32 게로→17:05 나고야는 현재 공개 시간표를 기준으로 한 계획값이며, 12월 실제 운행·좌석은 출발 전 재확인하고 지정석을 확보합니다. 15:32 편을 놓치면 16:18 편은 저녁 여유가 줄어드니 몬자에 연락하거나 유연한 저녁으로 변경합니다.",
-  walk:"도보 약 3–5km", cost:"대절탕 ¥2,200 (2인 이용 기준) + 열차·식사",
-  events:[
-   itineraryEvent("sun-gero-morning", "komeda", "07:00", "07:35", "고메다 모닝 / 게로 나들이 준비", "식사", "고메다에 바로 입장할 수 있으면 모닝. 개점·대기 상황에 따라 전날 준비한 간단식으로 대체합니다.", [
-    "07:45까지 호텔을 출발해 나고야역에 08:15 전후 도착하는 계획.",
-    "아침 대기가 길면 테이크아웃 또는 간단식으로 바꾸고 특급 승차 시간을 우선합니다.",
-    "작은 가방, 보온 겉옷, 갈아입을 속옷을 준비합니다."
-   ], {"food": "komeda", "mapQuery": "コメダ珈琲店 桜通大津店 名古屋"}),
-   itineraryEvent("sun-gero-outbound", "geroStation", "07:45", "10:14", "호텔 → JR 나고야역 → 게로역 / 히다 3호", "이동", "JR 나고야역에서 다카야마선 특급 히다를 타고 게로로 이동합니다.", [
-    "07:45 호텔 출발 → 사쿠라도리선 나고야역 → JR 재래선 개찰. 08:15 전후 JR역 도착 목표.",
-    "계획 열차 08:43→10:14. 12/13 실제 시간과 지정석을 구매 화면에서 확인하고, 아침에는 표 발권으로 서두르지 않도록 미리 수령 방법을 확인합니다."
-   ]),
-   itineraryEvent("sun-gero-town-am", "geroTown", "10:14", "11:20", "게로 온천마을 산책 / 강변·족욕", "산책", "게로역에서 히다강 다리를 한 번 건너 오가와야 쪽으로 들어가고, 점심까지 같은 구역에 머뭅니다.", [
-    "게로역에서 오가와야까지 도보 약 7분, 처음이면 8–12분 계획.",
-    "강변 사진과 족욕 한 곳이면 충분합니다. 추우면 족욕이나 강변 체류를 줄입니다."
-   ]),
-   itineraryEvent("sun-gero-lunch", "geroLunch", "11:20", "12:05", "게로에서 히다 지역 점심", "식사", "온천마을에서 점심을 먹고 대절탕 예약 시간에 맞춥니다.", [
-    "11:20 전후 온천마을 중심에서 바로 입장할 곳을 고릅니다. 대기가 10–15분을 넘으면 간단식으로 전환합니다.",
-    "12:20까지 오가와야 도착. 길게 먹고 싶다면 온천 뒤로 옮기고 주방 마감 시각을 확인합니다.",
-    "개별 점포의 12월 영업과 메뉴는 출발 전 확인합니다."
-   ]),
-   itineraryEvent("sun-gero-private-bath", "ogawaya", "12:30", "13:15", "오가와야 대절탕 / 2인 프라이빗 온천", "온천", "유라기 2인 대절탕을 12:30 시작으로 계획합니다. 실제 예약 슬롯은 별도 확인합니다.", [
-    "본관 대절탕은 45분 ¥3,300/실(최대 4명)이지만 일요일 첫 슬롯은 15:30이라 15:32 복귀 열차와 양립하지 않습니다. 이번 일정은 12:30부터 이용 가능한 별관 유라기 대절탕 45분 ¥4,400/실(정원 2명) 기준.",
-    "12:30은 별관 이용 가능 시간대에 맞춘 계획값이며 해당 날짜 예약 가능한 시작 시각은 예약 화면에서 확정해야 합니다.",
-    "별관은 서로 다른 7종. 사전예약 필수. 예약이 없으면 공용 족욕·온천마을 산책으로 전환합니다.",
-    "별관 6종은 2인 총 ¥4,400, 고하쿠는 ¥4,950. 공용탕 추가 시 일요일 접수 14:00 마감과 추가 요금을 확인합니다."
-   ]),
-   itineraryEvent("sun-gero-town-pm", "geroRiver", "13:25", "14:50", "온천 뒤 따뜻한 카페와 짧은 산책", "산책", "오가와야 근처 카페에서 쉬고 강변을 짧게 봅니다.", [
-    "13:15–13:25는 목욕 뒤 정리와 이동 여유. 카페 30–45분을 우선합니다.",
-    "온천사 오르막은 맑고 시간이 남을 때만 카페나 산책 일부와 교체합니다. 14:50에 마을 일정을 끝냅니다."
-   ]),
-   itineraryEvent("sun-gero-return", "jrNagoya", "14:55", "17:05", "마을 → 게로역 → JR 나고야역 / 히다 14호", "이동", "15:32 게로 출발, 17:05 나고야 도착 편을 우선 목표로 돌아옵니다.", [
-    "14:55 마을 출발, 다리를 건너 15:10–15:15 게로역 도착. 계획 열차 15:32→17:05.",
-    "16:18 대체편을 탈 경우 나고야행 16호 차량을 확인합니다. 저녁 예약이 확정돼 있으면 열차 지연 즉시 매장에 연락합니다."
-   ]),
-   itineraryEvent("sun-gero-hotel-transfer", "hotel", "17:05", "17:40", "JR 나고야역 → 호텔", "이동", "JR 개찰에서 사쿠라도리선으로 갈아타고 히사야오도리역에서 내립니다.", [
-    "열차 하차부터 객실까지 보행·대기 포함 25–35분을 잡습니다."
-   ]),
-   itineraryEvent("sun-gero-rest", "hotel", "17:40", "18:45", "호텔 휴식 / 온천 후 정리", "휴식", "호텔로 돌아와 쉬고 저녁 식사 전 여유를 둡니다.", [
-    "객실에서 1시간 정도 쉬고 18:50 전후 몬자 식당으로 걸어갑니다.",
-    "복귀편이 늦으면 객실 휴식을 줄이고, 19:15 약속에 늦을 것 같으면 식당에 연락합니다."
-   ]),
-   itineraryEvent("d3-monja", "monja", "19:15", "20:30", "오코게에서 몬자야키", "식사", "게로에서 돌아온 뒤 기존 저녁 계획을 이어갑니다.", [
-    "일요일 19:15는 계획 시각이며 실제 예약 확정 여부는 매장 확인.",
-    "18:50 전후 호텔 출발. 사카에 3초메 매장까지 도보 15–25분을 잡습니다.",
-    "15:32 게로 출발편을 기준으로 한 구성. 다음 열차로 돌아오면 식사 전 휴식이 거의 없어 변경을 판단합니다."
-   ], {"food": "monja"})
-  ]
- },
- {
-  date:"12.14", dow:"월요일", short:"텐무스 모닝 & 공항 직행", title:"텐무스 모닝 & 공항 직행",
-  subtitle:"캐리어는 객실에 둔 채 아침 식사. 호텔 체크아웃 후 가나야마에서 한 번 갈아타고 공항으로 직행합니다.",
-  note:"시내 쇼핑 없이 운영합니다. 기본 체크아웃 11:00에 맞춰 공항으로 이동합니다. 호텔에서 12:00 퇴실 혜택을 확인한 경우에는 모닝 후 객실에서 더 쉬고 12:00에 출발해 13:30 전후 터미널 도착을 목표로 할 수 있습니다. 17:50 출국, 터미널 도착 계획상 상한은 14:50입니다.",
-  walk:"도보 약 2–4km", cost:"약 ¥4,500–7,000",
-  events:[
-   itineraryEvent("d5-breakfast-transfer", "keshiki", "09:00", "09:25", "객실에 짐 두고 국제센터로", "이동", "호텔에서 케시키까지 걸어가거나 히사야오도리에서 사쿠라도리선을 타고 국제센터에서 내립니다.", [
-    "편도 15–25분. TableCheck를 이용했다면 09:20 도착을 목표로 조금 일찍 출발합니다."
-   ]),
-   itineraryEvent("d5-keshiki", "keshiki", "09:25", "10:05", "케시키에서 가벼운 텐무스 모닝", "식사", "09:25부터 텐무스 모닝을 가볍게 먹고 객실로 돌아갈 준비를 합니다.", [
-    "TableCheck 우선 안내를 이용했다면 09:20까지 도착해 직원에게 알립니다.",
-    "텐무스를 우선하고 키시멘은 모닝 메뉴에 있을 때만 주문. 원하는 메뉴가 없거나 09:45까지 입장이 어려우면 호텔 근처 간단식으로 전환합니다.",
-    "10:05 전후 식당에서 출발해 다음 객실 복귀 일정으로 이어갑니다."
-   ], {"food": "keshiki"}),
-   itineraryEvent("d5-hotel-return", "hotel", "10:05", "10:30", "아침 식사 후 객실로 복귀", "이동", "케시키에서 호텔로 돌아와 객실에서 캐리어를 챙깁니다.", [
-    "복귀가 늦어질 조짐이 있으면 식사를 짧게 하고 사쿠라도리선을 이용합니다."
-   ]),
-   itineraryEvent("d5-checkout", "hotel", "10:30", "11:00", "객실 정리 / 체크아웃", "휴식", "아침을 먹고 객실로 돌아와 짐을 챙긴 뒤 체크아웃하고 바로 공항으로 출발합니다.", [
-    "호텔 기본 체크아웃 11:00. 10:45까지 짐 정리를 마치고 여권·항공권·휴대품을 확인합니다.",
-    "체크아웃 후 캐리어를 가지고 히사야오도리역으로 이동합니다."
-   ]),
-   itineraryEvent("d5-airport-transfer", "airport", "11:00", "12:30", "가나야마 경유 / 센트레아 직행", "이동", "히사야오도리 1번 승강장 → 메이조선 사카에·가나야마 방면 → 가나야마에서 메이테츠 공항행으로 한 번 환승.", [
-    "가나야마에서 지하철 개찰을 나와 메이테츠 표지를 따릅니다. 캐리어와 엘리베이터 이동을 포함해 환승에 10–15분을 잡습니다.",
-    "중부국제공항(中部国際空港)행을 확인. μSKY는 전 좌석 지정석이고 일부 특급은 일반차를 이용할 수 있습니다. 해당 날짜 열차와 다음 직통편은 출발 전에 확인합니다.",
-    "12:30 전후 터미널 도착을 예상합니다. T2는 공항역에서 캐리어 이동에 10–15분을 추가해 계산합니다."
-   ]),
-   itineraryEvent("d5-airport-break", "airport", "12:30", "14:50", "센트레아에서 점심과 휴식", "식사", "항공사 카운터 운영을 먼저 확인한 뒤, 해당 터미널에서 점심을 먹고 앉아서 쉽니다.", [
-    "수하물 위탁이 가능하면 먼저 맡깁니다. 카운터가 아직 열리지 않았다면 같은 터미널 안에서 식사하거나 앉아 기다립니다.",
-    "위탁을 마쳤고 날씨와 시간이 좋다면 T1 스카이데크는 짧게 선택할 수 있습니다. T2 출발이면 터미널을 오가는 일정은 생략합니다."
-   ]),
-   itineraryEvent("d5-departure-check", "airport", "14:50", "16:40", "체크인 / 보안검색 / 출국", "출국", "항공사 카운터가 열리는 시각부터 수속합니다. 14:50은 계획상 기준 시각입니다.", [
-    "수하물 위탁·보안검색·출국심사를 먼저 완료.",
-    "수속을 마치면 게이트와 탑승 마감 시각을 확인하고 근처에서 쉽니다.",
-    "터미널·항공사에 따라 수속 기준이 다르므로 항공권 안내를 따릅니다."
-   ]),
-   itineraryEvent("d5-flight", "airport", "17:50", "", "나고야 출발", "비행", "4박 5일 여행을 마무리합니다.", [
-    "17:50은 항공편 출발 시각입니다. 탑승구에는 항공사가 정한 탑승 시각 전에 도착하세요."
-   ])
-  ]
+function locationFields(name, japaneseName, address, query=japaneseName+' '+address) {
+ return {name,japaneseName,address,mapUrl:appMap(query)};
+}
+const VENUE_DETAILS = {
+ ogawaya:locationFields('게로 온천 오가와야 별관 유라기','下呂温泉 小川屋 別館ゆらぎ','岐阜県下呂市湯之島570'),
+ gateTower:locationFields('JR 게이트타워','JRゲートタワー','名古屋市中村区名駅1-1-3'),
+ ibushigin:locationFields('로바타야키 이부시긴 후시미점','炉端焼き 燻銀 伏見店','名古屋市中区栄2-1-14 マルイチセンタービル1F'),
+ maruya:locationFields('마루야 본점 JR 나고야역점','まるや本店 JR名古屋駅店','名古屋市中村区名駅1-1-4 JR名古屋駅構内 うまいもん通り'),
+ sunroad:locationFields('메이에키 지하상가 선로드','名駅地下街 サンロード','名古屋市中村区名駅4-7-25 先'),
+ jrNagoya:locationFields('JR 나고야역','JR名古屋駅','名古屋市中村区名駅1-1-4'),
+ beerGarden:locationFields('나가시마 비어가든','長島ビール園','三重県桑名市長島町駒江漆畑270 なばなの里内')
+};
+const ENDPOINTS = {
+ f02:'hisaya', f05:'ramuchi', f21:'mutsumi', f23:'tower', s06:'kannon',
+ 'd4-return':'jrNagoya', b02:'jrNagoya', b04:'jrNagoya', b05:'gateTower', b12:'beerGarden'
+};
+const ADDRESS_FALLBACK = {
+ airport:'愛知県常滑市セントレア1丁目', station:'名古屋市中村区名駅1-2-1',
+ hotel:'名古屋市中区錦3-4-3', shoraku:'名古屋市東区泉1-4-1',
+ komeda:'名古屋市中区丸の内3-19-30', monja:'名古屋市中区栄3-9-29',
+ keshiki:'名古屋市中村区那古野1-46-12 小鳥ビル1F', ogawaya:'岐阜県下呂市湯之島570',
+ geroStation:'岐阜県下呂市幸田', geroTown:'岐阜県下呂市 湯之島・森', hisaya:'名古屋市中区・東区 久屋大通'
+};
+const BOOKING_RULES = {
+ f06:{id:'ramuchi',modes:['phone','walk'],name:'쿠로부타야 라무치',time:'11:00',requirement:'방문 전 전화 확인',links:[['매장 전화','tel:+81522411664']]},
+ f22:{id:'mutsumi',modes:['web','phone'],name:'테바사키 무츠미 본점',time:'17:30',requirement:'예약 권장',links:[['예약 안내','https://tabelog.com/aichi/A2301/A230103/23079119/'],['매장 전화','tel:+81526845577']]},
+ s05:{id:'sushi-lunch',modes:['phone'],name:'야나기바시 키타로 장내점 · 점심',time:'11:30',requirement:'사전 전화 확인 권장',links:[['장내점 공식 안내',BOOKING.kitaro],['매장 전화','tel:+81524332004']]},
+ s24:{id:'ibushigin',modes:['web','phone'],name:'로바타야키 이부시긴 후시미점',time:'18:40',requirement:'예약 권장',links:[['공식 웹 예약 안내',BOOKING.ibushigin],['매장 전화','tel:+81522049889']]},
+ 'd4-train':{id:'hida-outbound',name:'특급 히다 3호 · 나고야 → 게로',time:'08:43',requirement:'승차권·특급권 준비 / 지정석 권장',links:[['JR 지정석 안내',RAIL]]},
+ 'd4-bath':{id:'ogawaya-ruri',name:'오가와야 별관 유라기 · 루리(瑠璃)',time:'12:30',requirement:'사전 예약 필요',links:[['루리 예약',BOOKING.ogawaya_yuragi_ruri],['카스미 대안',BOOKING.ogawaya_yuragi_kasumi],['시설 안내','https://www.gero-ogawaya.net/how_to_spend/daytrip/'],['시설 전화','tel:+81576252118']]},
+ 'd4-return':{id:'hida-return',name:'특급 히다 14호 · 게로 → JR 나고야',time:'15:32',requirement:'승차권·특급권 준비 / 지정석 권장',links:[['JR 지정석 안내',RAIL]]},
+ 'd4-monja':{id:'monja',modes:['phone'],name:'츠키시마 몬자 오코게 사카에',time:'19:15',requirement:'선택 방문 / 전화 문의',links:[['매장 전화','tel:+81522286998']]},
+ b09:{id:'nabana-ticket',name:'나바나노사토 일루미네이션 입장권',time:'15:50',requirement:'입장권 사전 구매 권장',links:[['공식 입장권 안내',BOOKING.nabana]]},
+ 'd5-keshiki':{id:'keshiki',modes:['web','walk'],name:'케시키 · 우선 안내',time:'09:30',requirement:'우선 안내 선택',links:[['TableCheck 우선 안내','https://www.tablecheck.com/ja/shops/tenmusudokorokeshiki/reserve']]}
+};
+const VISIT_LINKS = {
+ f04:[['오아시스21 안내','https://www.sakaepark.co.jp/']],
+ f22:[['본점 주소·영업','https://tebasaki623.co.jp/ja/shops']],
+ f24:[['전망대 안내','https://www.nagoya-tv-tower.co.jp/fee/']],
+ s04:[['장내점 공식 안내',BOOKING.kitaro]],
+ b03:[['JR 나고야역점 공식 안내','https://www.maruya-honten.com/shop/nagoya-jrmeieki/'],['매장 전화','tel:+81525891208']],
+ b05:[['JR 게이트타워 안내','https://www.towers.jp/']],
+ b10:[['12월 13일 운영·점등 안내','https://www.nagashima-onsen.co.jp/nabana/fee/calendar/20261213.html']],
+ b12:[['비어가든 메뉴·영업 안내','https://www.nagashima-onsen.co.jp/nabana/restaurant/beer.html'],['개인 방문 문의','tel:+81594410752']],
+ b15:[['긴테쓰 귀환 열차 시간표','https://www.kintetsu.co.jp/railway/Dia/dia_nabana_20261017.html']],
+ 'd4-train':[['JR 시간표','https://railway.jr-central.co.jp/time-schedule/']],
+ 'd4-return':[['JR 시간표','https://railway.jr-central.co.jp/time-schedule/']],
+ 'd5-airport':[['공항 철도 안내','https://www.meitetsu.co.jp/train/centrair/guidance/index.html'],['가나야마역 환승 위치',appMap('金山駅 名古屋')]],
+ 'd5-lunch':[['플라이트 오브 드림즈','https://www.centrair.jp/flight-of-dreams/']]
+};
+const VISIT_REQUIREMENTS = {b12:'개인 현장 방문 · 15명 이상 단체는 별도 사전 예약'};
+const MEAL_INFO = {
+ shoraku:['마늘 라멘','닌니쿠 라멘 · 마늘 양 선택','목요일 18:00–23:00, 주문 마감 22:45. 재료 소진 시 조기 종료.','https://tabelog.com/aichi/A2301/A230103/23000137/'],
+ komeda:['나고야 모닝','커피·토스트에 오구라앙(단팥)','사쿠라도리오츠점의 모닝 안내를 확인하세요.','https://www.komeda.co.jp/shop/detail.html?id=350'],
+ ramuchi:['미소카츠','파가 올라간 미소카츠 정식','점심 영업은 당일 매장 안내를 확인하세요.','https://tabelog.com/aichi/A2301/A230103/23001001/'],
+ harbs:['케이크·음료','케이크 한 조각과 따뜻한 음료','PARCO 매장 안내에서 마지막 주문 시각을 확인하세요.'],
+ mutsumi:['테바사키','흑·백 테바사키를 나눠 비교','본점 일반 금요일 15:00–24:00. 음식 주문 마감 23:00.','https://tebasaki623.co.jp/ja/shops'],
+ sushi:['니기리 스시','니기리 세트나 당일 점심 메뉴','장내점 공식 안내에 점심 11:00–15:00(주문 마감 14:30). 일정은 11:30 방문.',BOOKING.kitaro],
+ ibushigin:['로바타야키·사케','제철 숯불구이와 사케','후시미점의 당일 영업·메뉴를 확인하세요.',BOOKING.ibushigin],
+ yushimaan:['히다규 간식','히다규 아부리 스시'],
+ senda:['히다 지역 정식','히다규와 지역 재료를 곁들인 정식','점심은 가게 안내에서 확인하세요.','https://www.gerogle.jp/gourmet/detail_11.html'],
+ geropudding:['푸딩·디저트','게로 푸딩과 따뜻한 음료'],
+ monja:['몬자야키','명란·떡 몬자와 치즈 토핑','오코게 사카에점의 당일 영업 안내를 확인하세요.','https://tabelog.com/aichi/A2301/A230103/23091106/'],
+ maruya:['히츠마부시','장어덮밥을 그대로, 약미와 함께, 육수를 부어 맛보기','JR역 우마이몬도리 지점의 공식 영업시간을 확인하세요.','https://www.maruya-honten.com/shop/nagoya-jrmeieki/'],
+ beerGarden:['원내 저녁','스페어립 또는 미에식 돈테키','요일별 식당 영업시간과 마감은 공식 안내에서 확인하세요.'],
+ keshiki:['텐무스 모닝','새우 텐무스. 키시멘은 모닝 메뉴에서 확인','모닝 제공 메뉴와 우선 안내 시간을 확인하세요.','https://tabelog.com/aichi/A2301/A230101/23087668/']
+};
+function effectivePlace(raw, key) {
+ let place = VENUE_DETAILS[key] || raw.place;
+ if (ENDPOINTS[raw.id] && !VENUE_DETAILS[key]) {
+  const target = PLACE[key];
+  place = locationFields(target.name, target.jp, target.address, target.query);
  }
-];
-const zooEvents=[E('08:20','09:00','동물원으로 이동','이동','사카에역 → 히가시야마선 히가시야마코엔역 → 정문.',['이동 약 35–45분. 동물원은 9시 개장. 토요일 오전에 선택합니다.','체력이 부족하거나 비가 오면 선택 스위치를 꺼 기본 산책 코스로 돌아갑니다.'],'東山動植物園'),E('09:00','11:45','히가시야마 동식물원','관광','성인 ¥500. 고릴라·코알라 등 보고 싶은 동물 위주로.',['전체 동식물원을 다 보려 하지 말고 동물 구역 2–3곳을 정합니다.','전시·동물 상태에 따라 관람 가능 여부가 달라집니다.','정규 09:00–16:50 / 입장권 16:30까지. 월요일 휴원. 오늘은 오스 시간을 위해 11:45 출발.'],'東山動植物園'),E('11:45','14:00','간단한 점심 후 오스로','식사','공원 주변에서 간단히 먹고 히가시야마선·메이조선으로 가미마에즈 이동.',['점심 40분 + 환승·보행 45–60분 여유. 특정 식당 예약 없는 자유식, 예산 ¥1,000–1,800.','14시부터 오스상점가 관람. 기본 일정의 12시 먹거리 시간은 생략.'],'上前津駅')];
-prepareTripPlaces();
+ const address = place.address || ADDRESS_FALLBACK[key];
+ const query = new URL(place.mapUrl).searchParams.get('query');
+ const exactName = place.japaneseName.replace(/\s/g,'');
+ return {...place,address,mapUrl:query?.replace(/\s/g,'').includes(exactName)
+  ? place.mapUrl : appMap([place.japaneseName,address].filter(Boolean).join(' '))};
+}
+function normalizeEvent(raw, index, plan) {
+ const key = ENDPOINTS[raw.id] || keyByName.get(raw.place.name);
+ if (!key) throw new Error('Unmapped itinerary place: '+raw.id);
+ const place = effectivePlace(raw,key);
+ const booking = BOOKING_RULES[raw.id];
+ let steps = [...raw.details];
+ if (ENDPOINTS[raw.id]||raw.id==='d4-bath') {
+  steps = steps.map(step=>step.replaceAll(raw.place.name,place.name));
+ }
+ if (raw.id==='d4-bath') {
+  steps[0]='12:20 접수 후 12:30에 루리(瑠璃)를 이용하는 계획입니다. 실제 확정은 예약 기록에 남기세요.';
+  steps[5]='카스미(霞)는 같은 이용 시간의 별도 선택지입니다. 실제 이용한 욕탕 이름은 예약 메모에 기록하세요.';
+ }
+ if (raw.id==='d4-monja') steps[0]='피로가 크면 가벼운 저녁으로 바꿀 수 있습니다. 기존 예약이 있다면 매장 취소 규정을 확인하세요.';
+ const meal = raw.category==='식사'||(raw.category==='휴식'&&MEAL_INFO[key]) ? MEAL_INFO[key]||['식사',steps[0]] : null;
+ return {
+  ...raw, place, details:steps,
+  ...(raw.card_notes&&steps[0]!==raw.details[0]&&{card_notes:{...raw.card_notes,visit_tip:steps[0]}}), time:raw.start, end:raw.end||'', kind:raw.category, desc:raw.description,
+  steps, placeId:key, day:index, plan, booking,
+  meal, transport:raw.transport_from_previous||raw.card_notes?.transport||'전후 장소와 길찾기 확인',
+  requirement:booking?.requirement||VISIT_REQUIREMENTS[raw.id]||raw.reservation?.requirement||raw.card_notes?.reservation_requirement||'현장 안내 확인'
+ };
+}
+function normalizeDay(raw, index, plan=null) {
+ const note = plan==='A'
+  ? '12:20 접수 후 12:30~13:15 루리(瑠璃) 대절탕. 카스미(霞)는 다다미 취향 대안입니다. 히다 왕복은 지정석을 권장합니다. 예약 기록은 직접 관리하며 A/B는 언제든 선택할 수 있습니다.'
+  : raw.note;
+ return {...raw, date:raw.date.slice(5).replace('-','.'), iso:raw.date, dow:raw.weekday,
+  short:['도착','사카에 쇼핑','오스·피규어',plan==='A'?'게로 온천':'나바나노사토','귀국'][index],
+  subtitle:raw.summary,note, events:raw.events.map(event=>normalizeEvent(event,index,plan))};
+}
+const commonDays = ITINERARY_SOURCE.shared.map((day,i)=>normalizeDay(day,i===3?4:i));
+const sundayDays = Object.fromEntries(Object.entries(ITINERARY_SOURCE.sunday).map(([plan,day])=>[plan,normalizeDay(day,SUNDAY,plan)]));
+const days = [...commonDays.slice(0,3),sundayDays.A,commonDays[3]];
+function daysForPlan(plan) {
+ return [...commonDays.slice(0,3),sundayDays[plan]||sundayDays.A,commonDays[3]];
+}
+const ALL_EVENTS = [...commonDays.flatMap(day=>day.events),...Object.values(sundayDays).flatMap(day=>day.events)];
+function exportItinerary(plan='A') {
+ return {destination:ITINERARY_SOURCE.destination,timezone:ITINERARY_SOURCE.timezone,plan,
+  days:daysForPlan(plan).map(day=>({date:day.iso,weekday:day.dow,title:day.title,summary:day.summary,note:day.note,
+   events:day.events.map(e=>({
+    id:e.id,start:e.time,end:e.end||null,title:e.title,category:e.kind,place:e.place,description:e.desc,details:e.steps,optional:e.optional,
+    ...(e.booking&&{booking:{requirement:e.booking.requirement,planTime:e.booking.time,links:e.booking.links}}),
+    ...(e.reservation&&{reservation:e.reservation}),...(e.transport_from_previous&&{transport_from_previous:e.transport_from_previous}),
+    ...(e.source_url!==undefined&&{source_url:e.source_url}),...(e.card_notes&&{card_notes:e.card_notes}),
+    ...(e.alternatives&&{alternatives:e.alternatives})
+   }))}))};
+}
