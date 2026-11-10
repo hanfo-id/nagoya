@@ -1,6 +1,23 @@
 'use strict';
 
 const SUNDAY = 3;
+const CATEGORY_KEYS = {
+ 식사:'meal', 쇼핑:'shopping', 관광:'sight', 산책:'sight',
+ 이동:'transit', 출국:'transit', 비행:'transit', 휴식:'rest'
+};
+const CATEGORY_VISUALS = {
+ meal:{label:'식사',icon:'<path d="M4 3v6a3 3 0 0 0 6 0V3M7 3v18M20 3c-3 1-5 4-5 8v2h5m0-10v18"/>'},
+ shopping:{label:'쇼핑',icon:'<path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/>'},
+ sight:{label:'관광',icon:'<path d="M4 7h4l2-3h4l2 3h4a1 1 0 0 1 1 1v11H3V8a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3"/>'},
+ transit:{label:'이동',icon:'<rect x="5" y="3" width="14" height="15" rx="3"/><path d="M5 11h14M12 3v8M8 18l-2 3m10-3 2 3M8.5 14.5h.01m7 0h.01"/>'},
+ rest:{label:'휴식·간식',icon:'<path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9Zm13 1h1.5a2.5 2.5 0 0 1 0 5H17M3 22h17M8 3v3m4-3v3"/>'},
+ lodging:{label:'숙소',icon:'<path d="M3 18v3m18-3v3M3 12V6h18v6M9 12V9h6v3M3 18v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4H3Z"/>'},
+ activity:{label:'일정',icon:'<rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4m8-4v4M4 10h16m-12 5h8"/>'}
+};
+function eventCategory(event) {
+ // At the same hotel, an arrival by train or a breakfast still has its own category.
+ return event.kind==='휴식'&&event.placeId==='hotel'?'lodging':CATEGORY_KEYS[event.kind]||'activity';
+}
 const BOOKING = ITINERARY_SOURCE.bookingLinks;
 const BOOKING_RULES = {
  f06:{id:'ramuchi',modes:['phone','walk'],name:'쿠로부타야 라무치',time:'11:00',requirement:'방문 전 전화 확인',links:[['매장 전화','tel:+81522411664']]},

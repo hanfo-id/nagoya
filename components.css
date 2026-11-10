@@ -5,6 +5,62 @@
 
 
 
+/* Keep the activity accent, badge background and legible ink separate. */
+[data-category="meal"] {
+ --category-accent:#c57257; --category-tint:#faece6; --category-ink:#843d2a;
+}
+[data-category="shopping"] {
+ --category-accent:#6485c0; --category-tint:#eaf0fa; --category-ink:#375782;
+}
+[data-category="sight"] {
+ --category-accent:#3e8a76; --category-tint:#e5f2ed; --category-ink:#2d6758;
+}
+[data-category="transit"] {
+ --category-accent:#7c8793; --category-tint:#ebeef1; --category-ink:#465360;
+}
+[data-category="rest"] {
+ --category-accent:#9a74ac; --category-tint:#f1eaf6; --category-ink:#674779;
+}
+[data-category="lodging"] {
+ --category-accent:#a98040; --category-tint:#f7f0e1; --category-ink:#725626;
+}
+.category-edge{position:relative}
+.category-edge::before {
+ content:"";
+ position:absolute;
+ inset-block:9px;
+ inset-inline-start:0;
+ width:3px;
+ border-radius:3px;
+ background:var(--category-accent,var(--muted));
+ pointer-events:none;
+}
+.category-edge.is-skipped::before{opacity:.6}
+.category-badge,.optional-label {
+ display:inline-flex;
+ align-items:center;
+ gap:4px;
+ border-radius:4px;
+ padding:2px 5px;
+ font-size:11px;
+ font-weight:600;
+ line-height:1.25;
+ white-space:nowrap;
+}
+.category-badge{color:var(--category-ink,var(--muted));background:var(--category-tint,var(--paper))}
+.category-badge svg {
+ width:13px;
+ height:13px;
+ flex:none;
+ fill:none;
+ stroke:currentColor;
+ stroke-width:1.8;
+ stroke-linecap:round;
+ stroke-linejoin:round;
+}
+.optional-label{color:var(--ink);background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}
+.print-event-meta .category-badge{margin-inline-end:4px}
+
 .btn,.action-group .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;min-width:44px;padding:10px 16px;border:1px solid var(--line);border-radius:var(--control-radius);font:inherit;font-size:14px;font-weight:500;line-height:1.5;text-align:center;white-space:normal;text-decoration:none;cursor:pointer;box-sizing:border-box;color:var(--ink);background:var(--white)}
 .btn.btn-primary{background:var(--ink);border-color:var(--ink);color:var(--white);font-weight:600}.btn.btn-secondary{background:var(--paper);border-color:var(--muted);color:var(--ink)}.btn.btn-quiet{border-color:var(--clear);background:var(--clear);color:var(--ink);text-decoration:underline;padding-inline:8px}
 .btn:hover{filter:brightness(.96)}.btn:focus-visible,.link-inline:focus-visible{outline:3px solid var(--focus);outline-offset:3px}.btn:active{transform:translateY(1px)}

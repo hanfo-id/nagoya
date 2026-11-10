@@ -16,14 +16,14 @@ const html = vm.runInContext(`
     const place=eventPlace(e);
     return \`<article class="panel" data-guide-event="\${e.id}">
      <h3>\${esc(eventSlot(e))} · \${esc(e.title)}</h3><p><b>\${esc(place.name)}</b> · <span lang="ja">\${esc(place.jp)}</span></p>
-     <p>\${esc(e.desc)}</p><p>\${esc(e.kind)}\${e.optional?' · 선택 방문':''} · \${link(place.mapUrl,'Google Maps')}</p>
+     <p>\${esc(e.desc)}</p><p>\${categoryBadge(eventCategory(e))}\${e.optional?' · 선택 방문':''} · \${link(place.mapUrl,'Google Maps')}</p>
      \${eventInfo(e,{open:true})}</article>\`;
    }).join('')}\${day.note?'<p>'+esc(day.note)+'</p>':''}</section>\`;
  }
  \`<!doctype html>
  <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
  <title>나고야 전체 일정</title><link rel="stylesheet" href="style.css?v=\${guideRelease}"><link rel="stylesheet" href="controls.css?v=\${guideRelease}">
- <link rel="stylesheet" href="ux.css?v=\${guideRelease}"><link rel="stylesheet" href="screen.css?v=\${guideRelease}"></head>
+ <link rel="stylesheet" href="ux.css?v=\${guideRelease}"><link rel="stylesheet" href="components.css?v=\${guideRelease}"><link rel="stylesheet" href="screen.css?v=\${guideRelease}"></head>
  <body class="static-guide"><main><p><a href="index.html">여행 웹앱으로 돌아가기</a></p><h1>나고야 전체 일정</h1>
  <p>2026.12.10–14 · 일본 현지 시간</p>
  <nav aria-label="날짜별 일정">\${days.map((day,i)=>\`<a href="#day-\${i+1}">\${day.date} \${esc(day.short)}</a>\`).join(' · ')}</nav>

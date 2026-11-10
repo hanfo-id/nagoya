@@ -48,7 +48,9 @@ function initDayMap(){
  mapTiles.on('load',()=>{if(!tileFailed)status.textContent=missing?missing+'곳은 Google Maps에서 확인하세요.':''});
  points.forEach(point=>{
   if(!point.location||!Number.isFinite(point.location.lat)||!Number.isFinite(point.location.lng))return;
-  const marker=L.marker([point.location.lat,point.location.lng],{icon:L.divIcon({className:'numberpin'+(point.optional?' is-optional':'')+(point.status==='skipped'?' is-skipped':''),html:`<span>${point.number}</span>`,iconSize:[34,34],iconAnchor:[17,17],popupAnchor:[0,-20]}),title:point.number+'번 '+point.name,alt:point.number+'번 '+point.name,keyboard:true,riseOnHover:true});
+  const category=eventCategory(EVENTS_BY_ID.get(point.eventId));
+  const label=point.number+'번 '+point.name+' · '+CATEGORY_VISUALS[category].label;
+  const marker=L.marker([point.location.lat,point.location.lng],{icon:L.divIcon({className:'numberpin'+(point.optional?' is-optional':'')+(point.status==='skipped'?' is-skipped':''),html:`<span>${point.number}</span>`,iconSize:[34,34],iconAnchor:[17,17],popupAnchor:[0,-20]}),title:label,alt:label,keyboard:true,riseOnHover:true});
   marker.on('click',()=>{
    if(coincidentStops(point,points).length>1){
     routeFollowAfter=Date.now()+1200;
@@ -63,8 +65,12 @@ function initDayMap(){
    showMapSelection({number:point.number});
    openPlace(point.eventId,point.number,{expand:true});
   });
+  marker.on('add',()=>{
+   const icon=marker.getElement();
+   icon.dataset.category=category;
+   icon.setAttribute('aria-label',label);
+  });
   marker.addTo(dayMap);
-  marker.getElement()?.setAttribute('aria-label',point.number+'번 '+point.name);
   mapMarkers.set(point.number,{marker,point});
  });
  if(mapMarkers.size)fitDayMap();else{dayMap.setView([35.17,136.90],12);status.textContent='표시할 좌표가 없습니다. 아래 Google Maps 링크를 이용하세요.'}

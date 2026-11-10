@@ -16,7 +16,7 @@ function printedEvent(e){
  const point=eventPlace(e),def=reservationFor(e);
  return `<article class="event panel" data-printed-event="${e.id}"><h3>${esc(eventSlot(e))} · ${esc(e.title)}</h3>
   <p><b>${esc(point.name)}</b> · <span lang="ja">${esc(point.jp)}</span></p><p>${esc(e.desc)}</p>
-  <p>${esc(EVENT_STATUS[eventStatus(e)])}${e.optional?' · 선택 방문':''}</p>
+  <p class="print-event-meta">${categoryBadge(eventCategory(e))} ${esc(EVENT_STATUS[eventStatus(e)])}${e.optional?' · 선택 방문':''}</p>
   ${def?reservationBadge(def)+reservationTiming(def):''}${eventInfo(e,{open:true})}</article>`;
 }
 function printedDay(i){

@@ -1,5 +1,5 @@
 /* Install one release of the app shell. Public map tiles remain network-only. */
-const RELEASE='20261110-food1';
+const RELEASE='20261110-category1';
 const CACHE='nagoya-trip-'+RELEASE;
 const VERSIONED=['style.css','controls.css','ux.css','travel.css','components.css','screen.css','screen.js','data/itinerary.js','trip-details.js','trip-data.js','map-locations.js','trip-state.js','ux.js','numbered-map.js','app.js','favicon.ico','favicon.svg','icons/apple-touch-icon.png','manifest.webmanifest'];
 const STATIC=['index.html','guide.html','icons/favicon-32.png','icons/icon-192.png','icons/icon-512.png','vendor/leaflet/leaflet.css','vendor/leaflet/leaflet.js','vendor/leaflet/images/layers.png','vendor/leaflet/images/layers-2x.png'];

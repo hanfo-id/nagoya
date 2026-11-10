@@ -1,5 +1,9 @@
 /* Screen composition. Travel data, stable event IDs and storage remain in trip-state.js. */
 let screenPage='home',selectedStopNumber=0,routeFollowAfter=0,inlinePlaceKey='';
+function categoryBadge(key) {
+ const {label,icon}=CATEGORY_VISUALS[key];
+ return `<span class="category-badge" data-category="${key}"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${icon}</svg>${label}</span>`;
+}
 function eventSlot(e){return e.time+(e.end?'–'+e.end:'')}
 function stopDescription(p){return EVENTS_BY_ID.get(p.eventId).desc}
 function stopKey(p){return p.id+'|'+p.eventIds.join(',')}
@@ -11,9 +15,12 @@ function routeDayHTML(i){
  inlinePlaceKey=open?stopKey(open):'';
  const rows=points.map(p=>{
   const expanded=inlinePlaceKey===stopKey(p),event=EVENTS_BY_ID.get(p.eventId);
-  return `<li id="mapstop-${p.number}" data-event-id="${p.eventId}" class="route-item ${p.status==='skipped'?'is-skipped':''}">
+  const category=eventCategory(event);
+  const visit=(event.booking||VISIT_REQUIREMENTS[event.id])?`<span class="route-visit">${esc(event.requirement)}</span>`:'';
+  return `<li id="mapstop-${p.number}" data-event-id="${p.eventId}" data-category="${category}" class="route-item category-edge ${p.status==='skipped'?'is-skipped':''}">
    <button class="route-place" data-pin="${p.number}" aria-pressed="false"><span class="route-number">${p.number}</span><span class="route-copy">
-    <span class="route-time">${esc(pointTime(p))} / ${esc(p.kind)}${p.optional?' / 선택':''}${p.status!=='planned'?' / '+EVENT_STATUS[p.status]:''}${(event.booking||VISIT_REQUIREMENTS[event.id])?' / '+esc(event.requirement):''}</span>
+    <span class="route-meta"><span class="route-time">${esc(pointTime(p))}</span>${categoryBadge(category)}
+    ${p.optional?'<span class="optional-label">선택</span>':''}${p.status!=='planned'?`<span class="route-status">${EVENT_STATUS[p.status]}</span>`:''}${visit}</span>
     <strong>${esc(p.name)}</strong><small>${esc(stopDescription(p))}</small></span></button>
    <button class="route-more" ${stopDetailAttributes(p)} aria-label="${esc(event.title)} 상세">${expanded?'접기':'상세'}</button>
    ${expanded?`<div class="inline-stop-detail">${placeDetailsHTML(p,i)}</div>`:''}</li>`;
@@ -40,7 +47,7 @@ function renderHomeCompact(){
  document.body.classList.toggle('is-travelling',travelPhase()==='during'||state.options.fieldMode);
  const clock=japanClock(),today=dayIndexForDate(clock.date);if(state.selectionMode==='auto'&&today>=0)active=today;
  const e=nextEvent({...state,selectedEvent:''},active,clock).event,p=eventPlace(e),totals=reservationTotals();
- $('#todaypanel').innerHTML=`<div class="home-title"><h1>나고야 여행</h1><p>2026.12.10 목 – 12.14 월</p></div><div class="home-next"><span>${days[active].date} ${today===active?'오늘의 일정':'선택 일정'}</span><h2>${e?esc(p?.name||e.title):'일정을 모두 마쳤어요'}</h2>${e?`<p>${esc(confirmedTime(e)||e.time)} <span>${esc(e.kind)}</span></p><div class="action-group"><button class="btn btn-primary" data-screen="plan">일정 보기</button></div>`:'<button class="btn btn-primary" data-screen="plan">전체 일정</button>'}</div><div class="home-days">${days.map((d,i)=>`<button data-home-day="${i}" aria-label="${d.date} ${d.dow} ${esc(d.short)} 일정 열기"><b>${d.date}</b><small>${d.dow[0]}</small></button>`).join('')}</div><div class="home-booking"><button data-screen="food"><strong>식당 찾기</strong><span>추천 메뉴·예약·후기</span><b aria-hidden="true">›</b></button><button data-screen="reservations"><strong>예약 현황</strong><span>확정 ${totals.confirmed} / 확인 필요 ${totals.attention}</span><b aria-hidden="true">›</b></button></div><details class="travel-facts"><summary>항공·호텔 정보</summary><p>입국 12.10 16:50 / 출국 12.14 17:50<br>출국일 공항 도착 계획 ${esc(baseEvents(4).find(e=>e.id==='d5-airport').end)}</p><p>니시테츠 호텔 크룸 나고야<br><span lang="ja">西鉄ホテル クルーム名古屋</span></p>${link(EVENTS_BY_ID.get('d1-checkin').place.mapUrl,'호텔 Google Maps')}</details>`;
+ $('#todaypanel').innerHTML=`<div class="home-title"><h1>나고야 여행</h1><p>2026.12.10 목 – 12.14 월</p></div><div class="home-next"><span>${days[active].date} ${today===active?'오늘의 일정':'선택 일정'}</span><h2>${e?esc(p?.name||e.title):'일정을 모두 마쳤어요'}</h2>${e?`<p class="home-next-meta">${esc(confirmedTime(e)||e.time)} ${categoryBadge(eventCategory(e))}${e.optional?'<span class="optional-label">선택</span>':''}</p><div class="action-group"><button class="btn btn-primary" data-screen="plan">일정 보기</button></div>`:'<button class="btn btn-primary" data-screen="plan">전체 일정</button>'}</div><div class="home-days">${days.map((d,i)=>`<button data-home-day="${i}" aria-label="${d.date} ${d.dow} ${esc(d.short)} 일정 열기"><b>${d.date}</b><small>${d.dow[0]}</small></button>`).join('')}</div><div class="home-booking"><button data-screen="food"><strong>식당 찾기</strong><span>추천 메뉴·예약·후기</span><b aria-hidden="true">›</b></button><button data-screen="reservations"><strong>예약 현황</strong><span>확정 ${totals.confirmed} / 확인 필요 ${totals.attention}</span><b aria-hidden="true">›</b></button></div><details class="travel-facts"><summary>항공·호텔 정보</summary><p>입국 12.10 16:50 / 출국 12.14 17:50<br>출국일 공항 도착 계획 ${esc(baseEvents(4).find(e=>e.id==='d5-airport').end)}</p><p>니시테츠 호텔 크룸 나고야<br><span lang="ja">西鉄ホテル クルーム名古屋</span></p>${link(EVENTS_BY_ID.get('d1-checkin').place.mapUrl,'호텔 Google Maps')}</details>`;
 }
 function requestedScreen(){const u=new URL(location.href);return ['home','plan','reservations','prepare','food'].includes(u.searchParams.get('page'))?u.searchParams.get('page'):u.hash==='#reservations'?'reservations':u.hash==='#prepare'?'prepare':u.hash==='#food'?'food':u.searchParams.has('day')||u.searchParams.has('view')||u.hash==='#plan'?'plan':'home'}
 function syncScreen(){
@@ -138,8 +145,8 @@ function initRouteObserver(){
 
 function infoRows(rows){return '<dl class="info-rows">'+rows.map(([key,value])=>`<div><dt>${esc(key)}</dt><dd>${value}</dd></div>`).join('')+'</dl>'}
 function restaurantCard(e){
- const point=eventPlace(e),def=reservationFor(e),[kind,order]=e.meal;
- return `<article class="restaurant food-card" id="restaurant-${e.id}"><header><span>${esc(kind)}</span><small>${days[e.day].date} ${esc(e.time)}</small></header>
+ const point=eventPlace(e),def=reservationFor(e),[kind,order]=e.meal,category=eventCategory(e);
+ return `<article class="restaurant food-card category-edge" id="restaurant-${e.id}" data-category="${category}"><header><span class="food-card-meta">${categoryBadge(category)}<span>${esc(kind)}</span>${e.optional?'<span class="optional-label">선택</span>':''}</span><small>${days[e.day].date} ${esc(e.time)}</small></header>
   <h3>${esc(point.name)}</h3><p class="jp" lang="ja">${esc(point.jp)}</p><p>${esc(e.desc)}</p>
   ${infoRows([['추천',esc(order)],['방문 방식',esc(e.requirement)]])}${def?`<div class="food-booking">${reservationBadge(def)}${reservationTiming(def)}</div>`:''}
   <div class="card-actions">${actionLink(directions(point.query,'transit'),'길찾기','primary')}${def?`<button class="btn btn-secondary" data-res-jump="${def.id}">예약 관리</button>`:''}</div>

@@ -13,6 +13,7 @@ for(const file of files){
 assert.equal(run('nearestSheetLevel(600,65)'),'expanded');
 assert.equal(run('nearestSheetLevel(600,195)'),'balanced');
 assert.equal(run('nearestSheetLevel(600,295)'),'map');
+const renderedCategories=new Set();
 for(let i=0;i<5;i++){
  run('active='+i);
  const events=JSON.parse(run('JSON.stringify(baseEvents(active))')),collapsed=run('routeDayHTML(active)');
@@ -21,6 +22,12 @@ for(let i=0;i<5;i++){
  assert.equal(collapsed.includes('data-plan='),false);
  for(const e of events){
   assert.ok(collapsed.includes(run('esc(EVENTS_BY_ID.get("'+e.id+'").desc)')),e.id);
+  const category=run('eventCategory(EVENTS_BY_ID.get("'+e.id+'"))');
+  const row=collapsed.split('data-event-id="'+e.id+'"')[1].split('</li>')[0];
+  assert.ok(row.includes('data-category="'+category+'"'),e.id);
+  assert.ok(row.includes(run('categoryBadge("'+category+'")')),e.id);
+  assert.equal(row.includes('class="optional-label"'),e.optional,e.id);
+  renderedCategories.add(category);
   run('state.selectedEvent="'+e.id+'";state.expanded[state.selectedEvent]=true');
   const detail=run('routeDayHTML(active).split("inline-stop-detail")[1]?.split("</li></ol>")[0]');
   assert.ok(detail,e.id);
@@ -31,10 +38,22 @@ for(let i=0;i<5;i++){
   for(const step of e.steps)assert.ok(detail.includes(run('esc('+JSON.stringify(step)+')')),e.id+' '+step);
   const printed=run('printedEvent(EVENTS_BY_ID.get("'+e.id+'"))');
   assert.ok(printed.includes('data-printed-event="'+e.id+'"'));
+  assert.ok(printed.includes(run('categoryBadge("'+category+'")')),e.id);
   assert.ok(printed.includes(run('esc(EVENTS_BY_ID.get("'+e.id+'").desc)')),e.id);
   assert.ok(!detail.includes('undefined')&&!printed.includes('undefined'),e.id);
  }
 }
+assert.deepEqual([...renderedCategories].sort(),['lodging','meal','rest','shopping','sight','transit']);
+for(const [id,category] of Object.entries({
+ 'd1-checkin':'lodging','b16':'lodging','b01':'meal','b15':'transit','d5-security':'transit','d5-flight':'transit',
+ 'f08':'shopping','s07':'sight','s-osu-walk':'sight','f20':'rest','f-chiikawa':'rest','s-coffee-buriko':'rest',
+ 's-shinsuzume':'rest','sun-unayasu':'meal','s-okoge':'meal'
+})){
+ assert.equal(run('eventCategory(EVENTS_BY_ID.get("'+id+'"))'),category,id);
+}
+const guide=fs.readFileSync('guide.html','utf8');
+assert.match(guide,/components\.css\?v=/);
+assert.match(guide,/data-guide-event="f-chiikawa">[\s\S]*?category-badge" data-category="rest"/);
 assert.match(run('restaurantCard(EVENTS_BY_ID.get("s05"))'),/data-res-jump="sushi-lunch"/);
 assert.doesNotMatch(run('restaurantCard(EVENTS_BY_ID.get("s01"))'),/data-res-jump/);
 const checked=run('Object.keys(SHOP_WALKS)');
@@ -55,4 +74,4 @@ for(const id of ['f-chiikawa','s-shinsuzume','s-okoge','sun-unayasu']){
 }
 assert.match(run('eventInfo(EVENTS_BY_ID.get("s22"),{open:true})'),/12\/11 금요일 포함/);
 assert.doesNotMatch(fs.readFileSync('index.html','utf8'),/id="zoo"|place-experiences\.js/);
-console.log('PASS: every collapsed/expanded/printed event, all detail text, inline progress and routes, hotel without booking and mobile sheet snaps.');
+console.log('PASS: six shared visual categories, every collapsed/expanded/printed event, all detail text, inline progress and routes, hotel without booking and mobile sheet snaps.');

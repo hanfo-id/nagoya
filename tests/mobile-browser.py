@@ -143,7 +143,7 @@ def verify_mobile(browser, url, server, engine):
     expect(page.locator(".route-item")).to_have_count(29)
 
     for width in (320, 360, 375, 390, 430, 768, 1280):
-        height = 568 if width == 320 else 640
+        height = {320: 568, 375: 812, 390: 844}.get(width, 640)
         page.set_viewport_size({"width": width, "height": height})
         page.goto(url + "?page=plan&day=12-11&plan=A", wait_until="domcontentloaded")
         expect(page.locator(".route-item")).to_have_count(29)
@@ -151,6 +151,14 @@ def verify_mobile(browser, url, server, engine):
         assert page.locator(".route-scroll").bounding_box()["height"] > 60, width
         assert page.locator("#selected-actions").bounding_box()["y"] < height, width
         assert page.locator(".route-layout").bounding_box()["width"] <= width, width
+        assert page.locator(".route-meta").evaluate_all(
+            "(rows)=>rows.every(row=>row.scrollWidth<=row.clientWidth)"
+        ), width
+        assert row("f-chiikawa").locator(".route-more").bounding_box()["height"] >= 44
+        expect(row("f-chiikawa").locator(".optional-label")).to_have_text("선택")
+        expect(row("f-chiikawa").locator(".category-badge")).to_have_text("휴식·간식")
+        expect(row("s18").locator(".route-status")).to_have_text("완료")
+        expect(row("s18").locator(".category-badge")).to_have_text("쇼핑")
         for button in page.locator(".selected-buttons .btn").all():
             bounds = button.bounding_box()
             assert bounds["height"] >= 44 and bounds["x"] + bounds["width"] <= width, (width, bounds)
@@ -159,6 +167,14 @@ def verify_mobile(browser, url, server, engine):
             expect(row(event_id).locator(".inline-jp")).not_to_be_empty()
             expect(row(event_id).locator(".info-bullets").first).not_to_be_empty()
         assert page.locator(".route-scroll").evaluate("node=>node.scrollTop") > 0
+    page.set_viewport_size({"width": 390, "height": 844})
+    page.goto(url + "?page=plan&day=12-10", wait_until="domcontentloaded")
+    expect(row("d1-checkin").locator(".category-badge")).to_have_text("숙소")
+    expect(row("d1-night-park").locator(".category-badge")).to_have_text("관광")
+    expect(row("d1-arrival").locator(".category-badge")).to_have_text("이동")
+    expect(row("d1-ramen").locator(".category-badge")).to_have_text("식사")
+    page.goto(url + "?page=home&day=12-10", wait_until="domcontentloaded")
+    expect(page.locator(".home-next .category-badge")).to_have_text("이동")
     page.set_viewport_size({"width": 390, "height": 700})
     page.goto(url + "?page=plan&day=12-12&plan=A", wait_until="domcontentloaded")
     expect(page.locator(".route-item")).to_have_count(23)
@@ -174,6 +190,11 @@ def verify_mobile(browser, url, server, engine):
     assert page.evaluate("Array.from(mapMarkers.values()).every(({marker,point})=>marker.getLatLng().lat===point.location.lat && marker.getLatLng().lng===point.location.lng)")
     page.evaluate("[...mapMarkers.values()].find(({point})=>point.eventId==='s08').marker.fire('click')")
     expect(row("s08").locator(".inline-stop-detail")).to_be_visible()
+    assert page.evaluate("""[...mapMarkers.values()].every(({marker,point})=>{
+        const row=document.querySelector('[data-event-id="'+point.eventId+'"]');
+        return marker.getElement().dataset.category===row.dataset.category &&
+            marker.getElement().textContent===String(point.number);
+    })""")
     page.evaluate("[...mapMarkers.values()].find(({point})=>point.eventId==='s-coffee-buriko').marker.fire('click')")
     choice = page.locator("#map-choices .pin-visits [data-place-detail=s-coffee-buriko]")
     expect(choice).to_be_visible()
@@ -186,6 +207,19 @@ def verify_mobile(browser, url, server, engine):
     expect(row("s-okoge")).to_be_visible()
     page.locator("#optional").check()
     expect(row("s-osu-walk")).to_be_visible()
+    snack = row("s-shinsuzume")
+    snack.locator(".route-more").tap()
+    snack.locator("[data-event-status]").select_option("progress")
+    expect(snack.locator(".route-status")).to_have_text("진행 중")
+    snack.locator("[data-event-status]").select_option("skipped")
+    expect(snack).to_have_class(re.compile("is-skipped"))
+    expect(snack.locator(".route-status")).to_have_text("건너뜀")
+    expect(snack.locator(".category-badge")).to_have_text("휴식·간식")
+    expect(snack.locator(".optional-label")).to_have_text("선택")
+    assert snack.locator(".route-copy > strong").evaluate(
+        "(node)=>getComputedStyle(node).textDecorationLine"
+    ) == "line-through"
+
     page.goto(url + "?page=food&day=12-12&plan=A", wait_until="domcontentloaded")
     for query, event_id in (
         ("부리코", "s-coffee-buriko"), ("치이카와", "f-chiikawa"), ("당고", "s-shinsuzume"),
@@ -193,6 +227,11 @@ def verify_mobile(browser, url, server, engine):
     ):
         page.locator("#search").fill(query)
         expect(page.locator("#restaurant-" + event_id)).to_be_visible()
+    unayasu = page.locator("#restaurant-sun-unayasu")
+    expect(unayasu.locator(".category-badge")).to_have_text("식사")
+    expect(unayasu.locator(".optional-label")).to_have_text("선택")
+    expect(unayasu.locator(".statusbadge")).to_have_text("예약 미확정")
+    assert unayasu.locator(".food-card-meta").evaluate("(node)=>node.scrollWidth<=node.clientWidth")
     page.locator("#search").fill("이부시긴")
     expect(page.locator("#foodcount")).to_contain_text("0개")
 
@@ -208,14 +247,37 @@ def verify_mobile(browser, url, server, engine):
         row("s22").locator(".inline-section").first.scroll_into_view_if_needed()
         page.screenshot(path=screenshot)
     page.evaluate("beforePrint()")
-    expect(page.locator("[data-printed-event]")).to_have_count(83)
+    expect(page.locator("[data-printed-event] .category-badge")).to_have_count(83)
     page.evaluate("afterPrint()")
     page.goto(sunday + "&plan=B", wait_until="domcontentloaded")
     page.evaluate("beforePrint()")
     expect(page.locator("[data-printed-event]")).to_have_count(83)
     expect(page.locator("[data-printed-event=d4-bath]")).to_have_count(0)
     page.evaluate("afterPrint()")
-    print("PASS 320–1280 px, touch and scroll, shopping detail samples, same-location marker choice, print")
+    print("PASS 320–1280 px, category labels, combined status, touch, scroll, marker choice and print")
+
+    # Measure foreground/background pairs from the actual badges on the static guide.
+    page.goto(url + "guide.html", wait_until="load")
+    expect(page.locator('.category-badge[data-category="transit"]').first).to_have_css(
+        "background-color", "rgb(235, 238, 241)"
+    )
+    ratios = page.locator(".category-badge").evaluate_all(r"""badges=>{
+        function luminance(color){
+            const rgb=color.match(/\d+/g).slice(0,3).map(n=>{
+                const v=Number(n)/255;
+                return v<=0.04045?v/12.92:((v+0.055)/1.055)**2.4;
+            });
+            return 0.2126*rgb[0]+0.7152*rgb[1]+0.0722*rgb[2];
+        }
+        return Object.fromEntries(badges.map(b=>{
+            const style=getComputedStyle(b);
+            const l1=luminance(style.color),l2=luminance(style.backgroundColor);
+            return [b.dataset.category,(Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05)];
+        }));
+    }""")
+    assert len(ratios) == 6 and min(ratios.values()) >= 4.5, ratios
+    print("PASS all six category badge contrast ratios:", {k: round(v, 2) for k, v in ratios.items()})
+    page.goto(sunday, wait_until="domcontentloaded")
 
     page.wait_for_function("navigator.serviceWorker.controller !== null", timeout=15000)
     # Windows WebKit aborts navigations before the worker when Playwright turns off
@@ -241,6 +303,9 @@ def verify_mobile(browser, url, server, engine):
     expect(row("s-coffee-buriko").locator(".inline-jp")).to_have_text("珈琲ぶりこ")
     page.goto(url + "guide.html#sunday-b", wait_until="domcontentloaded")
     expect(page.locator("#day-4 [data-guide-event]")).to_have_count(17)
+    expect(page.locator('[data-guide-event="s-okoge"] .category-badge')).to_have_css(
+        "background-color", "rgb(250, 236, 230)"
+    )
     expect(page.locator("[data-guide-event]")).to_have_count(83)
     expect(page.locator("#sunday-a")).to_have_count(0)
     expect(page.locator("[data-guide-event=s-okoge]")).to_contain_text("몬자야키")
