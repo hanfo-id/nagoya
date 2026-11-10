@@ -55,6 +55,7 @@ const guide=fs.readFileSync('guide.html','utf8');
 assert.match(guide,/components\.css\?v=/);
 assert.match(guide,/data-guide-event="f-chiikawa">[\s\S]*?category-badge" data-category="rest"/);
 assert.match(run('restaurantCard(EVENTS_BY_ID.get("d5-keshiki"))'),/data-res-jump="keshiki-saturday"/);
+assert.match(run('eventInfo(EVENTS_BY_ID.get("d5-keshiki"),{open:true})'),/maps\/reserve\/v\/dine/);
 assert.equal(run('EVENTS_BY_ID.get("s01").meal'),null);
 const checked=run('Object.keys(SHOP_WALKS)');
 assert.equal(checked.length,23);

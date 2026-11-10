@@ -13,7 +13,7 @@ const {createHash}=require('node:crypto');
  vm.runInContext(fs.readFileSync('sw.js','utf8'),c);
  const release=vm.runInContext('RELEASE',c);
  let pending;listeners.install({waitUntil(p){pending=p}});await pending;
- for(const file of ['index.html','guide.html','trip-data.js?v='+release,'data/itinerary.js?v='+release])assert.ok(entries.has(scope+file),file);
+ for(const file of ['index.html','guide.html','trip-data.js?v='+release,'data/itinerary.js?v='+release,'data/reservations.js?v='+release])assert.ok(entries.has(scope+file),file);
  assert.ok(![...entries.keys()].some(u=>u.includes('openstreetmap')));
  listeners.activate({waitUntil(p){pending=p}});await pending;assert.deepEqual(deleted,['nagoya-trip-old']);
  const fetchEvent=(url,mode='cors')=>{
@@ -29,7 +29,7 @@ const {createHash}=require('node:crypto');
  assert.deepEqual(requests,[]);
  const html=fs.readFileSync('index.html','utf8');
  const scripts=[...html.matchAll(/<script src="([^"?]+)\?v=([^"]+)" integrity="sha256-([^"]+)"/g)];
- assert.equal(scripts.length,9);
+ assert.equal(scripts.length,10);
  for(const [,name,version,hash] of scripts){
   assert.equal(version,release);
   assert.equal(createHash('sha256').update(fs.readFileSync(name)).digest('base64'),hash,name);

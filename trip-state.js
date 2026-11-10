@@ -16,8 +16,8 @@ function migratedRouteDay(day,eventId){
 }
 const EVENTS_BY_ID=new Map(ALL_EVENTS.map(event=>[event.id,event]));
 const RESERVATIONS=ALL_EVENTS.filter(event=>event.booking).map(event=>({
- ...event.booking,day:event.day,plan:event.booking.time,event:event.id,
- optional:event.optional||event.booking.optional===true,required:!event.optional&&event.booking.optional!==true
+ ...event.booking,day:event.day,visit:event.time,plan:event.booking.time,event:event.id,
+ optionalVisit:event.optional,required:['required','ticket'].includes(event.bookingClass)
 }));
 const PREP_GROUPS={
  '출발 준비':{flight:'항공편 NGO·터미널·출발 시각 확인',passport:'여권·티켓 QR 준비',hotel:'숙소 예약·주소 확인',connect:'통신·교통카드·현금 준비',insurance:'여행자 보험 가입 여부 확인'},
@@ -83,7 +83,8 @@ function normalizeState(raw,strict=false){
   const value=raw.reservations?.[id];
   if(plainObject(value)&&Object.hasOwn(RES_STATUS,value.status))s.reservations[id]={
    status:value.status,date:validDate(value.date)?value.date:'',time:validTime(value.time)?value.time:'',
-   note:cleanText(value.note),updatedAt:cleanText(value.updatedAt,40)
+   note:cleanText(value.note),updatedAt:cleanText(value.updatedAt,40),
+   ...(Object.hasOwn(TICKET_KINDS,value.ticketKind)&&{ticketKind:value.ticketKind})
   };
  }
  for(const id of Object.keys(s.checks))s.checks[id]=raw.checks?.[id]===true;
@@ -122,7 +123,18 @@ function eventDayIndex(id){return EVENTS_BY_ID.get(id)?.day??-1}
 function dayFor(i){return days[i]}
 function isoDay(i){return days[i].iso}
 function dayIndexForDate(date){return days.findIndex(day=>day.iso===date)}
-function activeReservations(){return RESERVATIONS}
+function activeReservations(){return RESERVATIONS.filter(def=>!def.optionalVisit||state.filters.optional)}
+function reservationStatuses(def){
+ if(def.type==='priority')return {...RES_STATUS,requested:'우선 안내 신청 중',confirmed:'우선 안내 신청 완료'};
+ if(def.type==='ticket')return {...RES_STATUS,requested:'일본 도착 후 발권 예정',confirmed:'티켓 구매 완료',walkin:'현장 발권 예정'};
+ if(def.type==='queue')return {...RES_STATUS,requested:'정리권 수령 예정',confirmed:'정리권 수령 완료'};
+ if(def.type==='notice')return {...RES_STATUS,requested:'공지 확인 예정',confirmed:'신청 완료',walkin:'예약 불필요 확인'};
+ return RES_STATUS;
+}
+function reservationComplete(def){
+ const {status}=reservationValue(def);
+ return status==='confirmed'||(status==='walkin'&&['restaurant','notice'].includes(def.type));
+}
 function reservationFor(event){return RESERVATIONS.find(def=>def.event===event.id)}
 function reservationValue(def){return state.reservations[def.id]||{status:'unconfirmed',date:'',time:'',note:''}}
 function eventStatus(event){return state.events[event.id]?.status||'planned'}

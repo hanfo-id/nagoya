@@ -18,20 +18,11 @@ function eventCategory(event) {
  // At the same hotel, an arrival by train or a breakfast still has its own category.
  return event.kind==='휴식'&&event.placeId==='hotel'?'lodging':CATEGORY_KEYS[event.kind]||'activity';
 }
-const BOOKING = ITINERARY_SOURCE.bookingLinks;
-const BOOKING_RULES = {
- f06:{id:'ramuchi',modes:['phone','walk'],name:'쿠로부타야 라무치',time:'11:00',requirement:'방문 전 전화 확인',links:[['매장 전화','tel:+81522411664']]},
- f22:{id:'mutsumi',modes:['web','phone'],name:'테바사키 무츠미 본점',time:'17:30',requirement:'예약 권장',links:[['예약 안내','https://tabelog.com/aichi/A2301/A230103/23079119/'],['매장 전화','tel:+81526845577']]},
- 's-okoge':{id:'monja-saturday',modes:['phone'],name:'츠키시마 몬자 오코게 사카에',time:'19:30',requirement:'예약 가능 · 전화로 확인',links:[['매장 전화','tel:+81522286998'],['타베로그 지점 안내','https://tabelog.com/aichi/A2301/A230103/23091106/']]},
- 'sun-unayasu':{id:'unayasu-lunch',modes:['web','phone','walk'],name:'우나야스 니시키점',time:'11:00',requirement:'예약 없이 방문 가능 · 온라인 예약 선택',links:[['니시키점 온라인 예약','https://www.hotpepper.jp/strJ003341409/'],['매장 전화','tel:+81529515151']]},
- b09:{id:'nabana-ticket',name:'나바나노사토 일루미네이션 입장권',time:'15:50',requirement:'입장권 사전 구매 권장',links:[['공식 입장권 안내',BOOKING.nabana]]},
- 'd5-keshiki':{id:'keshiki-saturday',optional:true,modes:['web','walk'],name:'케시키 · 우선 안내',time:'10:00',requirement:'우선 안내 선택 · 좌석 확정 아님',links:[['TableCheck 우선 안내','https://www.tablecheck.com/ja/shops/tenmusudokorokeshiki/reserve']]}
-};
 const VISIT_LINKS = {
  'd5-keshiki':[['메뉴·모닝 안내','https://tabelog.com/aichi/A2301/A230101/23087668/dtlmenu/'],['매장 문의','tel:+81529904704'],['평일 오전 두 메뉴 주문 후기','https://retty.me/area/PRE23/ARE62/SUB6202/100001738965/']],
  's-kurin':[['정리권·이용 안내','https://www.kurin.gensg.jp/shop/shop_index.html'],['카누레와 아이스크림 · 공식 안내','https://www.caneleandicecream.com/'],['대체 매장 Google Maps',appMap('カヌレとアイス 名古屋・大須本店 愛知県名古屋市中区大須3-37-43')]],
  's-donki':[['사카에 본점 공식 안내','https://www.donki.com/store/shop_detail.php?shop_id=348'],['소비세 환급 · 일본 관광청','https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00021.html']],
- 'f-chiikawa':[['나고야 PARCO 매장','https://nagoya.parco.jp/shop/detail/?id=10854'],['나고야 구매 예약 안내','https://www.chiikawa-yaki.com/app-nagoya/schedules'],['매장 전화','tel:+81522657353']],
+ 'f-chiikawa':[['나고야 PARCO 매장','https://nagoya.parco.jp/shop/detail/?id=10854'],['매장 전화','tel:+81522657353']],
  's-shinsuzume':[['오스 상점가 매장 안내','https://osu.nagoya/ja/shop.php?s=lOJDBK']],
  'sun-unayasu':[['니시키점 메뉴·가격','https://www.hotpepper.jp/strJ003341409/food/'],['대안 · JR 중앙통로 에키카마 키시멘','https://www.jrt-food-service.co.jp/store/338/']],
  f04:[['오아시스21 공사 공지','https://www.sakaepark.co.jp/news/news-8135/']],
@@ -46,7 +37,7 @@ const VISIT_LINKS = {
  'd5-flight-park':[['플라이트 오브 드림즈','https://www.centrair.jp/flight-of-dreams/']],
  'd5-security':[['센트레아 출국 시 환급 절차','https://www.centrair.jp/taxrefund/index.html']]
 };
-const VISIT_REQUIREMENTS = {'s-kurin':'현장 정리권 · 10:30부터',f24:'야간 전망대 입장권',s22:'무료 입장 · 혼잡 시 현장 정리권 또는 입장 제한',b12:'개인 현장 방문 · 15명 이상 단체는 별도 사전 예약'};
+const VISIT_REQUIREMENTS = {b12:'개인 현장 방문 · 15명 이상 단체만 사전 예약'};
 const MEAL_INFO = {
  kurin:['와구리 몽블랑','황금 몽블랑 · 쿠리잔마이 · 계절 과일 몽블랑','통상 11:00–19:00 · 부정기 휴무 · 매장·포장 현금만.','https://www.kurin.gensg.jp/menu/menu_index.html'],
  katoCoffee:['나고야 모닝','자가 로스팅 커피와 오구라 토스트 · 나고야 세트','월요일 08:00–16:00 · 모닝 08:00–10:30.','https://www.katocoffee.com/com/company/access.html'],
@@ -65,13 +56,16 @@ const MEAL_INFO = {
 };
 function normalizeEvent(raw, index) {
  const key = raw.place.id;
+ const rule=BOOKING_RULES[raw.id];
+ const booking=rule&&{...rule,name:rule.name||raw.place.name,time:rule.time||raw.start,
+  links:rule.methods.map(({label,url})=>[label,url])};
  const meal = raw.category==='식사'||(raw.category==='휴식'&&MEAL_INFO[key])
   ? MEAL_INFO[key]||['식사',null] : null;
  return {
   ...raw, time:raw.start, end:raw.end||'', kind:raw.category, desc:raw.description,
-  steps:raw.details, placeId:key, day:index, booking:BOOKING_RULES[raw.id],
+  steps:raw.details, placeId:key, day:index, booking, bookingClass:rule?.classification||RESERVATION_AUDIT[raw.id]?.classification,
   meal, transport:raw.transport_from_previous||raw.card_notes?.transport,
-  requirement:BOOKING_RULES[raw.id]?.requirement||VISIT_REQUIREMENTS[raw.id]||raw.reservation?.requirement||raw.card_notes?.reservation_requirement
+  requirement:booking?.requirement||VISIT_REQUIREMENTS[raw.id]||raw.reservation?.requirement||raw.card_notes?.reservation_requirement
  };
 }
 function normalizeDay(raw, index) {
@@ -86,7 +80,7 @@ function exportItinerary() {
   days:days.map(day=>({date:day.iso,weekday:day.dow,title:day.title,summary:day.summary,note:day.note,
    events:day.events.map(e=>({
     id:e.id,start:e.time,end:e.end||null,title:e.title,category:e.kind,place:e.place,description:e.desc,details:e.steps,optional:e.optional,
-    ...(e.booking&&{booking:{requirement:e.booking.requirement,planTime:e.booking.time,links:e.booking.links}}),
+    ...(e.booking&&{booking:{requirement:e.booking.requirement,planTime:e.booking.time,links:e.booking.links,classification:e.bookingClass,methods:e.booking.methods}}),
     ...(e.reservation&&{reservation:e.reservation}),...(e.transport_from_previous&&{transport_from_previous:e.transport_from_previous}),
     ...(e.source_url!==undefined&&{source_url:e.source_url}),...(e.card_notes&&{card_notes:e.card_notes}),
     ...(e.alternatives&&{alternatives:e.alternatives})

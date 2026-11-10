@@ -33,7 +33,16 @@ function focusEvent(id){
  openScreen('plan');showMapSelection({eventId:id});openPlace(id,undefined,{expand:true});
 }
 function markNav(name){if(name==='map')name='plan';document.querySelectorAll('.top nav [data-nav]').forEach(b=>{if(b.dataset.nav===name)b.setAttribute('aria-current','location');else b.removeAttribute('aria-current')})}
-function openReservation(id){if(!activeReservations().some(r=>r.id===id))return;openScreen('reservations');const card=$('#reservation-'+id);if(card){card.querySelector('.resedit').open=true;scrollTarget('#reservation-'+id);card.querySelector('select')?.focus({preventScroll:true})}announce('예약 상태는 직접 기록하며 실제 예약을 실행하지 않습니다.')}
+function openReservation(id){
+ const def=RESERVATIONS.find(r=>r.id===id);if(!def)return;
+ if(def.optionalVisit)state.filters.optional=true;
+ for(const selector of ['#res-date-filter','#res-group-filter','#res-status-filter'])$(selector).value='';
+ renderReservations();
+ openScreen('reservations');
+ const card=$('#reservation-'+id),editor=card?.querySelector('.resedit');
+ if(editor)editor.open=true;
+ scrollTarget('#reservation-'+id);
+}
 function dialogConfirm(message,callback){
  const dialog=$('#confirmdialog');$('#confirmtext').textContent=message;dialog.returnValue='cancel';dialog.showModal();
  const finish=e=>{dialog.removeEventListener('close',finish);if(dialog.returnValue==='confirm')callback()};dialog.addEventListener('close',finish);
@@ -53,13 +62,14 @@ async function importBackup(file){
  }catch(error){$('#backupfeedback').textContent=error.message;announce(error.message)}finally{$('#backupfile').value=''}
 }
 function changeReservation(id,field,value){
- const def=activeReservations().find(d=>d.id===id);if(!def)return;
+ const def=activeReservations().find(d=>d.id===id);if(!def||def.record===false)return;
+ if(field==='ticketKind'&&value&&!Object.hasOwn(TICKET_KINDS,value))return;
  if(field==='status'&&!Object.hasOwn(RES_STATUS,value)||field==='date'&&value&&!validDate(value)||field==='time'&&value&&!validTime(value)){announce('여행 기간 내 날짜와 올바른 시각을 입력하세요.');return}
  if(field!=='note')remember();
  state.reservations[id]={...reservationValue(def),[field]:value,updatedAt:new Date().toISOString()};
  if(field==='note'){announce(persist()?'예약 메모를 저장했습니다.':storageMessage);return}
  commit('예약 기록을 저장했습니다. 관련 일정·식당·준비 화면에 반영했습니다.');
- document.querySelector(`[data-res-${field}="${id}"]`)?.focus({preventScroll:true});
+ document.querySelector(`[data-res-${field==='ticketKind'?'ticket-kind':field}="${id}"]`)?.focus({preventScroll:true});
 }
 function initUx(){
  const header=$('.top'),dates=$('#daytabs');
@@ -94,7 +104,10 @@ function initUx(){
  document.addEventListener('change',e=>{
   const t=e.target;
   if(t.matches('[data-event-status]')){remember();state.events[t.dataset.eventStatus]={status:t.value,updatedAt:new Date().toISOString()};commit('일정을 '+EVENT_STATUS[t.value]+' 상태로 기록했습니다.');document.querySelector(`[data-event-status="${t.dataset.eventStatus}"]`)?.focus({preventScroll:true})}
-  if(['foodonly','optional'].includes(t.id)){remember();state.filters[t.id==='foodonly'?'foodOnly':'optional']=t.checked;commit('일정과 지도에 같은 선택 조건을 반영했습니다.',{reservations:false})}
+  if(['foodonly','optional'].includes(t.id)){remember();state.filters[t.id==='foodonly'?'foodOnly':'optional']=t.checked;commit('일정과 지도에 같은 선택 조건을 반영했습니다.',{reservations:t.id==='optional'})}
+  if(t.matches('[data-res-filter]'))renderReservations();
+  if(t.id==='res-optional'){state.filters.optional=t.checked;commit('선택 방문 표시를 갱신했습니다.')}
+  if(t.matches('[data-res-ticket-kind]'))changeReservation(t.dataset.resTicketKind,'ticketKind',t.value);
   for(const field of ['status','date','time'])if(t.matches('[data-res-'+field+']'))changeReservation(t.dataset['res'+field[0].toUpperCase()+field.slice(1)],field,t.value);
   if(t.matches('[data-check]')){state.checks[t.dataset.check]=t.checked;announce(persist()?'준비 체크를 저장했습니다.':storageMessage);renderChecklist()}
   if(t.id==='reservefilter'){state.filters.reserve=t.value;persist();renderFood()}

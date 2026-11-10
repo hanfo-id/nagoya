@@ -47,7 +47,15 @@ assert.equal(run('RESERVATIONS.find(r=>r.id==="keshiki-saturday").required'),fal
 assert.equal(run('readRoute(state,"https://example.com/nagoya/?day=12-14&event=d5-keshiki").active'),2);
 
 const bookings=snapshot('activeReservations().map(r=>r.id)');
-assert.deepEqual(bookings,['ramuchi','mutsumi','keshiki-saturday','monja-saturday','unayasu-lunch','nabana-ticket']);
+assert.deepEqual(bookings,['ramuchi','chiikawa-yaki-notice','hero-popup-queue','mutsumi','mirai-night-ticket','keshiki-saturday','kurin-queue','monja-saturday','unayasu-lunch','nabana-ticket','kato-sakae-visit']);
+assert.equal(run('reservationStatuses(RESERVATIONS.find(r=>r.id==="keshiki-saturday")).confirmed'),'우선 안내 신청 완료');
+assert.equal(run('reservationStatuses(RESERVATIONS.find(r=>r.id==="nabana-ticket")).confirmed'),'티켓 구매 완료');
+run('state.reservations["nabana-ticket"]={status:"requested",ticketKind:"seven",note:"2 tickets"}');
+assert.equal(snapshot('validateBackup(JSON.stringify(backupEnvelope()))').reservations['nabana-ticket'].ticketKind,'seven');
+assert.equal(run('reservationComplete(RESERVATIONS.find(r=>r.id==="nabana-ticket"))'),false);
+run('state.filters.optional=false');
+assert.ok(!snapshot('activeReservations().map(r=>r.id)').some(id=>['unayasu-lunch','kurin-queue','chiikawa-yaki-notice'].includes(id)));
+run('state.filters.optional=true');
 for(let day=0;day<5;day++){
  for(const food of [true,false])for(const optional of [true,false]){
   run('state.filters.foodOnly='+food+';state.filters.optional='+optional);

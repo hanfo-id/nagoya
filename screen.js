@@ -91,7 +91,7 @@ function placeDetailsHTML(point,i){
  const previous=points.slice(0,index).reverse().find(p=>p.status!=='skipped'&&p.id!==point.id),next=points.slice(index+1).find(p=>p.status!=='skipped'&&p.id!==point.id);
  const walking=Boolean(SHOP_WALKS[e.id]);
  return `<p class="inline-jp" lang="ja">${esc(point.jp)}</p><ul class="activity-list">${activityHTML(e)}</ul>
-  ${def?`<div class="inline-reservation">${reservationBadge(def)}${reservationTiming(def)}<button class="btn btn-secondary" data-res-jump="${def.id}">예약 관리</button></div>`:''}
+  ${def?`<div class="inline-reservation">${reservationBadge(def)}${reservationTiming(def)}<button class="btn btn-secondary" data-res-jump="${def.id}">${def.record===false?'방문 안내':'예약 관리'}</button></div>`:''}
   ${eventInfo(e)}<details class="inline-section segment-options" data-segment-current="${esc(point.query)}" data-segment-previous="${esc(previous?.query||'')}" data-segment-next="${esc(next?.query||'')}">
   <summary>이전·다음 장소로 이동</summary><label>출발·도착<select data-route-choice="origin"><option value="current">현재 위치 → ${esc(point.name)}</option>
   ${previous?`<option value="previous">${esc(previous.name)} → ${esc(point.name)}</option>`:''}${next?`<option value="next">${esc(point.name)} → ${esc(next.name)}</option>`:''}</select></label>
@@ -149,7 +149,7 @@ function restaurantCard(e){
  return `<article class="restaurant food-card category-edge" id="restaurant-${e.id}" data-category="${category}"><header><span class="food-card-meta">${categoryBadge(category)}<span>${esc(kind)}</span>${e.optional?'<span class="optional-label">선택</span>':''}</span><small>${days[e.day].date} ${esc(e.time)}</small></header>
   <h3>${esc(point.name)}</h3><p class="jp" lang="ja">${esc(point.jp)}</p><p>${esc(e.desc)}</p>
   ${infoRows([['추천',esc(order)],['방문 방식',esc(e.requirement)]])}${def?`<div class="food-booking">${reservationBadge(def)}${reservationTiming(def)}</div>`:''}
-  <div class="card-actions">${actionLink(directions(point.query,'transit'),'길찾기','primary')}${def?`<button class="btn btn-secondary" data-res-jump="${def.id}">예약 관리</button>`:''}</div>
+  <div class="card-actions">${actionLink(directions(point.query,'transit'),'길찾기','primary')}${def?`<button class="btn btn-secondary" data-res-jump="${def.id}">${def.record===false?'방문 안내':'예약 관리'}</button>`:''}</div>
   <details class="restaurantdetail"><summary>메뉴·영업·방문 메모</summary>${eventInfo(e,{open:true})}${reviewLinks({name:point.name,blogs:BLOGS[e.placeId]})}</details></article>`;
 }
 let sheetLevel='balanced';

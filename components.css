@@ -77,6 +77,51 @@
 
 
 
+/* Reservation desk. Status and the action remain visible above the edit disclosure. */
+.res-filters {
+ display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:8px 12px;
+ margin:0 0 20px;
+ padding:12px;
+ border:1px solid var(--line);
+ border-radius:8px;
+}
+.res-filters>label { display:grid; gap:4px; min-width:0; font-size:12px; color:var(--muted) }
+.res-filters select {
+ min-height:44px;
+ min-width:0;
+ width:100%;
+ border:1px solid var(--muted);
+ border-radius:6px;
+ padding:6px 8px;
+ background:var(--white);
+ color:var(--ink);
+ font-size:16px;
+}
+.res-filters .res-include { display:flex; align-items:center; gap:8px; min-height:44px; align-self:end; color:var(--ink) }
+.res-include input { accent-color:var(--ink) }
+.res-group { margin-block:16px 26px }
+.res-group>h3 { margin:0 0 10px; padding-bottom:8px; border-bottom:1px solid var(--line); font-size:16px }
+.res-group>h3 small { margin-inline-start:5px; color:var(--muted); font-weight:400 }
+.rescardhead h3 { min-width:0; overflow-wrap:anywhere }
+.rescardhead .statusbadge { max-width:100%; white-space:normal }
+.res-requirement { margin:10px 0 0; font-weight:700; font-size:13px }
+.res-note { margin:4px 0 10px; line-height:1.55; font-size:13px }
+.res-method { display:grid; justify-items:start; gap:3px; margin-block:8px; font-size:13px }
+.res-method small { color:var(--muted); line-height:1.5; overflow-wrap:anywhere }
+.res-methods { border-top:1px solid var(--line); margin-top:12px }
+.res-methods summary { display:flex; align-items:center; min-height:44px; font-size:13px; cursor:pointer }
+.res-methods summary::after { content:'＋'; margin-inline-start:auto }
+.res-methods[open] summary::after { content:'−' }
+.res-methods .res-method + .res-method { border-top:1px solid var(--line); padding-top:8px }
+@media (max-width:760px) {
+ .res-filters { grid-template-columns:repeat(2,minmax(0,1fr)) }
+}
+@media (max-width:360px) {
+ .reservationcard .rescardhead { flex-wrap:wrap }
+}
+
 .experience{border-top:1px solid var(--line);margin-top:20px;padding-top:16px}.experience h5{font-size:17px;margin:0 0 8px}.experience p{font-size:14px;line-height:1.7;margin:8px 0}.experience dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0}.experience dl>div{padding:12px;background:var(--soft-panel);border-radius:6px;min-width:0}.experience dt{font-size:13px;color:var(--muted)}.experience dd{font-size:14px;margin:4px 0 0}.experience ul{padding-left:20px;margin:8px 0}.experience li{font-size:14px;margin:6px 0}.experience .sourcecheck{font-size:12px;color:var(--muted)}
 @media (max-width:760px){.daystats b{font-size:18px}.daystats{gap:8px;margin:12px 0}.daystats>div{padding-left:8px}.eventactions .btn{padding-inline:12px}.eventactions .event-status-label{margin:0;flex:1 1 130px}.reservationcard{padding:16px}.experience dl{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:480px){.reswhen{grid-template-columns:minmax(0,1fr);gap:0}.reservationcard input,.reservationcard select,.reservationcard textarea{width:100%;min-width:0}.action-group>.btn{flex:1 1 120px}.rescardhead{gap:8px}}
