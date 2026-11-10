@@ -1,14 +1,39 @@
-const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const {createHash}=require('node:crypto');
 (async()=>{
  const listeners={},entries=new Map(),deleted=[],requests=[];
- const scope='https://example.com/nagoya/',cache={addAll:async urls=>{for(const u of urls)entries.set(u,{cached:u})},put:async(k,v)=>entries.set(k,v),match:async k=>entries.get(String(k))};
- const c=vm.createContext({URL,Response,self:{registration:{scope},location:new URL(scope),addEventListener:(k,fn)=>listeners[k]=fn,clients:{claim:async()=>{}},skipWaiting:()=>{}},caches:{open:async()=>cache,keys:async()=>['nagoya-trip-old','other-app'],delete:async k=>deleted.push(k)},fetch:async request=>{requests.push(request.url);throw Error('offline')}});
+ const scope='https://example.com/nagoya/';
+ const cache={
+  addAll:async assets=>{for(const request of assets){assert.equal(request.cache,'reload');entries.set(request.url,{cached:request.url})}},
+  match:async key=>entries.get(String(key))
+ };
+ const c=vm.createContext({URL,Request,Response,self:{registration:{scope},addEventListener:(k,fn)=>listeners[k]=fn,clients:{claim:async()=>{}},skipWaiting:()=>{}},
+  caches:{open:async()=>cache,keys:async()=>['nagoya-trip-old','other-app'],delete:async k=>deleted.push(k)},
+  fetch:async request=>{requests.push(request.url);throw Error('offline')}});
  vm.runInContext(fs.readFileSync('sw.js','utf8'),c);
+ const release=vm.runInContext('RELEASE',c);
  let pending;listeners.install({waitUntil(p){pending=p}});await pending;
- assert.ok(entries.has(scope+'index.html'));assert.ok(entries.has(scope+'trip-data.js'));assert.ok(entries.has(scope+'data/itinerary.js'));assert.ok(entries.has(scope+'guide.html'));assert.ok(![...entries.keys()].some(u=>u.includes('openstreetmap')));
+ for(const file of ['index.html','guide.html','trip-data.js?v='+release,'data/itinerary.js?v='+release])assert.ok(entries.has(scope+file),file);
+ assert.ok(![...entries.keys()].some(u=>u.includes('openstreetmap')));
  listeners.activate({waitUntil(p){pending=p}});await pending;assert.deepEqual(deleted,['nagoya-trip-old']);
- listeners.fetch({request:{url:scope+'?day=12-12&view=map',method:'GET',mode:'navigate'},respondWith(p){pending=p}});let result=await pending;assert.equal(result.cached,scope);
- listeners.fetch({request:{url:scope+'app.js?v=current',method:'GET',mode:'cors'},respondWith(p){pending=p}});result=await pending;assert.equal(result.cached,scope+'app.js');
- let intercepted=false;listeners.fetch({request:{url:'https://tile.openstreetmap.org/1/2/3.png',method:'GET',mode:'cors'},respondWith(){intercepted=true}});assert.equal(intercepted,false);
- console.log('PASS: project-subpath offline navigation and query assets; core-only cache; external tiles excluded; prior project cache removed; unrelated cache preserved.');
+ const fetchEvent=(url,mode='cors')=>{
+  let intercepted;
+  listeners.fetch({request:{url,method:'GET',mode},respondWith(result){intercepted=result}});
+  return intercepted;
+ };
+ assert.equal((await fetchEvent(scope+'?day=12-13&plan=B','navigate')).cached,scope+'index.html');
+ assert.equal((await fetchEvent(scope+'guide.html','navigate')).cached,scope+'guide.html');
+ assert.equal((await fetchEvent(scope+'app.js?v='+release)).cached,scope+'app.js?v='+release);
+ assert.equal((await fetchEvent(scope+'app.js?v=old')).status,409);
+ assert.equal(fetchEvent('https://tile.openstreetmap.org/1/2/3.png'),undefined);
+ assert.deepEqual(requests,[]);
+ const html=fs.readFileSync('index.html','utf8');
+ const scripts=[...html.matchAll(/<script src="([^"?]+)\?v=([^"]+)" integrity="sha256-([^"]+)"/g)];
+ assert.equal(scripts.length,9);
+ for(const [,name,version,hash] of scripts){
+  assert.equal(version,release);
+  assert.equal(createHash('sha256').update(fs.readFileSync(name)).digest('base64'),hash,name);
+  assert.ok(entries.has(scope+name+'?v='+version),name);
+ }
+ console.log('PASS: release-specific app shell, offline query navigation, old-version isolation, script integrity and external-tile exclusion.');
 })().catch(error=>{console.error(error);process.exitCode=1});

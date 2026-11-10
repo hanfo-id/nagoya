@@ -11,11 +11,17 @@ from playwright.sync_api import expect, sync_playwright
 
 
 class Handler(SimpleHTTPRequestHandler):
+    def do_GET(self):
+        if self.server.origin_unavailable.is_set():
+            self.close_connection = True
+            return
+        super().do_GET()
+
     def log_message(self, *_):
         pass
 
 
-def verify_mobile(browser, url):
+def verify_mobile(browser, url, server, engine):
     context = browser.new_context(
         viewport={"width": 390, "height": 700},
         is_mobile=True, has_touch=True, accept_downloads=True, reduced_motion="reduce",
@@ -27,6 +33,7 @@ def verify_mobile(browser, url):
     ))
     page = context.new_page()
     errors = []
+    page.set_default_timeout(12000)
     page.on("pageerror", lambda error: errors.append(str(error)))
     sunday = url + "?page=plan&day=12-13"
     page.goto(sunday, wait_until="domcontentloaded")
@@ -128,12 +135,17 @@ def verify_mobile(browser, url):
     print("PASS v2 UI import, archived legacy reservation and colliding event ID isolation")
 
     for width in (320, 360, 375, 390, 430, 768, 1280):
-        page.set_viewport_size({"width": width, "height": 640})
+        height = 568 if width == 320 else 640
+        page.set_viewport_size({"width": width, "height": height})
         page.goto(url + "?page=plan&day=12-11&plan=A", wait_until="domcontentloaded")
         expect(page.locator(".route-item")).to_have_count(25)
         assert page.evaluate("document.documentElement.scrollWidth === innerWidth"), width
         assert page.locator(".route-scroll").bounding_box()["height"] > 60, width
-        assert page.locator("#selected-actions").bounding_box()["y"] < 640, width
+        assert page.locator("#selected-actions").bounding_box()["y"] < height, width
+        assert page.locator(".route-layout").bounding_box()["width"] <= width, width
+        for button in page.locator(".selected-buttons .btn").all():
+            bounds = button.bounding_box()
+            assert bounds["height"] >= 44 and bounds["x"] + bounds["width"] <= width, (width, bounds)
         for event_id in ("f08", "f11", "f13", "f15", "f17"):
             row(event_id).locator(".route-more").tap()
             expect(row(event_id).locator(".inline-jp")).not_to_be_empty()
@@ -148,23 +160,58 @@ def verify_mobile(browser, url):
     page.evaluate("dayMap.zoomIn();dayMap.panBy([40,30],{animate:false})")
     page.locator('[data-mapextent="all"]').tap()
     assert page.evaluate("Array.from(mapMarkers.values()).every(({marker,point})=>marker.getLatLng().lat===point.location.lat && marker.getLatLng().lng===point.location.lng)")
-    page.evaluate("mapMarkers.get(18).marker.openPopup()")
-    expect(page.locator(".leaflet-popup .pin-visits [data-place-detail=s18]")).to_be_visible()
-    page.evaluate("dayMap.closePopup()")
+    page.evaluate("mapMarkers.get(8).marker.fire('click')")
+    expect(row("s08").locator(".inline-stop-detail")).to_be_visible()
+    page.evaluate("mapMarkers.get(18).marker.fire('click')")
+    choice = page.locator("#map-choices .pin-visits [data-place-detail=s17]")
+    expect(choice).to_be_visible()
+    choice.tap()
+    expect(row("s17").locator(".inline-stop-detail")).to_be_visible()
+    expect(row("s08").locator(".inline-stop-detail")).to_have_count(0)
+    row("s22").locator(".route-more").tap()
+    row("s22").locator(".inline-section").first.locator("summary").tap()
+    expect(row("s22")).to_contain_text("12/12 토요일 포함")
+    for selector in (".route-sheet", "#tab4", "[data-plan=B]", ".selected-buttons"):
+        target = page.locator("#plan " + selector).first.bounding_box()
+        assert target["x"] + target["width"] <= 390, (selector, target)
+    screenshot = os.getenv("NAGOYA_TEST_SCREENSHOT")
+    if screenshot:
+        row("s22").locator(".inline-section").first.scroll_into_view_if_needed()
+        page.screenshot(path=screenshot)
     page.evaluate("beforePrint()")
     expect(page.locator("[data-printed-event]")).to_have_count(75)
+    page.evaluate("afterPrint()")
+    page.goto(sunday + "&plan=B", wait_until="domcontentloaded")
+    page.evaluate("beforePrint()")
+    expect(page.locator("[data-printed-event]")).to_have_count(81)
+    expect(page.locator("[data-printed-event=d4-bath]")).to_have_count(0)
     page.evaluate("afterPrint()")
     print("PASS 320–1280 px, touch and scroll, shopping detail samples, same-location marker choice, print")
 
     page.wait_for_function("navigator.serviceWorker.controller !== null", timeout=15000)
-    context.set_offline(True)
+    # Windows WebKit aborts navigations before the worker when Playwright turns off
+    # the network context. A stopped origin exercises the same worker cache path.
+    if engine == "webkit":
+        server.origin_unavailable.set()
+        assert page.evaluate("fetch('/origin-probe').then(()=>false,()=>true)")
+    else:
+        context.set_offline(True)
     page.goto(sunday + "&plan=B", wait_until="domcontentloaded")
     expect(page.locator(".route-item")).to_have_count(17)
-    expect(page.locator("#networkstatus")).to_contain_text("오프라인")
+    if engine != "webkit":
+        expect(page.locator("#networkstatus")).to_contain_text("오프라인")
     nabana.locator(".route-more").tap()
     expect(nabana.locator(".inline-stop-detail")).to_be_visible()
+    plan("A").tap()
+    expect(page.locator(".route-item")).to_have_count(11)
+    bath.locator(".route-more").tap()
+    expect(bath.locator(".inline-stop-detail")).to_be_visible()
     page.goto(url + "guide.html#sunday-b", wait_until="domcontentloaded")
     expect(page.locator("#sunday-b [data-guide-event]")).to_have_count(17)
+    expect(page.locator("#sunday-a")).to_be_hidden()
+    page.locator('#sunday-b a[href="#sunday-a"]').tap()
+    expect(page.locator("#sunday-b")).to_be_hidden()
+    expect(page.locator("#sunday-a [data-guide-event]")).to_have_count(11)
     assert not errors, errors
     print("PASS Service Worker offline timeline, details and static guide; no page errors")
     context.close()
@@ -174,11 +221,14 @@ def main():
     root = Path(__file__).resolve().parents[1]
     handler = partial(Handler, directory=str(root))
     with ThreadingHTTPServer(("127.0.0.1", 0), handler) as server:
+        server.origin_unavailable = threading.Event()
         threading.Thread(target=server.serve_forever, daemon=True).start()
         try:
             with sync_playwright() as playwright:
-                browser = playwright.chromium.launch(channel=os.getenv("NAGOYA_BROWSER_CHANNEL", "msedge"))
-                verify_mobile(browser, f"http://127.0.0.1:{server.server_port}/")
+                engine = os.getenv("NAGOYA_BROWSER_ENGINE", "chromium")
+                browser = (playwright.webkit.launch() if engine == "webkit" else
+                           playwright.chromium.launch(channel=os.getenv("NAGOYA_BROWSER_CHANNEL", "msedge")))
+                verify_mobile(browser, f"http://127.0.0.1:{server.server_port}/", server, engine)
                 browser.close()
         finally:
             server.shutdown()

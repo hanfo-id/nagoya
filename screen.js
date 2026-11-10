@@ -16,7 +16,7 @@ function routeDayHTML(i){
   const expanded=inlinePlaceKey===stopKey(p),event=EVENTS_BY_ID.get(p.eventId);
   return `<li id="mapstop-${p.number}" data-event-id="${p.eventId}" class="route-item ${p.status==='skipped'?'is-skipped':''}">
    <button class="route-place" data-pin="${p.number}" aria-pressed="false"><span class="route-number">${p.number}</span><span class="route-copy">
-    <span class="route-time">${esc(pointTime(p))} / ${esc(p.kind)}${p.optional?' / 선택':''}${p.status!=='planned'?' / '+EVENT_STATUS[p.status]:''}${event.booking?' / '+esc(event.booking.requirement):''}</span>
+    <span class="route-time">${esc(pointTime(p))} / ${esc(p.kind)}${p.optional?' / 선택':''}${p.status!=='planned'?' / '+EVENT_STATUS[p.status]:''}${(event.booking||VISIT_REQUIREMENTS[event.id])?' / '+esc(event.requirement):''}</span>
     <strong>${esc(p.name)}</strong><small>${esc(stopDescription(p))}</small></span></button>
    <button class="route-more" ${stopDetailAttributes(p)} aria-label="${esc(event.title)} 상세">${expanded?'접기':'상세'}</button>
    ${expanded?`<div class="inline-stop-detail">${placeDetailsHTML(p,i)}</div>`:''}</li>`;
@@ -29,7 +29,7 @@ function routeDayHTML(i){
   <div class="route-day-head"><h2>${day.date} ${day.dow} <span>${esc(day.short)}</span></h2><small>완료 ${done}/${day.events.length}</small></div>${planControls()}
   <div id="route-filters-slot"></div><div class="route-scroll" tabindex="0" aria-label="방문 순서">
   ${i===SUNDAY?`<details class="route-options"><summary>${esc(day.summary)}</summary><p>${esc(day.note)}</p></details>`:''}
-  <ol class="route-list">${rows||'<li class="empty">이 조건에 맞는 일정이 없습니다.</li>'}</ol><details class="route-options"><summary>일정 변경·하루 안내</summary>
+  <section id="map-choices" class="pin-choices" aria-label="같은 위치의 일정" hidden></section><ol class="route-list">${rows||'<li class="empty">이 조건에 맞는 일정이 없습니다.</li>'}</ol><details class="route-options"><summary>일정 변경·하루 안내</summary>
   ${i!==SUNDAY?`<p>${esc(day.note||day.summary)}</p>`:''}${i===0?'<button class="btn btn-secondary" data-adjust="delay">항공 지연 시 밤 일정 생략</button>':''}
   <button class="btn btn-secondary" data-adjust="essential">선택 방문 제외</button><button class="btn btn-quiet" data-restore-day="${i}">이 날짜 진행 기록 복원</button></details></div>
   <div id="selected-actions" class="selected-actions" aria-live="polite"><span>목록에서 장소를 선택하세요</span></div></div></div>`;
@@ -43,7 +43,7 @@ function renderHomeCompact(){
  document.body.classList.toggle('is-travelling',travelPhase()==='during'||state.options.fieldMode);
  const clock=japanClock(),today=dayIndexForDate(clock.date);if(state.selectionMode==='auto'&&today>=0)active=today;
  const e=nextEvent({...state,selectedEvent:''},active,clock).event,p=eventPlace(e),totals=reservationTotals();
- $('#todaypanel').innerHTML=`<div class="home-title"><h1>나고야 여행</h1><p>2026.12.10 목 – 12.14 월</p></div><div class="home-next"><span>${days[active].date} ${today===active?'오늘의 일정':'선택 일정'}</span><h2>${e?esc(p?.name||e.title):'일정을 모두 마쳤어요'}</h2>${e?`<p>${esc(confirmedTime(e)||e.time)} <span>${esc(e.kind)}</span></p><div class="action-group"><button class="btn btn-primary" data-screen="plan">일정 보기</button></div>`:'<button class="btn btn-primary" data-screen="plan">전체 일정</button>'}</div><div class="home-days">${daysForPlan(state.plan).map((d,i)=>`<button data-home-day="${i}" aria-label="${d.date} ${d.dow} ${esc(d.short)} 일정 열기"><b>${d.date}</b><small>${d.dow[0]}</small></button>`).join('')}</div>${planControls()}<div class="home-booking"><button data-screen="food"><strong>식당 찾기</strong><span>추천 메뉴·예약·후기</span><b aria-hidden="true">›</b></button><button data-screen="reservations"><strong>예약 현황</strong><span>확정 ${totals.confirmed} / 확인 필요 ${totals.attention}</span><b aria-hidden="true">›</b></button></div><details class="travel-facts"><summary>항공·호텔 정보</summary><p>입국 12.10 16:50 / 출국 12.14 17:50<br>출국일 공항 도착 계획 ${esc(baseEvents(4).find(e=>e.id==='d5-airport').end)}</p><p>니시테츠 호텔 크룸 나고야<br><span lang="ja">西鉄ホテル クルーム名古屋</span></p>${link(appMap(PLACE.hotel.query),'호텔 Google Maps')}</details>`;
+ $('#todaypanel').innerHTML=`<div class="home-title"><h1>나고야 여행</h1><p>2026.12.10 목 – 12.14 월</p></div><div class="home-next"><span>${days[active].date} ${today===active?'오늘의 일정':'선택 일정'}</span><h2>${e?esc(p?.name||e.title):'일정을 모두 마쳤어요'}</h2>${e?`<p>${esc(confirmedTime(e)||e.time)} <span>${esc(e.kind)}</span></p><div class="action-group"><button class="btn btn-primary" data-screen="plan">일정 보기</button></div>`:'<button class="btn btn-primary" data-screen="plan">전체 일정</button>'}</div><div class="home-days">${daysForPlan(state.plan).map((d,i)=>`<button data-home-day="${i}" aria-label="${d.date} ${d.dow} ${esc(d.short)} 일정 열기"><b>${d.date}</b><small>${d.dow[0]}</small></button>`).join('')}</div>${planControls()}<div class="home-booking"><button data-screen="food"><strong>식당 찾기</strong><span>추천 메뉴·예약·후기</span><b aria-hidden="true">›</b></button><button data-screen="reservations"><strong>예약 현황</strong><span>확정 ${totals.confirmed} / 확인 필요 ${totals.attention}</span><b aria-hidden="true">›</b></button></div><details class="travel-facts"><summary>항공·호텔 정보</summary><p>입국 12.10 16:50 / 출국 12.14 17:50<br>출국일 공항 도착 계획 ${esc(baseEvents(4).find(e=>e.id==='d5-airport').end)}</p><p>니시테츠 호텔 크룸 나고야<br><span lang="ja">西鉄ホテル クルーム名古屋</span></p>${link(EVENTS_BY_ID.get('d1-checkin').place.mapUrl,'호텔 Google Maps')}</details>`;
 }
 function requestedScreen(){const u=new URL(location.href);return ['home','plan','reservations','prepare','food'].includes(u.searchParams.get('page'))?u.searchParams.get('page'):u.hash==='#reservations'?'reservations':u.hash==='#prepare'?'prepare':u.hash==='#food'?'food':u.searchParams.has('day')||u.searchParams.has('view')||u.hash==='#plan'?'plan':'home'}
 function syncScreen(){
@@ -59,15 +59,18 @@ function activityHTML(e){return `<li><div><b>${esc(e.time)}${e.end?'–'+esc(e.e
 function bookingLinks(links){return links.map(([label,url])=>link(url,label)).join('')}
 function detailList(items){return `<ul class="info-bullets">${items.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`}
 function eventInfo(e,{open=false}={}){
- const point=eventPlace(e),[kind,order,hours,menuSource]=e.meal||[],location=MAP_LOCATIONS[e.placeId];
+ const point=eventPlace(e),[kind,order,mealHours,menuSource]=e.meal||[],location=MAP_LOCATIONS[e.placeId];
+ const venue=e.kind!=='이동'&&VENUE_VISITS[e.placeId],hours=venue?.hours||mealHours,walk=SHOP_WALKS[e.id];
+ const sources=venue?.source?[venue.source,venue.extra]:[menuSource,e.source_url];
  const urls=[...e.booking?.links||[],...VISIT_LINKS[e.id]||[]];
- const sourceLinks=[...new Set([menuSource,e.source_url].flat().filter(url=>typeof url==='string'&&/^https:\/\//.test(url)))].map(url=>['공식·매장 정보',url]);
+ const sourceLinks=[...new Set(sources.flat().filter(url=>typeof url==='string'&&/^https:\/\//.test(url)))].map(url=>['공식·매장 정보',url]);
  const visit=e.card_notes?.visit_tip;
  const isCovered=text=>e.steps.some(step=>step.includes(text)||text.includes(step));
  const info=[
   ...(order?[['추천 메뉴',esc(order)]]:[]),
-  ['영업·이용',esc(hours||(e.kind==='이동'?'계획 시각과 운행 안내를 참고하세요.':'방문일 영업시간은 매장·시설 안내에서 확인하세요.'))],
-  ['예약·방문',esc(e.requirement)],
+  ...(venue?.picks?[['추천 방문',esc(venue.picks)]]:[]),
+  ...(hours?[['영업·이용',esc(hours)]]:[]),
+  ...(e.requirement&&!['불필요','확인된 예약 조건 없음'].includes(e.requirement)?[['예약·방문',esc(e.requirement)]]:[]),
   ...(point.address?[['위치',`<span lang="ja">${esc(point.address)}</span>`]]:[]),
   ...(location?.note?[['지도 핀',esc(location.note)]]:[])
  ];
@@ -75,19 +78,22 @@ function eventInfo(e,{open=false}={}){
  return `<details class="inline-section" ${open?'open':''}><summary>${kind?'추천 메뉴·영업·예약':e.kind==='쇼핑'?'방문 포인트·영업 정보':'방문·이용 정보'}</summary>
   ${infoRows(info)}<div class="info-links">${bookingLinks([...urls,...sourceLinks.filter(([,url])=>!urls.some(([,other])=>other===url))])}</div>
   ${alternatives.length?`<h4>선택 대안</h4><ul class="info-bullets">${alternatives.map((item,i)=>`<li>${link(item.url||item.source,item.name_ko)} · ${i===0?'야키토리 저녁 대안':'식사 후 음악 바'}</li>`).join('')}</ul><p>J-POP 재생 여부는 미확인입니다.</p>`:''}</details>
-  <details class="inline-section" open><summary>교통·방문 메모</summary><p class="event-transport">${esc(e.transport)}</p>${detailList(e.steps)}${visit&&!isCovered(visit)?`<p>${esc(visit)}</p>`:''}</details>`;
+  <details class="inline-section" open><summary>교통·방문 메모</summary>
+  ${walk?infoRows([['오는 길 · 계획',esc(walk[0])],['다음 장소 · 계획',esc(walk[1])]]):
+  e.transport&&e.transport!=='전후 일정과 위치를 확인하고 이동'?`<p class="event-transport">${esc(e.transport)}</p>`:''}${detailList(e.steps)}${visit&&!isCovered(visit)?`<p>${esc(visit)}</p>`:''}</details>`;
 }
 function placeDetailsHTML(point,i){
  const e=EVENTS_BY_ID.get(point.eventId),def=reservationFor(e);
  const points=getMapStops(state,i),index=points.findIndex(p=>p.eventId===point.eventId);
- const previous=points.slice(0,index).reverse().find(p=>p.status!=='skipped'),next=points.slice(index+1).find(p=>p.status!=='skipped');
+ const previous=points.slice(0,index).reverse().find(p=>p.status!=='skipped'&&p.id!==point.id),next=points.slice(index+1).find(p=>p.status!=='skipped'&&p.id!==point.id);
+ const walking=Boolean(SHOP_WALKS[e.id]);
  return `<p class="inline-jp" lang="ja">${esc(point.jp)}</p><ul class="activity-list">${activityHTML(e)}</ul>
   ${def?`<div class="inline-reservation">${reservationBadge(def)}${reservationTiming(def)}<button class="btn btn-secondary" data-res-jump="${def.id}">예약 관리</button></div>`:''}
   ${eventInfo(e)}<details class="inline-section segment-options" data-segment-current="${esc(point.query)}" data-segment-previous="${esc(previous?.query||'')}" data-segment-next="${esc(next?.query||'')}">
   <summary>이전·다음 장소로 이동</summary><label>출발·도착<select data-route-choice="origin"><option value="current">현재 위치 → ${esc(point.name)}</option>
   ${previous?`<option value="previous">${esc(previous.name)} → ${esc(point.name)}</option>`:''}${next?`<option value="next">${esc(point.name)} → ${esc(next.name)}</option>`:''}</select></label>
-  <label>이동 수단<select data-route-choice="mode"><option value="transit">대중교통</option><option value="walking">도보</option></select></label>
-  ${actionLink(directions(point.query,'transit'),'경로 열기','secondary').replace('<a ','<a data-segment-link ')}</details>`;
+  <label>이동 수단<select data-route-choice="mode"><option value="transit">대중교통</option><option value="walking" ${walking?'selected':''}>도보</option></select></label>
+  ${actionLink(directions(point.query,walking?'walking':'transit'),'경로 열기','secondary').replace('<a ','<a data-segment-link ')}</details>`;
 }
 function openPlace(id,number,{expand=false}={}){
  const i=eventDayIndex(id);
@@ -95,6 +101,7 @@ function openPlace(id,number,{expand=false}={}){
  const point=getMapStops(state,i).find(p=>p.eventId===id&&(!number||p.number===number));
  if(!point)return;
  const row=document.querySelector('#mapstop-'+point.number),close=!expand&&inlinePlaceKey===stopKey(point);
+ if(!row)return;
  const old=document.querySelector('.inline-stop-detail')?.closest('[data-event-id]');
  if(old){state.expanded[old.dataset.eventId]=false;old.querySelector('.inline-stop-detail').remove()}
  inlinePlaceKey=close?'':stopKey(point);
@@ -118,7 +125,11 @@ function initScreens(){
   const t=event.target,page=t.closest('button[data-screen],[data-nav],.brand'),homeDay=t.closest('[data-home-day]'),detail=t.closest('[data-place-detail]');
   if(page){event.preventDefault();event.stopImmediatePropagation();if(page.hasAttribute('data-nav')){const nav=page.dataset.nav;if(nav==='map'||nav==='plan')view='schedule';openScreen(nav==='today'?'home':nav==='map'?'plan':nav)}else openScreen(page.dataset.screen||'home')}
   if(homeDay){event.preventDefault();event.stopImmediatePropagation();active=Number(homeDay.dataset.homeDay);state.selectionMode='manual';state.selectedEvent='';view='schedule';openScreen('plan')}
-  if(detail){event.preventDefault();event.stopImmediatePropagation();if(screenPage==='plan')showMapSelection(detail.dataset.detailNumber?{number:Number(detail.dataset.detailNumber)}:{eventId:detail.dataset.placeDetail});openPlace(detail.dataset.placeDetail,Number(detail.dataset.detailNumber)||undefined)}
+  if(t.closest('[data-close-pin-choices]')){
+   document.querySelector('#map-choices').hidden=true;
+   document.querySelector('#selected-actions [data-place-detail]')?.focus({preventScroll:true});
+  }
+  if(detail){event.preventDefault();event.stopImmediatePropagation();if(screenPage==='plan')showMapSelection(detail.dataset.detailNumber?{number:Number(detail.dataset.detailNumber)}:{eventId:detail.dataset.placeDetail});openPlace(detail.dataset.placeDetail,Number(detail.dataset.detailNumber)||undefined,{expand:Boolean(detail.closest('.pin-visits'))})}
  },true);
  document.addEventListener('change',event=>{if(!event.target.matches('[data-route-choice]'))return;const root=event.target.closest('.segment-options'),origin=root.querySelector('[data-route-choice=origin]').value,mode=root.querySelector('[data-route-choice=mode]').value;root.querySelector('[data-segment-link]').href=origin==='next'?directions(root.dataset.segmentNext,mode,root.dataset.segmentCurrent):directions(root.dataset.segmentCurrent,mode,origin==='previous'?root.dataset.segmentPrevious:undefined)});
 }
@@ -126,7 +137,7 @@ function initRouteObserver(){
  const list=document.querySelector('.route-scroll');if(!list)return;
  const points=numberedPlaces(active),saved=points.find(p=>p.eventIds.includes(state.selectedEvent))||points[0];if(saved)selectPin(saved);initSheetDrag();
  let pending=false,last=selectedStopNumber;
- list.addEventListener('scroll',()=>{if(pending||Date.now()<routeFollowAfter)return;pending=true;requestAnimationFrame(()=>{pending=false;const top=list.getBoundingClientRect().top+12;const items=[...list.querySelectorAll('.route-item')];const candidate=items.find(n=>n.getBoundingClientRect().bottom>top+36);const number=Number(candidate?.querySelector('[data-pin]')?.dataset.pin);if(number&&number!==last){last=number;showMapSelection({number,fromScroll:true})}})},{passive:true});
+ list.addEventListener('scroll',()=>{if(pending||!document.querySelector('#map-choices').hidden||Date.now()<routeFollowAfter)return;pending=true;requestAnimationFrame(()=>{pending=false;const top=list.getBoundingClientRect().top+12;const items=[...list.querySelectorAll('.route-item')];const candidate=items.find(n=>n.getBoundingClientRect().bottom>top+36);const number=Number(candidate?.querySelector('[data-pin]')?.dataset.pin);if(number&&number!==last){last=number;showMapSelection({number,fromScroll:true})}})},{passive:true});
 }
 
 function infoRows(rows){return '<dl class="info-rows">'+rows.map(([key,value])=>`<div><dt>${esc(key)}</dt><dd>${value}</dd></div>`).join('')+'</dl>'}
@@ -139,7 +150,11 @@ function restaurantCard(e){
   <details class="restaurantdetail"><summary>메뉴·영업·방문 메모</summary>${eventInfo(e,{open:true})}${reviewLinks({name:point.name,blogs:BLOGS[e.placeId]})}</details></article>`;
 }
 let sheetLevel='balanced';
-function sheetStops(height){return {expanded:Math.min(64,height*.1),balanced:height*.32,map:height*.5}}
+function sheetStops(height){
+ const expanded=Math.min(64,height*.1);
+ // Reserve space for the fixed controls and at least a short list on compact phones.
+ return {expanded,balanced:Math.min(height*.32,Math.max(expanded,height-360)),map:Math.min(height*.5,Math.max(expanded,height-328))};
+}
 function nearestSheetLevel(height,pixels){return Object.entries(sheetStops(height)).reduce((best,pair)=>Math.abs(pair[1]-pixels)<Math.abs(best[1]-pixels)?pair:best)[0]}
 function initSheetDrag(){
  const layout=document.querySelector('.route-layout'),sheet=document.querySelector('.route-sheet'),handle=sheet?.querySelector('.sheet-handle');if(!handle)return;

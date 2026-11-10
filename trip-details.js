@@ -83,6 +83,49 @@ function prepareTripPlaces(){
  restaurants.find(r=>r.id==='eel').day='금 점심 교체 선택';
  restaurants.find(r=>r.id==='eel').why='원한다면 금요일 점심을 장어로 교체하는 선택지입니다.';
 }
+
+// Public operating information for the booked itinerary. Walk times are itinerary allowances.
+const VENUE_VISITS = {
+ beams:{hours:'11:00–21:00 · 비정기 휴무',picks:'BEAMS PLUS의 재킷·셔츠, BEAMS T 그래픽 상의, 모자·잡화.',source:'https://www.beams.co.jp/shop/bna/'},
+ unitedArrows:{hours:'11:00–21:00 · 라시크 영업 일정에 따름',picks:'깔끔한 캐주얼, 테일러드 재킷, 신발과 액세서리. BEAMS와 핏을 비교하기 좋습니다.',source:'https://store.united-arrows.co.jp/brand/ua/stores/ung.html'},
+ stussy:{hours:'월~일 11:00–19:00 · 공식 챕터 안내',picks:'그래픽 티셔츠·후디·캡. 시즌 아우터는 사이즈를 먼저 확인하세요.',source:'https://www.stussy.com/blogs/chapters/stussy-nagoya'},
+ bape:{hours:'11:00–19:00 · 공식 매장 목록',picks:'A BATHING APE 카모 후드와 그래픽 티셔츠, 작은 액세서리.',source:'https://jp.bape.com/pages/store-list/nagoya'},
+ hoods:{hours:'11:00–20:00 · 정기휴무 미공개',picks:'NEIGHBORHOOD의 워크웨어와 WTAPS의 밀리터리풍 상의·아우터.',source:'https://www.doubledutch-jp.com/hoods-nagoya'},
+ blackeye:{hours:'PARCO 일반 쇼핑 10:00–20:00. 브랜드 페이지는 21:00 마감 표기이므로 오후 방문 권장.',picks:'도쿄 스트리트웨어의 로고 티셔츠·후드와 그래픽 소품.',source:'https://nagoya.parco.jp/shop/detail/?cd=029194',extra:'https://blackeyepatch.com/en/pages/store'},
+ freaks:{hours:'PARCO 일반 쇼핑 10:00–20:00 · 시설 일정에 따름',picks:'아메리칸 캐주얼의 데님·워크웨어·아우터를 BEAMS와 비교.',source:'https://nagoya.parco.jp/shop/detail/?cd=009015'},
+ atmos:{hours:'10:00–20:00 · PARCO 영업 일정에 따름',picks:'스니커즈와 스트리트 의류. 모델명과 일본 cm 사이즈를 확인하세요.',source:'https://www.atmos-tokyo.com/shop/store/shoplist/29'},
+ darumaya:{hours:'10:00–19:00 · 수요일 휴무',picks:'오스 니오몬도리의 캐릭터 완구와 특촬 장난감. 다음 중고점과 비교할 첫 매장.',source:'https://www.kinsyachi.com/shop/darumaya/'},
+ mandarake:{hours:'12:00–20:00 · 공식 안내상 연중무휴',picks:'2층 중고 완구·피규어, 4층 로봇·마법소녀 완구. 박스·부속품 상태를 비교하세요.',source:'https://www.mandarake.co.jp/shop/ngy/floor_guide.html'},
+ lashinbang:{hours:'평일 11:00–20:00 / 토·일·공휴일 10:00–20:00',picks:'중고 아크릴 스탠드·배지·피규어. 작품별 소형 굿즈를 비교하기 좋습니다.',source:'https://www.lashinbang.com/special/25082/'},
+ surugaya:{hours:'10:00–21:00 · 정기휴무 없음',picks:'3층 애니 굿즈, 4층 게임·서적, 5층 피규어·프라모델·공구.',source:'https://www.suruga-ya.jp/feature/realstore/osu_main/index.html'},
+ volks:{hours:'평일 11:00–20:00 / 토·일·공휴일 10:00–20:00 · 건물 휴관 시 휴무',picks:'PVC 완성품, 캐릭터 프라모델과 조립·도색 용품. 전시품과 판매품을 구분하세요.',source:'https://hobby.volks.co.jp/shop/sr_nagoya.html'},
+ animateParco:{hours:'10:00–20:00 · PARCO 영업 일정에 따름',picks:'최신 작품의 공식 신품 굿즈·서적. 오스 중고점과 달리 신작 코너 위주로 보세요.',source:'https://www.animate.co.jp/shop/sakae/'},
+ mugiwara:{hours:'10:00–20:00 · PARCO 영업 일정에 따름',picks:'원피스 공식 피규어·키링·문구. 좋아하는 캐릭터부터 찾아보세요.',source:'https://www.mugiwara-store.com/store/'},
+ heroPopup:{hours:'12/5–12/20 10:00–20:00 · 12/12 토요일 포함 · 최종일 18:00 마감',picks:'히로아카 10주년 한정 팝업의 캐릭터 굿즈. 혼잡 시 현장 정리권과 구매 제한 안내를 확인하세요.',source:'https://nagoya.parco.jp/event/detail/?id=38619',extra:'https://x.com/ngparco_gallery'},
+ oasis:{hours:'옥상 물의 우주선은 2027/4/30까지 공사로 폐쇄. 지상·지하도 구간별 통제.',picks:'열린 지상 구간에서 유리 지붕과 미라이타워를 한 프레임에 담기.',source:'https://www.sakaepark.co.jp/news/news-8135/'},
+ tower:{hours:'12/11 금요일 17:00–21:00, 마지막 입장 20:40 · 야간 성인 ¥1,800.',picks:'야경과 겨울 프로젝션 매핑. 야간 입장 시각과 요금은 해당 기간 공지를 확인하세요.',source:'https://www.nagoya-tv-tower.co.jp/news/202611011053/'},
+ hands:{hours:'다카시마야 영업 일정에 따름. 해당 점포는 2027/1/11 영업 종료 예정.',picks:'문구·여행용 소품·생활용품. 열차 이동을 앞두고 5~10층 중 관심 층부터 보세요.',source:'https://nagoya.hands.net/',extra:'https://info.hands.net/news/20260204-nagoya-close.html'},
+ flightOfDreams:{hours:'플라이트 파크 10:00–17:00 · 무료 전시, 일부 체험 유료. 식당별 시간은 상이.',picks:'1층 B787 초호기 전시와 시애틀 테라스 점심. 수하물 수속과 터미널 이동 시간을 먼저 확보하세요.',source:'https://www.centrair.jp/flight-of-dreams/access.html'}
+};
+const SHOP_WALKS = {
+ f08:['라무치 → 라시크 2층 도보·에스컬레이터 5~10분','같은 2층에서 UNITED ARROWS로 이동'],
+ f09:['BEAMS에서 같은 2층 통로','라시크 밖으로 나와 Stüssy까지 도보 10~15분'],
+ f11:['라시크 → 사카에 3초메 남서쪽 도보 10~15분','BAPE까지 도보 5~10분'],
+ f13:['Stüssy에서 인근 도로를 따라 도보 5~10분','HOODS까지 도보 5~10분'],
+ f15:['BAPE에서 SK빌딩 1층까지 도보 5~10분','PARCO 서관까지 도보 약 10분'],
+ f17:['HOODS에서 PARCO 서관까지 도보 약 10분','서관 2층 FREAK’S STORE로 내부 이동 약 5분'],
+ f18:['서관 1층 BlackEyePatch에서 내부 이동 약 5분','같은 서관 1층 atmos로 내부 이동 약 5분'],
+ f19:['서관 2층 FREAK’S STORE에서 1층까지 약 5분','서관 1층 HARBS로 같은 층 이동'],
+ s08:['오스칸논에서 니오몬도리 아케이드로 도보','만다라케까지 오스 골목 도보 5~10분'],
+ s10:['다루마야에서 오스 골목 도보 5~10분','MultinaBox 2층 라신반까지 도보 5~10분'],
+ s12:['만다라케에서 MultinaBox까지 도보 5~10분','스루가야 오스 본관까지 도보 5~10분'],
+ s14:['라신반에서 오스 본관까지 도보 5~10분','오스 동쪽으로 걸어 보크스까지 10~15분'],
+ s16:['스루가야에서 야바초 방면 도보 10~15분','오쓰도리에서 야바초 방향으로 걸어 PARCO 동관 4층. 계획 10분'],
+ s18:['보크스에서 도보로 PARCO 동관에 진입해 4층으로. 계획 10분','서관으로 이동해 엘리베이터로 8층. 계획 5~10분'],
+ s20:['동관 4층에서 서관 8층으로 건물·층 이동 5~10분','남관 10층 EVENT SPACE까지 5~10분'],
+ s22:['서관 8층에서 남관 10층으로 이동 5~10분','후시미 이부시긴까지 도보 또는 지하철 25~35분']
+};
+
 function appMap(q){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q)}
 function directions(q,mode,origin){return 'https://www.google.com/maps/dir/?'+new URLSearchParams({api:'1',destination:q,travelmode:mode,...(origin?{origin}: {})}).toString()}
 function placeForEvent(e){
